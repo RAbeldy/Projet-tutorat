@@ -7,7 +7,7 @@ class UsersController
 // page d'authentification
 public function login()  
 	{
-	  require_once('views/Login.php');
+	  require_once('views/login.php');
 	}
 
 public function inscription()
