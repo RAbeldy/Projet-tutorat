@@ -1,0 +1,71 @@
+.navbar.navbar-light.navbar-expand-md.navigation-clean-button {
+  background-color: #fab900;
+  max-height: 50px;
+}
+
+.nav-link {
+  color: white!important;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-weight: 400;
+}
+
+#navcol-1 {
+  text-align: center;
+}
+
+@media (min-width: 768px) {
+  #navcol-1 {
+    padding-left: 125px;
+  }
+}
+
+@media (max-width: 576px) {
+  .sign-in-container form h3, .sign-up-container form h3, .overlay-container h1 {
+    font-size: 19px;
+  }
+}
+
+@media (max-width: 576px) {
+  form, .overlay-panel {
+    padding: 0 2px;
+  }
+}
+
+@media (max-width: 576px) {
+  .ghost, .bouton {
+    width: 145px;
+  }
+}
+
+@media (max-width: 576px) {
+  .container#container {
+    min-height: 450px;
+  }
+}
+
+@media (max-width: 576px) {
+  a {
+    margin: 5px 0;
+  }
+}
+
+body {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
+input {
+  border-radius: 30px;
+}
+
+#content {
+  flex: 1;
+}
+
+.footer-basic {
+  background-color: black;
+  color: white;
+}
+
