@@ -10,9 +10,17 @@ public function login()
 	  require_once('views/login.php');
 	}
 
+public function testConnexion(){
+		       //intance e la classe modele
+	if(isset($_POST['email']) && isset($_POST['password'])){
+    $user= new Users();
+    $user->connexion($_POST['email'], $_POST['password']);
+	}	
+}
+
 public function inscription()
 	{
-	 require_once('views/inscription.php');	
+	 require_once('inscription.php');	
 	}
 
 public function save_user()
