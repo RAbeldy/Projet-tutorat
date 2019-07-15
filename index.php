@@ -7,7 +7,7 @@
     $controller = $_GET['controller'];
     $action     = $_GET['action'];
   } else {
-    $controller = 'page';
+    $controller = 'pag';
     $action     = 'home';
   }
 ?>
@@ -38,10 +38,14 @@
     <link rel="stylesheet" href="assets/css/styles.css">
 </head>
 
-<body>
+<body id="page-top">
     <nav class="navbar navbar-light navbar-expand-md navigation-clean-button">
     <div class="container"><a href="#" class="navbar-brand"> LOGO </a><button data-toggle="collapse" data-target="#navcol-1" class="navbar-toggler"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
-        <div class="collapse navbar-collapse"
+        
+    <?php
+      if($_SESSION['statut_id']==3){
+
+            echo '<div class="collapse navbar-collapse"
             id="navcol-1">
             <ul class="nav navbar-nav mr-auto">
                 <li class="nav-item"><a href="#" class="nav-link">Accueil </a>
@@ -50,13 +54,18 @@
                 </li>
                 <li class="nav-item"><a href="#" class="nav-link">Contact </a>
                 </li>
-            </ul>
+            </ul>';
+
+          }
+    ?> 
                 <div>
                     <button class="btn btn-light action-button" type="button"> <a href="?controller=users&action=login"> Connexion</a> </button>
                     <div class="modal" id="signmodal">
                     </div>
                 </div>
-        </div>
+        </div> 
+
+
     </div>
 </nav>
     <div id="content">
