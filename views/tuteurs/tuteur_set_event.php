@@ -18,13 +18,13 @@
                                                 </p>
                                             </div>
                                             <div class="card-body">
-                                                <form method="post" action="?controller=evenements&action=set_event" onsubmit="javascript:message();">
+                                                <form method="post" action="?controller=evenements&action=set_event" onsubmit="javascript:test_date();javascript:message();">
                                                     <div class="row">
                                                         <div class="form-group col-xs-12 col-md-6">
                                                             <label for="date">
                                                                 <strong>Date</strong><br>
                                                             </label>
-                                                            <input class="form-control" type="datetime-local" name="date_creation" required onkeyup = "javascript:test_date();"/>
+                                                            <input  id = "event" class="form-control" type="datetime-local" name="date_creation"  onchange = 'javascript:test_date();' required/>
                                                         </div>
                                                         <div class="form-group col-xs-12 col-md-6">
                                                             <label for="lieu">
@@ -87,16 +87,19 @@
        alert("l\'évènement a bien été crée. vous le trouverez dans la liste des évènements ");
       }
 
-      function test_date()
+      var test_date = function()
       {
         var today = new Date();
         var dd = String(today.getDate()).padStart(2, '0');// Day config 
-         var mm = String(today.getMonth() + 1).padStart(2, '0'); //first month January takes 0. 
-         var yyyy = today.getFullYear(); // year takes all e.g: 2019 => 2019
-         today = dd + '/' + mm + '/' + yyyy;
+        var mm = String(today.getMonth() + 1).padStart(2, '0'); //first month January takes 0. 
+        var yyyy = today.getFullYear(); // year takes all e.g: 2019 => 2019
+
+         today = yyyy + '-' + mm + '-' + dd;
          if (document.getElementById('event').value < today) {
             alert(" Entrer une date ultérieure à celle d'aujourd'hui.");
+            return -1;
          }
+
       }
     </script>
     
