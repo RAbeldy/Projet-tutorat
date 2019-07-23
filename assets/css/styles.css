@@ -47,11 +47,30 @@ input {
   border-radius: 30px;
 }
 
-#content {
+#globalContent {
   flex: 1;
 }
-
+#content
+{
+  width: 100%;
+}
 .footer-basic {
   background-color: black;
   color: white;
+}
+
+#globalContent #wrapper nav{
+    min-height: unset;
+
+}
+
+div#content {
+    width: 100%;
+}
+
+@media (min-width:768px) {
+    .navigation-clean-button {
+        padding-top: 1rem;
+        padding-bottom: 1rem;
+    }
 }

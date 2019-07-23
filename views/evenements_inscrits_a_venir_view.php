@@ -1,0 +1,128 @@
+<?php 
+if(!isset($_SESSION['id_statut']))
+ {
+    require_once('views/login.php');
+  }
+  ?>  
+
+    <div id="globalContent">
+        <div id="wrapper">
+            
+            <div class="d-flex flex-column" id="content-wrapper">
+                <div id="content">
+                    <div class="block">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-md-1">
+                                </div>
+                                <div class="col-xs-12 col-md-10">
+                                    <div class="row">
+                                        <div class="card debut">
+                                            <div class="card-header py-3">
+                                                <p class="text-primary m-0 font-weight-bold">
+                                                    Inscrits
+                                                </p>
+                                            </div>
+                                            <div class="card-body">
+                                                <form method="post" action="traitement.php">
+                                                <div class="row">
+                                                    <div class="col-12 card-body-title">
+                                                        <span>RECHERCHER PAR :</span>
+                                                    </div>
+                                                    <div class="col-md-7 text-nowrap">
+                                                        <div class="row text-center">
+                                                            <label style="flex: auto;">Période</label>
+                                                        </div>
+                                                       
+                                                        <div class="row">
+                                                            <div class="col-xs-12 col-md-6">
+                                                                <label class="col-2">De</label>
+                                                                <input class="col-8 offset-2" type="datetime-local"/>
+                                                            </div>
+                                                            <div class="col-xs-12 col-md-6">
+                                                                <label class="col-2">à</label>
+                                                                <input class="col-8 offset-2" type="datetime-local"/>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-4 offset-1">
+                                                        <div class="row text-center">
+                                                            <label style="flex: auto;">TUTORAT</label>
+                                                        </div>
+                                                        <div class="row">
+                                                            <input type="search" class="form-control form-control-sm" aria-controls="dataTable" placeholder="Rechercher"/>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-12 text-center rechercher">
+                                                    <a href="traitement.php"><button class="btn" type="button" name="rechercher">RECHERCHER</button></a>
+                                                    </div>
+                                                
+                                                </div>
+                                                </form>
+                                                <div class="table-responsive table mt-2" role="grid" aria-describedby="dataTable_info">
+                                                    <table class="table dataTable my-0" id="dataTable">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Tutorat</th>
+                                                                <th>Date</th>
+                                                                <th>Adresse</th>
+                                                                <th>Désinscription</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <?php while($data=$donnees->fetch())
+                                                            {
+                                                             ?>   
+                                                             <form method="post" action="?controller=evenements&action=cancel_participation
+                                                              ">
+                                                            <tr>
+                                                                <td><label><?=$data['libelle']?></label></td>
+                                                                <td><label><?=$data['date_evenement']?></label></td>
+                                                                <td><label><?=$data['lieu']?></label></td>
+                                                                <?php if($data['libelle'] == 'TUTORAT_PERSONNALISE')
+                                                                {
+                                                                ?>
+                                                                      <td><button class="btn" type="submit" name="supprimer" onclick="alert();">Supprimer</button></td>
+                                                                      <input type="hidden" name="id_e_d" value="<?=$data['id_evenement']?>" >
+                                                                <?php 
+                                                                }
+                                                                else
+                                                                {
+                                                                ?>
+                                                                    <td><button class="btn" type="submit" name="annuler" onclick="alert();">Annuler</button></td>
+                                                                    <input type="hidden" name="id_e_c" value="<?=$data['id_evenement']?>" >
+                                                                    <?php
+
+                                                                } // id_e_d correspond a identifiant de l'évènement avec comme action suppression(d pour delete) et id_e_c avec pour action annuler(c pour cancel)
+                                                                ?>
+                                                                    
+                                                            </tr>
+                                                            </form>
+                                                            <?php
+                                                             }
+                                                             ?>
+                                                        </tbody>
+                                                        <tfoot>
+                                                            <tr></tr>
+                                                        </tfoot>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        function alert()
+        {
+            confirm('etes vous sur de vouloir supprimer?');
+        }
+    </script>
+    
