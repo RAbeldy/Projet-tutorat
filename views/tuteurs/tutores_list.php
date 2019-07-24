@@ -84,20 +84,20 @@ if(!isset($_SESSION['id_statut']))
                                                               <tr >
 
  
-                                                                  <td> <label><?=$elt['user']->getNom()?></label></td>
-                                                                  <td><label><?=$elt['user']->getPrenom()?></label></td>
-                                                                  <td><label><?=$elt['user']->getDate_naissance()?></label></td>
-                                                                  <td><label><?=$elt['user']->getEmail()?></label></td>
-                                                                  <td><label ><?=$elt['user']->getPhone()?></label></td>
-                                                                  <td><label ><?=$elt['adresse'][0]?></label></td>
-                                                                  <td><label ><?=$elt['adresse'][1]?></label></td>
-                                                                  <td><label ><?=$elt['adresse'][2]?></label></td>
+                                                                  <td> <label><?=$elt->getNom()?></label></td>
+                                                                  <td><label><?=$elt->getPrenom()?></label></td>
+                                                                  <td><label><?=$elt->getDate_naissance()?></label></td>
+                                                                  <td><label><?=$elt->getEmail()?></label></td>
+                                                                  <td><label ><?=$elt->getPhone()?></label></td>
+                                                                  <td><label ><?=$elt->getVille()?></label></td>
+                                                                  <td><label ><?=$elt->getAdress()?></label></td>
+                                                                  <td><label ><?=$elt->getCode_postal()?></label></td>
                                                                   
-                                                                  <td><a href="<?=$elt['user']->getId_user()?>"><button class="btn" type="submit"name="Se_lier" >Se lier</button></a>
+                                                                  <td><button class="btn" type="submit"name="Se_lier" >Se lier</button>
                                                                   </td>
                                                                   
                                                                 </tr>
-                                                                 <input type="hidden" name="id_u" value="<?=$elt['user']->getId_user()?>" >
+                                                                 <input type="hidden" name="id_u" value="<?=$elt->getId_user()?>" >
                                                         
                                                       
                                                              </form>

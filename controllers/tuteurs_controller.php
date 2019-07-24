@@ -147,8 +147,7 @@ class TuteursController
     {
         if(isset($_SESSION['id_statut']))// on vérifie que seul un utilisateur connecté peut accéder à ces pages
         { 
-            $tuteurs = new Users();
-            $donnees = $tuteurs->Get_info($_SESSION['id_user']);    // on récupère les info des user
+            $donnees = Users::Get_info($_SESSION['id_user']);    // on récupère les info des user
             require_once('views/update_account.php');
         }
         else

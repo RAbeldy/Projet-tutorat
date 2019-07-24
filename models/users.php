@@ -111,19 +111,19 @@ require_once('connexion.php');
     }
     public function setVille($ville)
     {
-     $this->phone= $ville ;
+     $this->ville= $ville ;
     }
     public function setAdress($adress)
     {
-     $this->phone= $adress ;
+     $this->adress= $adress ;
     }
     public function setCom_adress($com_adress)
     {
-     $this->phone= $com_adress ;
+     $this->com_adress= $com_adress ;
     }
     public function setCode_postal($code_postal)
     {
-     $this->phone= $code_postal ;
+     $this->code_postal= $code_postal ;
     }
 
 
@@ -138,12 +138,23 @@ require_once('connexion.php');
       $req->execute(array($this->getVille(),$this->getAdress(),$this->getCom_adress(),$this->getCode_postal(),$id_user));
       */
     }
-    public function Get_info($id_user)
+    public static function Get_info($id_user)
     {
       $db = Db::getInstance();
       $req= $db->query("SELECT ville,adress,complement_adress,code_postal FROM adresse as a,user as u WHERE a.id_adresse = u.id_adresse AND u.id_user = $id_user ");
 
-      return $req;
+      foreach ($req->fetchAll() as $temp) 
+      {
+        $user= new Users();
+        $user->setAdress($temp['adress']);
+        $user->setCode_postal($temp['code_postal']);
+        $user->setVille($temp['ville']);
+        $user->setCom_adress($temp['complement_adress']);
+     
+      
+        $list[]=$user;
+      }
+      return $list;
     }
 
     public function Deconnexion()

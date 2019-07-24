@@ -18,7 +18,7 @@
                                                 </p>
                                             </div>
                                             <div class="card-body">
-                                                <form method="post" action="?controller=evenements&action=set_event" onsubmit="javascript:test_date();javascript:message();">
+                                                <form method="post" action="?controller=evenements&action=set_event" onsubmit="javascript:message();">
                                                     <div class="row">
                                                         <div class="form-group col-xs-12 col-md-6">
                                                             <label for="date">

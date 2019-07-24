@@ -17,24 +17,42 @@
                     <hr>
                     <div class="form-row">
                         <div class="col-sm-12 col-md-6">
-                            <div class="form-group"><label>Adresse</label><input class="form-control" type="text" name="adresse" autofocus></div>
+                            <div class="form-group">
+                                <label>Adresse</label>
+                                <input class="form-control" type="text" name="adresse" autofocus>
+                            </div>
                         </div>
                         <div class="col-sm-12 col-md-6">
-                            <div class="form-group"><label>Complément D'Adresse&nbsp;</label><input class="form-control" type="text" name="complement_adresse"></div>
+                            <div class="form-group">
+                                <label>Complément D'Adresse&nbsp;</label>
+                                <input class="form-control" type="text" name="complement_adresse">
+                            </div>
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="col-sm-12 col-md-6">
-                            <div class="form-group"><label>Ville</label><input class="form-control" type="text" name="ville" autocomplete="off" required></div>
+                            <div class="form-group">
+                                <label>Ville</label>
+                                <input class="form-control" type="text" name="ville" value="<?php echo str_replace("'", "&#39",$donnees->getVille())?>"  required>
+                            </div>
                         </div>
                         <div class="col-sm-12 col-md-6">
-                            <div class="form-group"><label>Code Postal</label><input class="form-control" type="text" name="code_postal" autocomplete="off" required></div>
+                            <div class="form-group">
+                                <label>Code Postal</label>
+                                <input class="form-control" type="text" name="code_postal" value="" required>
+                            </div>
                         </div>
                         <div class="col">
-                            <div class="form-group"><label>Mot de Passe</label><input class="form-control" type="password" name="password" autocomplete="off" required></div>
+                            <div class="form-group">
+                                <label>Mot de Passe</label>
+                                <input class="form-control" type="password" name="password" required>
+                            </div>
                         </div>
                         <div class="col-sm-12 col-md-6">
-                            <div class="form-group"><label>Confirmer Mot de Passe&nbsp;</label><input class="form-control" type="password" name="confirmer_password" autocomplete="off" required></div>
+                            <div class="form-group">
+                                <label>Confirmer Mot de Passe&nbsp;</label>
+                                <input class="form-control" type="password" name="confirmer_password" required>
+                            </div>
                         </div>
                     </div>
                     <hr>

@@ -1,9 +1,8 @@
-
 <script type="text/javascript">
 //Control password
-var checke = function() {
-  if (document.getElementById('passworde').value ==
-    document.getElementById('confirme_password').value) {
+var check = function() {
+  if (document.getElementById('password').value ==
+    document.getElementById('confirm_password').value) {
     document.getElementById('mess').style.color = 'green';
     document.getElementById('mess').innerHTML = 'matching';
   } else {
@@ -23,14 +22,13 @@ var checke = function() {
            
           
             <div class="form-group">
-                <input  class="form-control" type="text" name="reset_email" placeholder="Email" required>
+                <input class="form-control" type="text" name="reset_email" placeholder="Email" required>
             </div>
             <div class="form-group">
-                <input class="form-control" type="password" name="password" id="passworde" placeholder="Mot de passe"       onkeyup='javascript:checke();' required>
+                <input class="form-control" type="password" name="password" id="password" placeholder="mot de passe"  onkeyup='javascript:check();' required>
             </div>
             <div class="form-group">
-                <input class="form-control" type="password" name="confirmer_password" id="confirme_password" placeholder="Confirmer mot de passe" onkeyup='javascript:checke();'  required>
-             <span id='mess'></span>
+            <input class="form-control" type="password" name="confirm_password" id="confirm_password" placeholder="confirmer mot de passe"  onkeyup='javascript:check();' required>
             </div>
             <div class="form-group">
             <button class="btn btn-primary btn-block" id="submit">Réinitialiser</button>

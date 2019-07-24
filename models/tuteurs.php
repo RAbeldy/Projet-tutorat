@@ -65,20 +65,24 @@ class Tuteurs extends users
     {
        $db = Db::getInstance();
        $list=[];
-       $req = $db->prepare(" SELECT   u.id_user,nom,prenom,date_naissance,email,phone,a.ville as ville,a.adress as adress,a.code_postal as code_postal FROM user as u, statut as s,adresse as a, avoir_statut as at,en_attente as e WHERE at.id_statut = s.id_statut AND at.id_user = u.id_user AND  u.id_adresse = a.id_adresse AND u.id_user= e.id_tutores AND e.id_tuteurs=  ? AND e.provenance = 'TUTEUR' AND e.statut_liaison= 'INACTIF'");
+       $req = $db->prepare(" SELECT   u.id_user,nom,prenom,date_naissance,email,phone,a.ville ,a.adress ,a.code_postal  FROM user as u, statut as s,adresse as a, avoir_statut as at,en_attente as e WHERE at.id_statut = s.id_statut AND at.id_user = u.id_user AND  u.id_adresse = a.id_adresse AND u.id_user= e.id_tutores AND e.id_tuteurs=  ? AND e.provenance = 'TUTEUR' AND e.statut_liaison= 'INACTIF'");
         $req->execute(array($_SESSION['id_user']));
 
-        $users= new Users();
+        
       foreach ($req->fetchAll() as $data)
       {
+        $users= new Users();
         $users->setId_user($data['id_user']);
         $users->setNom($data['nom']);
         $users->setPrenom($data['prenom']);
         $users->setDate_naissance($data['date_naissance']);
         $users->setEmail($data['email']);
         $users->setPhone($data['phone']);
+        $users->setAdress($data['adress']);
+        $users->setVille($data['ville']);
+        $users->setCode_postal($data['code_postal']);
 
-        $list []= array('user' => $users,'adresse'=>$data['ville'],'adresse'=>$data['adress'],'adresse'=>$data['code_postal']);
+        $list []=  $users;
       }
       return $list ;
     }
@@ -97,20 +101,24 @@ class Tuteurs extends users
     {
         $db = Db::getInstance();
         $list=[];
-        $req = $db->prepare(" SELECT DISTINCT u.id_user,nom,prenom,date_naissance,email,phone,a.ville as ville,a.adress as adress,a.code_postal as code_postal FROM user as u, statut as s,adresse as a, avoir_statut as at,matchs as m WHERE at.id_statut = s.id_statut AND at.id_user = u.id_user AND  u.id_adresse = a.id_adresse AND u.id_user= m.id_tutores AND m.id_tuteurs =  ? ");
+        $req = $db->prepare(" SELECT DISTINCT u.id_user,u.nom,u.prenom,u.date_naissance,u.email,u.phone,a.ville ,a.adress ,a.code_postal  FROM user as u, statut as s,adresse as a, avoir_statut as at,matchs as m WHERE at.id_statut = s.id_statut AND at.id_user = u.id_user AND  u.id_adresse = a.id_adresse AND u.id_user= m.id_tutores AND m.id_tuteurs =  ? ");
         $req->execute(array($_SESSION['id_user']));
 
-        $users= new Users();
+        
       foreach ($req->fetchAll() as $data)
       {
+        $users= new Users();
         $users->setId_user($data['id_user']);
         $users->setNom($data['nom']);
         $users->setPrenom($data['prenom']);
         $users->setDate_naissance($data['date_naissance']);
         $users->setEmail($data['email']);
         $users->setPhone($data['phone']);
+        $users->setAdress($data['adress']);
+        $users->setVille($data['ville']);
+        $users->setCode_postal($data['code_postal']);
 
-        $list []= array('user' => $users,'adresse'=>$data['ville'],'adresse'=>$data['adress'],'adresse'=>$data['code_postal']);
+        $list []= $users;
       }
       return $list ;
     }
@@ -118,19 +126,22 @@ class Tuteurs extends users
     {
         $db = Db::getInstance();
         $list=[];
-        $req= $db->query("SELECT DISTINCT u.id_user,nom,prenom,date_naissance,email,phone,a.ville as ville,a.adress as adress,a.code_postal as code_postal FROM user as u, statut as s,adresse as a, avoir_statut as at, etat as e WHERE at.id_statut = s.id_statut AND at.id_user = u.id_user AND  u.id_adresse = a.id_adresse AND e.id_etat = at.id_etat AND e.libelle = 'LIBRE' AND s.libelle= 'TUTORE' AND u.id_user NOT IN (SELECT id_tutores as id_user FROM matchs) AND u.id_user NOT IN (SELECT id_tutores as id_user FROM en_attente)");
+        $req= $db->query("SELECT DISTINCT u.id_user,u.nom,u.prenom,u.date_naissance,u.email,u.phone,a.ville ,a.adress ,a.code_postal  FROM user as u, statut as s,adresse as a, avoir_statut as at, etat as e WHERE at.id_statut = s.id_statut AND at.id_user = u.id_user AND  u.id_adresse = a.id_adresse AND e.id_etat = at.id_etat AND e.libelle = 'LIBRE' AND s.libelle= 'TUTORE' AND u.id_user NOT IN (SELECT id_tutores as id_user FROM matchs) AND u.id_user NOT IN (SELECT id_tutores as id_user FROM en_attente)");
         
-        $users= new Users();
       foreach ($req->fetchAll() as $data)
       {
+        $users= new Users();
         $users->setId_user($data['id_user']);
         $users->setNom($data['nom']);
         $users->setPrenom($data['prenom']);
         $users->setDate_naissance($data['date_naissance']);
         $users->setEmail($data['email']);
         $users->setPhone($data['phone']);
+        $users->setAdress($data['adress']);
+        $users->setVille($data['ville']);
+        $users->setCode_postal($data['code_postal']);
 
-        $list []= array('user' => $users,'adresse'=>$data['ville'],'adresse'=>$data['adress'],'adresse'=>$data['code_postal']);
+        $list []= $users;
       }
       return $list ;
         
@@ -145,9 +156,10 @@ class Tuteurs extends users
             {
                 $req= $db->prepare('SELECT u.id_user,nom,prenom,date_naissance,email,phone,a.ville as ville,a.adress as adress,a.code_postal as code_postal FROM user as u, statut as s,adresse as a, avoir_statut as at, en_attente as e WHERE at.id_statut = s.id_statut AND at.id_user = u.id_user AND  u.id_adresse = a.id_adresse  AND e.provenance= "TUTORE" AND e.statut_liaison="INACTIF"  AND u.id_user = e.id_tutores AND e.id_tuteurs = ?  ');
                 $req->execute(array($_SESSION['id_user']));
-                    $users= new Users();
+                    
                   foreach ($req->fetchAll() as $data)
                   {
+                    $users= new Users();
                     $users->setId_user($data['id_user']);
                     $users->setNom($data['nom']);
                     $users->setPrenom($data['prenom']);
@@ -165,9 +177,10 @@ class Tuteurs extends users
                 $req= $db->prepare('SELECT u.id_user,nom,prenom,date_naissance,email,phone,a.ville as ville,a.adress as adress,a.code_postal as code_postal FROM user as u, statut as s,adresse as a, avoir_statut as at, en_attente as e WHERE at.id_statut = s.id_statut AND at.id_user = u.id_user AND  u.id_adresse = a.id_adresse  AND e.provenance= "TUTEUR" AND e.statut_liaison="INACTIF"  AND u.id_user= e.id_tuteurs AND e.id_tutores = ?  ');
                 $req->execute(array($_SESSION['id_user']));
 
-                    $users= new Users();
+                   
                   foreach ($req->fetchAll() as $data)
                   {
+                    $users= new Users();
                     $users->setId_user($data['id_user']);
                     $users->setNom($data['nom']);
                     $users->setPrenom($data['prenom']);
