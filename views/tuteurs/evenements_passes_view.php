@@ -1,8 +1,4 @@
 
-
-    <div id="globalContent">
-        <div id="wrapper">
-            
             <div class="d-flex flex-column" id="content-wrapper">
                 <div id="content">
                     <div class="block">
@@ -14,7 +10,9 @@
                                     <div class="row">
                                         <div class="card debut">
                                             <div class="card-header py-3">
-                                                <p class="text-primary m-0 font-weight-bold">A venir</p>
+                                                <p class="text-primary m-0 font-weight-bold">
+                                                    Historique
+                                                </p>
                                             </div>
                                             <div class="card-body">
                                                 <div class="row">
@@ -52,51 +50,54 @@
                                                     <table class="table dataTable my-0" id="dataTable">
                                                         <thead>
                                                             <tr>
-                                                                <th>Nom</th>
-                                                                <th>Prenom</th>
-                                                                <th>Date de naissance</th>
-                                                                <th>Email</th>
-                                                                <th>Phone</th>
-                                                                <th>Ville</th>
+                                                                <th>Tutorat</th>
+                                                                <th>Date</th>
                                                                 <th>Adresse</th>
-                                                                <th>Code_postal</th>
-
-                                                               
+                                                                <th>Heures</th>
+                                                                <th>Validé</th>
+                                                                <th>Action</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-
                                                             <?php
                                                             if(!is_null($donnees))
                                                             {
-                                                                 foreach ($donnees as $elt) 
-                                                                {
-                                                                 ?>
+                                                             foreach ($donnees as $elt) 
+                                                            {
+                                                             ?>
 
-                                                                  <form method="post" action="?controller=tuteurs&action=delete_link">
-                                                                    
-                                                                  <tr >
+                                                              <form method="post" action="#">
+                                                                
+                                                              <tr>
 
-     
-                                                                      <td> <label><?=$elt->getNom()?></label></td>
-                                                                      <td><label><?=$elt->getPrenom()?></label></td>
-                                                                      <td><label><?=$elt->getDate_naissance()?></label></td>
-                                                                      <td><label style="overflow: scroll;"><?=$elt->getEmail()?></label></td>
-                                                                      <td><label ><?=$elt->getPhone()?></label></td>
-                                                                      <td><label ><?=$elt->getVille()?></label></td>
-                                                                      <td><label ><?=$elt->getAdress()?></label></td>
-                                                                      <td><label ><?=$elt->getCode_postal()?></label></td>
-                                                                      
-                                                                      <td><button class="btn" type="submit"name="accepter" >Rompre</button>
-                                                                      </td>
-                                                                      
-                                                                    </tr>
-                                                                     <input type="hidden" name="id_u" value="<?=$elt->getId_user()?>" >
-                                                            
-                                                          
-                                                                 </form>
-                                                                <?php
-                                                                 }
+ 
+                                                                  <td> <label><?=$elt['tutorat']?></label></td>
+                                                                  <td><label><?=$elt['evenement']->getDate_evenement()?></label></td>
+                                                                  <td><label><?=$elt['evenement']->getLieu()?></label></td>
+                                                                  <td><label ><?=$elt['planning_event']?></label></td>
+                                                                  <?php
+                                                                  if( $elt['validé'] == 'NON' )
+                                                                  {
+                                                                    ?>
+                                                                  <td><button class="btn" type="submit" name="réclamer" onclick="alert();">Réclamer</button>
+                                                                  </td>
+                                                                  <?php
+                                                                  }
+                                                                  else
+                                                                  {
+                                                                    ?>
+                                                                    <td><label title="plus de places disponibles" class="btn" name="s'inscrire">Pris en compte</label>
+                                                                  </td>
+                                                                  <?php
+                                                                  }
+                                                                  ?>
+                                                                </tr>
+                                                                 <input type="hidden" name="id_e" value="<?=$elt['evenement']->getId_evenement()?>" >
+                                                        
+                                                      
+                                                             </form>
+                                                            <?php
+                                                             }
                                                              }
                                                              ?>
                                                         </tbody>
@@ -114,16 +115,5 @@
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-
-
-
-
-
-
-
-
-
-
+    
     

@@ -33,7 +33,7 @@
                         <div class="col-sm-12 col-md-6">
                             <div class="form-group">
                                 <label>Ville</label>
-                                <input class="form-control" type="text" name="ville" value="<?php echo str_replace("'", "&#39",$donnees->getVille())?>"  required>
+                                <input class="form-control" type="text" name="ville"   required>
                             </div>
                         </div>
                         <div class="col-sm-12 col-md-6">

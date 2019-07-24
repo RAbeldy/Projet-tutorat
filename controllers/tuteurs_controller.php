@@ -17,7 +17,7 @@ class TuteursController
     {   if(isset($_SESSION['id_statut']))// on vérifie que seul un utilisateur connecté peut accéder à ces pages
           {
             $tuteurs = new Tuteurs();
-            $donnees = $tuteurs->Get_working_list();
+            $donnees = $tuteurs->Get_working_list($_SESSION['id_user']);
             require_once('views/tuteurs/tuteur_set_event.php'); // on charge la vue adéquate
           }
         else
@@ -57,7 +57,7 @@ class TuteursController
         if(isset($_SESSION['id_statut']))// on vérifie que seul un utilisateur connecté peut accéder à ces pages
         {   
             $tuteurs= new Tuteurs();
-            $donnees= $tuteurs->Get_waiting_list();
+            $donnees= $tuteurs->Get_waiting_list($_SESSION['id_user']);
             require_once('views/tuteurs/waiting_list.php');
         }
         else
@@ -70,7 +70,7 @@ class TuteursController
         if(isset($_SESSION['id_statut']))// on vérifie que seul un utilisateur connecté peut accéder à ces pages
         {   
              $tuteurs= new Tuteurs();
-             $tuteurs->Link_with_tutores($_POST['id_u']);
+             $tuteurs->Link_with_tutores($_SESSION['id_user'],$_POST['id_u']);
             require_once('views/tuteurs/notifications_tuteurs.php');
              
         }
@@ -83,7 +83,7 @@ class TuteursController
         if(isset($_SESSION['id_statut']))// on vérifie que seul un utilisateur connecté peut accéder à ces pages
         {    
             $tuteurs= new Tuteurs();
-             $tuteurs->Accept_link($_POST['id_u']);
+             $tuteurs->Accept_link($_SESSION['id_user'],$_POST['id_u']);
             require_once('views/tuteurs/notifications_tuteurs.php');
              
         }
@@ -111,7 +111,7 @@ class TuteursController
         if(isset($_SESSION['id_statut']))// on vérifie que seul un utilisateur connecté peut accéder à ces pages
         {    
              $tuteurs= new Tuteurs();
-             $donnees=$tuteurs->Get_working_list();
+             $donnees=$tuteurs->Get_working_list($_SESSION['id_user']);
             require_once('views/tuteurs/working_list.php');
              
         }
@@ -124,7 +124,7 @@ class TuteursController
         if(isset($_SESSION['id_statut']))// on vérifie que seul un utilisateur connecté peut accéder à ces pages
         {    
              $tuteurs= new Tuteurs();
-             $donnees=$tuteurs->Get_wish_list();
+             $donnees=$tuteurs->Get_wish_list($_SESSION['id_user']);
             require_once('views/tuteurs/wish_list.php');
              
         }
@@ -136,7 +136,7 @@ class TuteursController
         if(isset($_SESSION['id_statut']))// on vérifie que seul un utilisateur connecté peut accéder à ces pages
         {    
              $tuteurs= new Tuteurs();
-             $donnees=$tuteurs->Cancel_wish($_POST['id_u']);
+             $donnees=$tuteurs->Cancel_wish($_SESSION['id_user'],$_POST['id_u']);
              require_once('views/tuteurs/interface_selection_tutores_tuteurs.php');
         }
         else

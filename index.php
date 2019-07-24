@@ -5,23 +5,6 @@
   if(!isset($_SESSION['id_user']))
   $_SESSION['id_statut'] = null;
 
-  if(is_null($_SESSION['id_statut']))
-    { echo "non connecté";
-      echo $_SESSION['id_statut'];
-    }
-   else
-    {
-      echo "connecté";
-      echo $_SESSION['id_statut'];
-     }
-
-  if (isset($_GET['controller']) && isset($_GET['action'])) {
-    $controller = $_GET['controller'];
-    $action     = $_GET['action'];
-  } else {
-    $controller = 'page';
-    $action     = 'home';
-  }
 ?>
 
 <!DOCTYPE html>
@@ -34,9 +17,6 @@
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css?h=f20836d04db9c2e94df06e239fab9fd8">
     <link rel="stylesheet" href="assets/fonts/ionicons.min.css?h=0692f36eb27607e4837760bbbf813d92">
     <link rel="stylesheet" href="assets/css/Footer-Basic.css?h=d15dfcb68fabe0442ff06063b052477c">
-    <link rel="stylesheet" href="assets/css/Navbarbuttonsignupsignin-modal-form-1.css?h=051c6d9e28b7c3d5e3836f24f2502d7d">
-    <link rel="stylesheet" href="assets/css/Navbarbuttonsignupsignin-modal-form-2.css?h=b486ae8ecf6c38e7b0073c57ef30f22f">
-    <link rel="stylesheet" href="assets/css/Navbarbuttonsignupsignin-modal-form.css?h=6363a7a5e162c8842a20a60ee778a476">
     <link rel="stylesheet" href="assets/css/styles.css?h=1637acf6632f17b3758401ceb35eb91e">
     <!-- login-->
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
@@ -53,7 +33,6 @@
     <link rel="stylesheet" href="assets/fonts/ionicons.min.css?h=0692f36eb27607e4837760bbbf813d92">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i">
     <link rel="stylesheet" href="assets/fonts/fontawesome-all.min.css?h=0692f36eb27607e4837760bbbf813d92">
-    <link rel="stylesheet" href="assets/css/Navbarbuttonsignupsignin-modal-form.css?h=6363a7a5e162c8842a20a60ee778a476">
     <link rel="stylesheet" href="assets/css/menu.css">
     <link rel="stylesheet" href="assets/css/tuteur.css">
     <!-- upadte account -->
@@ -62,13 +41,32 @@
 </head>
 
 <body id="page-top">
+    <?php
+      if(is_null($_SESSION['id_statut']))
+        { echo "non connecté";
+          echo $_SESSION['id_statut'];
+        }
+       else
+        {
+          echo "connecté";
+          echo $_SESSION['id_statut'];
+         }
+
+      if (isset($_GET['controller']) && isset($_GET['action'])) {
+        $controller = $_GET['controller'];
+        $action     = $_GET['action'];
+      } else {
+        $controller = 'page';
+        $action     = 'home';
+      }
+    ?>
     <nav class="navbar navbar-light navbar-expand-md navigation-clean-button">
     <div class="container"><a href="index.php" class="navbar-brand"> LOGO </a><button data-toggle="collapse" data-target="#navcol-1" class="navbar-toggler"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
         <div class="collapse navbar-collapse"
             id="navcol-1">
             <ul class="nav navbar-nav mr-auto">
                 <?php
-                if(($_SESSION['id_statut']== '13')) // id_statut d'un  tuteur 
+                if(($_SESSION['id_statut']== '13')) // id_statut d'un  tuteur
                  {
                   ?>
                 <li class="nav-item"><a href="?controller=tuteurs&action=interface_tuteur" class="nav-link">Mon tutorat </a>
@@ -88,14 +86,14 @@
                 </li>
                 <li class="nav-item"><a href="#" class="nav-link">Contact </a>
                 </li>
-                <?php 
+                <?php
                 }
-                ?> 
-                
+                ?>
+
             </ul>
                 <span class="navbar-text actions">
                 <div>
-                 <?php   
+                 <?php
                  if(is_null($_SESSION['id_statut']))
                  {
                   ?>
@@ -106,10 +104,10 @@
                 {
                    ?>
                    <a class="forgot" href="?controller=users&action=deconnexion"><button class="btn btn-light action-button" type="button">Deconnexion</button></a>
-                <?php 
+                <?php
                 }
-                ?> 
-                    
+                ?>
+
                 </div>
             </span>
         </div>
@@ -148,7 +146,7 @@
                 </div>
             </nav>
     <div id="content">
-        <?php 
+        <?php
         require_once('routes.php');
         ?>
     </div>

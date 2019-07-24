@@ -1,5 +1,4 @@
-
-    <div id="globalContent">
+<div id="globalContent">
         <div id="wrapper">
             
             <div class="d-flex flex-column" id="content-wrapper">
@@ -41,7 +40,7 @@
                                                                 foreach ($donnees as $elt) 
                                                             {
                                                              ?>
-                                                                <option value="<?=$elt['user']->getId_user() ;?>" ><?=$elt['user']->getNom().' '.$elt['user']->getPrenom() ; ?></option>
+                                                                <option value="<?= $elt['user']->getId_user(); ?>"><?= $elt['user']->getNom().' '.$elt['user']->getPrenom() ;?></option>
                                                             <?php
                                                             }
                                                             ?>
@@ -80,26 +79,3 @@
             </div>
         </div>
     </div>
-
-     <script type="text/javascript">
-      function  message()
-      {
-       alert("l\'évènement a bien été crée. vous le trouverez dans la liste des évènements ");
-      }
-
-      var test_date = function()
-      {
-        var today = new Date();
-        var dd = String(today.getDate()).padStart(2, '0');// Day config 
-        var mm = String(today.getMonth() + 1).padStart(2, '0'); //first month January takes 0. 
-        var yyyy = today.getFullYear(); // year takes all e.g: 2019 => 2019
-
-         today = yyyy + '-' + mm + '-' + dd;
-         if (document.getElementById('event').value < today) {
-            alert(" Entrer une date ultérieure à celle d'aujourd'hui.");
-            return -1;
-         }
-
-      }
-    </script>
-    

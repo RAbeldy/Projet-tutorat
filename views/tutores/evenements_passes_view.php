@@ -1,13 +1,4 @@
-<?php 
-if(!isset($_SESSION['id_statut']))
- {
-    require_once('views/login.php');
-  }
-  ?>  
 
-    <div id="globalContent">
-        <div id="wrapper">
-            
             <div class="d-flex flex-column" id="content-wrapper">
                 <div id="content">
                     <div class="block">
@@ -20,11 +11,10 @@ if(!isset($_SESSION['id_statut']))
                                         <div class="card debut">
                                             <div class="card-header py-3">
                                                 <p class="text-primary m-0 font-weight-bold">
-                                                    Inscrits
+                                                    Historique
                                                 </p>
                                             </div>
                                             <div class="card-body">
-                                                <form method="post" action="traitement.php">
                                                 <div class="row">
                                                     <div class="col-12 card-body-title">
                                                         <span>RECHERCHER PAR :</span>
@@ -33,7 +23,6 @@ if(!isset($_SESSION['id_statut']))
                                                         <div class="row text-center">
                                                             <label style="flex: auto;">Période</label>
                                                         </div>
-                                                       
                                                         <div class="row">
                                                             <div class="col-xs-12 col-md-6">
                                                                 <label class="col-2">De</label>
@@ -54,11 +43,9 @@ if(!isset($_SESSION['id_statut']))
                                                         </div>
                                                     </div>
                                                     <div class="col-12 text-center rechercher">
-                                                    <a href="traitement.php"><button class="btn" type="button" name="rechercher">RECHERCHER</button></a>
+                                                        <button class="btn" type="button">RECHERCHER</button>
                                                     </div>
-                                                
                                                 </div>
-                                                </form>
                                                 <div class="table-responsive table mt-2" role="grid" aria-describedby="dataTable_info">
                                                     <table class="table dataTable my-0" id="dataTable">
                                                         <thead>
@@ -66,39 +53,52 @@ if(!isset($_SESSION['id_statut']))
                                                                 <th>Tutorat</th>
                                                                 <th>Date</th>
                                                                 <th>Adresse</th>
-                                                                <th>Désinscription</th>
+                                                                <th>Heures</th>
+                                                                <th>Validé</th>
+                                                                <th>Action</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-                                                            <?php while($data=$donnees->fetch())
-                                                            {
-                                                             ?>   
-                                                             <form method="post" action="?controller=evenements&action=cancel_participation
-                                                              ">
-                                                            <tr>
-                                                                <td><label><?=$data['libelle']?></label></td>
-                                                                <td><label><?=$data['date_evenement']?></label></td>
-                                                                <td><label><?=$data['lieu']?></label></td>
-                                                                <?php if($data['libelle'] == 'TUTORAT_PERSONNALISE')
-                                                                {
-                                                                ?>
-                                                                      <td><button class="btn" type="submit" name="supprimer" onclick="alert();">Supprimer</button></td>
-                                                                      <input type="hidden" name="id_e_d" value="<?=$data['id_evenement']?>" >
-                                                                <?php 
-                                                                }
-                                                                else
-                                                                {
-                                                                ?>
-                                                                    <td><button class="btn" type="submit" name="annuler" onclick="alert();">Annuler</button></td>
-                                                                    <input type="hidden" name="id_e_c" value="<?=$data['id_evenement']?>" >
-                                                                    <?php
-
-                                                                } // id_e_d correspond a identifiant de l'évènement avec comme action suppression(d pour delete) et id_e_c avec pour action annuler(c pour cancel)
-                                                                ?>
-                                                                    
-                                                            </tr>
-                                                            </form>
                                                             <?php
+                                                            if(!is_null($donnees))
+                                                            {
+                                                             foreach ($donnees as $elt) 
+                                                            {
+                                                             ?>
+
+                                                              <form method="post" action="#">
+                                                                
+                                                              <tr>
+
+ 
+                                                                  <td> <label><?=$elt['tutorat']?></label></td>
+                                                                  <td><label><?=$elt['evenement']->getDate_evenement()?></label></td>
+                                                                  <td><label><?=$elt['evenement']->getLieu()?></label></td>
+                                                                  <td><label ><?=$elt['planning_event']?></label></td>
+                                                                  <td><label ><?=$elt['validé']?></label></td>
+                                                                  <?php
+                                                                  if( $elt['validé'] == 'NON' )
+                                                                  {
+                                                                    ?>
+                                                                  <td><button class="btn" type="submit" name="réclamer" onclick="alert();">Valider</button>
+                                                                  </td>
+                                                                  <?php
+                                                                  }
+                                                                  else
+                                                                  {
+                                                                    ?>
+                                                                    <td><label title="plus de places disponibles" class="btn" name="s'inscrire">Validé</label>
+                                                                  </td>
+                                                                  <?php
+                                                                  }
+                                                                  ?>
+                                                                </tr>
+                                                                 <input type="hidden" name="id_e" value="<?=$elt['evenement']->getId_evenement()?>" >
+                                                        
+                                                      
+                                                             </form>
+                                                            <?php
+                                                             }
                                                              }
                                                              ?>
                                                         </tbody>
@@ -116,13 +116,5 @@ if(!isset($_SESSION['id_statut']))
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-
-    <script type="text/javascript">
-        function alert()
-        {
-            confirm('etes vous sur de vouloir supprimer?');
-        }
-    </script>
+    
     

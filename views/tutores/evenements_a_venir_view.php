@@ -1,9 +1,4 @@
-<?php 
-if(!isset($_SESSION['id_statut']))
- {
-    require_once('views/login.php');
-  }
-  ?>  
+
 
     <div id="globalContent">
         <div id="wrapper">
@@ -61,8 +56,7 @@ if(!isset($_SESSION['id_statut']))
                                                                 <th>Date</th>
                                                                 <th>Adresse</th>
                                                                 <th>Places</th>
-                                                                <th>Horaires</th>
-                                                                <th>Inscription</th>
+                                                                
                                                             </tr>
                                                         </thead>
                                                         <tbody>
@@ -74,7 +68,7 @@ if(!isset($_SESSION['id_statut']))
                                                             {
                                                              ?>
 
-                                                              <form method="post" action="?controller=evenements&action=subscribe_to_event">
+                                                              
                                                                 
                                                               <tr >
 
@@ -84,29 +78,13 @@ if(!isset($_SESSION['id_statut']))
                                                                   <td><label><?=$elt['evenement']->getLieu()?></label></td>
                                                                   <td><label><?=$elt['evenement']->getNb_places()?></label></td>
                                                                   <td><label ><?=$elt['planning_event']?></label></td>
-                                                                  <?php
-                                                                  if( $elt['evenement']->getNb_places() > 0 )
-                                                                  {
-                                                                    ?>
-                                                                  <td><button class="btn" type="submit" title="<?=$elt['evenement']->getNb_places().' place(s) restante(s)' ?>"name="s'inscrire" onclick="alert();">S'inscrire</button>
-                                                                  </td>
-                                                                  <?php
-                                                                  }
-                                                                  else
-                                                                  {
-                                                                    ?>
-                                                                    <td><label title="plus de places disponibles" class="btn" name="s'inscrire">Complet</label>
-                                                                  </td>
-                                                                  <?php
-                                                                  }
-                                                                  ?>
+                                                                  
                                                                 </tr>
-                                                                 <input type="hidden" name="id_e" value="<?=$elt['evenement']->getId_evenement()?>" >
+                                                                 
                                                         
                                                       
-                                                             </form>
-                                                            <?php
-                                                             }
+                                                             
+                                                            
                                                              }
                                                              ?>
                                                         </tbody>
@@ -135,62 +113,8 @@ if(!isset($_SESSION['id_statut']))
 
         
     </script>
-<
-   <!-- <script type="text/javascript">
-        function post()
-        { 
 
-           $.post(
-      'traitement.php', // Un script PHP qui permet le création d'un nouveau compte
-      {
-         libelle : document.getElementsById('libelle').value, 
-         date_evenement : document.getElementsById('date_evenement').value,
-         lieu : document.getElementsById('lieu').value,
-         nb_tuteurs : document.getElementsById('nb_tuteurs').value,
-         duree : document.getElementsById('duree').value
-      },
-      function(data){
-      },
-      'text'
-   );
-        }
-     </script>
-    function createAccount()
- {
-    libelle : $("#libelle").val(), 
-         date_evenement : $("#date_evenement").val(),
-         lieu : $("#lieu").val(),
-         nb_tuteurs : $("#nb_tuteurs").val(),
-         duree : $("#duree").val()
-    $.post(
-      'code_valid_account.php', // Un script PHP qui permet le création d'un nouveau compte
-      {
-         new_email : $("#email").val(), 
-         new_password : sha1($("#password_1").val()),
-         confirm_password : sha1($("#password_2").val()),
-         nom : $("#nom").val(),
-         prenom : $("#prenom").val()
-      },
-      function(data){
-          console.log(data);
-          if(data == "Success"){
-              alert("Votre compte a été créé");
-              document.location.href="index.php";
-          }
-          else if (data == "Failed_login") {
-            alert("Cet identifiant n'est pas valide")
-          } else if (data == "Failed_password") {
-            alert("La vérification du mot de passe a échoué !");
-          } else {
-            alert("Une erreur s'est produite. Veuillez réessayer");
-            //document.location.href="signup.php";
-          }
-      },
-      'text'
-   );
- }
-
--->
+  
 
 
 

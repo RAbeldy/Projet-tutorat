@@ -1,14 +1,9 @@
-.block {
-    padding-top: 60px;
-    padding-bottom: 60px;
-}
 .card-container{
     padding: 0.75rem;
     text-align: center;
 }
 .card {
     border-left: .25rem solid #fab900!important;
-    background-color: #ffee99;
 }
 .card-title {
     color: #29292a;

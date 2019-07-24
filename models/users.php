@@ -216,73 +216,7 @@ require_once('connexion.php');
      }    
      
 
-     public function Get_all_tutores()
-    {
-        $db = Db::getInstance();
-        $list=[];
-        $req= $db->query("SELECT u.id_user,nom,prenom,date_naissance,email,phone,a.ville as ville,a.adress as adress,a.code_postal as code_postal FROM user as u, statut as s,adresse as a, avoir_statut as at, etat as e WHERE at.id_statut = s.id_statut AND at.id_user = u.id_user AND  u.id_adresse = a.id_adresse AND e.id_etat = at.id_etat AND e.id_etat = 'LIBRE' AND s.libelle= 'TUTORE' AND u.id_user NOT IN (SELECT id_tutores as id_user FROM matchs) ");
-        
-        $users= new Users();
-      foreach ($req->fetchAll() as $data)
-      {
-        $users->setId_user($data['id_user']);
-        $users->setNom($data['nom']);
-        $users->setPrenom($data['prenom']);
-        $users->setDate_naissance($data['date_naissance']);
-        $users->setEmail($data['email']);
-        $users->setPhone($data['phone']);
-
-        $list []= array('user' => $users,'adresse'=>$data['ville'],'adresse'=>$data['adress'],'adresse'=>$data['code_postal']);
-      }
-      return $list ;
-        
-    }
-    public function Get_waiting_list()
-    {
-        $db = Db::getInstance();
-        $list=[];
-
-         if( $_SESSION['id_statut'] == 13)
-            {
-                $req= $db->prepare('SELECT u.id_user,nom,prenom,date_naissance,email,phone,a.ville as ville,a.adress as adress,a.code_postal as code_postal FROM user as u, statut as s,adresse as a, avoir_statut as at, en_attente as e WHERE at.id_statut = s.id_statut AND at.id_user = u.id_user AND  u.id_adresse = a.id_adresse AND e.statut_liaison = "INACTIF" AND e.provenance= "TUTORE"   AND u.id_user = m.id_tutores AND m.tuteurs = ?  ');
-                $req->execute(array($_SESSION['id_user']));
-                    $users= new Users();
-                  foreach ($req->fetchAll() as $data)
-                  {
-                    $users->setId_user($data['id_user']);
-                    $users->setNom($data['nom']);
-                    $users->setPrenom($data['prenom']);
-                    $users->setDate_naissance($data['date_naissance']);
-                    $users->setEmail($data['email']);
-                    $users->setPhone($data['phone']);
-
-                    $list []= array('user' => $users,'adresse'=>$data['ville'],'adresse'=>$data['adress'],'adresse'=>$data['code_postal']);
-                  }
-                  return $list ;
-            
-             }
-          else
-             {
-                $req= $db->prepare('SELECT u.id_user,nom,prenom,date_naissance,email,phone,a.ville as ville,a.adress as adress,a.code_postal as code_postal FROM user as u, statut as s,adresse as a, avoir_statut as at, en_attente as e WHERE at.id_statut = s.id_statut AND at.id_user = u.id_user AND  u.id_adresse = a.id_adresse AND e.statut_liaison = "INACTIF" AND e.provenance= "TUTEUR"   AND u.id_user= m.id_tuteurs AND m.id_tutores = ?  ');
-                $req->execute(array($_SESSION['id_user']));
-
-                    $users= new Users();
-                  foreach ($req->fetchAll() as $data)
-                  {
-                    $users->setId_user($data['id_user']);
-                    $users->setNom($data['nom']);
-                    $users->setPrenom($data['prenom']);
-                    $users->setDate_naissance($data['date_naissance']);
-                    $users->setEmail($data['email']);
-                    $users->setPhone($data['phone']);
-
-                    $list []= array('user' => $users,'adresse'=>$data['ville'],'adresse'=>$data['adress'],'adresse'=>$data['code_postal']);
-                  }
-                  return $list ;
-             }
-        
-        
-    }
+     
     
   }
 ?>

@@ -71,28 +71,28 @@ class Evenements
     }
 
 
-    public function Set_event($id_t) // créer un évènement
+    public function Set_event($id_tuteur,$id_tutore) // créer un évènement
     {
         // une instance de la classe tuteur
         $db = Db::getInstance();
     	$statut = new Tuteurs(); 
         $req= $db->prepare("SELECT id_evenement FROM evenement WHERE date_evenement = ? AND id_user = ? ");
-        $req->execute(array($this->getDate_evenement(),$_SESSION['id_user']));
+        $req->execute(array($this->getDate_evenement(),$id_tuteur));
         if( $req->rowcount() == 0 ) // aucun évènement crée le meme jour meme heure par cette personne
         {
         	if( $_SESSION['id_statut'] == '13')
         	{
         	
-        	$req= $db->prepare( 'INSERT INTO evenement(date_evenement,lieu,nb_tutores,nb_tuteurs,nb_places,id_planning,id_statut_evenement,id_tutorat,id_user) VALUES(?,?,?,?,?,(SELECT id_planning from planning_event as pe WHERE pe.duree= ?),(SELECT id_statut_evenement from statut_evenement as se WHERE se.libelle= "A_VENIR"),(SELECT id_tutorat FROM tutorat as t WHERE t.libelle = "TUTORAT_PERSONNALISE"),'.$_SESSION['id_user'].')');
-        	$req->execute(array($this->getDate_evenement(),$this->getLieu(),'0','0','0',$this->getDuree()));
+        	$req= $db->prepare( 'INSERT INTO evenement(date_evenement,lieu,nb_tutores,nb_tuteurs,nb_places,id_planning,id_statut_evenement,id_tutorat,id_user) VALUES(?,?,?,?,?,(SELECT id_planning from planning_event as pe WHERE pe.duree= ?),(SELECT id_statut_evenement from statut_evenement as se WHERE se.libelle= "A_VENIR"),(SELECT id_tutorat FROM tutorat as t WHERE t.libelle = "TUTORAT_PERSONNALISE"),?)');
+        	$req->execute(array($this->getDate_evenement(),$this->getLieu(),'0','0','0',$this->getDuree(),$id_tuteur));
             
             // on insère directement un tutorat personnalisé dans les évènements auxquels il s'est inscrit
             $req = $db->prepare('INSERT INTO participer_evenement(id_evenement,id_user,date_evenement) VALUES((SELECT id_evenement FROM evenement WHERE date_evenement = ? AND id_user = ? ),?,?)') ;
-            $req->execute(array($this->getDate_evenement(), $_SESSION['id_user'],$_SESSION['id_user'],$this->getDate_evenement()));
+            $req->execute(array($this->getDate_evenement(), $id_tuteur,$id_tuteur,$this->getDate_evenement()));
 
             // on insère le tutoré avec lequel il va faire cette séance juste apres
             $req = $db->prepare('INSERT INTO participer_evenement(id_evenement,id_user,date_evenement) VALUES((SELECT id_evenement FROM evenement WHERE date_evenement = ? AND id_user = ? ),?,?)') ;
-            $req->execute(array($this->getDate_evenement(), $_SESSION['id_user'],$id_t,$this->getDate_evenement()));
+            $req->execute(array($this->getDate_evenement(), $id_tuteur,$id_tutore,$this->getDate_evenement()));
 
             echo('1 crée');
             }
@@ -111,12 +111,23 @@ class Evenements
     }
    
 
-    public function Get_past_events() // afficher les evenements passés auxquels il a participé
+    public function Get_past_events($id_user) // afficher les evenements passés auxquels il a participé
     {
         $db = Db::getInstance();
-        $req= $db->query(" SELECT t.libelle,e.id_evenement,e.date_evenement,e.lieu FROM evenement as e INNER JOIN tutorat as t ON e.id_tutorat= t.id_tutorat INNER JOIN participer_evenement as pe ON e.id_evenement = pe.id_evenement WHERE pe.date_evenement < NOW() AND pe.id_user=".$_SESSION['id_user']." ");
+        $list=[];
+        $req= $db->query(" SELECT t.libelle,e.id_evenement,e.date_evenement,e.lieu,pe.valide as validé,p.duree as duree  FROM evenement as e INNER JOIN tutorat as t ON e.id_tutorat= t.id_tutorat INNER JOIN participer_evenement as pe ON e.id_evenement = pe.id_evenement INNER JOIN planning_event as p ON e.id_planning = p.id_planning WHERE pe.date_evenement < NOW() AND pe.id_user= $id_user ");
         
-        return $req; 
+        foreach($req->fetchAll() as $data)
+        { 
+          $event= new Evenements();
+          $event->setId_evenement($data['id_evenement']);
+          $event->setDate_evenement($data['date_evenement']);
+          $event->setLieu($data['lieu']);
+          
+         
+          $list []= array('evenement' => $event,'tutorat' => $data['libelle'],'participer_evenement' => $data['validé'],'planning_event' => $data['duree']);
+        }
+        return $list; 
     }
     public  function Get_future_events() // afficher les evenements à venir qui ne sont pas des tutorats 
     {
@@ -138,15 +149,15 @@ class Evenements
         }
         return $list; 
         
-        //return $req;
+       
     }
-    public  function Get_subscribed_events() // récupérer la liste des évènements auxquels il a souscrit (il va participer )
+    public  function Get_subscribed_events($id_user) // récupérer la liste des évènements auxquels il a souscrit (il va participer )
     {
         $list=[];
        $db = Db::getInstance();
-        $req= $db->query(" SELECT t.libelle as libelle,pe.id_evenement,pe.date_evenement,e.lieu  FROM evenement as e, tutorat as t, participer_evenement as pe WHERE e.id_evenement=pe.id_evenement  AND e.id_tutorat= t.id_tutorat   AND e.date_evenement > NOW() AND pe.id_user=".$_SESSION['id_user']." ");
+        $req= $db->query(" SELECT t.libelle as libelle,e.id_evenement,e.date_evenement,e.lieu  FROM evenement as e, tutorat as t, participer_evenement as pe WHERE e.id_evenement=pe.id_evenement  AND e.id_tutorat= t.id_tutorat   AND e.date_evenement > NOW() AND pe.id_user= $id_user ");
         
-        /*
+        
         foreach($req->fetchAll() as $data)
         { 
           $event= new Evenements();
@@ -154,23 +165,20 @@ class Evenements
           $event->setDate_evenement($data['date_evenement']);
           $event->setLieu($data['lieu']);
          
-          $list []= array('evenement' => $event,'tutorat' => $data['libelle'],'planning_event' => $data['duree']);
+          $list []= array('evenement' => $event,'tutorat' => $data['libelle']);
         }
         return $list; 
-        */
-        return $req;
+        
+    
     }
-    public function Subscribe_to_event($id_evenement) // souscrire à un évènement
+    public function Subscribe_to_event($id_user,$id_evenement) // souscrire à un évènement
     {
        $db = Db::getInstance();
        $event = new Evenements();
 
-     
-       
-       
         $req= $db->prepare('INSERT INTO participer_evenement (id_evenement,id_user,date_evenement) VALUES(?,?,(SELECT date_evenement FROM evenement WHERE id_evenement=?))');
 
-        $req->execute(array($id_evenement, $_SESSION['id_user'], $id_evenement));
+        $req->execute(array($id_evenement, $id_user, $id_evenement));
  
     }
 
@@ -179,7 +187,7 @@ class Evenements
        $db = Db::getInstance();
        $event = new Evenements();
        $list=[];
-
+       
        $req= $db->prepare('SELECT  e.nb_places,e.nb_tuteurs,e.date_evenement,e.lieu,t.libelle,u.nom,u.prenom,c.niveau,c.ecole FROM evenement as e, tutorat as t, participer_evenement as pe ,user as u, classe as c WHERE e.id_tutorat= t.id_tutorat AND e.id_evenement = pe.id_evenement AND u.id_user = pe.id_user AND c.id_classe = u.id_classe AND pe.id_evenement= ? ))');
 
         $req->execute(array($id_evenement));
@@ -199,21 +207,21 @@ class Evenements
 
     }
 
-    public function Cancel_participation($id_evenement) // annuler sa particpation aun évènement
+    public function Cancel_participation($id_user,$id_evenement) // annuler sa particpation aun évènement
     {
         $db = Db::getInstance();
         $event = new Evenements();
 
-        $req= $db->query("DELETE FROM participer_evenement WHERE id_evenement= $id_evenement  AND id_user= ".$_SESSION['id_user']." ");
+        $req= $db->query("DELETE FROM participer_evenement WHERE id_evenement= $id_evenement  AND id_user= $id_user ");
        
     }
 
-    public function Delete_event($id_evenement)
+    public function Delete_event($id_user,$id_evenement)
     {
         $db = Db::getInstance();
         $req= $db->query("DELETE FROM participer_evenement WHERE id_evenement= $id_evenement "); // dans ce cas on supprime en meme tant le tutteur et le tutoré s'il c'était inscrit à cet évènement
-        $req= $db->query("DELETE FROM evenement WHERE id_evenement= $id_evenement AND id_user= ".$_SESSION['id_user']."  ");
-        // la table évènement conttient l'évènement et celui qui l'a crée donc on supprime quand les deux coincident( c'est magnifique )
+        $req= $db->query("DELETE FROM evenement WHERE id_evenement= $id_evenement AND id_user= $id_user  ");
+        // la table évènement contient l'évènement et celui qui l'a crée donc on supprime quand les deux coincident( c'est magnifique )
     }
 
     public  function Get_nb_inscrits($id_evenement) // le nombre de tuteurs deja. inscrits à l'évènement

@@ -20,6 +20,10 @@ public function connexion()
 	        { 
 	        	if($_SESSION['id_statut'] == 13)
 	        		require_once('views/tuteurs/interface_tuteur.php');
+	        	elseif($_SESSION['id_statut'] == 16)
+	        	{
+	        		require_once('views/tutores/interface_tutore.php');
+	        	}
 	        	else
 	        	{
 	        		$message= 'interface pas encore crée';
