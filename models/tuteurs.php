@@ -2,7 +2,7 @@
 require_once('connexion.php');
 require('users.php');
 require('evenements.php');
-class Tuteurs extends Users
+class Tuteurs
 {
 	private $nb_max_mef;
 	private $nb_max_perso;
@@ -101,7 +101,7 @@ class Tuteurs extends Users
     {
         $db = Db::getInstance();
         $list=[];
-        $req = $db->prepare(" SELECT  u.id_user,u.nom,u.prenom,u.date_naissance,u.email,u.phone,a.ville ,a.adress ,a.code_postal  FROM user as u, statut as s,adresse as a, avoir_statut as at,matchs as m WHERE at.id_statut = s.id_statut AND at.id_user = u.id_user AND  u.id_adresse = a.id_adresse AND u.id_user= m.id_tutores AND m.id_tuteurs =  ? ");
+        $req = $db->prepare(" SELECT  u.id_user,u.nom,u.prenom,u.date_naissance,u.email,u.phone,a.ville ,a.adress ,a.code_postal  FROM user as u,adresse as a,matchs as m WHERE   u.id_adresse = a.id_adresse AND u.id_user= m.id_tutores AND m.id_tuteurs =  ? ");
         $req->execute(array($id_user));
 
         

@@ -1,4 +1,9 @@
- 
+<?php 
+if(!isset($_SESSION['id_statut']))
+ {
+    require_once('views/login.php');
+  }
+  ?>  
 
     <div id="globalContent">
         <div id="wrapper">
@@ -14,12 +19,9 @@
                                     <div class="row">
                                         <div class="card debut">
                                             <div class="card-header py-3">
-                                                <p class="text-primary m-0 font-weight-bold">
-                                                    Inscrits
-                                                </p>
+                                                <p class="text-primary m-0 font-weight-bold">A venir</p>
                                             </div>
                                             <div class="card-body">
-                                                <form method="post" action="traitement.php">
                                                 <div class="row">
                                                     <div class="col-12 card-body-title">
                                                         <span>RECHERCHER PAR :</span>
@@ -28,7 +30,6 @@
                                                         <div class="row text-center">
                                                             <label style="flex: auto;">Période</label>
                                                         </div>
-                                                       
                                                         <div class="row">
                                                             <div class="col-xs-12 col-md-6">
                                                                 <label class="col-2">De</label>
@@ -49,48 +50,54 @@
                                                         </div>
                                                     </div>
                                                     <div class="col-12 text-center rechercher">
-                                                    <a href="traitement.php"><button class="btn" type="button" name="rechercher">RECHERCHER</button></a>
+                                                        <button class="btn" type="button">RECHERCHER</button>
                                                     </div>
-                                                
                                                 </div>
-                                                </form>
                                                 <div class="table-responsive table mt-2" role="grid" aria-describedby="dataTable_info">
                                                     <table class="table dataTable my-0" id="dataTable">
                                                         <thead>
                                                             <tr>
-                                                                <th>Tutorat</th>
-                                                                <th>Date</th>
+                                                                <th>Nom</th>
+                                                                <th>Prenom</th>
+                                                                <th>Date de naissance</th>
+                                                                <th>Email</th>
+                                                                <th>Phone</th>
+                                                                <th>Ville</th>
                                                                 <th>Adresse</th>
+                                                                <th>Code_postal</th>
                                                                 <th>Action</th>
+
+                                                               
                                                             </tr>
                                                         </thead>
                                                         <tbody>
+
                                                             <?php
                                                             if(!is_null($donnees))
                                                             {
                                                              foreach ($donnees as $elt) 
                                                             {
-                                                                if( $elt['tutorat']== 'TUTORAT_PERSONNALISE' )
-                                                                  {
                                                              ?>
 
-                                                              <form method="post" action="#">
+                                                              <form method="post" action="?controller=tuteurs&action=cancel_wish">
                                                                 
                                                               <tr >
 
  
-                                                                  <td> <label><?=$elt['tutorat']?></label></td>
-                                                                  <td><label><?=$elt['evenement']->getDate_evenement()?></label></td>
-                                                                  <td><label><?=$elt['evenement']->getLieu()?></label></td>
-                                                                
-                                                                  <td><button class="btn" type="submit" name="annuler" onclick="alert();">Annuler</button>
-                                                                  </td>
-                                                                  <?php
-                                                                  }
+                                                                  <td> <label><?=$elt->getNom()?></label></td>
+                                                                  <td><label><?=$elt->getPrenom()?></label></td>
+                                                                  <td><label><?=$elt->getDate_naissance()?></label></td>
+                                                                  <td><label style="overflow: scroll;"><?=$elt->getEmail()?></label></td>
+                                                                  <td><label ><?=$elt->getPhone()?></label></td>
+                                                                  <td><label ><?=$elt->getVille()?></label></td>
+                                                                  <td><label ><?=$elt->getAdress()?></label></td>
+                                                                  <td><label ><?=$elt->getCode_postal()?></label></td>
                                                                   
-                                                                  ?>
+                                                                  <td><button class="btn" type="submit"name="annuler">Annuler</button>
+                                                                  </td>
+                                                                  
                                                                 </tr>
-                                                                 <input type="hidden" name="id_e" value="<?=$elt['evenement']->getId_evenement()?>" >
+                                                                 <input type="hidden" name="id_u" value="<?=$elt->getId_user()?>" >
                                                         
                                                       
                                                              </form>
@@ -116,10 +123,13 @@
         </div>
     </div>
 
-    <script type="text/javascript">
-        function alert()
-        {
-            confirm('etes vous sur de vouloir supprimer?');
-        }
-    </script>
+
+
+
+
+
+
+
+
+
     

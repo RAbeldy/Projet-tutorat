@@ -23,13 +23,13 @@
                                                             <label for="date">
                                                                 <strong>Date</strong><br>
                                                             </label>
-                                                            <input  id = "event" class="form-control" type="datetime-local" name="date_creation"  onchange = 'javascript:test_date();' required/>
+                                                            <input  id = "event" class="form-control" type="datetime-local" name="date_creation"  onchange = "javascript:test_date();" />
                                                         </div>
                                                         <div class="form-group col-xs-12 col-md-6">
                                                             <label for="lieu">
                                                                 <strong>Lieu</strong><br> 
                                                             </label>
-                                                            <input class="form-control" type="text" placeholder="Lieu" name="lieu" required />
+                                                            <input class="form-control" type="text" placeholder="Lieu" name="lieu"  />
                                                         </div>
                                                         <div class="form-group col-12">
                                                             <label for="tutore">

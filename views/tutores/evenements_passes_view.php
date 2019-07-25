@@ -74,10 +74,15 @@
                                                                   <td> <label><?=$elt['tutorat']?></label></td>
                                                                   <td><label><?=$elt['evenement']->getDate_evenement()?></label></td>
                                                                   <td><label><?=$elt['evenement']->getLieu()?></label></td>
-                                                                  <td><label ><?=$elt['planning_event']?></label></td>
-                                                                  <td><label ><?=$elt['validé']?></label></td>
+                                                                    <td><label > 
+                                                                      <strong style="color: red;">
+                                                                        <?=$elt['planning_event']?>
+                                                                      </strong>
+                                                                    </label></td>
+                                                                  
+                                                                  <td><label ><?=$elt['participer_evenement']?></label></td>
                                                                   <?php
-                                                                  if( $elt['validé'] == 'NON' )
+                                                                  if( $elt['participer_evenement'] == 'NON' )
                                                                   {
                                                                     ?>
                                                                   <td><button class="btn" type="submit" name="réclamer" onclick="alert();">Valider</button>

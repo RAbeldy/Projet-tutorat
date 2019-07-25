@@ -41,7 +41,8 @@
 			$request->execute(array($login_mail));
 
 			//On regarde si le mail n'est pas déjà utilisé pour un compte valide!
-			if ($request->rowCount() == 0 /*aucun compte avec ce login*/) { 
+			if ($request->rowCount() == 0 /*aucun compte avec ce login*/) 
+			{ 
 				//On créer un nouveau compte (nouvealle ligne dans bd)
 				// on insère son adresse
 				$req = $bd->prepare("INSERT INTO adresse (ville,adress,complement_adress,code_postal) VALUES(?,?,?,?)");
@@ -92,7 +93,7 @@
                			$req->execute(array($niveau,$ecole));
                
                 // initialise le statut_compte du nouveau user dans avoir_statut
-                 
+                   
 				         $req = $bd->prepare("INSERT INTO avoir_statut (id_user,id_statut_compte,id_statut,id_etat) VALUES ((SELECT id_user FROM user  WHERE email =?),(SELECT id_statut_compte FROM statut_compte  WHERE libelle = 'ATTENTE_VALIDATION' ),(SELECT id_statut FROM statut WHERE libelle = 'TUTORE' ),(SELECT id_etat FROM etat as e WHERE e.libelle = 'LIBRE')) ");
 				         $req->execute(array($login_mail));
                          
@@ -104,7 +105,8 @@
                 $req= $bd->prepare("INSERT INTO user(id_classe) VALUES(SELECT id_classe from classe WHERE ecole=? AND niveau= ? )");
                 $re->execute(array($ecole,$niveau));
 			}
-			else {
+			else 
+			{
 				//login déjà utilisé pour un compte valide
 				exit("Failed_login");
 				//On le redirige vers la page d'accueil

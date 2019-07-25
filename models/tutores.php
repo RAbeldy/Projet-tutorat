@@ -1,8 +1,8 @@
 <?php
 require_once('connexion.php');
-require('users.php');
-require('evenements.php');
-class Tutores extends Users
+require_once('models/users.php');
+
+class Tutores 
 {
 	private $id_tutore;
 	private $charte;

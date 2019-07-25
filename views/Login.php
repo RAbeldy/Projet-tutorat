@@ -7,7 +7,7 @@
             <?php  include('views/alert_view.php'); ?>
             <div class="form-group"><input class="form-control" type="email" name="email" placeholder="Email"></div>
             <div class="form-group"><input class="form-control" type="password" name="password" id= "myInput" placeholder="Password"></div>
-            <p><input type="checkbox" onclick="myFunction()"/>Show passwword</p>
+            <p><input type="checkbox" onclick="myFunction()"/>Show password</p>
             <div class="form-group">
                 <button class="btn btn-primary btn-block" type="submit">Log In</button>
             </div>

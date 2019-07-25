@@ -56,6 +56,7 @@
                                                                 <th>Date</th>
                                                                 <th>Adresse</th>
                                                                 <th>Places</th>
+                                                                <th>Durée</th>
                                                                 
                                                             </tr>
                                                         </thead>
@@ -67,25 +68,17 @@
                                                              foreach ($donnees as $elt) 
                                                             {
                                                              ?>
-
-                                                              
-                                                                
                                                               <tr >
-
- 
-                                                                  <td> <label><?=$elt['tutorat']?></label></td>
+                                                                <td> <label><?=$elt['tutorat']?></label></td>
                                                                   <td><label><?=$elt['evenement']->getDate_evenement()?></label></td>
                                                                   <td><label><?=$elt['evenement']->getLieu()?></label></td>
                                                                   <td><label><?=$elt['evenement']->getNb_places()?></label></td>
                                                                   <td><label ><?=$elt['planning_event']?></label></td>
                                                                   
                                                                 </tr>
-                                                                 
-                                                        
-                                                      
-                                                             
-                                                            
+                                                             <?php
                                                              }
+                                                         }
                                                              ?>
                                                         </tbody>
                                                         <tfoot>
@@ -105,14 +98,7 @@
         </div>
     </div>
 
-<script type="text/javascript">
-        function alert()
-        {
-            confirm('etes vous sur de vouloir vous inscrir?');
-        }
 
-        
-    </script>
 
   
 

@@ -1,6 +1,6 @@
 <?php
 require_once('connexion.php');
-  class Users 
+  class Users
   {
     private $id_user;
     private $nom;
@@ -178,7 +178,7 @@ require_once('connexion.php');
          
          
          //on recupere l'ID du statut de l'user
-         $request=$db->query('SELECT avst.id_statut as id_statut,e.libelle as libelle,us.nom as nom,us.prenom as prenom,us.email as mail from user as us, avoir_statut as avst, etat as e WHERE  avst.id_user=us.id_user AND e.id_etat = avst.id_etat AND avst.id_user = '.$_SESSION['id_user'].'');
+         $request=$db->query('SELECT avst.id_statut as id_statut,e.libelle as libelle,s.libelle as libelle_statut,us.nom as nom,us.prenom as prenom,us.email as mail from user as us, avoir_statut as avst, etat as e,statut as s WHERE  avst.id_user=us.id_user AND e.id_etat = avst.id_etat AND avst.id_statut = s.id_statut AND avst.id_user = '.$_SESSION['id_user'].'');
          $res = $request->fetch();
 
          $_SESSION['mail']=$res['mail'];
@@ -186,6 +186,7 @@ require_once('connexion.php');
          $_SESSION['prenom']=$res['prenom'];
          $_SESSION['id_statut']=$res['id_statut'];
          $_SESSION['etat']= $res['libelle'];
+         $_SESSION['statut']= $res['libelle_statut'];
          //exit('authentification success');
     } 
     else

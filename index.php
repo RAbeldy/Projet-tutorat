@@ -65,8 +65,9 @@
         <div class="collapse navbar-collapse"
             id="navcol-1">
             <ul class="nav navbar-nav mr-auto">
+                <!-- CONTROL  sur la navbar horizontale -->
                 <?php
-                if(($_SESSION['id_statut']== '13')) // id_statut d'un  tuteur
+                if(isset($_SESSION['statut']) &&($_SESSION['statut']== 'TUTEUR')) // id_statut d'un  tuteur
                  {
                   ?>
                 <li class="nav-item"><a href="?controller=tuteurs&action=interface_tuteur" class="nav-link">Mon tutorat </a>
@@ -77,16 +78,27 @@
                 </li>
                 <?php
                 }
+                elseif(isset($_SESSION['statut']) && preg_match('#^TUTORE#', $_SESSION['statut']) == 1)
+                { 
+                ?>
+                    <li class="nav-item"><a href="?controller=tutores&action=interface_tutore" class="nav-link">Mon tutorat </a>
+                    </li>
+                     <li class="nav-item"><a href="?controller=tutores&action=selection_tuteurs" class="nav-link">Mes Tutorés </a>
+                    </li>
+                     <li class="nav-item"><a href="#" class="nav-link">Le tutorat: ce que je dois savoir </a>
+                    </li>
+                <?php
+                }
                 else
                 {
-                ?>
-                   <li class="nav-item"><a href="#" class="nav-link">Accueil </a>
-                </li>
-                <li class="nav-item"><a href="#" class="nav-link">Equipe </a>
-                </li>
-                <li class="nav-item"><a href="#" class="nav-link">Contact </a>
-                </li>
-                <?php
+                    ?>
+                     <li class="nav-item"><a href="#" class="nav-link">Accueil </a>
+                    </li>
+                    <li class="nav-item"><a href="#" class="nav-link">Equipe </a>
+                    </li>
+                    <li class="nav-item"><a href="#" class="nav-link">Contact </a>
+                    </li>
+                    <?php
                 }
                 ?>
 
@@ -107,7 +119,7 @@
                 <?php
                 }
                 ?>
-
+                 <!-- FIN du CONTROL sur la navbar horizontale -->
                 </div>
             </span>
         </div>
@@ -115,36 +127,88 @@
 </nav>
      <div id="globalContent">
         <div id="wrapper">
-            <nav class="navbar navbar-dark align-items-start sidebar sidebar-dark accordion bg-gradient-primary p-0">
-                <div class="container-fluid d-flex flex-column p-0">
-                    <a class="navbar-brand d-flex justify-content-center align-items-center sidebar-brand m-0" href="#">
-                        <div class="sidebar-brand-icon rotate-n-15"><i class="far fa-id-card"></i></div>
-                        <div class="sidebar-brand-text mx-3"><span>Tuteur</span></div>
-                    </a>
-                    <hr class="sidebar-divider my-0">
-                    <ul class="nav navbar-nav text-light" id="accordionSidebar">
-                        <li class="nav-item" role="presentation">
-                            <a class="nav-link active" href="?controller=tuteurs&action=interface_tuteur">
-                                <i class="fab fa-phoenix-squadron"></i>
-                                <span>Evénement</span>
-                            </a>
-                            <a class="nav-link" href="?controller=tuteurs&action=update_account">
-                                <i class="fab fa-phoenix-squadron"></i>
-                                <span>Mon Compte</span>
-                            </a>
-                            <a class="nav-link" href="?controller=tuteurs&action=notifications">
-                                <i class="fab fa-phoenix-squadron"></i>
-                                <span>Notifications</span>
-                            </a>
-                            <a class="nav-link" href="index.html">
-                                <i class="fab fa-phoenix-squadron"></i>
-                                <span>Questions / Support</span>
-                            </a>
-                        </li>
-                    </ul>
-                    <div class="text-center d-none d-md-inline"><button class="btn rounded-circle border-0" id="sidebarToggle" type="button"></button></div>
-                </div>
-            </nav>
+            <!-- CONTROL sur la navbar verticale -->
+            <?php 
+             if( isset($_SESSION['statut'])&& ($_SESSION['statut']== 'TUTEUR') )
+             {
+                ?>
+                <nav class="navbar navbar-dark align-items-start sidebar sidebar-dark accordion bg-gradient-primary p-0">
+                    <div class="container-fluid d-flex flex-column p-0">
+                        <a class="navbar-brand d-flex justify-content-center align-items-center sidebar-brand m-0" href="#">
+                            <div class="sidebar-brand-icon rotate-n-15"><i class="far fa-id-card"></i></div>
+                            <div class="sidebar-brand-text mx-3"><span>Tuteur</span></div>
+                        </a>
+                        <hr class="sidebar-divider my-0">
+                        <ul class="nav navbar-nav text-light" id="accordionSidebar">
+                            <li class="nav-item" role="presentation">
+                                <a class="nav-link active" href="?controller=tuteurs&action=interface_tuteur">
+                                    <i class="fab fa-phoenix-squadron"></i>
+                                    <span>Evénement</span>
+                                </a>
+                                <a class="nav-link" href="?controller=tuteurs&action=update_account">
+                                    <i class="fab fa-phoenix-squadron"></i>
+                                    <span>Mon Compte</span>
+                                </a>
+                                <a class="nav-link" href="?controller=tuteurs&action=notifications">
+                                    <i class="fab fa-phoenix-squadron"></i>
+                                    <span>Notifications</span>
+                                </a>
+                                <a class="nav-link" href="?controller=tutores&action=contacter">
+                                    <i class="fab fa-phoenix-squadron"></i>
+                                    <span>Questions / Support</span>
+                                </a>
+                            </li>
+                        </ul>
+                        <div class="text-center d-none d-md-inline"><button class="btn rounded-circle border-0" id="sidebarToggle" type="button"></button></div>
+                    </div>
+                </nav>
+            <?php
+           }
+           elseif(isset($_SESSION['statut']) && preg_match('#^TUTORE#', $_SESSION['statut']) == 1)
+            {
+             ?>
+                <nav class="navbar navbar-dark align-items-start sidebar sidebar-dark accordion bg-gradient-primary p-0">
+                    <div class="container-fluid d-flex flex-column p-0">
+                        <a class="navbar-brand d-flex justify-content-center align-items-center sidebar-brand m-0" href="#">
+                            <div class="sidebar-brand-icon rotate-n-15"><i class="far fa-id-card"></i></div>
+                            <div class="sidebar-brand-text mx-3"><span>Tutore</span></div>
+                        </a>
+                        <hr class="sidebar-divider my-0">
+                        <ul class="nav navbar-nav text-light" id="accordionSidebar">
+                            <li class="nav-item" role="presentation">
+                                <a class="nav-link active" href="?controller=tutores&action=interface_tutore">
+                                    <i class="fab fa-phoenix-squadron"></i>
+                                    <span>Evénement</span>
+                                </a>
+                                <a class="nav-link" href="?controller=tutores&action=update_account">
+                                    <i class="fab fa-phoenix-squadron"></i>
+                                    <span>Mon Compte</span>
+                                </a>
+                                <a class="nav-link" href="?controller=tutores&action=notifications">
+                                    <i class="fab fa-phoenix-squadron"></i>
+                                    <span>Notifications</span>
+                                </a>
+                                <a class="nav-link" href="?controller=tutores&action=contacter">
+                                    <i class="fab fa-phoenix-squadron"></i>
+                                    <span>Questions / Support</span>
+                                </a>
+                            </li>
+                        </ul>
+                        <div class="text-center d-none d-md-inline"><button class="btn rounded-circle border-0" id="sidebarToggle" type="button"></button></div>
+                    </div>
+                </nav>
+            <?php
+            }
+            else //  on bloque l'afficahge de la navbar si pas connecté
+            {
+              ?>
+                <nav style="display: none;" class="navbar navbar-dark align-items-start sidebar sidebar-dark accordion bg-gradient-primary p-0">
+                    
+                </nav>
+            <?php
+            }
+            ?>
+            <!-- FIN de CONTROL sur la navbar verticale -->
     <div id="content">
         <?php
         require_once('routes.php');

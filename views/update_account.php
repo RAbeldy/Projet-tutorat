@@ -39,7 +39,7 @@
                         <div class="col-sm-12 col-md-6">
                             <div class="form-group">
                                 <label>Code Postal</label>
-                                <input class="form-control" type="text" name="code_postal" value="" required>
+                                <input class="form-control" type="text" name="code_postal" value="" >
                             </div>
                         </div>
                         <div class="col">

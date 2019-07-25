@@ -3,11 +3,11 @@
 var check = function() {
   if (document.getElementById('password').value ==
     document.getElementById('confirm_password').value) {
-    document.getElementById('mess').style.color = 'green';
-    document.getElementById('mess').innerHTML = 'matching';
+    document.getElementById('message').style.color = 'green';
+    document.getElementById('message').innerHTML = 'matching';
   } else {
-    document.getElementById('mess').style.color = 'red';
-    document.getElementById('mess').innerHTML = 'not matching';
+    document.getElementById('message').style.color = 'red';
+    document.getElementById('message').innerHTML = 'not matching';
   }
 }
 

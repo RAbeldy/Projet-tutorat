@@ -220,8 +220,13 @@ class Evenements
     {
         $db = Db::getInstance();
         $req= $db->query("DELETE FROM participer_evenement WHERE id_evenement= $id_evenement "); // dans ce cas on supprime en meme tant le tutteur et le tutoré s'il c'était inscrit à cet évènement
-        $req= $db->query("DELETE FROM evenement WHERE id_evenement= $id_evenement AND id_user= $id_user  ");
-        // la table évènement contient l'évènement et celui qui l'a crée donc on supprime quand les deux coincident( c'est magnifique )
+        if( $_SESSION['id_statut'] == 13) // la table évènement contient l'évènement et celui qui l'a crée donc on supprime quand les deux coincident( c'est magnifique ) si c'est le tutoré qui veut supprimer on s'en va chercher dans la table match le tuteur qui lui est associé
+        $req= $db->query("DELETE FROM evenement WHERE id_evenement= $id_evenement AND id_user= $id_user ");
+      
+        else // on rajoutera peut etre une condition au cas ou un admin voudrait supprimer cet evenement
+        {
+           $req= $db->query("DELETE FROM evenement WHERE id_evenement= $id_evenement AND id_user = (SELECT id_tuteurs FROM matchs WHERE id_tutores = $id_user) "); 
+        }
     }
 
     public  function Get_nb_inscrits($id_evenement) // le nombre de tuteurs deja. inscrits à l'évènement
