@@ -114,6 +114,7 @@ class Tutores
       }
       return $list ;
     }
+
     public function Get_all_tuteurs()
     {
         $db = Db::getInstance();
@@ -138,7 +139,7 @@ class Tutores
       return $list ;
         
     }
-
+    
     public function Get_waiting_list($id_user)
     {
         $db = Db::getInstance();

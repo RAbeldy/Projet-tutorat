@@ -92,8 +92,9 @@ if(!isset($_SESSION['id_statut']))
                                                                   <td><label ><?=$elt['adresse'][1]?></label></td>
                                                                   <td><label ><?=$elt['adresse'][2]?></label></td>
                                                                   
-                                                                  <td><button class="btn" type="submit"name="accepter" >Accepter</button>
+                                                                  <td><button class="btn"  name="accepter" >Accepter</button>
                                                                   </td>
+                                                                  
                                                                   
                                                                 </tr>
                                                                  <input type="hidden" name="id_u" value="<?=$elt['user']->getId_user()?>" >

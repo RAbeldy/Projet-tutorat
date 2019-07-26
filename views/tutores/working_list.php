@@ -15,7 +15,9 @@
                                         <div class="card debut">
                                             <div class="card-header py-3">
                                                 <p class="text-primary m-0 font-weight-bold">A venir</p>
+                                                <?php include('retour.php') ?> 
                                             </div>
+                                              <!-- bouton de retour -->
                                             <div class="card-body">
                                                 <div class="row">
                                                     <div class="col-12 card-body-title">
@@ -73,7 +75,7 @@
                                                                 {
                                                                  ?>
 
-                                                                  <form method="post" action="?controller=tuteurs&action=delete_link">
+                                                                  <form method="post" action="?controller=tutores&action=delete_link">
                                                                     
                                                                   <tr >
 
@@ -88,6 +90,7 @@
                                                                       <td><label ><?=$elt->getCode_postal()?></label></td>
                                                                       
                                                                       <td><button class="btn" type="submit"name="accepter" >Rompre</button>
+                                                                       
                                                                       </td>
                                                                       
                                                                     </tr>

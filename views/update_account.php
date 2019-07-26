@@ -1,13 +1,13 @@
 
-    <div class="container profile profile-view" id="profile">
+    <div class="container debut" id="profile">
         <div class="row">
             <div class="col-md-12 alert-col relative">
                 <div class="alert alert-info absolue center" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button><span>Profile save with success</span></div>
             </div>
         </div>
-        <form method="post" action="?controller=tuteurs&action=modify_account">
-            <div class="form-row profile-row profile">
-                <div class="col-md-4 relative profile">
+        <form method="post" action="?controller=tuteurs&action=modify_account" class="card-container">
+            <div class="card" style="display:flex; flex-direction:row; padding-top: 60px; padding-bottom: 60px;">
+                <div class="col-md-2 relative profile">
                     <div class="avatar">
                         <div class="avatar-bg center"></div>
                     </div>
@@ -56,8 +56,15 @@
                         </div>
                     </div>
                     <hr>
-                    <div class="form-row">
-                        <div class="col-md-12 content-right"><a href="#"><button onclick="alert();" class="btn btn-primary form-btn profil" type="submit">Sauvegarder</button></a><a href="views/tuteurs/interface_tuteur.php"><button class="btn btn-danger form-btn profil" type="reset">Annuler</button></a></div>
+                    <div style="display: flex; align-content: space-between;" class="form-row">
+                        
+							<div><a href="#" >
+								<button class="btn form-btn profil" type="reset">Annuler</button>
+							</a></div>
+                            <div><a href="#" >
+                                <button onclick="alert();" class="btn form-btn profil" type="submit">Sauvegarder</button>
+                            </a></div>
+						
                     </div>
                 </div>
             </div>

@@ -85,14 +85,23 @@
                                                                   if( $elt['participer_evenement'] == 'NON' )
                                                                   {
                                                                     ?>
-                                                                  <td><button class="btn" type="submit" name="réclamer" onclick="alert();">Valider</button>
+                                                                  <td><button class="btn" id="btnPopup"> Valider</button>
                                                                   </td>
+                                                                  <div id= "overlay" class="overlay"> 
+                                                                         <div id="popup" class="popup">
+                                                                            <h2> Confirmer </h2>
+                                                                            <p>
+                                                                                <button class="btn" id="close" name="annuler" >annuler</button>
+                                                                            <button class="btn" id="submit" type="submit" name="valider">valider</button>
+                                                                            </p>
+                                                                         </div>
+                                                                  </div>
                                                                   <?php
                                                                   }
                                                                   else
                                                                   {
                                                                     ?>
-                                                                    <td><label title="plus de places disponibles" class="btn" name="s'inscrire">Validé</label>
+                                                                    <td><label title="plus de places disponibles" class="btn" name="s'inscrire">Validé</label> 
                                                                   </td>
                                                                   <?php
                                                                   }

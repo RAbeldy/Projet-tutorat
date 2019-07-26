@@ -33,14 +33,14 @@ class TutoresController
             else
                 require_once('views/login.php');  
         }
-        public function notifications()
+     public function notifications()
         {
             if( isset($_SESSION['id_statut']))
                 require_once('views/tutores/notifications_tutores.php');
             else
                 require_once('views/login.php');
         }
-        public function waiting_list()  // on récuprère la lsite des 
+     public function waiting_list()  // on récuprère la lsite des 
         {
             
             if(isset($_SESSION['id_statut']))// on vérifie que seul un utilisateur connecté peut accéder à ces pages
@@ -53,26 +53,26 @@ class TutoresController
                 require_once('views/login.php'); 
 
         }
-        public function link() // action de se lier à un tuteur ou un tutoré
+     public function link() // action de se lier à un tuteur ou un tutoré
         {
             
             if(isset($_SESSION['id_statut']))// on vérifie que seul un utilisateur connecté peut accéder à ces pages
             {   
                  $tuteurs= new Tutores();
                  $tuteurs->Link_with_tuteurs($_SESSION['id_user'],$_POST['id_u']);
-                require_once('views/tutores/notifications_tuteurs.php');   
+                require_once('views/tutores/notifications_tutores.php');   
             }
             else
                 require_once('views/login.php'); 
         }
-        public function accept_link()
+     public function accept_link()
         {
             
             if(isset($_SESSION['id_statut']))// on vérifie que seul un utilisateur connecté peut accéder à ces pages
             {    
                 $tuteurs= new Tutores();
                  $tuteurs->Accept_link($_SESSION['id_user'],$_POST['id_u']);
-                require_once('views/tutores/notifications_tuteurs.php');  
+                require_once('views/tutores/notifications_tutores.php');  
             }
             else
                 require_once('views/login.php'); 
@@ -93,20 +93,24 @@ class TutoresController
                 require_once('views/login.php'); 
         }
         */
-        public function working_list()
+     public function working_list()
         {
             
             if(isset($_SESSION['id_statut']))// on vérifie que seul un utilisateur connecté peut accéder à ces pages
             {    
                  $tuteurs= new Tutores();
                  $donnees=$tuteurs->Get_working_list($_SESSION['id_user']);
+
+                 $controller_report='tutores';
+                 $fonction_back='selection_tuteurs';
+            
                 require_once('views/tutores/working_list.php');
             }
             else
                 require_once('views/login.php'); 
         }
 
-        public function wish_list()
+     public function wish_list()
         {
             if(isset($_SESSION['id_statut']))// on vérifie que seul un utilisateur connecté peut accéder à ces pages
             {    
@@ -117,7 +121,7 @@ class TutoresController
             else
                 require_once('views/login.php'); 
         }
-        public function cancel_wish()
+     public function cancel_wish()
         {
             if(isset($_SESSION['id_statut']))// on vérifie que seul un utilisateur connecté peut accéder à ces pages
             {    
@@ -129,9 +133,9 @@ class TutoresController
                 require_once('views/login.php'); 
         }
 
-        public function update_account()
+     public function update_account()
         {
-            echo "dvfdvfdvfbvfbfbvgjdjgjjcjcjfdcjgcjghc";
+            
 
             if(isset($_SESSION['id_statut']))// on vérifie que seul un utilisateur connecté peut accéder à ces pages
             { 
@@ -141,7 +145,7 @@ class TutoresController
             else
                 require_once('views/login.php');
         }
-        public function modify_account()
+     public function modify_account()
         {
             if(isset($_SESSION['id_statut']))// on vérifie que seul un utilisateur connecté peut accéder à ces pages
             { 
@@ -158,10 +162,10 @@ class TutoresController
             else
                 require_once('views/login.php');
         }
-        public function contacter()
+     public function contact()
         {
             if(isset($_SESSION['id_statut']))// on vérifie que seul un utilisateur connecté peut accéder à ces pages
-                require_once('contacter.php');
+                require_once('views/contacter.php');
             else
                 require_once('views/login.php');
         }

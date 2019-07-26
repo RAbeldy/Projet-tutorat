@@ -19,7 +19,7 @@
     <link rel="stylesheet" href="assets/css/Footer-Basic.css?h=d15dfcb68fabe0442ff06063b052477c">
     <link rel="stylesheet" href="assets/css/styles.css?h=1637acf6632f17b3758401ceb35eb91e">
     <!-- login-->
-    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css"> 
     <link rel="stylesheet" href="assets/fonts/font-awesome.min.css">
     <link rel="stylesheet" href="assets/fonts/ionicons.min.css">
     <link rel="stylesheet" href="assets/css/-Login-form-Page-BS4--1.css">
@@ -28,16 +28,19 @@
     <link rel="stylesheet" href="assets/css/Login-Form-Dark.css">
     <link rel="stylesheet" href="assets/css/Login-screen.css">
     <link rel="stylesheet" href="assets/css/styles.css">
-    <!-- navbar latérale et tuteur-->
+    <!-- navbar latérale et tuteur et evenements-->
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css?h=f20836d04db9c2e94df06e239fab9fd8">
     <link rel="stylesheet" href="assets/fonts/ionicons.min.css?h=0692f36eb27607e4837760bbbf813d92">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i">
     <link rel="stylesheet" href="assets/fonts/fontawesome-all.min.css?h=0692f36eb27607e4837760bbbf813d92">
     <link rel="stylesheet" href="assets/css/menu.css">
     <link rel="stylesheet" href="assets/css/tuteur.css">
+    <link rel="stylesheet" href="assets/css/evenement.css">
     <!-- upadte account -->
     <link rel="stylesheet" href="assets/css/Profile-Edit-Form-1.css?h=941c84e96020d5a5b03f80619fed6ea9">
     <link rel="stylesheet" href="assets/css/Profile-Edit-Form.css?h=0d932fa81301936f118cc8607c135e19">
+    <!-- pop up -->
+
 </head>
 
 <body id="page-top">
@@ -153,7 +156,7 @@
                                     <i class="fab fa-phoenix-squadron"></i>
                                     <span>Notifications</span>
                                 </a>
-                                <a class="nav-link" href="?controller=tutores&action=contacter">
+                                <a class="nav-link" href="?controller=tutores&action=contact">
                                     <i class="fab fa-phoenix-squadron"></i>
                                     <span>Questions / Support</span>
                                 </a>
@@ -188,7 +191,7 @@
                                     <i class="fab fa-phoenix-squadron"></i>
                                     <span>Notifications</span>
                                 </a>
-                                <a class="nav-link" href="?controller=tutores&action=contacter">
+                                <a class="nav-link" href="?controller=tutores&action=contact">
                                     <i class="fab fa-phoenix-squadron"></i>
                                     <span>Questions / Support</span>
                                 </a>
@@ -201,7 +204,7 @@
             }
             else //  on bloque l'afficahge de la navbar si pas connecté
             {
-              ?>
+              ?>               
                 <nav style="display: none;" class="navbar navbar-dark align-items-start sidebar sidebar-dark accordion bg-gradient-primary p-0">
                     
                 </nav>
@@ -232,6 +235,7 @@
     <script src="assets/js/Navbarbuttonsignupsignin-modal-form.js?h=9ce049da3c28fd2ded69977163ac47a3"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.js"></script>
     <script src="assets/js/theme.js?h=6d33b44a6dcb451ae1ea7efc7b5c5e30"></script>
+    <script src="assets/js/popup.js"></script>
 </body>
 
 </html>

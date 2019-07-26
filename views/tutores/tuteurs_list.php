@@ -79,7 +79,7 @@ if(!isset($_SESSION['id_statut']))
                                                             {
                                                              ?>
 
-                                                              <form method="post" action="?controller=tuteurs&action=link">
+                                                              <form method="post" action="?controller=tutores&action=link">
                                                                 
                                                               <tr >
 

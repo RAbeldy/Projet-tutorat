@@ -90,6 +90,7 @@
                                                                       <td><button class="btn" type="submit"name="accepter" >Rompre</button>
                                                                       </td>
                                                                       
+                                                                      
                                                                     </tr>
                                                                      <input type="hidden" name="id_u" value="<?=$elt->getId_user()?>" >
                                                             

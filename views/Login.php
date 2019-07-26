@@ -9,7 +9,7 @@
             <div class="form-group"><input class="form-control" type="password" name="password" id= "myInput" placeholder="Password"></div>
             <p><input type="checkbox" onclick="myFunction()"/>Show password</p>
             <div class="form-group">
-                <button class="btn btn-primary btn-block" type="submit">Log In</button>
+                <button class="btn btn-block" type="submit">Log In</button>
             </div>
             <a class="forgot" href="?controller=users&amp;action=forgotPassword">Mot de passe oublié ?</a>
             <a class="forgot" href="?controller=users&amp;action=inscription">Pas encore inscrit ?</a>

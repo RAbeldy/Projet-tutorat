@@ -15,7 +15,7 @@
                         <h2>A PROPOS</h2>
                     </div>
                     <div class="row">
-                        <div class="col-md-4">
+                        <div class="col-md-4 space">
                             <div class="card special-skill-item border-0">
                                 <div class="card-header bg-transparent border-0"><img class="cardImage" src="assets/img/1.jpg"></div>
                                 <div class="card-body">
@@ -24,7 +24,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-4 space">
                             <div class="card special-skill-item border-0">
                                 <div class="card-header bg-transparent border-0"><img class="cardImage" src="assets/img/2.jpg"></div>
                                 <div class="card-body">
@@ -33,7 +33,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-4 space">
                             <div class="card special-skill-item border-0">
                                 <div class="card-header bg-transparent border-0"><img class="cardImage" src="assets/img/3.jpg"></div>
                                 <div class="card-body">
@@ -44,7 +44,7 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-4">
+                        <div class="col-md-4 space">
                             <div class="card special-skill-item border-0">
                                 <div class="card-header bg-transparent border-0"><img class="cardImage" src="assets/img/1.jpg"></div>
                                 <div class="card-body">
@@ -53,7 +53,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-4 space">
                             <div class="card special-skill-item border-0">
                                 <div class="card-header bg-transparent border-0"><img class="cardImage" src="assets/img/2.jpg"></div>
                                 <div class="card-body">
@@ -62,7 +62,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-4 space">
                             <div class="card special-skill-item border-0">
                                 <div class="card-header bg-transparent border-0"><img class="cardImage" src="assets/img/3.jpg"></div>
                                 <div class="card-body">

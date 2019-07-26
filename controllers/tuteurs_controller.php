@@ -170,6 +170,13 @@ class TuteursController
         else
             require_once('views/login.php');
     }
+    public function contact()
+        {
+            if(isset($_SESSION['id_statut']))// on vérifie que seul un utilisateur connecté peut accéder à ces pages
+                require_once('views/contacter.php');
+            else
+                require_once('views/login.php');
+        }
 
 }
 ?>
