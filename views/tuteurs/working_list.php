@@ -14,7 +14,8 @@
                                     <div class="row">
                                         <div class="card debut">
                                             <div class="card-header py-3">
-                                                <p class="text-primary m-0 font-weight-bold">A venir</p>
+                                                <p class="text-primary m-0 font-weight-bold">Je travaille avec eux</p>
+                                                <?php include('retour.php') ?>
                                             </div>
                                             <div class="card-body">
                                                 <div class="row">
@@ -87,9 +88,8 @@
                                                                       <td><label ><?=$elt->getAdress()?></label></td>
                                                                       <td><label ><?=$elt->getCode_postal()?></label></td>
                                                                       
-                                                                      <td><button class="btn" type="submit"name="accepter" >Rompre</button>
-                                                                      </td>
-                                                                      
+                                                                     
+                                                                     
                                                                       
                                                                     </tr>
                                                                      <input type="hidden" name="id_u" value="<?=$elt->getId_user()?>" >

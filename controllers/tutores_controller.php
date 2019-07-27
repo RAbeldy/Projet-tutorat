@@ -28,6 +28,10 @@ class TutoresController
             {
                 $tuteurs= new Tutores();
                 $donnees= $tuteurs->Get_all_tuteurs();
+
+                $controller_report='tutores';
+                $fonction_back='selection_tuteurs';
+
                 require_once('views/tutores/tuteurs_list.php');
             }
             else
@@ -47,6 +51,10 @@ class TutoresController
             {   
                 $tuteurs= new Tutores();
                 $donnees= $tuteurs->Get_waiting_list($_SESSION['id_user']);
+
+                $controller_report='tutores';
+                $fonction_back='notifications';
+
                 require_once('views/tutores/waiting_list.php');
             }
             else
@@ -116,6 +124,10 @@ class TutoresController
             {    
                  $tuteurs= new Tutores();
                  $donnees=$tuteurs->Get_wish_list($_SESSION['id_user']);
+
+                 $controller_report='tutores';
+                 $fonction_back='notifications';
+
                  require_once('views/tutores/wish_list.php');  
             }
             else
@@ -133,10 +145,9 @@ class TutoresController
                 require_once('views/login.php'); 
         }
 
+
      public function update_account()
         {
-            
-
             if(isset($_SESSION['id_statut']))// on vérifie que seul un utilisateur connecté peut accéder à ces pages
             { 
                 $donnees = Users::Get_info($_SESSION['id_user']);    // on récupère les info des user
@@ -145,6 +156,8 @@ class TutoresController
             else
                 require_once('views/login.php');
         }
+
+
      public function modify_account()
         {
             if(isset($_SESSION['id_statut']))// on vérifie que seul un utilisateur connecté peut accéder à ces pages
@@ -169,6 +182,24 @@ class TutoresController
             else
                 require_once('views/login.php');
         }
+      public function message() // rajouter adresse e-mail
+      {
+            if(isset($_SESSION['id_statut']))// on vérifie que seul un utilisateur connecté peut accéder à ces pages
+            {    
+                //Déclaration du message au format texte et au format html (selon ce que les webmails supportent)
+                $message_txt = $_POST['message'];
+
+                
+                $message_html = $_POST['message'];
+                //Sujet
+                $sujet = "[Yncrea tutorat] Message plateforme Yncrea tutorat de: ".$_POST['nom']."";
+                // on envoie un email de confirmation
+                include('send_mail.php');
+                require_once('views/contacter.php');
+            }
+            else
+                require_once('views/login.php');
+      }
 
        
 }

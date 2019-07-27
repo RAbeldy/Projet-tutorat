@@ -14,7 +14,7 @@
                                     <div class="row">
                                         <div class="card debut">
                                             <div class="card-header py-3">
-                                                <p class="text-primary m-0 font-weight-bold">A venir</p>
+                                                <p class="text-primary m-0 font-weight-bold">Je travaille avec lui</p>
                                                 <?php include('retour.php') ?> 
                                             </div>
                                               <!-- bouton de retour -->
@@ -56,7 +56,7 @@
                                                             <tr>
                                                                 <th>Nom</th>
                                                                 <th>Prenom</th>
-                                                                <th>Date de naissance</th>
+                                                                
                                                                 <th>Email</th>
                                                                 <th>Phone</th>
                                                                 <th>Ville</th>
@@ -82,7 +82,7 @@
      
                                                                       <td> <label><?=$elt->getNom()?></label></td>
                                                                       <td><label><?=$elt->getPrenom()?></label></td>
-                                                                      <td><label><?=$elt->getDate_naissance()?></label></td>
+                                                                      
                                                                       <td><label style="overflow: scroll;"><?=$elt->getEmail()?></label></td>
                                                                       <td><label ><?=$elt->getPhone()?></label></td>
                                                                       <td><label ><?=$elt->getVille()?></label></td>

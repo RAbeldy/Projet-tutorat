@@ -36,7 +36,7 @@ var check = function() {
             </div>
 
           </form>
-          
-     </div>
+        
+</div>
 
 

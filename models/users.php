@@ -149,12 +149,9 @@ require_once('connexion.php');
         $user->setAdress($temp['adress']);
         $user->setCode_postal($temp['code_postal']);
         $user->setVille($temp['ville']);
-        $user->setCom_adress($temp['complement_adress']);
-     
-      
-        $list[]=$user;
+        $user->setCom_adress($temp['complement_adress']); 
       }
-      return $list;
+      return $user;
     }
 
     public function Deconnexion()

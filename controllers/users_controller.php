@@ -4,6 +4,10 @@ require_once('models/users.php');
 class UsersController
 {
 
+
+public function choixStatut(){
+	require_once('views/choixStatut.php');
+}
 // page d'authentification
 public function login()  
 	{
@@ -31,8 +35,6 @@ public function connexion()
                     $fonction_back='Display_future_events';
                     require_once('views/system/error.php');
 	        	}
-
-
 	        }
 	        else
 	        {
@@ -49,14 +51,23 @@ public function resetPassword()
 {
 	require_once('views/reset_password_view.php');
 }
+
 public function forgotPassword()
 {
 	require_once('views/forgot_password_view.php');
 }
+
 public function inscription()
 	{
-	 require_once('views/inscription.php');	
+		if (isset($_POST['Tuteur'])) {
+			require_once('views/inscriptionTuteur.php');	
+		}
+		if (isset($_POST['Tutore'])) {
+			require_once('views/inscriptionTutore.php');
+		}
 	}
+
+
 public function deconnexion()
 {
 	$user= new Users();

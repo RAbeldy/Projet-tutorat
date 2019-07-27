@@ -1,9 +1,4 @@
-<?php 
-if(!isset($_SESSION['id_statut']))
- {
-    require_once('views/login.php');
-  }
-  ?>  
+
 
     <div id="globalContent">
         <div id="wrapper">
@@ -19,7 +14,8 @@ if(!isset($_SESSION['id_statut']))
                                     <div class="row">
                                         <div class="card debut">
                                             <div class="card-header py-3">
-                                                <p class="text-primary m-0 font-weight-bold">A venir</p>
+                                                <p class="text-primary m-0 font-weight-bold">Je souhaite travailler avec eux</p>
+                                                <?php include('retour.php') ?>
                                             </div>
                                             <div class="card-body">
                                                 <div class="row">

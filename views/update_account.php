@@ -19,13 +19,13 @@
                         <div class="col-sm-12 col-md-6">
                             <div class="form-group">
                                 <label>Adresse</label>
-                                <input class="form-control" type="text" name="adresse" autofocus>
+                                <input class="form-control" type="text" value="<?php echo $donnees->getAdress();?>" name="adresse" autofocus>
                             </div>
                         </div>
                         <div class="col-sm-12 col-md-6">
                             <div class="form-group">
                                 <label>Complément D'Adresse&nbsp;</label>
-                                <input class="form-control" type="text" name="complement_adresse">
+                                <input class="form-control" type="text" value="<?php echo $donnees->getCom_adress();?>"   name="complement_adresse">
                             </div>
                         </div>
                     </div>
@@ -33,13 +33,13 @@
                         <div class="col-sm-12 col-md-6">
                             <div class="form-group">
                                 <label>Ville</label>
-                                <input class="form-control" type="text" name="ville"   required>
+                                <input class="form-control" type="text" value="<?php echo $donnees->getVille();?>"  name="ville"   required>
                             </div>
                         </div>
                         <div class="col-sm-12 col-md-6">
                             <div class="form-group">
                                 <label>Code Postal</label>
-                                <input class="form-control" type="text" name="code_postal" value="" >
+                                <input class="form-control" type="text" value="<?php echo $donnees->getCode_postal();?>"  name="code_postal" value="" >
                             </div>
                         </div>
                         <div class="col">

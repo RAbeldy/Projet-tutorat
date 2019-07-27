@@ -19,7 +19,8 @@ if(!isset($_SESSION['id_statut']))
                                     <div class="row">
                                         <div class="card debut">
                                             <div class="card-header py-3">
-                                                <p class="text-primary m-0 font-weight-bold">A venir</p>
+                                                <p class="text-primary m-0 font-weight-bold">Ils sont disponibles</p>
+                                                <?php include('retour.php') ?>
                                             </div>
                                             <div class="card-body">
                                                 <div class="row">
@@ -59,7 +60,6 @@ if(!isset($_SESSION['id_statut']))
                                                             <tr>
                                                                 <th>Nom</th>
                                                                 <th>Prenom</th>
-                                                                <th>Date de naissance</th>
                                                                 <th>Email</th>
                                                                 <th>Phone</th>
                                                                 <th>Ville</th>
@@ -86,7 +86,6 @@ if(!isset($_SESSION['id_statut']))
  
                                                                   <td> <label><?=$elt->getNom()?></label></td>
                                                                   <td><label><?=$elt->getPrenom()?></label></td>
-                                                                  <td><label><?=$elt->getDate_naissance()?></label></td>
                                                                   <td><label><?=$elt->getEmail()?></label></td>
                                                                   <td><label ><?=$elt->getPhone()?></label></td>
                                                                   <td><label ><?=$elt->getVille()?></label></td>

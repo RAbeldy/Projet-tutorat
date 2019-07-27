@@ -44,6 +44,10 @@ class EvenementsController
                
               $event = new Evenements();
               $donnees = $event->Get_past_events($_SESSION['id_user']);
+
+              $controller_report='tutores';
+              $fonction_back='interface_tutore';
+
               require_once('views/tutores/evenements_passes_view.php');  // on charge la vue adéquate
           }
           else
@@ -52,6 +56,10 @@ class EvenementsController
              
               $event = new Evenements();
               $donnees = $event->Get_past_events($_SESSION['id_user']);
+
+              $controller_report='tuteurs';
+              $fonction_back='interface_tuteur';
+              
               require_once('views/tuteurs/evenements_passes_view.php');  // on charge la vue adéquate
           }
 
@@ -69,12 +77,20 @@ class EvenementsController
           {
               $event = new Evenements();
               $donnees = $event->Get_future_events($_SESSION['id_user']);
+
+              $controller_report='tutores';
+              $fonction_back='interface_tutore';
+
               require_once('views/tutores/evenements_a_venir_view.php');  // on charge la vue adéquate
           }
           else
           {
               $event = new Evenements();
               $donnees = $event->Get_future_events($_SESSION['id_user']);
+
+              $controller_report='tuteurs';
+              $fonction_back='interface_tuteur';
+
               require_once('views/tuteurs/evenements_a_venir_view.php');  // on charge la vue adéquate
           }
         }
@@ -93,12 +109,20 @@ class EvenementsController
           {
               $event = new Evenements();
               $donnees = $event->Get_subscribed_events($_SESSION['id_user']);
+
+              $controller_report='tutores';
+              $fonction_back='interface_tutore';
+
               require_once('views/tutores/evenements_inscrits_a_venir_view.php');  // on charge la vue adéquate
           }
           else // il s'agit d'un admin dans ce cas 
           {
               $event = new Evenements();
               $donnees = $event->Get_subscribed_events($_SESSION['id_user']);
+
+              $controller_report='tuteurs';
+              $fonction_back='interface_tuteur';
+
               require_once('views/tuteurs/evenements_inscrits_a_venir_view.php');  // on charge la vue adéquate
           }
         }
@@ -110,13 +134,13 @@ class EvenementsController
     { 
 
         
-
+         
         if( isset($_SESSION['id_statut']))
            { 
-                
-                if(isset($_POST['id_e']) && $event->nb_places_dispo($_POST['id_e'])>0)
+                $event = new Evenements();
+                if(isset($_POST['id_e']) && $event->nb_places_dispo($_POST['id_e']) >0)
                 {       
-                        $event = new Evenements();
+                        
                         $event->Subscribe_to_event($_SESSION['id_user'],$_POST['id_e']);
                         $event->updateNombrePlaces($_POST['id_e'],-1);
 

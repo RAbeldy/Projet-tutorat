@@ -39,6 +39,10 @@ class TuteursController
         {
             $tuteurs= new Tuteurs();
             $donnees= $tuteurs->Get_all_tutores();
+
+            $controller_report='tuteurs';
+            $fonction_back='selection_tutores';
+
             require_once('views/tuteurs/tutores_list.php');
         }
         else
@@ -58,6 +62,10 @@ class TuteursController
         {   
             $tuteurs= new Tuteurs();
             $donnees= $tuteurs->Get_waiting_list($_SESSION['id_user']);
+
+            $controller_report='tuteurs';
+            $fonction_back='notifications';
+
             require_once('views/tuteurs/waiting_list.php');
         }
         else
@@ -112,6 +120,10 @@ class TuteursController
         {    
              $tuteurs= new Tuteurs();
              $donnees=$tuteurs->Get_working_list($_SESSION['id_user']);
+
+             $controller_report='tuteurs';
+             $fonction_back='selection_tutores';
+
             require_once('views/tuteurs/working_list.php');
              
         }
@@ -125,6 +137,10 @@ class TuteursController
         {    
              $tuteurs= new Tuteurs();
              $donnees=$tuteurs->Get_wish_list($_SESSION['id_user']);
+
+             $controller_report='tuteurs';
+             $fonction_back='notifications';
+
             require_once('views/tuteurs/wish_list.php');
              
         }
@@ -177,6 +193,24 @@ class TuteursController
             else
                 require_once('views/login.php');
         }
+    public function message() // rajouter adresse e-mail
+      {
+            if(isset($_SESSION['id_statut']))// on vérifie que seul un utilisateur connecté peut accéder à ces pages
+            {    
+                //Déclaration du message au format texte et au format html (selon ce que les webmails supportent)
+                $message_txt = $_POST['message'];
+
+                
+                $message_html = $_POST['message'];
+                //Sujet
+                $sujet = "[Yncrea tutorat] Message plateforme Yncrea tutorat de: ".$_POST['nom']."";
+                // on envoie un email de confirmation
+                include('send_mail.php');
+                require_once('views/contacter.php');
+            }
+            else
+                require_once('views/login.php');
+      }
 
 }
 ?>

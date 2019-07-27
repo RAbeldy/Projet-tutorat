@@ -13,7 +13,7 @@
                                                 <div class="card-body">
                                                     
                                                     
-                                                    <h4 class="card-title">Liste de tutorés</h4>
+                                                    <h4 class="card-title">Liste de tuteurs</h4>
                                                     <?php if($_SESSION['etat'] == "LIBRE" )
                                                     {
                                                         ?>

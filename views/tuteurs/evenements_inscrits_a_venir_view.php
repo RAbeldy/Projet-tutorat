@@ -17,6 +17,7 @@
                                                 <p class="text-primary m-0 font-weight-bold">
                                                     Inscrits
                                                 </p>
+                                                <?php include('retour.php') ?>
                                             </div>
                                             <div class="card-body">
                                                 <form method="post" action="traitement.php">

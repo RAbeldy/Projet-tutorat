@@ -13,6 +13,7 @@
                                                 <p class="text-primary m-0 font-weight-bold">
                                                     Historique
                                                 </p>
+                                                <?php include('retour.php') ?>
                                             </div>
                                             <div class="card-body">
                                                 <div class="row">
@@ -85,14 +86,14 @@
                                                                   if( $elt['participer_evenement'] == 'NON' )
                                                                   {
                                                                     ?>
-                                                                  <td><button class="btn" id="btnPopup"> Valider</button>
+                                                                  <td><button class="btn" onclick="openModal();" id="btnPopup"> Valider</button>
                                                                   </td>
                                                                   <div id= "overlay" class="overlay"> 
                                                                          <div id="popup" class="popup">
                                                                             <h2> Confirmer </h2>
                                                                             <p>
-                                                                                <button class="btn" id="close" name="annuler" >annuler</button>
-                                                                            <button class="btn" id="submit" type="submit" name="valider">valider</button>
+                                                                                <button class="btn" onclick="openModal();" id="close" name="annuler" >annuler</button>
+                                                                            <button class="btn" onsubmit="openModal();" id="submit" type="submit" name="valider">valider</button>
                                                                             </p>
                                                                          </div>
                                                                   </div>
@@ -130,5 +131,26 @@
                     </div>
                 </div>
             </div>
-    
+
+<script type="text/javascript">
+
+
+var btnPopup = document.getElementById('btnPopup');
+var close =    document.getElementById('close');
+var submit =   document.getElementById('submit');
+
+
+        function openModal() 
+        {
+            var overlay = document.getElementById("overlay");
+            if (overlay.style.display == 'block') 
+            {
+                overlay.style.display = 'none' ;
+            } 
+            else 
+            {
+                overlay.style.display = 'block';
+            }
+        }
+    </script>
     

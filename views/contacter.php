@@ -12,7 +12,7 @@
 													</p>
 												</div>
 												<div class="form-group">
-													<input class="form-control" type="text" name="name" placeholder="Nom" />
+													<input class="form-control" type="text" name="nom" placeholder="Nom" />
 												</div>
 												<div class="form-group">
 													<input class="form-control" type="email" name="email" placeholder="Email" />

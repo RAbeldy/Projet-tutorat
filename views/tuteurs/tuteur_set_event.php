@@ -40,7 +40,7 @@
                                                                 foreach ($donnees as $elt) 
                                                             {
                                                              ?>
-                                                                <option value="<?= $elt['user']->getId_user(); ?>"><?= $elt['user']->getNom().' '.$elt['user']->getPrenom() ;?></option>
+                                                                <option value="<?= $elt->getId_user(); ?>"> <?= $elt->getNom().' '.$elt->getPrenom() ;?></option>
                                                             <?php
                                                             }
                                                             ?>

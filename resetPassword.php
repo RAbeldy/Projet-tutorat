@@ -33,20 +33,20 @@ if (isset($_POST['reset_email']) AND isset($_POST['password']) AND isset($_POST[
 	        
 			//On enregistre le nouveau mot de passe dans la bdd
 			$updatePWD = $bdd->prepare('UPDATE user SET password=? WHERE email=?');
-			$updatePWD->execute(array(password_hash($pwd1, PASSWORD_DEFAULT), $login_mail));
+			$updatePWD->execute(array($pwd1, $login_mail));
 			$resultat="1";
-			//header('location:index.php');
+			header('location:index.php?controller=users&action=connexion');
 		}
 		else
 		{
          $resultat="0 doesn't exist in database";
-		//header('location:index.php');
+		 header('location:index.php?controller=users&action=resetPassword');
 
 		}
 }
 else {
-		$resultat="0 password doesn't match";
-		//header('location:index.php');
+		$resultat="0 the two passwords you filled in the form do not match";
+		header('location:index.php?controller=users&action=resetPassword');
 	}
 echo ($resultat);
 }

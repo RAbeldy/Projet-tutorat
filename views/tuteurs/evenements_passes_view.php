@@ -13,6 +13,7 @@
                                                 <p class="text-primary m-0 font-weight-bold">
                                                     Historique
                                                 </p>
+                                                <?php include('retour.php') ?>
                                             </div>
                                             <div class="card-body">
                                                 <div class="row">

@@ -18,7 +18,7 @@
     <link rel="stylesheet" href="assets/fonts/ionicons.min.css?h=0692f36eb27607e4837760bbbf813d92">
     <link rel="stylesheet" href="assets/css/Footer-Basic.css?h=d15dfcb68fabe0442ff06063b052477c">
     <link rel="stylesheet" href="assets/css/styles.css?h=1637acf6632f17b3758401ceb35eb91e">
-    <!-- login-->
+    <!-- sign up-->
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css"> 
     <link rel="stylesheet" href="assets/fonts/font-awesome.min.css">
     <link rel="stylesheet" href="assets/fonts/ionicons.min.css">
@@ -39,7 +39,8 @@
     <!-- upadte account -->
     <link rel="stylesheet" href="assets/css/Profile-Edit-Form-1.css?h=941c84e96020d5a5b03f80619fed6ea9">
     <link rel="stylesheet" href="assets/css/Profile-Edit-Form.css?h=0d932fa81301936f118cc8607c135e19">
-    <!-- pop up -->
+    <!-- login-->
+    <link rel="stylesheet" href="assets/css/Login-Form.css?h=20d7842de129d800e792499681f0b672">
 
 </head>
 
@@ -235,7 +236,7 @@
     <script src="assets/js/Navbarbuttonsignupsignin-modal-form.js?h=9ce049da3c28fd2ded69977163ac47a3"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.js"></script>
     <script src="assets/js/theme.js?h=6d33b44a6dcb451ae1ea7efc7b5c5e30"></script>
-    <script src="assets/js/popup.js"></script>
+    
 </body>
 
 </html>

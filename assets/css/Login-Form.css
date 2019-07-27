@@ -1,6 +1,6 @@
 .login-clean {
   background: #f1f7fc;
-  padding: 80px 0;
+  padding: 100px 0;
 }
 
 .login-clean form {
@@ -18,7 +18,7 @@
   text-align: center;
   padding: 0 0 20px;
   font-size: 100px;
-  color: #56c6c6;
+  color: rgb(244,71,107);
 }
 
 .login-clean form .form-control {
@@ -34,7 +34,7 @@
 }
 
 .login-clean form .btn-primary {
-  background: #56c6c6;
+  background: #f4476b;
   border: none;
   border-radius: 4px;
   padding: 11px;
@@ -65,3 +65,4 @@
   opacity: 1;
   text-decoration: none;
 }
+
