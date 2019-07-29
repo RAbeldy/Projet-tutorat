@@ -45,13 +45,13 @@
                         <div class="col">
                             <div class="form-group">
                                 <label>Mot de Passe</label>
-                                <input class="form-control" type="password" name="password" required>
+                                <input class="form-control" type="password" name="password" id="password"onkeyup='javascript:checke();' required>
                             </div>
                         </div>
                         <div class="col-sm-12 col-md-6">
                             <div class="form-group">
-                                <label>Confirmer Mot de Passe&nbsp;</label>
-                                <input class="form-control" type="password" name="confirmer_password" required>
+                                <label>Confirmer Mot de Passe&nbsp;</label> <!-- &nbsp permet de forcer un blanc -->
+                                <input class="form-control" type="password" name="confirmer_password" id="confirm_password" onkeyup='javascript:checke();' required>
                             </div>
                         </div>
                     </div>
@@ -76,4 +76,15 @@
        {
         confirm('etes vous sur de vouloir modifier');
        }
+       //Control password
+var checke = function() {
+  if (document.getElementById('password').value ==
+    document.getElementById('confirm_password').value) {
+    document.getElementById('mess').style.color = 'green';
+    document.getElementById('mess').innerHTML = 'matching';
+  } else {
+    document.getElementById('mess').style.color = 'red';
+    document.getElementById('mess').innerHTML = 'not matching';
+  }
+}
    </script>

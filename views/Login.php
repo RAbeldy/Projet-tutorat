@@ -1,8 +1,9 @@
     <div class="login-clean">
-        <?php  include('views/alert_view.php'); ?>
+        
         <form method="post" action="?controller=users&action=connexion">
             <h2 class="sr-only">Login Form</h2>
             <div class="illustration"><i class="icon ion-ios-navigate"></i></div>
+            <?php  include('views/alert_view.php'); ?>
             <div class="form-group"><input class="form-control" type="email" name="email" placeholder="Email"></div>
             <div class="form-group"><input class="form-control" type="password" name="password" id= "myInput" placeholder="Password"></div>
             <p><input type="checkbox" onclick="myFunction()"/>Show password</p>

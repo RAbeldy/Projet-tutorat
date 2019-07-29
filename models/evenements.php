@@ -65,7 +65,7 @@ class Evenements
     {
         $this->nb_places = $nb_places ;
     }
-    public function setDuree($duree)
+    public function setDuree($duree) 
     {
         $this->Duree= $duree;
     }
@@ -115,7 +115,7 @@ class Evenements
     {
         $db = Db::getInstance();
         $list=[];
-        $req= $db->query(" SELECT t.libelle,e.id_evenement,e.date_evenement,e.lieu,pe.valide as validé,p.duree as duree  FROM evenement as e INNER JOIN tutorat as t ON e.id_tutorat= t.id_tutorat INNER JOIN participer_evenement as pe ON e.id_evenement = pe.id_evenement INNER JOIN planning_event as p ON e.id_planning = p.id_planning WHERE pe.date_evenement < NOW() AND pe.id_user= $id_user ");
+        $req= $db->query(" SELECT t.libelle,e.id_evenement,e.date_evenement,e.lieu,pe.valide as validé,p.duree as duree  FROM evenement as e INNER JOIN tutorat as t ON e.id_tutorat= t.id_tutorat INNER JOIN participer_evenement as pe ON e.id_evenement = pe.id_evenement INNER JOIN planning_event as p ON e.id_planning = p.id_planning WHERE pe.date_evenement < NOW() AND pe.id_user= $id_user ORDER BY e.date_evenement DESC");
         
         foreach($req->fetchAll() as $data)
         { 
@@ -133,7 +133,7 @@ class Evenements
     {
         $db = Db::getInstance();
         $list=[];
-        $req= $db->query(' SELECT t.libelle as libelle,e.id_evenement,e.date_evenement,e.lieu,e.nb_tuteurs,e.nb_places,p.duree as duree FROM evenement as e INNER JOIN tutorat as t ON e.id_tutorat= t.id_tutorat INNER JOIN planning_event as p ON e.id_planning = p.id_planning WHERE t.libelle <> "TUTORAT_PERSONNALISE" AND e.date_evenement > NOW() AND e.id_evenement NOT IN (SELECT id_evenement FROM participer_evenement)');
+        $req= $db->query(' SELECT t.libelle as libelle,e.id_evenement,e.date_evenement,e.lieu,e.nb_tuteurs,e.nb_places,p.duree as duree FROM evenement as e INNER JOIN tutorat as t ON e.id_tutorat= t.id_tutorat INNER JOIN planning_event as p ON e.id_planning = p.id_planning WHERE t.libelle <> "TUTORAT_PERSONNALISE" AND e.date_evenement > NOW() AND e.id_evenement NOT IN (SELECT id_evenement FROM participer_evenement) ORDER BY e.date_evenement DESC');
         
         
         foreach($req->fetchAll() as $data)
@@ -155,7 +155,7 @@ class Evenements
     {
         $list=[];
        $db = Db::getInstance();
-        $req= $db->query(" SELECT t.libelle as libelle,e.id_evenement,e.date_evenement,e.lieu  FROM evenement as e, tutorat as t, participer_evenement as pe WHERE e.id_evenement=pe.id_evenement  AND e.id_tutorat= t.id_tutorat   AND e.date_evenement > NOW() AND pe.id_user= $id_user ");
+        $req= $db->query(" SELECT t.libelle as libelle,e.id_evenement,e.date_evenement,e.lieu  FROM evenement as e, tutorat as t, participer_evenement as pe WHERE e.id_evenement=pe.id_evenement  AND e.id_tutorat= t.id_tutorat   AND e.date_evenement > NOW() AND pe.id_user= $id_user ORDER BY e.date_evenement DESC" );
         
         
         foreach($req->fetchAll() as $data)

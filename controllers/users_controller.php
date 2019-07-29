@@ -6,7 +6,7 @@ class UsersController
 
 
 public function choixStatut(){
-	require_once('views/choixStatut.php');
+	require_once('views/choix_statut_signup.php');
 }
 // page d'authentification
 public function login()  
@@ -27,6 +27,10 @@ public function connexion()
 	        	elseif($_SESSION['id_statut'] == 16)
 	        	{
 	        		require_once('views/tutores/interface_tutore.php');
+	        	}
+	        	elseif($_SESSION['id_statut'] == 8)
+	        	{
+	        		require_once('views/admin/interface_admin.php');
 	        	}
 	        	else
 	        	{

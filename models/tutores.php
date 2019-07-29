@@ -54,7 +54,7 @@ class Tutores
     {
        $db = Db::getInstance();
        $list=[];
-       $req = $db->prepare(" SELECT   u.id_user,nom,prenom,date_naissance,email,phone,a.ville ,a.adress ,a.code_postal  FROM user as u, statut as s,adresse as a, avoir_statut as at,en_attente as e WHERE at.id_statut = s.id_statut AND at.id_user = u.id_user AND  u.id_adresse = a.id_adresse AND u.id_user= e.id_tuteurs AND e.id_tutores=  ? AND e.provenance = 'TUTORE' AND e.statut_liaison= 'INACTIF'");
+       $req = $db->prepare(" SELECT   u.id_user,nom,prenom,date_naissance,email,phone,a.ville ,a.adress ,a.code_postal  FROM user as u, statut as s,adresse as a, avoir_statut as at,en_attente as e WHERE at.id_statut = s.id_statut AND at.id_user = u.id_user AND  u.id_adresse = a.id_adresse AND u.id_user= e.id_tuteurs AND e.id_tutores=  ? AND e.provenance = 'TUTORE' AND e.statut_liaison= 'INACTIF' ORDER BY nom ASC");
         $req->execute(array($id_user));
 
         
@@ -93,7 +93,7 @@ class Tutores
     {
         $db = Db::getInstance();
         $list=[];
-        $req = $db->prepare(" SELECT DISTINCT u.id_user,u.nom,u.prenom,u.date_naissance,u.email,u.phone,a.ville ,a.adress ,a.code_postal  FROM user as u, statut as s,adresse as a, avoir_statut as at,matchs as m WHERE at.id_statut = s.id_statut AND at.id_user = u.id_user AND  u.id_adresse = a.id_adresse AND u.id_user= m.id_tuteurs AND m.id_tutores =  ? ");
+        $req = $db->prepare(" SELECT DISTINCT u.id_user,u.nom,u.prenom,u.date_naissance,u.email,u.phone,a.ville ,a.adress ,a.code_postal  FROM user as u, statut as s,adresse as a, avoir_statut as at,matchs as m WHERE at.id_statut = s.id_statut AND at.id_user = u.id_user AND  u.id_adresse = a.id_adresse AND u.id_user= m.id_tuteurs AND m.id_tutores =  ? ORDER BY nom ASC ");
         $req->execute(array($id_user));
 
         
@@ -119,7 +119,7 @@ class Tutores
     {
         $db = Db::getInstance();
         $list=[];
-        $req= $db->query("SELECT DISTINCT u.id_user,u.nom,u.prenom,u.date_naissance,u.email,u.phone,a.ville ,a.adress ,a.code_postal  FROM user as u, statut as s,adresse as a, avoir_statut as at, etat as e WHERE at.id_statut = s.id_statut AND at.id_user = u.id_user AND  u.id_adresse = a.id_adresse AND e.id_etat = at.id_etat AND e.libelle = 'LIBRE' AND s.libelle= 'TUTEUR' AND u.id_user NOT IN (SELECT id_tuteurs as id_user FROM matchs) AND u.id_user NOT IN (SELECT id_tuteurs as id_user FROM en_attente)");
+        $req= $db->query("SELECT DISTINCT u.id_user,u.nom,u.prenom,u.date_naissance,u.email,u.phone,a.ville ,a.adress ,a.code_postal  FROM user as u, statut as s,adresse as a, avoir_statut as at, etat as e WHERE at.id_statut = s.id_statut AND at.id_user = u.id_user AND  u.id_adresse = a.id_adresse AND e.id_etat = at.id_etat AND e.libelle = 'LIBRE' AND s.libelle= 'TUTEUR' AND u.id_user NOT IN (SELECT id_tuteurs as id_user FROM matchs) AND u.id_user NOT IN (SELECT id_tuteurs as id_user FROM en_attente) ORDER BY nom ASC");
         
       foreach ($req->fetchAll() as $data)
       {
@@ -146,7 +146,7 @@ class Tutores
         $list=[];
 
          
-                $req= $db->prepare('SELECT u.id_user,nom,prenom,date_naissance,email,phone,a.ville as ville,a.adress as adress,a.code_postal as code_postal FROM user as u, statut as s,adresse as a, avoir_statut as at, en_attente as e WHERE at.id_statut = s.id_statut AND at.id_user = u.id_user AND  u.id_adresse = a.id_adresse  AND e.provenance= "TUTEUR" AND e.statut_liaison="INACTIF"  AND u.id_user= e.id_tuteurs AND e.id_tutores = ?  ');
+                $req= $db->prepare('SELECT u.id_user,nom,prenom,date_naissance,email,phone,a.ville as ville,a.adress as adress,a.code_postal as code_postal FROM user as u, statut as s,adresse as a, avoir_statut as at, en_attente as e WHERE at.id_statut = s.id_statut AND at.id_user = u.id_user AND  u.id_adresse = a.id_adresse  AND e.provenance= "TUTEUR" AND e.statut_liaison="INACTIF"  AND u.id_user= e.id_tuteurs AND e.id_tutores = ? ORDER BY nom ASC ');
                 $req->execute(array($id_user));
 
                    

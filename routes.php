@@ -15,6 +15,9 @@
       case 'tutores':
         $controller = new TutoresController();
         break;
+      case 'admin':
+        $controller = new AdminController();
+        break;
       case 'evenements':
        $controller = new EvenementsController();
         break;
@@ -30,6 +33,8 @@
                        'tuteurs'=>['interface_tuteur','tuteur_set_event','selection_tutores','tutores_list','notifications','waiting_list','link','accept_link','delete_link','working_list','wish_list','cancel_wish','update_account','modify_account','contact','message'],
 
                        'tutores'=>['interface_tutore','selection_tuteurs','tuteurs_list','notifications','waiting_list','link','accept_link','working_list','wish_list','cancel_wish','update_account','modify_account','contact','message'],
+
+                       'admin'=>['interface_admin','interface_admin_tuteur'],
 
                        'evenements' =>['set_event','cancel_participation','display_pasts_events','display_future_events','display_subscribed_events','subscribe_to_event','subscription_list']);
   if (array_key_exists($controller, $controllers))

@@ -18,6 +18,10 @@ class TuteursController
           {
             $tuteurs = new Tuteurs();
             $donnees = $tuteurs->Get_working_list($_SESSION['id_user']);
+
+            $controller_report='tuteurs';
+            $fonction_back='interface_tuteur';
+
             require_once('views/tuteurs/tuteur_set_event.php'); // on charge la vue adéquate
           }
         else

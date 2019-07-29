@@ -5,5 +5,5 @@
                 <div style: color="white"> <p> <?= $_SESSION['alert'] ?> </p> </div> 
                 <?php
             }
-            unset( $_SESSION['alert']); // on détruit la superglobale $_SESSION['alert']vpour la prochaine utilisattion
+            unset( $_SESSION['alert']); // on détruit la superglobale $_SESSION['alert']pour la prochaine utilisattion
 ?>

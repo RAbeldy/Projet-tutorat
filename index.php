@@ -87,10 +87,18 @@
                 ?>
                     <li class="nav-item"><a href="?controller=tutores&action=interface_tutore" class="nav-link">Mon tutorat </a>
                     </li>
-                     <li class="nav-item"><a href="?controller=tutores&action=selection_tuteurs" class="nav-link">Mes Tutorés </a>
+                     <li class="nav-item"><a href="?controller=tutores&action=selection_tuteurs" class="nav-link">Mon Tuteur </a>
                     </li>
                      <li class="nav-item"><a href="#" class="nav-link">Le tutorat: ce que je dois savoir </a>
                     </li>
+                <?php
+                }
+                elseif(isset($_SESSION['statut']) && preg_match('#^ADMIN#', $_SESSION['statut']) == 1)
+                { 
+                ?>
+                    <li class="nav-item"><a href="#" class="nav-link">Les tutorats que je dirige </a>
+                    </li>
+                    
                 <?php
                 }
                 else
@@ -201,6 +209,43 @@
                         <div class="text-center d-none d-md-inline"><button class="btn rounded-circle border-0" id="sidebarToggle" type="button"></button></div>
                     </div>
                 </nav>
+            <?php
+            }
+            elseif(isset($_SESSION['statut']) && preg_match('#^ADMIN#', $_SESSION['statut']) == 1) // menu latéral pour admin
+            {
+             ?>
+                <nav class="navbar navbar-dark align-items-start sidebar sidebar-dark accordion bg-gradient-primary p-0">
+                <div class="container-fluid d-flex flex-column p-0">
+                    <a class="navbar-brand d-flex justify-content-center align-items-center sidebar-brand m-0" href="#">
+                        <div class="sidebar-brand-icon rotate-n-15"><i class="far fa-id-card"></i></div>
+                        <div class="sidebar-brand-text mx-3"><span>Administrateur</span></div>
+                    </a>
+                    <hr class="sidebar-divider my-0">
+                    <ul class="nav navbar-nav text-light" id="accordionSidebar">
+                        <li class="nav-item" role="presentation">
+                            <a class="nav-link active" href="?controller=admin&action=interface_admin_tuteur">
+                                <i class="fab fa-phoenix-squadron"></i>
+                                <span>Tuteur</span>
+                            </a>
+                            <a class="nav-link" href="#">
+                                <i class="fab fa-phoenix-squadron"></i>
+                                <span>Tutoré</span>
+                            </a>
+                            <a class="nav-link" href="#">
+                                <i class="fab fa-phoenix-squadron"></i>
+                                <span>Evenement</span>
+                            </a>
+                            <a class="nav-link" href="#">
+                                <i class="fab fa-phoenix-squadron"></i>
+                                <span>Contact</span>
+                            </a>
+                        </li>
+                    </ul>
+                    <div class="text-center d-none d-md-inline">
+                        <button class="btn" id="sidebarToggle" type="button"></button>
+                    </div>
+                </div>
+            </nav>
             <?php
             }
             else //  on bloque l'afficahge de la navbar si pas connecté

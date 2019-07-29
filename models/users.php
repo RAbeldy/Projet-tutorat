@@ -188,7 +188,7 @@ require_once('connexion.php');
     } 
     else
     {
-      echo $request->rowCount();
+      //echo $request->rowCount();
         $_SESSION['alert']= "<strong>email et/ou mot de passe incorrects<strong/>";
     }
     return ($request->rowCount()) ;
