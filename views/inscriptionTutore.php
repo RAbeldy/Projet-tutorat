@@ -24,6 +24,79 @@ var check = function() {
   }
 }
 
+function validateForm() { 
+        if (document.getElementById("j").value == "") 
+        { 
+        alert("Un ou plusieurs champ(s) non rempli(s)"); 
+        return false; 
+        } 
+        if (document.getElementById("numero2").value == "") 
+        { 
+        alert("Un ou plusieurs champ(s) non rempli(s)"); 
+        return false; 
+        } 
+        if (document.getElementById("j").value == "") 
+        { 
+        alert("Un ou plusieurs champ(s) non rempli(s)"); 
+        return false; 
+        } 
+        if (document.getElementById("k").value == "") 
+        { 
+        alert("Un ou plusieurs champ(s) non rempli(s)"); 
+        return false; 
+        } 
+        if (document.getElementById("c").value == "") 
+        { 
+        alert("Un ou plusieurs champ(s) non rempli(s)"); 
+        return false; 
+        } 
+        if (document.getElementById("d").value == "") 
+        { 
+        alert("Un ou plusieurs champ(s) non rempli(s)"); 
+        return false; 
+        } 
+        if (document.getElementById("e").value == "") 
+        { 
+        alert("Un ou plusieurs champ(s) non rempli(s)"); 
+        return false; 
+        } 
+        if (document.getElementById("f").value == "") 
+        { 
+        alert("Un ou plusieurs champ(s) non rempli(s)"); 
+        return false; 
+        } 
+        if (document.getElementById("g").value == "") 
+        { 
+        alert("Un ou plusieurs champ(s) non rempli(s)"); 
+        return false; 
+        } 
+        if (document.getElementById("h").value == "") 
+        { 
+        alert("Un ou plusieurs champ(s) non rempli(s)"); 
+        return false; 
+        } 
+        if (document.getElementById("password").value == "") 
+        { 
+        alert("Un ou plusieurs champ(s) non rempli(s)"); 
+        return false; 
+        }   
+        if (document.getElementById("k").value == "") 
+        { 
+        alert("Un ou plusieurs champ(s) non rempli(s)"); 
+        return false; 
+        }  
+        if (document.getElementById("confirm_password").value == "") 
+        { 
+        alert("Un ou plusieurs champ(s) non rempli(s)"); 
+        return false; 
+        }  
+        if (document.getElementById("i").value == "") 
+        { 
+        alert("Un ou plusieurs champ(s) non rempli(s)"); 
+        return false; 
+        }                                       
+        return true; 
+    } 
 
 </script>
 

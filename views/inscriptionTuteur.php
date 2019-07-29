@@ -21,11 +21,86 @@ function checkEmail() {
             return false;
          }
 }
+
+function validateForm() { 
+        if (document.getElementById("numero1").value == "") 
+        { 
+        alert("Un ou plusieurs champ(s) non rempli(s)"); 
+        return false; 
+        } 
+       
+        if (document.getElementById("a").value == "") 
+        { 
+        alert("Un ou plusieurs champ(s) non rempli(s)"); 
+        return false; 
+        } 
+        if (document.getElementById("b").value == "") 
+        { 
+        alert("Un ou plusieurs champ(s) non rempli(s)"); 
+        return false; 
+        } 
+        if (document.getElementById("c").value == "") 
+        { 
+        alert("Un ou plusieurs champ(s) non rempli(s)"); 
+        return false; 
+        } 
+        if (document.getElementById("d").value == "") 
+        { 
+        alert("Un ou plusieurs champ(s) non rempli(s)"); 
+        return false; 
+        } 
+        if (document.getElementById("e").value == "") 
+        { 
+        alert("Un ou plusieurs champ(s) non rempli(s)"); 
+        return false; 
+        } 
+        if (document.getElementById("f").value == "") 
+        { 
+        alert("Un ou plusieurs champ(s) non rempli(s)"); 
+        return false; 
+        } 
+        if (document.getElementById("g").value == "") 
+        { 
+        alert("Un ou plusieurs champ(s) non rempli(s)"); 
+        return false; 
+        } 
+        if (document.getElementById("h").value == "") 
+        { 
+        alert("Un ou plusieurs champ(s) non rempli(s)"); 
+        return false; 
+        } 
+        if (document.getElementById("password").value == "") 
+        { 
+        alert("Un ou plusieurs champ(s) non rempli(s)"); 
+        return false; 
+        }   
+        if (document.getElementById("passworde").value == "") 
+        { 
+        alert("Un ou plusieurs champ(s) non rempli(s)"); 
+        return false; 
+        }  
+        if (document.getElementById("confirm_password").value == "") 
+        { 
+        alert("Un ou plusieurs champ(s) non rempli(s)"); 
+        return false; 
+        }  
+        if (document.getElementById("confirme_password").value == "") 
+        { 
+        alert("Un ou plusieurs champ(s) non rempli(s)"); 
+        return false; 
+        }      
+        if (document.getElementById("i").value == "") 
+        { 
+        alert("Un ou plusieurs champ(s) non rempli(s)"); 
+        return false; 
+        }                                       
+        return true; 
+    } 
 </script>
 
         <!-- TUTEUR -->
 <div class="login-dark">        
-    <form method="post" action="createAccount.php">
+    <form method="post" onsubmit='javascript:validateForm();' action="createAccount.php">
      <div class="form-group" id="Yes" name="text1" style="display:block;">
                 <div class="illustration">
                   <i class="icon ion-person-add"></i>
@@ -74,7 +149,7 @@ function checkEmail() {
                 </div>
                 <div class="form-group">
                     <button class="btn btn-primary btn-block" type="submit" 
-                    onclick='javascript:checkEmail();'>sign up</button>
+                    onclick='javascript:checkEmail();javascript:validateForm();'>sign up</button>
                 </div>
       </div>
     </form> 
