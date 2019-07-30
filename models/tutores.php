@@ -164,6 +164,19 @@ class Tutores
                   }
                   return $list ;
     }
+    public function Validate_hours($id_e)
+    {
+        $db = Db::getInstance();
+
+        $req= $db->prepare("UPDATE participer_evenement SET valide='OUI' WHERE id_evenement=?");
+        $req->execute(array($id_e));
+        
+        // on insère dans la table de validation des heures
+        $req= $db->prepare("INSERT INTO validation_heure(id_evenement,id_tuteurs,durée) VALUES(?,(SELECT id_user FROM evenement WHERE id_evenement= ?),4)");
+        $req->execute(array($id_e,$id_e));
+
+
+    }
         
         
 }

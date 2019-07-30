@@ -71,7 +71,7 @@
                                                             {
                                                              foreach ($donnees as $elt) 
                                                             {
-                                                                if( $elt['tutorat']== 'TUTORAT_PERSONNALISE' )
+                                                                if( $elt['type_tutorat']== 'TUTORAT_PERSONNALISE' )
                                                                   {
                                                              ?>
 
@@ -80,7 +80,7 @@
                                                               <tr >
 
  
-                                                                  <td> <label><?=$elt['tutorat']?></label></td>
+                                                                  <td> <label><?=$elt['type_tutorat']?></label></td>
                                                                   <td><label><?=$elt['evenement']->getDate_evenement()?></label></td>
                                                                   <td><label><?=$elt['evenement']->getLieu()?></label></td>
                                                                 

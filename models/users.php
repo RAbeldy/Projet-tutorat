@@ -141,7 +141,7 @@ require_once('connexion.php');
     public static function Get_info($id_user)
     {
       $db = Db::getInstance();
-      $req= $db->query("SELECT ville,adress,complement_adress,code_postal FROM adresse as a,user as u WHERE a.id_adresse = u.id_adresse AND u.id_user = $id_user ");
+      $req= $db->query("SELECT ville,adress,complement_adress,code_postal,u.chemin_photo as chemin_photo FROM adresse as a,user as u WHERE a.id_adresse = u.id_adresse AND u.id_user = $id_user ");
 
       foreach ($req->fetchAll() as $temp) 
       {
@@ -150,6 +150,7 @@ require_once('connexion.php');
         $user->setCode_postal($temp['code_postal']);
         $user->setVille($temp['ville']);
         $user->setCom_adress($temp['complement_adress']); 
+        $user->setChemin_photo($temp['chemin_photo']); 
       }
       return $user;
     }
@@ -192,6 +193,13 @@ require_once('connexion.php');
         $_SESSION['alert']= "<strong>email et/ou mot de passe incorrects<strong/>";
     }
     return ($request->rowCount()) ;
+ }
+
+ public function Set_picture_path($id_user)
+ {
+  $db=Db::getInstance();
+  $req= $db->prepare("UPDATE user SET chemin_photo= ? WHERE id_user= $id_user");
+  $req->execute(array( $this->chemin_photo));
  }
 
    public static function display_all()

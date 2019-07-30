@@ -157,7 +157,7 @@
                                     <i class="fab fa-phoenix-squadron"></i>
                                     <span>Evénement</span>
                                 </a>
-                                <a class="nav-link" href="?controller=tuteurs&action=update_account">
+                                <a class="nav-link" href="?controller=users&action=update_account">
                                     <i class="fab fa-phoenix-squadron"></i>
                                     <span>Mon Compte</span>
                                 </a>
@@ -192,7 +192,7 @@
                                     <i class="fab fa-phoenix-squadron"></i>
                                     <span>Evénement</span>
                                 </a>
-                                <a class="nav-link" href="?controller=tutores&action=update_account">
+                                <a class="nav-link" href="?controller=users&action=update_account">
                                     <i class="fab fa-phoenix-squadron"></i>
                                     <span>Mon Compte</span>
                                 </a>

@@ -83,7 +83,7 @@ class Evenements
         	if( $_SESSION['id_statut'] == '13')
         	{
         	
-        	$req= $db->prepare( 'INSERT INTO evenement(date_evenement,lieu,nb_tutores,nb_tuteurs,nb_places,id_planning,id_statut_evenement,id_tutorat,id_user) VALUES(?,?,?,?,?,(SELECT id_planning from planning_event as pe WHERE pe.duree= ?),(SELECT id_statut_evenement from statut_evenement as se WHERE se.libelle= "A_VENIR"),(SELECT id_tutorat FROM tutorat as t WHERE t.libelle = "TUTORAT_PERSONNALISE"),?)');
+        	$req= $db->prepare( 'INSERT INTO evenement(date_evenement,lieu,nb_tutores,nb_tuteurs,nb_places,id_planning,id_statut_evenement,id_tutorat,id_user) VALUES(?,?,?,?,?,(SELECT id_planning from planning_event as pe WHERE pe.duree= ?),(SELECT id_statut_evenement from statut_evenement as se WHERE se.libelle= "A_VENIR"),(SELECT id_tutorat FROM type_tutorat as t WHERE t.libelle = "TUTORAT_PERSONNALISE"),?)');
         	$req->execute(array($this->getDate_evenement(),$this->getLieu(),'0','0','0',$this->getDuree(),$id_tuteur));
             
             // on insère directement un tutorat personnalisé dans les évènements auxquels il s'est inscrit
@@ -99,7 +99,7 @@ class Evenements
             else // un admin crée un évènement
             {
              $db = Db::getInstance();
-        	$req= $db->prepare( 'INSERT INTO evenement(date_evenement,lieu,nb_tutorés,nb_tuteurs,id_planning,id_statut_evenement,id_tutorat,id_user) VALUES(?,?,?,?,(SELECT id_planning from planning_event as pe WHERE pe.duree= ?),(SELECT id_statut_evenement from statut_evenement as se WHERE se.libelle= "A_VENIR"),(SELECT id_tutorat FROM tutorat as t WHERE t.libelle = "TUTORAT_PERSONNALISE"),'.$_SESSION['id_user'].'))');
+        	$req= $db->prepare( 'INSERT INTO evenement(date_evenement,lieu,nb_tutorés,nb_tuteurs,id_planning,id_statut_evenement,id_tutorat,id_user) VALUES(?,?,?,?,(SELECT id_planning from planning_event as pe WHERE pe.duree= ?),(SELECT id_statut_evenement from statut_evenement as se WHERE se.libelle= "A_VENIR"),(SELECT id_tutorat FROM type_tutorat as t WHERE t.libelle = "TUTORAT_PERSONNALISE"),'.$_SESSION['id_user'].'))');
         	$req->execute($this->getDate_evenement(),$this->getLieu(),$this->getNb_tutorés(),$this->getNb_tuteurs());	
             }
             return 0;
@@ -115,7 +115,7 @@ class Evenements
     {
         $db = Db::getInstance();
         $list=[];
-        $req= $db->query(" SELECT t.libelle,e.id_evenement,e.date_evenement,e.lieu,pe.valide as validé,p.duree as duree  FROM evenement as e INNER JOIN tutorat as t ON e.id_tutorat= t.id_tutorat INNER JOIN participer_evenement as pe ON e.id_evenement = pe.id_evenement INNER JOIN planning_event as p ON e.id_planning = p.id_planning WHERE pe.date_evenement < NOW() AND pe.id_user= $id_user ORDER BY e.date_evenement DESC");
+        $req= $db->query(" SELECT t.libelle,e.id_evenement,e.date_evenement,e.lieu,pe.valide as validé,p.duree as duree  FROM evenement as e INNER JOIN type_tutorat as t ON e.id_tutorat= t.id_tutorat INNER JOIN participer_evenement as pe ON e.id_evenement = pe.id_evenement INNER JOIN planning_event as p ON e.id_planning = p.id_planning WHERE pe.date_evenement < NOW() AND pe.id_user= $id_user ORDER BY e.date_evenement DESC");
         
         foreach($req->fetchAll() as $data)
         { 
@@ -125,7 +125,7 @@ class Evenements
           $event->setLieu($data['lieu']);
           
          
-          $list []= array('evenement' => $event,'tutorat' => $data['libelle'],'participer_evenement' => $data['validé'],'planning_event' => $data['duree']);
+          $list []= array('evenement' => $event,'type_tutorat' => $data['libelle'],'participer_evenement' => $data['validé'],'planning_event' => $data['duree']);
         }
         return $list; 
     }
@@ -133,7 +133,7 @@ class Evenements
     {
         $db = Db::getInstance();
         $list=[];
-        $req= $db->query(' SELECT t.libelle as libelle,e.id_evenement,e.date_evenement,e.lieu,e.nb_tuteurs,e.nb_places,p.duree as duree FROM evenement as e INNER JOIN tutorat as t ON e.id_tutorat= t.id_tutorat INNER JOIN planning_event as p ON e.id_planning = p.id_planning WHERE t.libelle <> "TUTORAT_PERSONNALISE" AND e.date_evenement > NOW() AND e.id_evenement NOT IN (SELECT id_evenement FROM participer_evenement) ORDER BY e.date_evenement DESC');
+        $req= $db->query(' SELECT t.libelle as libelle,e.id_evenement,e.date_evenement,e.lieu,e.nb_tuteurs,e.nb_places,p.duree as duree FROM evenement as e INNER JOIN type_tutorat as t ON e.id_tutorat= t.id_tutorat INNER JOIN planning_event as p ON e.id_planning = p.id_planning WHERE t.libelle <> "TUTORAT_PERSONNALISE" AND e.date_evenement > NOW() AND e.id_evenement NOT IN (SELECT id_evenement FROM participer_evenement) ORDER BY  e.date_evenement DESC');
         
         
         foreach($req->fetchAll() as $data)
@@ -145,7 +145,7 @@ class Evenements
           $event->setLieu($data['lieu']);
           $event->setNb_places($data['nb_places']);
          
-          $list []= array('evenement' => $event,'tutorat' => $data['libelle'],'planning_event' => $data['duree']);
+          $list []= array('evenement' => $event,'type_tutorat' => $data['libelle'],'planning_event' => $data['duree']);
         }
         return $list; 
         
@@ -155,7 +155,7 @@ class Evenements
     {
         $list=[];
        $db = Db::getInstance();
-        $req= $db->query(" SELECT t.libelle as libelle,e.id_evenement,e.date_evenement,e.lieu  FROM evenement as e, tutorat as t, participer_evenement as pe WHERE e.id_evenement=pe.id_evenement  AND e.id_tutorat= t.id_tutorat   AND e.date_evenement > NOW() AND pe.id_user= $id_user ORDER BY e.date_evenement DESC" );
+        $req= $db->query(" SELECT t.libelle as libelle,e.id_evenement,e.date_evenement,e.lieu  FROM evenement as e, type_tutorat as t, participer_evenement as pe WHERE e.id_evenement=pe.id_evenement  AND e.id_tutorat= t.id_tutorat   AND e.date_evenement > NOW() AND pe.id_user= $id_user ORDER BY e.date_evenement DESC" );
         
         
         foreach($req->fetchAll() as $data)
@@ -165,7 +165,7 @@ class Evenements
           $event->setDate_evenement($data['date_evenement']);
           $event->setLieu($data['lieu']);
          
-          $list []= array('evenement' => $event,'tutorat' => $data['libelle']);
+          $list []= array('evenement' => $event,'type_tutorat' => $data['libelle']);
         }
         return $list; 
         

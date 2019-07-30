@@ -144,37 +144,22 @@ class TutoresController
             else
                 require_once('views/login.php'); 
         }
-
-
-     public function update_account()
-        {
-            if(isset($_SESSION['id_statut']))// on vérifie que seul un utilisateur connecté peut accéder à ces pages
-            { 
-                $donnees = Users::Get_info($_SESSION['id_user']);    // on récupère les info des user
-                require_once('views/update_account.php');
-            }
+     public function validate_hours()
+     {
+           if(isset($_SESSION['id_statut']))// on vérifie que seul un utilisateur connecté peut accéder à ces pages
+              { 
+                
+                    $tutores = new Tutores();
+                    $tutores->Validate_hours($_POST['id_e']);
+                    require_once('views/tutores/interface_tutore.php');
+               
+              }
             else
                 require_once('views/login.php');
-        }
+     }
 
 
-     public function modify_account()
-        {
-            if(isset($_SESSION['id_statut']))// on vérifie que seul un utilisateur connecté peut accéder à ces pages
-            { 
-                $tuteurs = new Users();
-                $tuteurs->setVille($_POST['ville']);
-                $tuteurs->setAdress($_POST['adresse']);
-                $tuteurs->setCom_adress($_POST['complement_adresse']);
-                $tuteurs->setCode_postal($_POST['code_postal']);
-                $tuteurs->setPassword($_POST['password']);
-
-                $tuteurs->Modify_info($_SESSION['id_user']);    // on update les infos du user
-                require_once('views/tutores/interface_tutore.php');
-            }
-            else
-                require_once('views/login.php');
-        }
+     
      public function contact()
         {
             if(isset($_SESSION['id_statut']))// on vérifie que seul un utilisateur connecté peut accéder à ces pages
@@ -182,7 +167,7 @@ class TutoresController
             else
                 require_once('views/login.php');
         }
-      public function message() // rajouter adresse e-mail
+      public function message() // rajouter adresse e-mail!!!
       {
             if(isset($_SESSION['id_statut']))// on vérifie que seul un utilisateur connecté peut accéder à ces pages
             {    
@@ -200,6 +185,8 @@ class TutoresController
             else
                 require_once('views/login.php');
       }
+
+
 
        
 }

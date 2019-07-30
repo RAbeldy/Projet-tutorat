@@ -27,12 +27,12 @@
 
   // we're adding an entry for the new controller and its actions
   $controllers = array(
-                       'users' => ['login','inscription','save_user','connexion','deconnexion','resetPassword','forgotPassword', 'choixStatut'],
+                       'users' => ['login','inscription','save_user','connexion','deconnexion','resetPassword','forgotPassword', 'choixStatut','update_account','modify_account'],
                        'page'=>['home'],
 
-                       'tuteurs'=>['interface_tuteur','tuteur_set_event','selection_tutores','tutores_list','notifications','waiting_list','link','accept_link','delete_link','working_list','wish_list','cancel_wish','update_account','modify_account','contact','message'],
+                       'tuteurs'=>['interface_tuteur','tuteur_set_event','selection_tutores','tutores_list','notifications','waiting_list','link','accept_link','delete_link','working_list','wish_list','cancel_wish','contact','message'],
 
-                       'tutores'=>['interface_tutore','selection_tuteurs','tuteurs_list','notifications','waiting_list','link','accept_link','working_list','wish_list','cancel_wish','update_account','modify_account','contact','message'],
+                       'tutores'=>['interface_tutore','selection_tuteurs','tuteurs_list','notifications','waiting_list','link','accept_link','working_list','wish_list','cancel_wish','validate_hours','contact','message'],
 
                        'admin'=>['interface_admin','interface_admin_tuteur'],
 

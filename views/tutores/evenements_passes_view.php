@@ -67,12 +67,12 @@
                                                             {
                                                              ?>
 
-                                                              <form method="post" action="#">
+                                                              <form method="post" action="?controller=tutores&action=validate_hours">
                                                                 
                                                               <tr>
 
  
-                                                                  <td> <label><?=$elt['tutorat']?></label></td>
+                                                                  <td> <label><?=$elt['type_tutorat']?></label></td>
                                                                   <td><label><?=$elt['evenement']->getDate_evenement()?></label></td>
                                                                   <td><label><?=$elt['evenement']->getLieu()?></label></td>
                                                                     <td><label > 
