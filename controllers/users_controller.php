@@ -41,7 +41,7 @@ public function connexion()
 	        	}
 	        	elseif($_SESSION['id_statut'] == 11) // ADMIN_MEF
 	        	{
-	        		require_once('views/admin/interface_superadmin.php');
+	        		require_once('views/admin/mef/interface_admin_mef.php');
 	        	}
 	        	elseif($_SESSION['id_statut'] == 14) // sup_lycee
 	        	{
@@ -73,6 +73,22 @@ public function connexion()
 	    {
 	    	require_once('views/login.php');
 	    }
+}
+
+public function redirection() // redirection vers interface en fonction du statut
+{
+  if(isset($_SESSION['id_statut']))// on vérifie que seul un utilisateur connecté peut accéder à ces pages
+    { 
+        if( $_SESSION['id_statut'] == 11)
+        	require_once('views/admin/mef/interface_admin_mef.php');
+        elseif($_SESSION['id_statut'] == 14)
+        	require_once('views/admin/mef/interface_admin_mef.php'); // à compléter
+        else
+        	require_once('views/admin/mef/interface_admin_mef.php');
+    }
+  else
+    require_once('views/login.php');
+  
 }
 public function resetPassword()
 {
@@ -118,8 +134,10 @@ public function modify_account()
                 
                 $tuteurs->Modify_info($_SESSION['id_user']);    // on update les infos du user
                 $this->upload_file();  // on va uploader la photo
-
-                require_once('views/update_account.php');
+                if($_SESSION['id_statut'] == 16)
+                	require_once('views/tutores/interface_tutore.php');
+                else
+                	require_once('views/tuteurs/interface_tuteur.php');
             }
             else
                 require_once('views/login.php');

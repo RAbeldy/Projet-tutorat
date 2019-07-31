@@ -144,13 +144,13 @@ class TutoresController
             else
                 require_once('views/login.php'); 
         }
-     public function validate_hours()
+     public function validate_hours() // tutoré valide les heures de son tuteur 
      {
            if(isset($_SESSION['id_statut']))// on vérifie que seul un utilisateur connecté peut accéder à ces pages
               { 
                 
                     $tutores = new Tutores();
-                    $tutores->Validate_hours($_POST['id_e']);
+                    $tutores->Validate_hours($_POST['id_e']); 
                     require_once('views/tutores/interface_tutore.php');
                
               }

@@ -1,4 +1,5 @@
 
+
     <div id="globalContent">
         <div id="wrapper">
             
@@ -13,8 +14,7 @@
                                     <div class="row">
                                         <div class="card debut">
                                             <div class="card-header py-3">
-                                                <p class="text-primary m-0 font-weight-bold">Participants à l'évenement de <?=$elt['tutorat']?> le <?=$elt['evenement']->getDate_evenement()?> à <?=$elt['evenement']->getLieu()?> <br>
-                                                 <?=$elt['evenement']->getNb_tuteurs()?> appelés et <?=$elt['evenement']->getNb_places()?> y ont éffectivement assisté</p>
+                                                <p class="text-primary m-0 font-weight-bold">Ils sont inscrits</p>
                                                 <?php include('retour.php') ?>
                                             </div>
                                             <div class="card-body">
@@ -53,37 +53,45 @@
                                                     <table class="table dataTable my-0" id="dataTable">
                                                         <thead>
                                                             <tr>
-                                                                
                                                                 <th>Nom</th>
-                                                                <th>Prénom</th>
-                                                                <th>Phone</th>
+                                                                <th>Prenom</th>
                                                                 <th>Email</th>
-                                                                <th>Ecole</th>
-                                                                <th>Niveau</th>
+                                                                <th>Phone</th>
+                                                                <th>Ville</th>
+                                                                <th>Adresse</th>
+                                                                <th>Code_postal</th>
+                                                                
+
+                                                               
                                                             </tr>
-                                                            
                                                         </thead>
                                                         <tbody>
 
                                                             <?php
                                                             if(!is_null($donnees))
                                                             {
-                                                       
-                                                             foreach ($donnees as $elt)
+                                                             foreach ($donnees as $elt) 
                                                             {
                                                              ?>
-                                                              <tr>
+
+                                                              <form method="post" action="?controller=tutores&action=link">
+                                                                
+                                                              <tr >
+
+ 
+                                                                  <td> <label><?=$elt->getNom()?></label></td>
+                                                                  <td><label><?=$elt->getPrenom()?></label></td>
+                                                                  <td><label><?=$elt->getEmail()?></label></td>
+                                                                  <td><label ><?=$elt->getPhone()?></label></td>
+                                                                  <td><label ><?=$elt->getVille()?></label></td>
+                                                                  <td><label ><?=$elt->getAdress()?></label></td>
+                                                                  <td><label ><?=$elt->getCode_postal()?></label></td>
                                                                   
-                                                                  <td> <label><?=$elt['user'][0]?></label></td> <!-- nom -->
-                                                                  <td><label><?=$elt['user'][1]?></label></td> <!-- prenom -->
-                                                                  <td><label><?=$elt['user'][2]?></label></td> <!-- phone -->
-                                                                  <td><label ><?=$elt['user'][3]?></label></td> <!-- email-->
-                                                                  <td><label ><?=$elt['classe'][0]?></label></td> <!-- niveau -->
-                                                                  <td><label ><?=$elt['classe'][1]?></label></td> <!-- eceole -->
-                                                                  
-                                                                  
-                                                             </tr>
-                                                             
+                                                                </tr>
+                                                                 <input type="hidden" name="id_u" value="<?=$elt->getId_user()?>" >
+                                                        
+                                                      
+                                                             </form>
                                                             <?php
                                                              }
                                                              }
@@ -106,12 +114,7 @@
         </div>
     </div>
 
-<script type="text/javascript">
-        function alert()
-        {
-            confirm('etes vous sur de vouloir vous inscrir?');
-        }
-</script>
+
 
 
 

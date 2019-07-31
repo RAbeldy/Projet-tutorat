@@ -1,10 +1,11 @@
 <?php
+/*
 	setcookie('adresse',$_POST['adresse'], time() + 365*24*3600, null, null, false, true); // On écrit un cookie
 	setcookie('ville',$_POST['ville'], time() + 365*24*3600, null, null, false, true); // On écrit un cookie
 	setcookie('complement_adresse',$_POST['complement_adresse'], time() + 365*24*3600, null, null, false, true); // On écrit un cookie
 	setcookie('code_postal',$_POST['code_postal'], time() + 365*24*3600, null, null, false, true); // On écrit un cookie
 	setcookie('password',$_POST['password'], time() + 365*24*3600, null, null, false, true); // On écrit un cookie
-
+*/
 
 	include('connexion.php');
 	require ('PHPMailer/PHPMailerAutoload.php');
@@ -100,17 +101,25 @@
 				         $req->execute(array($login_mail));
 
                         
-						header('location:index.php?controller=tuteurs&action=interface_tuteur');
+						header('location:index.php?controller=users&action=connexion');
 
 						// on insère. l'id_classe  dans la table user
 		                //$req= $bd->prepare("INSERT INTO user(id_classe) VALUES(SELECT id_classe from classe WHERE ecole=? AND niveau= 'NULL' )");
 		                //$re->execute(array($ecole,$niveau));
 					}
 				else
-					{
-						// on insère dans la table tutoré
-		                $addtutoré = $bd->prepare("INSERT INTO tutores(id_tutores,nationalite) VALUES((SELECT id_user FROM user  WHERE email = ?),?)");
-		                $addtutoré->execute(array($login_mail, $nationa));
+					{   
+						if( isset($_SESSION['id_statut']) && $_SESSION['id_statut'] == 11)
+						{
+							// on insère dans la table tutoré
+			                $addtutoré = $bd->prepare("INSERT INTO tutores(id_tutores,nationalite,id_typeTutorat) VALUES((SELECT id_user FROM user  WHERE email = ?),?,(SELECT id_typeTutorat FROM type_tutorat WHERE libelle = 'MEF'))");
+			                $addtutoré->execute(array($login_mail, $nationa));
+		                }
+		                else // c'est un tuteur normal qui fait l'inscription
+		                {
+		                	$addtutoré = $bd->prepare("INSERT INTO tutores(id_tutores,nationalite) VALUES((SELECT id_user FROM user  WHERE email = ?),?)");
+			                $addtutoré->execute(array($login_mail, $nationa));
+		                }
 
 		                // on insère son niveau
 		                $req = $bd->prepare("INSERT INTO classe (niveau,ecole) VALUES(?,?)");
@@ -124,8 +133,10 @@
 				         // on insère. l'id_classe  dans la table user
                         //$req= $bd->prepare("INSERT INTO user(id_classe) VALUES(SELECT id_classe from classe WHERE niveau= ? AND ecole= ? )");
                         //$req->execute(array($niveau,$ecole;));
-                         
-				         header('location:index.php?controller=tutores&action=interface_tutore');
+                         if( isset($_SESSION['id_statut']) && $_SESSION['id_statut'] == 11)
+				         	header('location:index.php?controller=users&action=redirection');
+				         else
+				         	header('location:index.php?controller=users&action=connexion');
 					}
 
 

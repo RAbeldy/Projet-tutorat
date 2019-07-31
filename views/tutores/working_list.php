@@ -56,7 +56,6 @@
                                                             <tr>
                                                                 <th>Nom</th>
                                                                 <th>Prenom</th>
-                                                                
                                                                 <th>Email</th>
                                                                 <th>Phone</th>
                                                                 <th>Ville</th>
@@ -75,7 +74,7 @@
                                                                 {
                                                                  ?>
 
-                                                                  <form method="post" action="?controller=tutores&action=delete_link">
+                                                                  <form method="post" action="#">
                                                                     
                                                                   <tr >
 
@@ -89,7 +88,7 @@
                                                                       <td><label ><?=$elt->getAdress()?></label></td>
                                                                       <td><label ><?=$elt->getCode_postal()?></label></td>
                                                                       
-                                                                      <td><button class="btn" type="submit"name="accepter" >Rompre</button>
+                                                                     
                                                                        
                                                                       </td>
                                                                       

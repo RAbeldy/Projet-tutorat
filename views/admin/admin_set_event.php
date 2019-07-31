@@ -30,24 +30,22 @@
                                                             <label for="lieu">
                                                                 <strong>Lieu</strong><br> 
                                                             </label>
-                                                            <input class="form-control" type="text" placeholder="Lieu" name="lieu"  />
+                                                            <input type="text" class="form-control" name="lieu">
+                                                            
                                                         </div>
-                                                        <div class="form-group col-12">
+                                                        <div class="form-group col-xs-12 col-md-6">
                                                             <label for="tutore">
-                                                                <strong>Tutoré</strong><br>
+                                                                <strong>nombre de Tutorés</strong><br>
                                                             </label>
-                                                            <select class="form-control" name="id">
-                                                            <?php
-                                                                foreach ($donnees as $elt) 
-                                                            {
-                                                             ?>
-                                                                <option value="<?= $elt->getId_user(); ?>"> <?= $elt->getNom().' '.$elt->getPrenom() ;?></option>
-                                                            <?php
-                                                            }
-                                                            ?>
-
-                                                            </select>
+                                                            <input type="number" class="form-control" name="nb_tutores">
+                                                            
                                                              
+                                                        </div>
+                                                        <div class="form-group col-xs-12 col-md-6">
+                                                            <label for="tutore">
+                                                                <strong>nombre de Tuteurs</strong><br>
+                                                            </label>
+                                                            <input type="number" class="form-control" name="nb_tuteurs">
                                                         </div>
                                                         <div class="form-group col-12">
                                                             <label for="tutore">
@@ -97,3 +95,5 @@
                     }
                 }         
           </script>
+
+         

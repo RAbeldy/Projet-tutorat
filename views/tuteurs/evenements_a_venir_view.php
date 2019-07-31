@@ -131,62 +131,7 @@
 
         
     </script>
-<
-   <!-- <script type="text/javascript">
-        function post()
-        { 
 
-           $.post(
-      'traitement.php', // Un script PHP qui permet le création d'un nouveau compte
-      {
-         libelle : document.getElementsById('libelle').value, 
-         date_evenement : document.getElementsById('date_evenement').value,
-         lieu : document.getElementsById('lieu').value,
-         nb_tuteurs : document.getElementsById('nb_tuteurs').value,
-         duree : document.getElementsById('duree').value
-      },
-      function(data){
-      },
-      'text'
-   );
-        }
-     </script>
-    function createAccount()
- {
-    libelle : $("#libelle").val(), 
-         date_evenement : $("#date_evenement").val(),
-         lieu : $("#lieu").val(),
-         nb_tuteurs : $("#nb_tuteurs").val(),
-         duree : $("#duree").val()
-    $.post(
-      'code_valid_account.php', // Un script PHP qui permet le création d'un nouveau compte
-      {
-         new_email : $("#email").val(), 
-         new_password : sha1($("#password_1").val()),
-         confirm_password : sha1($("#password_2").val()),
-         nom : $("#nom").val(),
-         prenom : $("#prenom").val()
-      },
-      function(data){
-          console.log(data);
-          if(data == "Success"){
-              alert("Votre compte a été créé");
-              document.location.href="index.php";
-          }
-          else if (data == "Failed_login") {
-            alert("Cet identifiant n'est pas valide")
-          } else if (data == "Failed_password") {
-            alert("La vérification du mot de passe a échoué !");
-          } else {
-            alert("Une erreur s'est produite. Veuillez réessayer");
-            //document.location.href="signup.php";
-          }
-      },
-      'text'
-   );
- }
-
--->
 
 
 

@@ -1,9 +1,4 @@
-<?php 
-if(!isset($_SESSION['id_statut']))
- {
-    require_once('views/login.php');
-  }
-  ?>  
+
 
     <div id="globalContent">
         <div id="wrapper">

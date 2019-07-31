@@ -93,7 +93,7 @@
                     </li>
                 <?php
                 }
-                elseif(isset($_SESSION['statut']) && preg_match('#^ADMIN#', $_SESSION['statut']) == 1)
+                elseif(isset($_SESSION['statut']) && ($_SESSION['statut'] == 'ADMIN_MEF'))
                 { 
                 ?>
                     <li class="nav-item"><a href="#" class="nav-link">Les tutorats que je dirige </a>
@@ -211,34 +211,27 @@
                 </nav>
             <?php
             }
-            elseif(isset($_SESSION['statut']) && preg_match('#^ADMIN#', $_SESSION['statut']) == 1) // menu latéral pour admin
+            elseif(isset($_SESSION['statut']) && ($_SESSION['statut']== 'ADMIN_MEF')) // menu latéral pour admin
             {
              ?>
                 <nav class="navbar navbar-dark align-items-start sidebar sidebar-dark accordion bg-gradient-primary p-0">
                 <div class="container-fluid d-flex flex-column p-0">
                     <a class="navbar-brand d-flex justify-content-center align-items-center sidebar-brand m-0" href="#">
                         <div class="sidebar-brand-icon rotate-n-15"><i class="far fa-id-card"></i></div>
-                        <div class="sidebar-brand-text mx-3"><span>Administrateur</span></div>
+                        <div class="sidebar-brand-text mx-3"><span>MEF</span></div>
                     </a>
                     <hr class="sidebar-divider my-0">
                     <ul class="nav navbar-nav text-light" id="accordionSidebar">
                         <li class="nav-item" role="presentation">
-                            <a class="nav-link active" href="?controller=admin&action=interface_admin_tuteur">
+                            <a class="nav-link active" href="?controller=admin&action=interface_admin">
                                 <i class="fab fa-phoenix-squadron"></i>
-                                <span>Tuteur</span>
+                                <span>évènements</span>
                             </a>
                             <a class="nav-link" href="#">
                                 <i class="fab fa-phoenix-squadron"></i>
-                                <span>Tutoré</span>
+                                <span>Les centres de la Mef</span>
                             </a>
-                            <a class="nav-link" href="#">
-                                <i class="fab fa-phoenix-squadron"></i>
-                                <span>Evenement</span>
-                            </a>
-                            <a class="nav-link" href="#">
-                                <i class="fab fa-phoenix-squadron"></i>
-                                <span>Contact</span>
-                            </a>
+                            
                         </li>
                     </ul>
                     <div class="text-center d-none d-md-inline">
