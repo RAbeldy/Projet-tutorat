@@ -5,7 +5,7 @@
                 <h1 id="h1bienvenue">BIENVENUE SUR TUTORAT YNCREA</h1>
                 <p id="middleJumboParagraph">Lorem Ispum dolor sit amet&nbsp;Lorem Ispum dolor sit amet Lorem Ispum dolor sit amet&nbsp;Lorem Ispum dolor sit amet&nbsp;Lorem Ispum dolor sit amet&nbsp;Lorem Ispum dolor sit amet&nbsp;Lorem Ispum dolor sit amet&nbsp;Lorem Ispum dolor
                     sit amet&nbsp;Lorem Ispum dolor sit amet&nbsp;Lorem Ispum dolor sit amet&nbsp;Lorem Ispum dolor sit amet&nbsp;Lorem Ispum dolor sit amet<br><br></p>
-                <p id="callToAction"><a class="btn btn-primary gris" role="button">En savoir plus</a></p>
+                <p id="callToAction" class="text-center"><a class="btn" role="button">En savoir plus</a></p>
             </div>
         </header>
         <div class="container">

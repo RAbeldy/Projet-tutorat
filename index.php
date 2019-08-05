@@ -8,6 +8,8 @@
 ?>
 
 <!DOCTYPE html>
+
+
 <html>
 
 <head>
@@ -37,10 +39,10 @@
     <link rel="stylesheet" href="assets/css/tuteur.css">
     <link rel="stylesheet" href="assets/css/evenement.css">
     <!-- upadte account -->
-    <link rel="stylesheet" href="assets/css/Profile-Edit-Form-1.css?h=941c84e96020d5a5b03f80619fed6ea9">
     <link rel="stylesheet" href="assets/css/Profile-Edit-Form.css?h=0d932fa81301936f118cc8607c135e19">
     <!-- login-->
     <link rel="stylesheet" href="assets/css/Login-Form.css?h=20d7842de129d800e792499681f0b672">
+
 
 </head>
 
@@ -227,10 +229,11 @@
                                 <i class="fab fa-phoenix-squadron"></i>
                                 <span>évènements</span>
                             </a>
-                            <a class="nav-link" href="#">
+                            <a class="nav-link" href="?controller=admin&action=interface_tutorat_mef">
                                 <i class="fab fa-phoenix-squadron"></i>
                                 <span>Les centres de la Mef</span>
                             </a>
+
                             
                         </li>
                     </ul>

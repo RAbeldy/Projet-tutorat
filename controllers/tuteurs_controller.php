@@ -42,7 +42,7 @@ class TuteursController
         if(isset($_SESSION['id_statut']))// on vérifie que seul un utilisateur connecté peut accéder à ces pages
         {
             $tuteurs= new Tuteurs();
-            $donnees= $tuteurs->Get_all_tutores();
+            $donnees= $tuteurs->Get_free_tutores();
 
             $controller_report='tuteurs';
             $fonction_back='selection_tutores';

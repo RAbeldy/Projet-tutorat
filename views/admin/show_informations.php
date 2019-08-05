@@ -5,6 +5,14 @@
             <div class="d-flex flex-column" id="content-wrapper">
                 <div id="content">
                     <div class="block">
+                        <div class="col-md-4">
+                            <div class="avatar">
+                                <div id="avatarPic">
+                                    <img src='<?=$data->getChemin_photo() ;?>' />
+                                </div>
+                                <input id="photoChooser" type="file" name="fileToUpload" title="PNG , JPG ,JPEG , GIF uniquements" id="fileToUpload">
+                            </div>
+                        </div>
                         <div class="container">
                             <div class="row">
                                 <div class="col-md-1">
@@ -13,7 +21,9 @@
                                     <div class="row">
                                         <div class="card debut">
                                             <div class="card-header py-3">
-                                                <p class="text-primary m-0 font-weight-bold"></p>
+                                                <p class="text-primary m-0 font-weight-bold">
+                                                NOM: <?=$data->getNom();?> PRENOM: <?=$data->getPrenom();?> EMAIL: <?=$data->getEmail();?>
+                                                </p>
                                                 <?php include('retour.php') ?>
                                             </div>
                                             <div class="card-body">
@@ -53,37 +63,46 @@
                                                         <thead>
                                                             <tr>
                                                                 
-                                                                <th>Nom</th>
-                                                                <th>Prénom</th>
-                                                                <th>Phone</th>
-                                                                <th>Email</th>
-                                                                <th>Ecole</th>
-                                                                <th>Niveau</th>
-                                                                <th>Action</th> 
+                                                                <th>Tutorat</th>
+                                                                <th>Date</th>
+                                                                <th>Lieu</th>
+                                                                <th>Duree</th>
+                                                                <th>Action</th>
                                                             </tr>
                                                             
                                                         </thead>
                                                         <tbody>
 
                                                             <?php
+                                                            
+                                                       
                                                              foreach ($donnees as $elt)
                                                             {
-                                                              
                                                              ?>
-                                                             <form method="post" action="?controller=admin&action=show_informations">
+                                                             <form method="post" action="?controller=admin&action=validate_hours">
                                                               <tr>
                                                                   
-                                                                  <td><label><?=$elt['user']->getNom();?></label></td> <!-- nom -->
-                                                                  <td><label><?=$elt['user']->getPrenom();?></label></td> <!-- prenom -->
-                                                                  <td><label><?=$elt['user']->getPhone();?></label></td> <!-- phone -->
-                                                                  <td><label ><?=$elt['user']->getEmail();?></label></td> <!-- email-->
-                                                                  <td><label ><?=$elt['classe'][0];?></label></td> <!-- niveau -->
-                                                                  <td><label ><?=$elt['classe'][1];?></label></td> <!-- ecole -->
-                                                                    
-                                                                  <td><button class="btn" type="submit" name="consulter" onclick="alert();">Consulter</button></td>
-                                                                  
-                                                                  <input type="hidden" name="id_t" value="<?=$elt['user']->getId_user();?>" >
-                                                                  
+                                                                  <td><label><?=$elt['type_tutorat']->?></label></td> <!-- nom -->
+                                                                  <td><label><?=$elt['evenement']->getDate_evenement();?></label></td> <!-- prenom -->
+                                                                  <td><label><?=$elt['evenement']->getLieu();?></label></td> <!-- phone -->
+                                                                  <td><input type="number" name="duree" value="<?=$elt['planning_event']?>"></td> <!-- duree de l'évenement -->    
+                                                                   
+                                                                  <?php if($elt['participer_evenement'] == 'NON')
+                                                                {
+                                                                ?>
+                                                                      <td><button class="btn" type="submit" name="valider" onclick="alert();">Valider</button></td>
+                                                                      <input type="hidden" name="id_e" value="<?=$elt['evenement']->getId_evenement()?>" >
+                                                                      <input type="hidden" name="id_t" value="<?=$data->getId_user();?>" >
+                                                                <?php 
+                                                                }
+                                                                else
+                                                                {
+                                                                ?>
+                                                                    <td><button class="btn"  name="validé" >Validé</button></td>
+                                                                      
+                                                                    <?php
+                                                                } 
+                                                                ?>
                                                                   
                                                              </tr>
                                                              </form>

@@ -27,7 +27,7 @@ class TutoresController
             if(isset($_SESSION['id_statut']))// on vérifie que seul un utilisateur connecté peut accéder à ces pages
             {
                 $tuteurs= new Tutores();
-                $donnees= $tuteurs->Get_all_tuteurs();
+                $donnees= $tuteurs->Get_free_tuteurs();
 
                 $controller_report='tutores';
                 $fonction_back='selection_tuteurs';
@@ -150,7 +150,7 @@ class TutoresController
               { 
                 
                     $tutores = new Tutores();
-                    $tutores->Validate_hours($_POST['id_e']); 
+                    $tutores->Validate_hours($_POST['id_e'],$_POST['duree']); 
                     require_once('views/tutores/interface_tutore.php');
                
               }

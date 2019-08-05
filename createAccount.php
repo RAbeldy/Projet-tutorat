@@ -42,6 +42,7 @@
 		$ville = $_POST['ville'];
 		$code_postal = $_POST['code_postal'];
 		$phone = $_POST['phone']; 
+		$id_typeTutorat= $_POST['id_typeTutorat'];
 
 		if(is_null($_POST['nationalite']) && is_null($_POST['niveau']) )
 		{
@@ -109,17 +110,24 @@
 					}
 				else
 					{   
-						if( isset($_SESSION['id_statut']) && $_SESSION['id_statut'] == 11)
+						if(isset($_SESSION['id_statut']) && $_SESSION['id_statut'] == 11 ) // c'est l'admin MEF qui fait l'inscription
 						{
-							// on insère dans la table tutoré
-			                $addtutoré = $bd->prepare("INSERT INTO tutores(id_tutores,nationalite,id_typeTutorat) VALUES((SELECT id_user FROM user  WHERE email = ?),?,(SELECT id_typeTutorat FROM type_tutorat WHERE libelle = 'MEF'))");
+							$addtutoré = $bd->prepare("INSERT INTO tutores(id_tutores,nationalite) VALUES((SELECT id_user FROM user  WHERE email = ?),?)");
 			                $addtutoré->execute(array($login_mail, $nationa));
-		                }
-		                else // c'est un tuteur normal qui fait l'inscription
-		                {
-		                	$addtutoré = $bd->prepare("INSERT INTO tutores(id_tutores,nationalite) VALUES((SELECT id_user FROM user  WHERE email = ?),?)");
+
+			                // on insère dans la table se_destine 
+			                $addtutoré = $bd->prepare("INSERT INTO se_destine(id_user,id_tutorat,id_typeTutorat) VALUES((SELECT id_user FROM user  WHERE email = ?),?,(SELECT id_typeTutorat FROM administrer WHERE id_tutorat= ?))");
+			                $addtutoré->execute(array($id_typeTutorat,$id_typeTutorat));
+			               
+
+						}
+						else // c'est un étudiant normal qui fait l'inscription 
+						{
+							$addtutoré = $bd->prepare("INSERT INTO tutores(id_tutores,nationalite) VALUES((SELECT id_user FROM user  WHERE email = ?),?)");
 			                $addtutoré->execute(array($login_mail, $nationa));
-		                }
+						}
+		                	
+		                
 
 		                // on insère son niveau
 		                $req = $bd->prepare("INSERT INTO classe (niveau,ecole) VALUES(?,?)");

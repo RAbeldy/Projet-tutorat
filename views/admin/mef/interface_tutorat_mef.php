@@ -12,9 +12,9 @@
                                         <div class="col-xs-12 col-md-6 card-container">
                                             <div class="card avenir">
                                                 <div class="card-body">
-                                                    <h4 class="card-title">Inscrire </h4>
-                                                    <a href="?controller=admin&action=sign_up">
-                                                        <button class="btn" type="button">j'inscris un <br/>tutoré</button>
+                                                    <h4 class="card-title">Créer </h4>
+                                                    <a href="?controller=admin&action=create_center">
+                                                        <button class="btn" type="button">je crée un centre <br/>de tutorat</button>
                                                     </a>
                                                 </div>
                                             </div>
@@ -23,8 +23,8 @@
                                             <div class="card historique">
                                                 <div class="card-body">
                                                     <h4 class="card-title">Je consulte</h4>
-                                                    <a href="?controller=admin&action=tutores_list">
-                                                        <button class="btn" type="button">liste de<br/>tutorés</button>
+                                                    <a href="?controller=admin&action=tutorat_center_list">
+                                                        <button class="btn" type="button">mes centres<br/>de tutorat</button>
                                                     </a>
                                                 </div>
                                             </div>

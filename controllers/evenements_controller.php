@@ -5,7 +5,7 @@ require_once('models/evenements.php');
 class EvenementsController
 {
 
-	public function set_event() // créer un évènement
+	public function tuteur_set_event() // créer un évènement
     {
       if( isset($_SESSION['id_statut']))
         {
@@ -14,31 +14,53 @@ class EvenementsController
             $event->setDate_evenement( $_POST['date_creation']);
             $event->setLieu( $_POST['lieu']);
             $event->setDuree( $_POST['duree']);
-            if(isset($_POST['nb_tuteurs']) && isset($_POST['nb_tutores']) )
-            {
-            $event->setNb_tuteurs($_POST['nb_tuteurs']);
-            $event->setNb_tutorés($_POST['nb_tutores']);
-            }
             
-            if( $event->Set_event($_SESSION['id_user'],$_POST['id']) == 0) // on a récupéré l'identifiant de celui avec qui il aura un tutorat personnalisé ou alors l'identifiant du lieu
-            {    
-              if($_SESSION['id_statut'] == 13)
+            if( $event->Tuteur_set_event($_SESSION['id_user'],$_POST['id']) == 0) // on a récupéré l'identifiant de celui avec qui il aura un tutorat personnalisé ou alors l'identifiant du lieu
+            {   
                 require_once('views/tuteurs/interface_tuteur.php');
-              elseif($_SESSION['id_statut'] == 11)
+              
+            } 
+            else
+            {
+                $message = 'Vous avez déja un évènement prévu à cette date et à cette heure, rendez vous dans la rubrique "je me suis inscrit à " pour le supprimer, puis dans "créer évènement", créer en un nouveau si vous le souhaitez';
+                $controller_report='admin';
+                $fonction_back='admin_set_event';
+                require_once('views/system/error.php');
+            } 
+      }
+      else
+           require_once('views/login.php'); 
+    }
+
+    public function admin_set_event()
+    {
+      // une instance de la classe tuteur
+            $event = new Evenements(); 
+            $event->setDate_evenement( $_POST['date_creation']);
+            $event->setLieu( $_POST['lieu']);
+            $event->setDuree( $_POST['duree']);
+            
+
+            $event->setNb_tuteurs($_POST['nb_tuteurs']);
+            $event->setNb_tutores($_POST['nb_tutores']);
+
+            if( $event->Admin_set_event($_SESSION['id_user']) == 0) // on a récupéré l'identifiant de celui avec qui il aura un tutorat personnalisé ou alors l'identifiant du lieu
+            {    
+              if($_SESSION['id_statut'] == 11)
+                require_once('views/admin/mef/interface_admin_mef.php');
+              elseif($_SESSION['id_statut'] == 14)
                 require_once('views/admin/mef/interface_admin_mef.php');
               else
                 require_once('views/admin/mef/interface_admin_mef.php');
-              } 
+            } 
             else
             {
                 $message = 'Vous avez déja un évènement prévu à cette date et à cette heure, rendez vous dans la rubrique "je me suis inscrit à " pour le supprimer, puis dans "créer évènement", créer en un nouveau si vous le souhaitez';
                 $controller_report='tuteurs';
                 $fonction_back='interface_tuteur';
                 require_once('views/system/error.php');
-            } 
-      }
-      else
-           require_once('views/login.php'); 
+            }
+            
     }
     public function display_pasts_events() // afficher les evenements passés auxquels il a participé
     {
@@ -73,7 +95,7 @@ class EvenementsController
         else
             require_once('views/login.php');
     }
-    public function display_future_events() // afficher les evenements à venir
+    public function display_future_events() // afficher les evenements à venir auxquels je peux participer
     {
         
 
@@ -141,7 +163,7 @@ class EvenementsController
         if( isset($_SESSION['id_statut']))
            { 
                 $event = new Evenements();
-                if(isset($_POST['id_e']) && $event->nb_places_dispo($_POST['id_e']) >0)
+                if(isset($_POST['id_e']) && $event->nb_places_dispo($_POST['id_e']) > 0)
                 {       
                         
                         $event->Subscribe_to_event($_SESSION['id_user'],$_POST['id_e']);
@@ -198,26 +220,18 @@ public function cancel_participation()
       }
     }
 
-    public function events_list()
-    {
-        if( isset($_SESSION['id_statut']))
-        {
-          $donnees = Evenements::Events_list($_SESSION['id_user']);
+    
 
-          $controller_report='admin';
-          $fonction_back='interface_admin';
-
-          require_once('views/admin/events_list.php');
-        }
-        else
-          require_once('views/login.php');
-    }
-
-    public function subscription_list()
+    public static function subscription_list()
     {
        if( isset($_SESSION['id_statut']))
        {
-          $donnees = Evenements::Subscription_list($_POST['id_e'],$_SESSION['id_user']);
+          $donnees = Evenements::Subscription_list($_POST['id_e']);
+          $data= Evenements::Get_informations_on_events($_POST['id_e']);
+
+          $controller_report='evenements';
+          $fonction_back='events_list';
+
           require_once('views/subscription_list.php');
        }    
        else

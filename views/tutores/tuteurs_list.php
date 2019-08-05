@@ -87,9 +87,22 @@
                                                                   <td><label ><?=$elt->getAdress()?></label></td>
                                                                   <td><label ><?=$elt->getCode_postal()?></label></td>
                                                                   
-                                                                  <td><button class="btn" type="submit"name="Se_lier" >Se lier</button>
-                                                                  </td>
-                                                                  
+                                                                  <?php
+                                                                   if(isset($_SESSION['etat']) && $_SESSION['etat'] == 'LIBRE')
+                                                                   {
+                                                                    ?>
+                                                                      <td><button class="btn" type="submit"name="Se_lier" >Se lier</button>
+                                                                      </td>
+                                                                   <?php
+                                                                   }
+                                                                   else
+                                                                   {
+                                                                    ?>
+                                                                    <td><button class="btn" name="Se_lier" >Liaison impossible</button>
+                                                                      </td>
+                                                                      <?php
+                                                                   }
+                                                                   ?>
                                                                 </tr>
                                                                  <input type="hidden" name="id_u" value="<?=$elt->getId_user()?>" >
                                                         

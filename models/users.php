@@ -128,7 +128,7 @@ require_once('connexion.php');
 
 
 
-    public function Modify_info($id_user) 
+    public function Modify_info($id_user) // modification de compte
     {
       $db = Db::getInstance();
       $req= $db->prepare("UPDATE user as u INNER JOIN adresse as a ON a.id_adresse = u.id_adresse  SET password = ?,a.ville= ?, a.adress = ?,a.complement_adress = ?, a.code_postal = ? WHERE  u.id_user = ?");
@@ -138,7 +138,7 @@ require_once('connexion.php');
       $req->execute(array($this->getVille(),$this->getAdress(),$this->getCom_adress(),$this->getCode_postal(),$id_user));
       */
     }
-    public static function Get_info($id_user)
+    public static function Get_info($id_user) // pour la page de modification de compte
     {
       $db = Db::getInstance();
       $req= $db->query("SELECT ville,adress,complement_adress,code_postal,u.chemin_photo as chemin_photo FROM adresse as a,user as u WHERE a.id_adresse = u.id_adresse AND u.id_user = $id_user ");
@@ -195,12 +195,34 @@ require_once('connexion.php');
     return ($request->rowCount()) ;
  }
 
- public function Set_picture_path($id_user)
+ public static function Set_picture_path($id_user)
  {
   $db=Db::getInstance();
   $req= $db->prepare("UPDATE user SET chemin_photo= ? WHERE id_user= $id_user");
   $req->execute(array( $this->chemin_photo));
  }
+
+ public static function Get_informations_on_user($id_user)
+    {
+       $db = Db::getInstance(); 
+      
+
+       $req= $db->query("SELECT id_user,nom,prenom,date_naissance,email,phone,chemin_photo FROM user WHERE id_user = ".$id_user."");
+
+       foreach ($req->fetchAll() as $temp) 
+      {
+        $user= new Users();
+        $user->setId_user($temp['id_user']);
+        $user->setNom($temp['nom']);
+        $user->setPrenom($temp['prenom']);
+        $user->setEmail($temp['email']);
+        $user->setDate_naissance($temp['date_naissance']);
+        $user->setPhone($temp['phone']);
+        $user->setChemin_photo($temp['chemin_photo']);
+        
+      }
+      return $user;
+    }
 
    public static function display_all()
      {

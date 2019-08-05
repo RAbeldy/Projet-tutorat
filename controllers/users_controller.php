@@ -109,7 +109,7 @@ public function inscription()
 			require_once('views/inscriptionTutore.php');
 		}
 	}
-public function update_account()
+public static function update_account()
         {
             if(isset($_SESSION['id_statut']))// on vérifie que seul un utilisateur connecté peut accéder à ces pages
             { 
@@ -133,11 +133,11 @@ public function modify_account()
                 $tuteurs->setPassword($_POST['password']);
                 
                 $tuteurs->Modify_info($_SESSION['id_user']);    // on update les infos du user
+                if(!empty($_FILES["fileToUpload"]["name"]))
                 $this->upload_file();  // on va uploader la photo
-                if($_SESSION['id_statut'] == 16)
-                	require_once('views/tutores/interface_tutore.php');
-                else
-                	require_once('views/tuteurs/interface_tuteur.php');
+
+
+                UsersController::update_account(); // on recharge pour la mise à jour
             }
             else
                 require_once('views/login.php');
@@ -209,7 +209,7 @@ public function set_picture_path($target_file)
 {
 	$user = new Users();
 	$user->setChemin_photo($target_file);
-	$user->Set_picture_path($_SESSION['id_user']);
+	Users::Set_picture_path($_SESSION['id_user']);
 }
 public function deconnexion()
 {

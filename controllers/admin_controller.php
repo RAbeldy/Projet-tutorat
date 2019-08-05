@@ -1,10 +1,10 @@
 <?php
-require_once('models/tuteurs.php');
-require_once('models/tutores.php');
+
 require_once('models/evenements.php');
 require_once('models/users.php');
 require_once('models/admin.php');
-
+require_once('models/tutorat.php');
+require_once('models/evenements.php');
 /* Définition du controller */
 class AdminController
 {
@@ -34,18 +34,26 @@ class AdminController
        public function admin_set_event()
        {
           if( isset($_SESSION['id_statut']))
-                require_once('views/admin/admin_set_event.php');
+          {    
+             $donnees= Tutorat::Get_lieu_tutorat($_SESSION['id_user']);
+              
+             $controller_report='admin';
+             $fonction_back='interface_admin';
+
+              require_once('views/admin/admin_set_event.php');
+          }
             else
                 require_once('views/login.php');
        }
      
-     public static function tuteurs_list() // lsite des tutorés 
+     public static function tuteurs_list() // lsite des tuteurs 
     {
         
         if(isset($_SESSION['id_statut']))// on vérifie que seul un utilisateur connecté peut accéder à ces pages
         {
             
             $donnees= Admin::Get_all_tuteurs();
+            $req= Tutorat::Get_lieu_tutorat($_SESSION['id_user']);
 
             $controller_report='admin';
             $fonction_back='interface_admin';
@@ -56,13 +64,14 @@ class AdminController
             require_once('views/login.php');  
     }
 
-    public function tutores_list()  // liste des tutprézs qui font partie de son tutorat( type de tutorat )
+    public static function tutores_list()  // liste des tutprézs qui font partie de son tutorat( type de tutorat )
     {
         
         if(isset($_SESSION['id_statut']))// on vérifie que seul un utilisateur connecté peut accéder à ces pages
         {
            
-            $donnees= Admin::Get_all_tutores();
+            $donnees= Admin::Get_my_tutores($_SESSION['id_user']);
+            $data= Admin::Get_free_tuteurs();
 
             $controller_report='admin';
             $fonction_back='interface_tutores_mef';
@@ -95,7 +104,7 @@ class AdminController
                  {
                     //echo "gfgfdghdfhxvvdvdfdfdkfhmdfhdmkfdhfdkmlfhdvn;vdkmbnvdfhdvfbnifldhfdklfdhfikhdg".$_POST['id_e_c'];
                       
-                      Admin::Choose_tuteur($_POST['id_u_c']);
+                      Admin::Choose_tuteur($_POST['id_u_c'],$_POST['tutorat']);
                       
                       $controller_report='admin';
                       $fonction_back='interface_admin';
@@ -126,5 +135,142 @@ class AdminController
             require_once('views/login.php'); 
     }
 
+     public function interface_tutorat_mef()
+     {
+         if( isset($_SESSION['id_statut']))
+         {
+            $controller_report='admin';
+            $fonction_back='interface_admin';
+
+                require_once('views/admin/mef/interface_tutorat_mef.php');
+         }
+          else
+                require_once('views/login.php');
+     }
+
+     public function sign_up()
+     {
+         if( isset($_SESSION['id_statut']))
+         {
+            $donnees= Tutorat::Get_lieu_tutorat($_SESSION['id_user']); // on récupère les lieux de tutorat qu'il dirige
+
+            $controller_report='admin';
+            $fonction_back='interface_admin';
+
+                require_once('views/admin/signup_by_admin.php');
+         }
+          else
+                require_once('views/login.php');
+     }
+
+     public function create_center()  // il s'agit de la vue
+     {
+       if( isset($_SESSION['id_statut']))
+       {
+          $donnees=Tutorat::Get_type_tutorat();  // on charge l'interface de création de tutorat
+
+          $controller_report='admin';
+          $fonction_back='interface_tutorat_mef';
+
+          require_once('views/admin/create_center.php');
+       }
+          else
+                require_once('views/login.php');
+     }
+
+     public function tutorat_center_list()
+     {
+       if( isset($_SESSION['id_statut']))
+       {
+          $donnees= Tutorat::tutorat_center_list($_SESSION['id_user']);
+
+          $controller_report='admin';
+          $fonction_back='interface_tutorat_mef';
+
+          require_once('views/admin/tutorat_center_list.php');
+       }
+       else
+          require_once('views/login.php');
+     }
+
+     
        
+     public  function validate_hours()  // on valide les heures concernant un évènement
+    {
+      if( isset($_SESSION['id_statut']))
+       {
+           Admin::Validate_hours($_POST['id_e'],$_POST['id_t'],$_POST['duree']);
+
+          AdminController::show_informations(); // on recharge. la page show_informations.php 
+       }
+       else
+          require_once('views/login.php');
+    }
+
+    public static function show_informations()
+    {
+      if( isset($_SESSION['id_statut']))
+       {
+           $data= Users::Get_informations_on_user($_POST['id_u']); // on récupère les info du user en question
+           $donnees = Evenements::Get_informations_events_on_user($_POST['id_u']);
+
+            $controller_report='evenements';
+            $fonction_back='subscription_list';
+
+        
+          require_once('views/admin/show_informations.php');
+       }
+       else
+          require_once('views/login.php');
+    }
+
+    public function link()
+     {
+       if( isset($_SESSION['id_statut']))
+       {   
+           if( isset($_POST['lier']))
+           Admin::link($_POST['id_tuteur'],$_POST['id_tutore']);
+         elseif(isset($_POST['supprimer']))
+           Admin::Delete_link($_POST['id_tutore']);
+
+          $controller_report='admin';
+          $fonction_back='interface_tutorat_mef';
+
+          AdminController:: tutores_list(); // on charge la liste des tu
+       }
+       else
+          require_once('views/login.php');
+     }
+    
+    public function future_events_list()
+    {
+        if( isset($_SESSION['id_statut']))
+        {
+          $donnees = Evenements::Future_events_list($_SESSION['id_user']);
+
+          $controller_report='admin';
+          $fonction_back='interface_admin';
+
+          require_once('views/admin/interface_admin_mef.php');
+        }
+        else
+          require_once('views/login.php');
+    }
+
+    public function pasts_events_list()
+    {
+        if( isset($_SESSION['id_statut']))
+        {
+          $donnees = Evenements::Pasts_events_list($_SESSION['id_user']);
+
+          $controller_report='admin';
+          $fonction_back='interface_admin';
+
+          require_once('views/admin/events_list.php');
+        }
+        else
+          require_once('views/login.php');
+    }
+
+
 }

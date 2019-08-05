@@ -18,31 +18,34 @@
                                                 </p>
                                             </div>
                                             <div class="card-body">
-                                                <form method="post" action="?controller=evenements&action=admin_set_event" onsubmit="javascript:test_date();javascript:message();">
+                                                <form method="post" action="?controller=tutorat&action=create_center" onsubmit="javascript:test_date();javascript:message();">
                                                     <div class="row">
                                                         <div class="form-group col-xs-12 col-md-6">
                                                             <label for="date">
-                                                                <strong>Date</strong><br>
+                                                                <strong>Type de tutorat</strong><br>
                                                             </label>
-                                                            <input  id = "event" class="form-control" type="datetime-local" name="date_creation"  onchange = 'javascript:test_date();' required/>
+                                                             <select class="form-control" name="id_typeTutorat">
+                                                                  <?php 
+                                                                       foreach($donnees as $data)
+                                                                       {
+                                                                         ?>
+                                                                        <option value="<?=$data[1];?>"required> <?= $data[0] ;?>
+                                                                            
+                                                                        </option>
+                                                                        
+                                                                         <?php
+                                                                       }
+                                                                       ?>
+                                                            </select>
+
+                                                           
+                                                            
                                                         </div>
                                                         <div class="form-group col-xs-12 col-md-6">
                                                             <label for="lieu">
-                                                                <strong>Lieu</strong><br> 
+                                                                <strong>nom du centre (lycée, collège...)</strong><br> 
                                                             </label>
-                                                            <select class="form-control" name="lieu">
-                                                            <?php
-                                                                foreach($donnees as $data)
-                                                                       {
-                                                                         ?>
-                                                                <option value="<?= $data[0]; ?>" required> <?= $data[0] ;?>
-                                                                    <input type="hidden" value="<?= $data[1]; ?>" name="id_t">
-                                                                </option>
-                                                            <?php
-                                                            }
-                                                            ?>
-
-                                                            </select>
+                                                             <input type="text" class="form-control" name="libelle">
                                                             
                                                         </div>
                                                         <div class="form-group col-xs-12 col-md-6">
@@ -59,21 +62,21 @@
                                                             </label>
                                                             <input type="number" class="form-control" name="nb_tuteurs">
                                                         </div>
-                                                        <div class="form-group col-12">
+                                                        <div class="form-group col-xs-12 col-md-6">
                                                             <label for="tutore">
-                                                                <strong>Durée</strong><br>
+                                                                <strong>Adresse</strong><br>
                                                             </label>
-                                                            <select class="form-control" name="duree">
-                                                                <option value="1">1 h</option>
-                                                                <option value="2">2 h</option>
-                                                                <option value="3">3 h</option>
-                                                                <option value="4">4 h</option>
-                                                                <option value="5">5 h</option>
-                                                                <option value="6">6 h</option>
-                                                                <option value="7">7 h</option>
-
-                                                            </select>
+                                                            <input type="text" class="form-control" name="adresse">
+                                                            
+                                                             
                                                         </div>
+                                                        <div class="form-group col-xs-12 col-md-6">
+                                                            <label for="tutore">
+                                                                <strong>Code postal</strong><br>
+                                                            </label>
+                                                            <input type="number" class="form-control" name="code_postal">
+                                                        </div>
+                                                        
                                                     </div>
                                                     <div class="form-group text-center col-12">
                                                         <button class="btn" type="submit">CREER</button>
@@ -91,21 +94,6 @@
         </div>
     </div>
 
-    <script type="text/javascript">
-         function test_date()
-          {
-            var today = new Date();
-           var mm = String(today.getMonth() + 1).padStart(2, '0'); //first month January takes 0. 
-            var yyyy = today.getFullYear(); // year takes all e.g: 2019 => 2019
-             var dd = String(today.getDate()).padStart(2, '0');// Day config 
-             today = yyyy + '-' + mm + '-' + dd;
-             day = dd + '/' + mm + '/' + yyyy; 
-             if (document.getElementById('event').value < today) {
-                alert(" Entrer une date ultérieure à celle d'aujourd'hui: " +day);
-                return -1;
-
-                    }
-                }         
-          </script>
+  
 
          

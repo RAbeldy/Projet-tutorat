@@ -8,6 +8,10 @@ class PageController
 	{
 	   require_once('views/page_pres.php');
 	}
-
+    
+    public function contact()
+    {
+    	require_once('views/contact.php');
+    }
 }
 ?>

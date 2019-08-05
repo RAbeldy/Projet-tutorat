@@ -14,7 +14,7 @@
                                     <div class="row">
                                         <div class="card debut">
                                             <div class="card-header py-3">
-                                                <p class="text-primary m-0 font-weight-bold">A venir</p>
+                                                <p class="text-primary m-0 font-weight-bold">Les evenements passés</p>
                                                 <?php include('retour.php') ?>
                                             </div>
                                             <div class="card-body">
@@ -70,7 +70,7 @@
                                                             {
                                                              ?>
 
-                                                              <form method="post" action="?controller=evenements&action=subscribtion_list">
+                                                              <form method="post" action="?controller=evenements&action=subscription_list">
                                                                 
                                                               <tr>
                                                                   <td> <label><?=$elt['type_tutorat']?></label></td>

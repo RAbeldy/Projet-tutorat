@@ -75,7 +75,7 @@
                                                                   <td> <label><?=$elt['type_tutorat']?></label></td>
                                                                   <td><label><?=$elt['evenement']->getDate_evenement()?></label></td>
                                                                   <td><label><?=$elt['evenement']->getLieu()?></label></td>
-                                                                    <td><label > <strong ><input type="text" style="color: red;" value="<?=$elt['planning_event']?>" title="veuillez renseigner le champ si le nombre d'Heures différent de celui réellement éffectué">
+                                                                    <td><label > <strong ><input type="text" style="color: red;" value="<?=$elt['planning_event']?>" title="veuillez renseigner le champ si le nombre d'Heures différent de celui réellement éffectué" name="duree">
                                                                       
                                                                         
                                                                       </strong>

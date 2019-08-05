@@ -60,7 +60,7 @@
                                                                 <th>Ville</th>
                                                                 <th>Adresse</th>
                                                                 <th>Code_postal</th>
-
+                                                                <th>Tutorats</th>
                                                                 <th>Action</th>
 
                                                                
@@ -69,8 +69,7 @@
                                                         <tbody>
 
                                                             <?php
-                                                            if(!is_null($donnees))
-                                                            {
+                                                            
                                                              foreach ($donnees as $elt) 
                                                             {
                                                              ?>
@@ -87,30 +86,42 @@
                                                                   <td><label ><?=$elt['user']->getVille()?></label></td>
                                                                   <td><label ><?=$elt['user']->getAdress()?></label></td>
                                                                   <td><label ><?=$elt['user']->getCode_postal()?></label></td>
+                                                                  <td><label >
+                                                                  <select class="form-control" name="tutorat">
                                                                   <?php 
-                                                                     if(isset($_SESSION['id_statut']) && $_SESSION['id_statut'] == 11 && $elt['tuteurs'] != 'MEF')
-                                                                        { // id_u_d ici correspond à déselectionner un tuteur, ne plus travailler avec lui
+                                                                       foreach($req as $data)
+                                                                       {
+                                                                         ?>
+                                                                        <option value="<?=$data[1];?>"required> <?= $data[0] ;?>
+                                                                            
+                                                                        </option>
+                                                                        
+                                                                         <?php
+                                                                       }
+                                                                       ?>
+                                                                    </select>
+                                                                    </label></td>
+                                                                  <?php 
+                                                                     if(isset($_SESSION['id_statut']) && $_SESSION['id_statut'] == 11 && $elt['tuteurs'] == 'NON') 
+                                                                        { //id_u_c ici correspond à choisir un tuteur
+
                                                                             ?>
 
-                                                                     <td><button class="btn" type="submit"name="rompre" >Choisir</button>
+                                                                     <td><button class="btn" type="submit"name="choisir" >Choisir</button>
                                                                      </td><input type="hidden" name="id_u_c" value="<?=$elt['user']->getId_user()?>" >
                                                                      <?php
                                                                         }
-                                                                    elseif(isset($_SESSION['id_statut']) && $_SESSION['id_statut'] == 11 && $elt['tuteurs'] == 'MEF')
-                                                                    {  // id_u_c ici correspond à choisir un tuteur
+                                                                    elseif(isset($_SESSION['id_statut']) && $_SESSION['id_statut'] == 11 && $elt['tuteurs'] == 'OUI')
+                                                                    {  // id_u_d ici correspond à déselectionner un tuteur, ne plus travailler avec lui
                                                                         ?> 
-                                                                        <td><button class="btn" type="submit"name="Se_lier" >Rompre</button>
+                                                                        <td><button class="btn" type="submit"name="rompre" >Rompre</button>
                                                                      </td><input type="hidden" name="id_u_d" value="<?=$elt['user']->getId_user()?>" > 
                                                                      <?php
                                                                     }
                                                                       ?>
                                                                 </tr>
-                                                                 
-                                                        
-                                                      
                                                              </form>
                                                             <?php
-                                                             }
                                                              }
                                                              ?>
                                                         </tbody>

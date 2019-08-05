@@ -8,12 +8,12 @@
         <form method="post" action="?controller=users&action=modify_account" class="card-container" enctype="multipart/form-data">
 
             <div class="card" style="display:flex; flex-direction:row; padding-top: 60px; padding-bottom: 60px;">
-                <div class="col-md-2 relative profile">
+                <div class="col-md-4">
                     <div class="avatar">
-                        <div class="avatar-bg center">
-                        <img class='profile-image img-circle pull-left' src='<?=$donnees->getChemin_photo() ;?>' width='150' />" 
+                        <div id="avatarPic">
+                            <img src='<?=$donnees->getChemin_photo() ;?>' />
                         </div>
-                        <input type="file" name="fileToUpload" title="PNG , JPG ,JPEG , GIF uniquements" id="fileToUpload">
+                        <input id="photoChooser" type="file" name="fileToUpload" title="PNG , JPG ,JPEG , GIF uniquements" id="fileToUpload">
                     </div>
                 </div>
                 <div class="col-md-8 profil">
@@ -60,15 +60,17 @@
                         </div>
                     </div>
                     <hr>
-                    <div style="display: flex; align-content: space-between;" class="form-row">
-                        
-							<div><a href="#" >
-								<button class="btn form-btn profil" type="reset">Annuler</button>
-							</a></div>
-                            <div><a href="#" >
+                    <div class="form-row">
+                        <div class="col-3 offset-2" style="text-align: initial;">
+                            <a href="#" class="">
+                                <button class="btn form-btn profil" type="reset">Annuler</button>
+                            </a>
+                        </div>
+                        <div class="col-4 offset-2" style="text-align: initial;">
+                            <a href="#" class="">
                                 <button onclick="alert();" class="btn form-btn profil" name="sauvegarder" type="submit">Sauvegarder</button>
-                            </a></div>
-						
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>

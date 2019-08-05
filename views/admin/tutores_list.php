@@ -60,6 +60,8 @@
                                                                 <th>Ville</th>
                                                                 <th>Adresse</th>
                                                                 <th>Code_postal</th>
+                                                                <th>tuteurs disponibles</th>
+                                                                <th> Action</th>
                                                                 
 
                                                                
@@ -68,32 +70,63 @@
                                                         <tbody>
 
                                                             <?php
-                                                            if(!is_null($donnees))
-                                                            {
+                                                            
                                                              foreach ($donnees as $elt) 
                                                             {
                                                              ?>
 
-                                                              <form method="post" action="?controller=tutores&action=link">
+                                                              <form method="post" action="?controller=admin&action=link">
                                                                 
                                                               <tr >
 
  
-                                                                  <td> <label><?=$elt->getNom()?></label></td>
-                                                                  <td><label><?=$elt->getPrenom()?></label></td>
-                                                                  <td><label><?=$elt->getEmail()?></label></td>
-                                                                  <td><label ><?=$elt->getPhone()?></label></td>
-                                                                  <td><label ><?=$elt->getVille()?></label></td>
-                                                                  <td><label ><?=$elt->getAdress()?></label></td>
-                                                                  <td><label ><?=$elt->getCode_postal()?></label></td>
-                                                                  
+                                                                  <td> <label><?=$elt['user']->getNom()?></label></td>
+                                                                  <td><label><?=$elt['user']->getPrenom()?></label></td>
+                                                                  <td><label><?=$elt['user']->getEmail()?></label></td>
+                                                                  <td><label ><?=$elt['user']->getPhone()?></label></td>
+                                                                  <td><label ><?=$elt['user']->getVille()?></label></td>
+                                                                  <td><label ><?=$elt['user']->getAdress()?></label></td>
+                                                                  <td><label ><?=$elt['user']->getCode_postal()?></label></td>
+                                                                  <td><label>
+                                                                      <select class="form-control" name="id_tuteur">
+                                                                           <?php 
+                                                                           foreach($data as $tab)
+                                                                           {
+                                                                             ?>
+                                                                            <option value="<?=$tab['user']->getId_user();?>"required> <?= $tab['user']->getNom().' '.$tab['user']->getPrenom();?>
+                                                                                
+                                                                            </option>
+                                                                            
+                                                                             <?php
+                                                                           }
+                                                                           ?>
+                                                                     </select>
+                                                                  </label></td>
+
+                                                                  <?php
+                                                                   if($elt['etat'] == 'LIBRE')
+                                                                   {
+                                                                    ?>
+                                                                      <td><button class="btn" type="submit"name="lier" >lier</button>
+                                                                      </td>
+                                                                   <?php
+                                                                   }
+                                                                   else
+                                                                   {
+                                                                    ?>
+                                                                    <td><button class="btn" name="supprimer" >Supprimer la liaison</button>
+                                                                      </td>
+                                                                      <?php
+                                                                   }
+                                                                   ?>
+                                                                  <input type="hidden" name="id_tutore" value="<?=$elt['user']->getId_user()?>" >
                                                                 </tr>
-                                                                 <input type="hidden" name="id_u" value="<?=$elt->getId_user()?>" >
+                                                                 
                                                         
                                                       
                                                              </form>
                                                             <?php
-                                                             }
+                                                             
                                                              }
                                                              ?>
                                                         </tbody>

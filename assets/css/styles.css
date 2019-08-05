@@ -198,8 +198,19 @@ div#content {
   padding: 1em;
 }
 
-/*FIN POUP UP */
+/*FIN POPUP UP */
+/* PROFIL */
 
+#avatarPic img{
+  width: 100%;
+  margin-bottom: 50px;
+  border-radius: 50%;
+}
+
+#photoChooser {
+  border-radius: unset;
+}
+/*FIN PROFIL */
 @media (min-width:768px) {
     .navigation-clean-button {
         padding-top: 1rem;
