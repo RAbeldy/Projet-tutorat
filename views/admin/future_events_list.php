@@ -1,5 +1,9 @@
 
 
+    <button class="btn" type="submit" name="imprimer" >Imprimer</button>
+
+
+                                                                 
     <div id="globalContent">
         <div id="wrapper">
             
@@ -58,7 +62,8 @@
                                                                 <th>Adresse</th>
                                                                 <th>Places</th>
                                                                 <th>Horaires</th>
-                                                                <th>Inscription</th>
+                                                                <th>Modifier</th>
+                                                                <th>Consulter</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
@@ -80,7 +85,9 @@
                                                                   <td><label ><?=$elt['planning_event']?></label></td>
                                                                  
 
-                                                                  <td><button class="btn" type="submit" name="consulter" >Modifier</button>
+                                                                  <td><button class="btn" type="submit" name="modifier" >Modifier</button>
+                                                                  </td>
+                                                                  <td><button class="btn" type="submit" name="consulter" >Consulter</button>
                                                                   </td>
 
                                                                 </tr>

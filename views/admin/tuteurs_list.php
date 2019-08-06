@@ -114,7 +114,7 @@
                                                                     elseif(isset($_SESSION['id_statut']) && $_SESSION['id_statut'] == 11 && $elt['tuteurs'] == 'OUI')
                                                                     {  // id_u_d ici correspond à déselectionner un tuteur, ne plus travailler avec lui
                                                                         ?> 
-                                                                        <td><button class="btn" type="submit"name="rompre" >Rompre</button>
+                                                                        <td><button class="btn" type="submit"name="rompre" >Annuler</button>
                                                                      </td><input type="hidden" name="id_u_d" value="<?=$elt['user']->getId_user()?>" > 
                                                                      <?php
                                                                     }
