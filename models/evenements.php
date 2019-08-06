@@ -307,12 +307,12 @@ class Evenements
 
     }
 
-    public static function Get_informations_events_on_user($id_tuteur)
+    public static function Get_informations_events_on_user($id_tuteur,$id_admin)
     {
         $db = Db::getInstance();
         $list=[];
-        $req= $db->prepare("SELECT tt.libelle as libelle,e.id_evenement,e.date_evenement,e.lieu ,pe.duree as duree,p.valide as validé FROM type_tutorat as tt,evenement as e, planning_event as pe, participer_evenement as p WHERE tt.id_typeTutorat = e.id_typeTutorat AND e.id_planning= pe.id_planning AND p.id_evenement = e.id_evenement AND p.id_user= ? ORDER BY e.date_evenement DESC  ");
-        $req->execute(array($id_tuteur));
+        $req= $db->prepare("SELECT tt.libelle as libelle,e.id_evenement,e.date_evenement,e.lieu ,pe.duree as duree,p.valide as validé FROM type_tutorat as tt,evenement as e, planning_event as pe, participer_evenement as p WHERE tt.id_typeTutorat = e.id_typeTutorat AND e.id_planning= pe.id_planning AND p.id_evenement = e.id_evenement AND e.id_user= ? AND p.id_user= ? ORDER BY e.date_evenement DESC  ");
+        $req->execute(array($id_admin,$id_tuteur));
 
         foreach($req->fetchAll() as $data)
         { 

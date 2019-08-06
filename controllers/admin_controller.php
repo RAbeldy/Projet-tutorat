@@ -253,7 +253,7 @@ class AdminController
       if( isset($_SESSION['id_statut']))
        {
            $data= Users::Get_informations_on_user($_POST['id_u']); // on récupère les info du user en question
-           $donnees = Evenements::Get_informations_events_on_user($_POST['id_u']);
+           $donnees = Evenements::Get_informations_events_on_user($_POST['id_u'],$_SESSION['id_user']); // on récupère les évènements que le tuteur a effectué quand c'est un admin en particulier qui l'a crée 
 
             $controller_report='admin';
             $fonction_back='pasts_events_list';

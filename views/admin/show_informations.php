@@ -17,6 +17,14 @@
                                                 <p class="text-primary m-0 font-weight-bold">
                                                  <?=$data->getNom();?> <?=$data->getPrenom();?> </br> EMAIL: <?=$data->getEmail();?>
                                                 </p>
+                                                <div class="col-md-4">
+                    <div class="avatar">
+                        <div id="avatarPic">
+                            <img src='<?=$data->getChemin_photo() ;?>' />
+                        </div>
+                        
+                    </div>
+                </div>
                                                 <?php include('retour.php') ?>
                                             </div>
                                             <div class="card-body">
