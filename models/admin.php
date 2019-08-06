@@ -41,7 +41,7 @@ class Admin
     {
         $db = Db::getInstance();
         $list=[];
-        $req= $db->query("SELECT DISTINCT u.id_user,u.nom,u.prenom,u.date_naissance,u.email,u.phone,a.ville ,a.adress ,a.code_postal,t.appartenance  FROM user as u,adresse as a, avoir_statut as at,tuteurs as t WHERE   at.id_user = u.id_user AND  u.id_adresse = a.id_adresse AND t.id_tuteurs= u.id_user ORDER BY nom ASC");
+        $req= $db->query("SELECT DISTINCT u.id_user,u.nom,u.prenom,u.date_naissance,u.email,u.phone,a.ville ,a.adress ,a.code_postal,t.demande  FROM user as u,adresse as a, avoir_statut as at,tuteurs as t WHERE   at.id_user = u.id_user AND  u.id_adresse = a.id_adresse AND t.id_tuteurs= u.id_user ORDER BY nom ASC");
         
       foreach ($req->fetchAll() as $data)
       {
@@ -56,7 +56,7 @@ class Admin
         $users->setVille($data['ville']);
         $users->setCode_postal($data['code_postal']);
 
-        $list []= array('user'=>$users,'tuteurs'=>$data['appartenance']);
+        $list []= array('user'=>$users,'tuteurs'=>$data['demande']);
       }
       return $list ;
         
@@ -69,7 +69,7 @@ class Admin
         $req= $db->prepare("INSERT INTO se_destine(id_user,id_tutorat,id_typeTutorat) VALUES(?,?,(SELECT id_typeTutorat FROM tutorat WHERE id_tutorat = ?)) ");
         $req->execute(array($id_tuteur,$id_tutorat,$id_tutorat));
 
-        $req= $db->query("UPDATE tuteurs SET appartenance = 'OUI' WHERE id_tuteurs= ".$id_tuteur." ");
+        $req= $db->query("UPDATE tuteurs SET demande = 'OUI' WHERE id_tuteurs= ".$id_tuteur." ");
        
     }
     
@@ -79,7 +79,7 @@ class Admin
 
         $req = $db->query("DELETE FROM se_destine  WHERE id_user = ".$id_tuteur." ");
 
-        $req= $db->query("UPDATE tuteurs SET appartenance = 'NON' WHERE id_tuteurs= ".$id_tuteur." ");
+        $req= $db->query("UPDATE tuteurs SET demande = 'NON' WHERE id_tuteurs= ".$id_tuteur." ");
     }
     
     public static function Get_free_tuteurs() // liste des tutorés affiliés à l'admin et pouvants éffectuer des liaisons avec ses tutorés

@@ -265,7 +265,7 @@ class Evenements
        
        $list=[];
        
-       $req= $db->prepare("SELECT u.id_user, u.nom, u.prenom, u.email, u.phone, u.niveau, u.ecole FROM user as u, participer_evenement as pe,tuteurs as t WHERE t.id_tuteurs= u.id_user  AND u.id_user = pe.id_user AND pe.id_evenement = ?");
+       $req= $db->prepare("SELECT u.id_user, u.nom, u.prenom, u.email, u.phone, u.niveau, u.ecole,t.demande as demande FROM user as u, participer_evenement as pe,tuteurs as t WHERE t.id_tuteurs= u.id_user  AND u.id_user = pe.id_user AND pe.id_evenement = ?");
 
         $req->execute(array($id_evenement));  
        
@@ -280,7 +280,7 @@ class Evenements
         $user->setNiveau($temp['niveau']);
         $user->setEcole($temp['ecole']);
 
-        $list []= array('user'=>$user);
+        $list []= array('user'=>$user,'tuteurs'=>$temp['demande']);
       }
       return $list;
 

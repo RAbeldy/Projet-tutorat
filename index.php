@@ -229,9 +229,13 @@
                                 <i class="fab fa-phoenix-squadron"></i>
                                 <span>évènements</span>
                             </a>
-                            <a class="nav-link" href="?controller=admin&action=interface_tutorat_mef">
+                            <a class="nav-link" href="?controller=admin&action=interface_tutorat">
                                 <i class="fab fa-phoenix-squadron"></i>
                                 <span>Les centres de la Mef</span>
+                            </a>
+                            <a class="nav-link" href="?controller=admin&action=selected_tuteurs">
+                                <i class="fab fa-phoenix-squadron"></i>
+                                <span>Mes listes</span>
                             </a>
 
                             
