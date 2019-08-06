@@ -80,13 +80,7 @@ div#content {
 	padding: 50px;
 }
 
-.jumbotron {
-    background: url(../../assets/img/accueil.jpg);
-    background-size: cover;
-    background-position: center;
-    color: white;
-    box-shadow: 0 0 0 400px rgba(0,0,255,0.3) inset;
-}
+
 
 .cardImage {
 	width: 100%;
@@ -106,8 +100,9 @@ div#content {
 }
 
 .heading {
-    margin-bottom: 50px;
+    margin-bottom: auto;
     text-align: center;
+    color: black;
 }
 
 #h1bienvenue {
@@ -233,3 +228,6 @@ div#content {
 		font-size: 15px;
 	}
 }
+
+
+
