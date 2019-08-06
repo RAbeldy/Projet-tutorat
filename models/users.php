@@ -14,6 +14,8 @@ require_once('connexion.php');
     private $adress;
     private $com_adress;
     private $code_postal;
+    private $niveau;
+    private $ecole;
 
     public function __construct(){}
 
@@ -68,6 +70,14 @@ require_once('connexion.php');
     public function getCode_postal()
     {
     return $this->code_postal;
+    }
+    public function getNiveau()
+    {
+    return $this->niveau;
+    }
+    public function getEcole()
+    {
+    return $this->ecole;
     }
     // les set              
 
@@ -124,6 +134,14 @@ require_once('connexion.php');
     public function setCode_postal($code_postal)
     {
      $this->code_postal= $code_postal ;
+    }
+    public function setNiveau($niveau)
+    {
+     $this->niveau= $niveau ;
+    }
+    public function setEcole($ecole)
+    {
+     $this->ecole= $ecole ;
     }
 
 

@@ -37,10 +37,10 @@
 
                        'tutores'=>['interface_tutore','selection_tuteurs','tuteurs_list','notifications','waiting_list','link','accept_link','working_list','wish_list','cancel_wish','validate_hours','contact','message'],
 
-                       'admin'=>['interface_admin','interface_admin_tuteur','admin_set_event','tuteurs_list','tutores_list','interface_tutores_mef','sign_up','choose_tuteur','interface_tutorat_mef','create_center','tutorat_center_list','validate_hours','show_informations','link','pasts_events_list','future_events_list'],
+                       'admin'=>['interface_admin','interface_admin_tuteur','admin_set_event','tuteurs_list','tutores_list','interface_tutores_mef','sign_up','choose_tuteur','interface_tutorat_mef','create_center','tutorat_center_list','validate_hours','show_informations','link','events','pasts_events_list','future_events_list','modify_event'],
                        'tutorat'=>['create_center'],
 
-                       'evenements' =>['admin_set_event','tuteur_set_event','cancel_participation','display_pasts_events','display_future_events','display_subscribed_events','subscribe_to_event','pasts_events','subscription_list']);
+                       'evenements' =>['admin_set_event','tuteur_set_event','cancel_participation','display_pasts_events','display_future_events','display_subscribed_events','subscribe_to_event','modify_event','subscription_list']);
   if (array_key_exists($controller, $controllers))
   {
     if (in_array($action, $controllers[$controller])) 

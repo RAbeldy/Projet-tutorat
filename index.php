@@ -110,7 +110,7 @@
                     </li>
                     <li class="nav-item"><a href="#" class="nav-link">Equipe </a>
                     </li>
-                    <li class="nav-item"><a href="#" class="nav-link">Contact </a>
+                    <li class="nav-item"><a href="?controller=page&action=contact" class="nav-link">Contact </a>
                     </li>
                     <?php
                 }

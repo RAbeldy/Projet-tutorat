@@ -11,7 +11,7 @@ class PageController
     
     public function contact()
     {
-    	require_once('views/contact.php');
+    	require_once('views/contactAdmin.php');
     }
 }
 ?>

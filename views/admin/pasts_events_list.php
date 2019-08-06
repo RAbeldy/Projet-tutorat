@@ -80,7 +80,7 @@
                                                                   <td><label ><?=$elt['planning_event']?></label></td>
                                                                  
 
-                                                                  <td><button class="btn" type="submit" name="consulter" onclick="alert();">Consulter</button>
+                                                                  <td><button class="btn" type="submit" name="consulter" >Consulter</button>
                                                                   </td>
 
                                                                 </tr>

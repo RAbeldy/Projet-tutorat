@@ -1,11 +1,11 @@
 
+
     <div id="globalContent">
         <div id="wrapper">
             
             <div class="d-flex flex-column" id="content-wrapper">
                 <div id="content">
                     <div class="block">
-                        
                         <div class="container">
                             <div class="row">
                                 <div class="col-md-1">
@@ -14,9 +14,7 @@
                                     <div class="row">
                                         <div class="card debut">
                                             <div class="card-header py-3">
-                                                <p class="text-primary m-0 font-weight-bold">
-                                                 <?=$data->getNom();?> <?=$data->getPrenom();?> </br> EMAIL: <?=$data->getEmail();?>
-                                                </p>
+                                                <p class="text-primary m-0 font-weight-bold">Les evenements à venir</p>
                                                 <?php include('retour.php') ?>
                                             </div>
                                             <div class="card-body">
@@ -55,53 +53,41 @@
                                                     <table class="table dataTable my-0" id="dataTable">
                                                         <thead>
                                                             <tr>
-                                                                
                                                                 <th>Tutorat</th>
                                                                 <th>Date</th>
-                                                                <th>Lieu</th>
-                                                                <th>Duree</th>
-                                                                <th>Action</th>
+                                                                <th>Adresse</th>
+                                                                <th>Places</th>
+                                                                <th>Horaires</th>
+                                                                <th>Inscription</th>
                                                             </tr>
-                                                            
                                                         </thead>
                                                         <tbody>
 
                                                             <?php
-                                                            
-                                                       
-                                                             foreach ($donnees as $elt)
+                                                            if(!is_null($donnees))
+                                                            {
+                                                             foreach ($donnees as $elt) 
                                                             {
                                                              ?>
-                                                             <form method="post" action="?controller=admin&action=validate_hours">
+
+                                                              <form method="post" action="?controller=admin&action=modify_event">
+                                                                
                                                               <tr>
-                                                                  
-                                                                  <td><label><?=$elt['type_tutorat'];?></label></td> <!-- nom -->
-                                                                  <td><label><?=$elt['evenement']->getDate_evenement();?></label></td> <!-- prenom -->
-                                                                  <td><label><?=$elt['evenement']->getLieu();?></label></td> <!-- phone -->
-                                                                  <td><input type="number" name="duree" value="<?=$elt['planning_event']?>"></td> <!-- duree de l'évenement -->    
-                                                                   
-                                                                  <?php 
-                                                                  if($elt['participer_evenement'] == 'NON')
-                                                                {
-                                                                ?>
-                                                                      <td><button class="btn" type="submit" name="valider" onclick="alert();">Valider</button></td>
-                                                                      <input type="hidden" name="id_e" value="<?=$elt['evenement']->getId_evenement()?>" >
-                                                                      <input type="hidden" name="id_t" value="<?=$data->getId_user();?>" >
-                                                                <?php 
-                                                                }
-                                                                else
-                                                                {
-                                                                ?>
-                                                                    <td><label class="btn" name="validé" title="deja validé">Validé</label>  </td>
-                                                                      
-                                                                    <?php
-                                                                } 
-                                                                ?>
-                                                                  
-                                                             </tr>
+                                                                  <td> <label><?=$elt['type_tutorat']?></label></td>
+                                                                  <td><label><?=$elt['evenement']->getDate_evenement()?></label></td>
+                                                                  <td><label><?=$elt['evenement']->getLieu()?></label></td>
+                                                                  <td><label><?=$elt['evenement']->getNb_places()?></label></td>
+                                                                  <td><label ><?=$elt['planning_event']?></label></td>
+                                                                 
+
+                                                                  <td><button class="btn" type="submit" name="consulter" >Modifier</button>
+                                                                  </td>
+
+                                                                </tr>
+                                                                 <input type="hidden" name="id_e" value="<?=$elt['evenement']->getId_evenement()?>" >
                                                              </form>
                                                             <?php
-                                                             
+                                                             }
                                                              }
                                                              ?>
                                                         </tbody>
@@ -125,9 +111,11 @@
 <script type="text/javascript">
         function alert()
         {
-            confirm('etes vous sur de vouloir valider?');
+            confirm('etes vous sur de vouloir vous inscrir?');
         }
-</script>
+
+        
+    </script>
 
 
 

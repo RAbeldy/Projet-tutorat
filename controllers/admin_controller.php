@@ -31,6 +31,14 @@ class AdminController
                 require_once('views/login.php');
        }
 
+
+       public function events()
+       {
+          if( isset($_SESSION['id_statut']))
+                require_once('views/admin/events.php');
+          else
+                require_once('views/login.php');
+       }
        public function admin_set_event()
        {
           if( isset($_SESSION['id_statut']))
@@ -38,13 +46,59 @@ class AdminController
              $donnees= Tutorat::Get_lieu_tutorat($_SESSION['id_user']);
               
              $controller_report='admin';
-             $fonction_back='interface_admin';
+             $fonction_back='events';
 
               require_once('views/admin/admin_set_event.php');
           }
             else
                 require_once('views/login.php');
        }
+
+       public function modify_event()
+       {
+        if( isset($_SESSION['id_statut']))
+          {    
+             $donnees= Tutorat::Get_lieu_tutorat($_SESSION['id_user']);
+             $tab= Evenements::Get_informations_on_events($_POST['id_e']);
+              
+             $controller_report='admin';
+             $fonction_back='events';
+
+              require_once('views/admin/modify_event.php');
+          }
+            else
+                require_once('views/login.php');
+       }
+
+       public function future_events_list()
+    {
+        if( isset($_SESSION['id_statut']))
+        {
+          $donnees = Evenements::Future_events_list($_SESSION['id_user']);
+
+          $controller_report='admin';
+          $fonction_back='events';
+
+          require_once('views/admin/future_events_list.php');
+        }
+        else
+          require_once('views/login.php');
+    }
+
+    public static function pasts_events_list()
+    {
+        if( isset($_SESSION['id_statut']))
+        {
+          $donnees = Evenements::Pasts_events_list($_SESSION['id_user']);
+
+          $controller_report='admin';
+          $fonction_back='interface_admin';
+
+          require_once('views/admin/pasts_events_list.php');
+        }
+        else
+          require_once('views/login.php');
+    }
      
      public static function tuteurs_list() // lsite des tuteurs 
     {
@@ -193,19 +247,6 @@ class AdminController
           require_once('views/login.php');
      }
 
-     
-       
-     public  function validate_hours()  // on valide les heures concernant un évènement
-    {
-      if( isset($_SESSION['id_statut']))
-       {
-           Admin::Validate_hours($_POST['id_e'],$_POST['id_t'],$_POST['duree']);
-
-          AdminController::show_informations(); // on recharge. la page show_informations.php 
-       }
-       else
-          require_once('views/login.php');
-    }
 
     public static function show_informations()
     {
@@ -214,11 +255,23 @@ class AdminController
            $data= Users::Get_informations_on_user($_POST['id_u']); // on récupère les info du user en question
            $donnees = Evenements::Get_informations_events_on_user($_POST['id_u']);
 
-            $controller_report='evenements';
-            $fonction_back='subscription_list';
+            $controller_report='admin';
+            $fonction_back='pasts_events_list';
 
         
           require_once('views/admin/show_informations.php');
+       }
+       else
+          require_once('views/login.php');
+    }
+
+    public  function validate_hours()  // on valide les heures concernant un évènement
+    {
+      if( isset($_SESSION['id_statut']))
+       {
+           Admin::Validate_hours($_POST['id_e'],$_POST['id_t'],$_POST['duree']);
+
+          AdminController::pasts_events_list(); // on recharge. la page show_informations.php 
        }
        else
           require_once('views/login.php');
@@ -242,35 +295,8 @@ class AdminController
           require_once('views/login.php');
      }
     
-    public function future_events_list()
-    {
-        if( isset($_SESSION['id_statut']))
-        {
-          $donnees = Evenements::Future_events_list($_SESSION['id_user']);
 
-          $controller_report='admin';
-          $fonction_back='interface_admin';
-
-          require_once('views/admin/interface_admin_mef.php');
-        }
-        else
-          require_once('views/login.php');
-    }
-
-    public function pasts_events_list()
-    {
-        if( isset($_SESSION['id_statut']))
-        {
-          $donnees = Evenements::Pasts_events_list($_SESSION['id_user']);
-
-          $controller_report='admin';
-          $fonction_back='interface_admin';
-
-          require_once('views/admin/events_list.php');
-        }
-        else
-          require_once('views/login.php');
-    }
+    
 
 
 }

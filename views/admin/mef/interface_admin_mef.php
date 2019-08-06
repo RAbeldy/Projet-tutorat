@@ -12,7 +12,7 @@
                                             <div class="card avenir">
                                                 <div class="card-body">
                                                     <h4 class="card-title">Evènements</h4>
-                                                    <a href="?controller=admin&action=admin_set_event">
+                                                    <a href="?controller=admin&action=events">
                                                         <button class="btn" type="button">je crée, je consulte</button>
                                                     </a>
                                                 </div>

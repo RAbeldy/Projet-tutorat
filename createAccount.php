@@ -130,8 +130,8 @@
 		                
 
 		                // on insère son niveau
-		                $req = $bd->prepare("INSERT INTO classe (niveau,ecole) VALUES(?,?)");
-               			$req->execute(array($niveau,$ecole));
+		                //$req = $bd->prepare("INSERT INTO classe (niveau,ecole) VALUES(?,?)");
+               			//$req->execute(array($niveau,$ecole));
                
                 // initialise le statut_compte du nouveau user dans avoir_statut
                    
@@ -141,6 +141,7 @@
 				         // on insère. l'id_classe  dans la table user
                         //$req= $bd->prepare("INSERT INTO user(id_classe) VALUES(SELECT id_classe from classe WHERE niveau= ? AND ecole= ? )");
                         //$req->execute(array($niveau,$ecole;));
+
                          if( isset($_SESSION['id_statut']) && $_SESSION['id_statut'] == 11)
 				         	header('location:index.php?controller=users&action=redirection');
 				         else

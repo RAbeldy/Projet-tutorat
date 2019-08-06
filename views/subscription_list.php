@@ -13,7 +13,9 @@
                                     <div class="row">
                                         <div class="card debut">
                                             <div class="card-header py-3">
-                                                <p class="text-primary m-0 font-weight-bold"></p>
+                                                <p class="text-primary m-0 font-weight-bold">
+                                                    Date:<?=$data[0]->getDate_evenement();?>&nbsp;&nbsp;Lieu:<?=$data[0]->getLieu();?> </br> Type_tutorat: <?=$data[1];?>
+                                                </p>
                                                 <?php include('retour.php') ?>
                                             </div>
                                             <div class="card-body">
@@ -77,12 +79,12 @@
                                                                   <td><label><?=$elt['user']->getPrenom();?></label></td> <!-- prenom -->
                                                                   <td><label><?=$elt['user']->getPhone();?></label></td> <!-- phone -->
                                                                   <td><label ><?=$elt['user']->getEmail();?></label></td> <!-- email-->
-                                                                  <td><label ><?=$elt['classe'][0];?></label></td> <!-- niveau -->
-                                                                  <td><label ><?=$elt['classe'][1];?></label></td> <!-- ecole -->
+                                                                  <td><label ><?=$elt['user']->getNiveau();?></label></td> <!-- niveau -->
+                                                                  <td><label ><?=$elt['user']->getEcole();?></label></td> <!-- ecole -->
                                                                     
-                                                                  <td><button class="btn" type="submit" name="consulter" onclick="alert();">Consulter</button></td>
+                                                                  <td><button class="btn" type="submit" name="consulter" >Consulter</button></td>
                                                                   
-                                                                  <input type="hidden" name="id_t" value="<?=$elt['user']->getId_user();?>" >
+                                                                  <input type="hidden" name="id_u" value="<?=$elt['user']->getId_user();?>" >
                                                                   
                                                                   
                                                              </tr>
@@ -109,12 +111,7 @@
         </div>
     </div>
 
-<script type="text/javascript">
-        function alert()
-        {
-            confirm('etes vous sur de vouloir vous inscrire?');
-        }
-</script>
+
 
 
 
