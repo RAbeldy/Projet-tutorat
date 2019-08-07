@@ -105,6 +105,14 @@ div#content {
     color: black;
 }
 
+.p{
+  padding-left: auto;
+  padding-right: auto;
+  padding-bottom: auto;
+  padding-top: auto;
+}
+
+
 #h1bienvenue {
     text-align: center;
     padding: 40px 0px;
