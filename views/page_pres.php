@@ -1,10 +1,10 @@
 
     <div class="global_container">
          <div class="w3-content w3-section" style="background-size: auto; background-position: center; top">
-              <img class="mySlides" src="../../assets/img/accueil.jpg" style="width:100%">
-              <img class="mySlides" src="../../assets/img/1.jpg" style="width:100%">
-              <img class="mySlides" src="../../assets/img/2.jpg" style="width:100%">
-              <img class="mySlides" src="../../assets/img/3.jpg" style="width:100%">
+              <img class="mySlides" src="assets/img/accueil.jpg" style="width:100%">
+              <img class="mySlides" src="assets/img/1.jpg" style="width:100%">
+              <img class="mySlides" src="assets/img/2.jpg" style="width:100%">
+              <img class="mySlides" src="assets/img/3.jpg" style="width:100%">
     </div>
 
             <script>

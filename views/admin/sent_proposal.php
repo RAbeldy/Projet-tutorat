@@ -13,8 +13,7 @@
                                     <div class="row">
                                         <div class="card debut">
                                             <div class="card-header py-3">
-                                                <p class="text-primary m-0 font-weight-bold">
-                                                    Date:<?=$data[0]->getDate_evenement();?>&nbsp;&nbsp;Lieu:<?=$data[0]->getLieu();?> </br> Type_tutorat: <?=$data[1];?>
+                                                <p class="text-primary m-0 font-weight-bold">  
                                                 </p>
                                                 <?php include('retour.php') ?>
                                             </div>
@@ -61,7 +60,9 @@
                                                                 <th>Email</th>
                                                                 <th>Ecole</th>
                                                                 <th>Niveau</th>
-                                                                <th>Action</th> 
+                                                                <th>intitulé tutorat</th>
+                                                                <th>Action</th>
+
                                                             </tr>
                                                             
                                                         </thead>
@@ -72,7 +73,7 @@
                                                             {
                                                               
                                                              ?>
-                                                             <form method="post" action="?controller=admin&action=show_informations">
+                                                             <form method="post" action="?controller=admin&action=cancel_proposal">
                                                               <tr>
                                                                   
                                                                   <td><label><?=$elt['user']->getNom();?></label></td> <!-- nom -->
@@ -81,12 +82,16 @@
                                                                   <td><label ><?=$elt['user']->getEmail();?></label></td> <!-- email-->
                                                                   <td><label ><?=$elt['user']->getNiveau();?></label></td> <!-- niveau -->
                                                                   <td><label ><?=$elt['user']->getEcole();?></label></td> <!-- ecole -->
+                                                                  <td><label ><?=$elt['libelle'];?> <!-- libelle du tutorat -->
+                                                                  
+                                                                    </label></td>
                                                                     
-                                                                  <td><button class="btn" type="submit" name="consulter" >Consulter</button></td>
-                                                                  
+                                                                    
+                                                                        
+                                                                        <td><button class="btn" type="submit"name="rompre" >Annuler</button>
+                                                                     </td> 
                                                                   <input type="hidden" name="id_u" value="<?=$elt['user']->getId_user();?>" >
-                                                                  
-                                                                  
+                                                                  <input type="hidden" name="id_t" value="<?=$elt['tutorat'];?>" >
                                                              </tr>
                                                              </form>
                                                             <?php

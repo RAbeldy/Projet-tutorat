@@ -14,7 +14,7 @@
                                     <div class="row">
                                         <div class="card debut">
                                             <div class="card-header py-3">
-                                                <p class="text-primary m-0 font-weight-bold">Ils sont disponibles</p>
+                                                <p class="text-primary m-0 font-weight-bold">Propositions recues</p>
                                                 <?php include('retour.php') ?>
                                             </div>
                                             <div class="card-body">
@@ -53,17 +53,12 @@
                                                     <table class="table dataTable my-0" id="dataTable">
                                                         <thead>
                                                             <tr>
-                                                                <th>Nom</th>
-                                                                <th>Prenom</th>
-                                                                <th>Email</th>
-                                                                <th>Phone</th>
-                                                                <th>Ville</th>
+                                                                <th>Type de tutorat</th>
+                                                                <th>Tutorat</th>
                                                                 <th>Adresse</th>
-                                                                <th>Code_postal</th>
-                                                                <th>Tutorats</th>
+                                                                <th>Code postal</th>
                                                                 <th>Action</th>
-
-                                                               
+                                                                   
                                                             </tr>
                                                         </thead>
                                                         <tbody>
@@ -72,45 +67,21 @@
                                                             
                                                              foreach ($donnees as $elt) 
                                                             {
-                                                             ?>
-
-                                                              <form method="post" action="?controller=admin&action=choose_tuteur">
-                                                                
+                                                             ?> 
+                                                             <form method="post" action="?controller=tuteurs&action=accept_proposal">
                                                               <tr >
-
- 
-                                                                  <td> <label><?=$elt['user']->getNom()?></label></td>
-                                                                  <td><label><?=$elt['user']->getPrenom()?></label></td>
-                                                                  <td><label><?=$elt['user']->getEmail()?></label></td>
-                                                                  <td><label ><?=$elt['user']->getPhone()?></label></td>
-                                                                  <td><label ><?=$elt['user']->getVille()?></label></td>
-                                                                  <td><label ><?=$elt['user']->getAdress()?></label></td>
-                                                                  <td><label ><?=$elt['user']->getCode_postal()?></label></td>
-                                                                  <td><label >
-                                                                  <select class="form-control" name="tutorat">
-                                                                  <?php 
-                                                                       foreach($req as $data)
-                                                                       {
-                                                                         ?>
-                                                                        <option value="<?=$data[1];?>"required> <?= $data[0] ;?>
-                                                                            
-                                                                        </option>
-                                                                        
-                                                                         <?php
-                                                                       }
-                                                                       ?>
-                                                                    </select>
-                                                                    </label></td>
-                                                                    <!-- //id_u_c ici correspond à choisir un tuteur-->
-
-                                                                          
-
-                                                                     <td><button class="btn" type="submit"name="choisir" >Choisir</button>
-                                                                     </td><input type="hidden" name="id_u_c" value="<?=$elt['user']->getId_user()?>" >
-                                                                     
-                                                                </tr>
-                                                             </form>
+                                          
+                                                                  <td> <label><?=$elt['type_tutorat']?></label></td>
+                                                                  <td> <label><?=$elt['libelle'];?></label></td>
+                                                                  <td><label><?=$elt['adresse'];?></label></td>
+                                                                  <td><label><?=$elt['code_postal'];?></label></td> 
+                                                                  <td><button class="btn" type="submit"name="choisir" >Accepter</button>
+                                                                  </td>
+                                                                  <input type="hidden" name="id_t" value="<?=$elt['tutorat'];?>"/>                                                                 
+                                                              </tr>
+                                                              </form>
                                                             <?php
+                                                             
                                                              }
                                                              ?>
                                                         </tbody>
@@ -131,7 +102,14 @@
         </div>
     </div>
 
+<script type="text/javascript">
+        function alert()
+        {
+            confirm('etes vous sur de vouloir vous inscrir?');
+        }
 
+        
+    </script>
 
 
 

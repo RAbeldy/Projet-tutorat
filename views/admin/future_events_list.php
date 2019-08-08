@@ -63,6 +63,7 @@
                                                                 <th>Places</th>
                                                                 <th>Horaires</th>
                                                                 <th>Modifier</th>
+                                                                <th>Supprimer</th>
                                                                 <th>Consulter</th>
                                                             </tr>
                                                         </thead>
@@ -78,7 +79,7 @@
                                                               <form method="post" action="?controller=admin&action=modify_event">
                                                                 
                                                               <tr>
-                                                                  <td> <label><?=$elt['type_tutorat']?></label></td>
+                                                                  <td> <label><?=$elt['tutorat']?></label></td>
                                                                   <td><label><?=$elt['evenement']->getDate_evenement()?></label></td>
                                                                   <td><label><?=$elt['evenement']->getLieu()?></label></td>
                                                                   <td><label><?=$elt['evenement']->getNb_places()?></label></td>
@@ -86,6 +87,8 @@
                                                                  
 
                                                                   <td><button class="btn" type="submit" name="modifier" >Modifier</button>
+                                                                  </td>
+                                                                  <td><button class="btn" type="submit" name="supprimer" >Supprimer</button>
                                                                   </td>
                                                                   <td><button class="btn" type="submit" name="consulter" >Consulter</button>
                                                                   </td>

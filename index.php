@@ -167,7 +167,11 @@
                                     <i class="fab fa-phoenix-squadron"></i>
                                     <span>Notifications</span>
                                 </a>
-                                <a class="nav-link" href="?controller=tutores&action=contact">
+                                <a class="nav-link" href="?controller=tuteurs&action=show_proposal">
+                                    <i class="fab fa-phoenix-squadron"></i>
+                                    <span>Propositions</span>
+                                </a>
+                                <a class="nav-link" href="?controller=tuteurs&action=contact">
                                     <i class="fab fa-phoenix-squadron"></i>
                                     <span>Questions / Support</span>
                                 </a>
@@ -233,7 +237,7 @@
                                 <i class="fab fa-phoenix-squadron"></i>
                                 <span>Les centres de la Mef</span>
                             </a>
-                            <a class="nav-link" href="?controller=admin&action=selected_tuteurs">
+                            <a class="nav-link" href="?controller=admin&action=interface_selection">
                                 <i class="fab fa-phoenix-squadron"></i>
                                 <span>Mes listes</span>
                             </a>

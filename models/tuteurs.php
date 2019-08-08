@@ -212,8 +212,35 @@ class Tuteurs
            
     }
         
-        
+    public static function Get_proposal($id_tuteur)
+    {
+        $db = Db::getInstance();
+        $list=[];
+        $req= $db->prepare("SELECT tt.libelle as libelle_type, t.id_tutorat as id_tutorat,t.libelle as libelle,t.adresse as adresse,t.code_postal,u.id_user,u.nom,u.prenom,u.email FROM user as u, administrer as a, type_tutorat as tt, tutorat as t,se_destine as se WHERE a.id_tutorat= se.id_tutorat AND a.id_typeTutorat= se.id_typeTutorat AND se.id_tutorat= t.id_tutorat AND se.id_typeTutorat = t.id_typeTutorat AND tt.id_typeTutorat= t.id_typeTutorat AND u.id_user= a.id_admin AND se.id_user= ? AND se.liaison='NON' ORDER BY libelle ");
+        $req->execute(array($id_tuteur));
+
+        foreach ($req->fetchAll() as $data)
+                  {
+                    $users= new Users();
+                    $users->setId_user($data['id_user']);
+                    $users->setNom($data['nom']);
+                    $users->setPrenom($data['prenom']);
+                    $users->setEmail($data['email']);
+                   
+
+                    $list []= array('user' => $users,'type_tutorat'=>$data['libelle_type'],'libelle'=>$data['libelle'],'tutorat'=>$data['id_tutorat'],'adresse'=>$data['adresse'],'code_postal'=>$data['code_postal']);
+                  }
+                  return $list ;
+
+    }    
     
+    public static function Accept_proposal($id_tuteur,$id_tutorat)
+    {
+      $db = Db::getInstance();
+      $req= $db->prepare("UPDATE se_destine SET liaison = 'OUI' WHERE id_user= ? AND id_tutorat= ?");
+      $req->execute(array($id_tuteur,$id_tutorat));
+
+    }
     
 
 }

@@ -94,7 +94,7 @@
    					 	$req = $bd->prepare("INSERT INTO classe (ecole) VALUES(?)");
                 		$req->execute(array($ecole));
                 // on insère dans la table tuteur
-		                $req = $bd->prepare("INSERT INTO tuteurs (id_tuteurs,nb_max_mef,nb_max_perso) VALUES((SELECT id_user FROM user  WHERE email =?),3,2)");
+		                $req = $bd->prepare("INSERT INTO tuteurs (id_tuteurs,nb_linksmef,nb_max_mef,nb_linksperso,nb_max_perso) VALUES((SELECT id_user FROM user  WHERE email =?),0,3,0,2)");
 		                $req->execute(array($login_mail));
 
                 // initialise le statut_compte du nouveau user dans avoir_statut

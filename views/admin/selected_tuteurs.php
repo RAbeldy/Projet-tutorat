@@ -14,7 +14,7 @@
                                     <div class="row">
                                         <div class="card debut">
                                             <div class="card-header py-3">
-                                                <p class="text-primary m-0 font-weight-bold">Ils sont disponibles</p>
+                                                <p class="text-primary m-0 font-weight-bold">Ils sont affiliés aux tutorats que je dirige</p>
                                                 <?php include('retour.php') ?>
                                             </div>
                                             <div class="card-body">
@@ -74,7 +74,7 @@
                                                             {
                                                              ?>
 
-                                                              <form method="post" action="?controller=admin&action=choose_tuteur">
+                                                              <form method="post" action="?controller=admin&action=end_contract">
                                                                 
                                                               <tr >
 
@@ -86,27 +86,11 @@
                                                                   <td><label ><?=$elt['user']->getVille()?></label></td>
                                                                   <td><label ><?=$elt['user']->getAdress()?></label></td>
                                                                   <td><label ><?=$elt['user']->getCode_postal()?></label></td>
-                                                                  <td><label >
-                                                                  <select class="form-control" name="tutorat">
-                                                                  <?php 
-                                                                       foreach($req as $data)
-                                                                       {
-                                                                         ?>
-                                                                        <option value="<?=$data[1];?>"required> <?= $data[0] ;?>
-                                                                            
-                                                                        </option>
-                                                                        
-                                                                         <?php
-                                                                       }
-                                                                       ?>
-                                                                    </select>
-                                                                    </label></td>
-                                                                    <!-- //id_u_c ici correspond à choisir un tuteur-->
-
-                                                                          
-
-                                                                     <td><button class="btn" type="submit"name="choisir" >Choisir</button>
-                                                                     </td><input type="hidden" name="id_u_c" value="<?=$elt['user']->getId_user()?>" >
+                                                                  <td><label ><?=$elt['libelle'];?></label></td>
+                                    
+                                                                  <td><button class="btn" type="submit"name="rompre" >Rompre</button>
+                                                                  </td><input type="hidden" name="id_u" value="<?=$elt['user']->getId_user()?>" > 
+                                                                  <input type="hidden" name="id_t" value="<?=$elt['tutorat'];?>" > 
                                                                      
                                                                 </tr>
                                                              </form>

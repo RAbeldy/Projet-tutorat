@@ -30,7 +30,7 @@ try {
         {
             foreach ($attachement as $file) {
                 $mail->addAttachment($file['tmp_name'], $file['name']);
-                //$attachement doit contenir la path absolue de la pièce jointe
+                //$attachement doit contenir le path absolue de la pièce jointe
             }
         }
     } else {

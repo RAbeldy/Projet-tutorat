@@ -83,7 +83,7 @@
                                                              <form method="post" action="?controller=admin&action=validate_hours">
                                                               <tr>
                                                                   
-                                                                  <td><label><?=$elt['type_tutorat'];?></label></td> <!-- nom -->
+                                                                  <td><label><?=$elt['tutorat'];?></label></td> <!-- nom -->
                                                                   <td><label><?=$elt['evenement']->getDate_evenement();?></label></td> <!-- prenom -->
                                                                   <td><label><?=$elt['evenement']->getLieu();?></label></td> <!-- phone -->
                                                                   <td><input type="number" name="duree" value="<?=$elt['planning_event']?>"></td> <!-- duree de l'évenement -->    

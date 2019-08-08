@@ -1,7 +1,8 @@
 <?php
 require_once('models/tuteurs.php');
 require_once('models/evenements.php');
-
+require_once('models/tutorat.php');
+require_once('controllers/admin_controller.php');
 class EvenementsController
 {
 
@@ -37,10 +38,7 @@ class EvenementsController
       // une instance de la classe tuteur
             $event = new Evenements(); 
             $event->setDate_evenement( $_POST['date_creation']);
-            $event->setLieu( $_POST['lieu']);
             $event->setDuree( $_POST['duree']);
-            
-
             $event->setNb_tuteurs($_POST['nb_tuteurs']);
             $event->setNb_tutores($_POST['nb_tutores']);
 
@@ -67,7 +65,7 @@ class EvenementsController
       // une instance de la classe tuteur
             $event = new Evenements(); 
             $event->setDate_evenement( $_POST['date_creation']);
-            $event->setLieu( $_POST['lieu']);
+            
             $event->setDuree( $_POST['duree']);
             
 
@@ -80,7 +78,7 @@ class EvenementsController
             $fonction_back='future_events_list';
                
               if($_SESSION['id_statut'] == 11)
-                require_once('views/admin/future_events_list.php');
+                AdminController::future_events_list();
               elseif($_SESSION['id_statut'] == 14)
                 require_once('views/admin/mef/interface_admin_mef.php');
               else
@@ -258,10 +256,70 @@ public function cancel_participation()
           $controller_report='admin';
           $fonction_back='pasts_events_list';
 
-          require_once('views/subscription_list.php');
+          require_once('views/admin/subscription_list.php');
        }    
        else
           require_once('views/login.php');
+    }
+    public static function Ssubscription_list() // cette fonction est la mm que subscription_list à la seule différence qu'elle permet la sélection des tuteurs d'ou le préfixe S
+    {
+       if( isset($_SESSION['id_statut']))
+       {
+          $donnees = Evenements::Subscription_list($_POST['id_e']); // on récupère la liste des participants
+          $data= Evenements::Get_informations_on_events($_POST['id_e']);  // on récupère la date, le. lieu etc sur l'évenement
+          $req= Tutorat::Get_lieu_tutorat($_SESSION['id_user']); // on récupère la liste des tutorats que l'admin administre
+          $controller_report='admin';
+          $fonction_back='Spasts_events_list';
+
+          require_once('views/admin/Ssubscription_list.php');
+       }    
+       else
+          require_once('views/login.php');
+    }
+    
+    // fonctions de recherche par tutorat et par nom
+    public function search_tutorat_name()//on affiche les evenements en fonction de leurs libelle
+    {
+      if( isset($_SESSION['id_statut']))
+        {  
+          if( isset( $_POST['name_tutorat'])) // une regex sur le statut du user pour savoir qui est connecté
+          {   
+                  
+                  $donnees = Evenements::FindTutoratByName($_SESSION['id_user'],$_POST['name_tutorat']);
+
+                  $controller_report='tutores';
+                  $fonction_back='interface_tutore';
+
+                  require_once('views/admin/vauban/future_event.php'); // on charge la vue adéquate
+              
+          }
+          else
+             require_once('views/admin/vauban/past_event');
+        }
+        else
+            require_once('views/login.php');
+    }
+
+    public function search_tutorat_date()//affichage des events par periode
+    {
+       if( isset($_SESSION['id_user']))
+        {  
+          if( isset( $_POST['date_debut']) && isset($_POST['date_fin'])) // une regex sur le statut du user pour savoir qui est connecté
+          {   
+                  
+                  $donnees = Evenements::FindTutoratByDate($_SESSION['id_user'],$_POST['date_debut'], $_POST['date_fin']);
+
+                  $controller_report='tutores';
+                  $fonction_back='interface_tutore';
+
+                  require_once('views/admin/vauban/future_event.php');  // on charge la vue adéquate
+              
+          }
+          else
+             require_once('views/admin/vauban/past_event');
+        }
+        else
+            require_once('views/login.php');
     }
 }
 

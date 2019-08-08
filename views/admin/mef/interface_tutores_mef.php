@@ -22,7 +22,7 @@
                                         <div class="col-xs-12 col-md-6 card-container">
                                             <div class="card historique">
                                                 <div class="card-body">
-                                                    <h4 class="card-title">Je consulte</h4>
+                                                    <h4 class="card-title">Je consulte,  je lie</h4>
                                                     <a href="?controller=admin&action=tutores_list">
                                                         <button class="btn" type="button">liste de<br/>tutorés</button>
                                                     </a>

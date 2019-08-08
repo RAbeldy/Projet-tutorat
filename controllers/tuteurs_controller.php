@@ -215,6 +215,27 @@ class TuteursController
             else
                 require_once('views/login.php');
       }
+    public static function show_proposal() // on affiche les différentes propositions recues par un tuteur
+    {
+        if(isset($_SESSION['id_statut']))// on vérifie que seul un utilisateur connecté peut accéder à ces pages
+        {
+            $donnees= Tuteurs::Get_proposal($_SESSION['id_user']);
+            require_once('views/tuteurs/received_proposal.php');
+        }
+         else
+            require_once('views/login.php');
+    }
+
+    public function accept_proposal() // il accepte une proposition recue pour un tutorat spécifique
+    {
+        if(isset($_SESSION['id_statut']))// on vérifie que seul un utilisateur connecté peut accéder à ces pages
+        {
+            Tuteurs::Accept_proposal($_SESSION['id_user'],$_POST['id_t']);
+            TuteursController::Show_proposal();
+         }
+        else
+             require_once('views/login.php');
+    }
 
 }
 ?>

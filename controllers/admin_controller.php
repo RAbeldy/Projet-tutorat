@@ -4,7 +4,8 @@ require_once('models/evenements.php');
 require_once('models/users.php');
 require_once('models/admin.php');
 require_once('models/tutorat.php');
-require_once('models/evenements.php');
+
+
 
 /* Définition du controller */
 class AdminController
@@ -72,31 +73,62 @@ class AdminController
             elseif( isset($_POST['consulter']))  // on va plutot consulter la liste des tuteurs inscrits pour cet évènement
             {
               $donnees = Evenements::Subscription_list($_POST['id_e']); // on récupère la liste des participants
+
               $data= Evenements::Get_informations_on_events($_POST['id_e']);  // on récupère la date, le. lieu etc sur l'évenement
+
               $controller_report='admin';
               $fonction_back='future_events_list';
 
-          require_once('views/subscription_list.php');
+              require_once('views/admin/subscription_list.php');
+            }
+            elseif( isset($_POST['supprimer']))  // on va plutot supprimer cet évènement
+            {
+               Evenements::Delete_event($_SESSION['id_user'],$_POST['id_e']); // on supprime
+ 
+               AdminController::future_events_list();
+          
+            }
+            elseif( isset($_POST['imprimer']))  // on va plutot supprimer cet évènement
+            {
+               $header= array('tutorat','date','adresse','nombre de places','duree');
+               $path="PDF/future_events_list.txt";
+               
+               Admin::Create_pdf($path,$header); 
+ 
+               AdminController::future_events_list();
+          
             }
           }
             else
                 require_once('views/login.php');
        }
 
-       public function future_events_list()
-    {
-        if( isset($_SESSION['id_statut']))
-        {
-          $donnees = Evenements::Future_events_list($_SESSION['id_user']);
+       public static function future_events_list()
+       {
+          if( isset($_SESSION['id_statut']))
+          {
+            $donnees = Evenements::Future_events_list($_SESSION['id_user']);
+            
+            $controller_report='admin';
+            $fonction_back='events';
+             
+             // petit code pour saisir les donnees dans un fichier pour telechargement au besoin
+            $myfile = fopen("PDF/future_events_list.txt", "w") or die("Unable to open file!");
+            
+            foreach ($donnees as $elt)
+             {
+              $saut= "\n";
+              $txt= $elt['tutorat'].';'.$elt['evenement']->getDate_evenement().';'.$elt['evenement']->getLieu().';'.$elt['evenement']->getNb_places().';'.$elt['planning_event'].''.$saut ;
+              fwrite($myfile, $txt);
+            }
+            fclose($myfile);
 
-          $controller_report='admin';
-          $fonction_back='events';
-
-          require_once('views/admin/future_events_list.php');
-        }
-        else
-          require_once('views/login.php');
-    }
+            
+            require_once('views/admin/future_events_list.php');
+          }
+          else
+            require_once('views/login.php');
+      }
 
     public static function pasts_events_list()
     {
@@ -119,7 +151,7 @@ class AdminController
         if(isset($_SESSION['id_statut']))// on vérifie que seul un utilisateur connecté peut accéder à ces pages
         {
             
-            $donnees= Admin::Get_all_tuteurs();
+            $donnees= Admin::Get_all_tuteurs($_SESSION['id_user']);
             $req= Tutorat::Get_lieu_tutorat($_SESSION['id_user']);
 
             $controller_report='admin';
@@ -172,17 +204,20 @@ class AdminController
                     //echo "gfgfdghdfhxvvdvdfdfdkfhmdfhdmkfdhfdkmlfhdvn;vdkmbnvdfhdvfbnifldhfdklfdhfikhdg".$_POST['id_e_c'];
                       
                       Admin::Choose_tuteur($_POST['id_u_c'],$_POST['tutorat']);
-                      
+                      $donnees= Admin::Get_sent_proposal($_POST['id_u_c'],$_POST['tutorat'],$_SESSION['id_user']); // on récupère les informations sur la proposition de sélection envoyée
+
                       $controller_report='admin';
                       $fonction_back='interface_admin';
 
-                      AdminController::tuteurs_list();
+                      Admin::Send_selection_mail($donnees[0]->getPrenom(),$donnees[0]->getNom(),$donnees[0]->getEmail(),$donnees[1],$donnees[2]) ;// on envoi le mail de confirmation de sélection
+
+                      AdminController::tuteurs_list(); // on charge la vue adéquate
                  }
            elseif(isset($_POST['id_u_d']))
                  {
                     //echo "gfgfdghdfhxvvdvdfdfdkfhmdfhdmkfdhfdkmlfhdvn;vdkmbnvdfhdvfbnifldhfdklfdhfikhdg".$_POST['id_e_d'];
                       
-                      Admin::Cancel_tuteur($_POST['id_u_d']);
+                      Admin::Cancel_tuteur($_POST['id_u_d'],$_POST['tutorat']);
                       
                       $controller_report='admin';
                       $fonction_back='interface_admin';
@@ -309,13 +344,21 @@ class AdminController
      }
 
     
-    
+    public function interface_selection()
+    {
+      if( isset($_SESSION['id_statut']))
+       {
+           require_once('views/admin/interface_selection.php') ;
+       }
+       else
+          require_once('views/login.php');
+    }
     
     public static function selected_tuteurs() // la liste de ceux qui ont été sélectionné et qui ont accepté
     {
         if( isset($_SESSION['id_statut']))
         {
-          $donnees = Evenements::Pasts_events_list($_SESSION['id_user']);
+          $donnees = Admin::Selected_tuteurs($_SESSION['id_user']);
 
           $controller_report='admin';
           $fonction_back='interface_selection';
@@ -326,8 +369,112 @@ class AdminController
           require_once('views/login.php');
     }
 
-    
+    public static function Spasts_events_list() // liste des évènements passés( pour pouvoir faire la sélection de tuteurs d'ou le préfixe S)
+    {
+        if( isset($_SESSION['id_statut']))
+        {
+          $donnees = Evenements::Pasts_events_list($_SESSION['id_user']);
 
+          $controller_report='admin';
+          $fonction_back='interface_selection';
+
+          require_once('views/admin/Spasts_events_list.php');
+        }
+        else
+          require_once('views/login.php');
+    }
+    
+    public function Schoose_tuteur() // l'admin sélectionne ses tuteurs( d'ou le préfixe S)
+    {
+      if(isset($_SESSION['id_statut']))// on vérifie que seul un utilisateur connecté peut accéder à ces pages
+        {
+           if(isset($_POST['id_u_c'] ))
+                 {
+                    //echo "gfgfdghdfhxvvdvdfdfdkfhmdfhdmkfdhfdkmlfhdvn;vdkmbnvdfhdvfbnifldhfdklfdhfikhdg".$_POST['id_e_c'];
+                      
+                      Admin::Choose_tuteur($_POST['id_u_c'],$_POST['tutorat']);
+                      $donnees= Admin::Get_sent_proposal($_POST['id_u_c'],$_POST['tutorat'],$_SESSION['id_user']); // on récupère les informations sur la proposition de sélection envoyée
+
+                      $controller_report='admin';
+                      $fonction_back='Spasts_events_list';
+                      
+                      Admin::Send_selection_mail($donnees[0]->getPrenom(),$donnees[0]->getNom(),$donnees[0]->getEmail(),$donnees[1],$donnees[2]) ;// on envoi le mail de confirmation de sélection
+
+                      
+                      AdminController::Spasts_events_list();
+                 }
+           elseif(isset($_POST['id_u_d']))
+                 {
+                    //echo "gfgfdghdfhxvvdvdfdfdkfhmdfhdmkfdhfdkmlfhdvn;vdkmbnvdfhdvfbnifldhfdklfdhfikhdg".$_POST['id_e_d'];
+                      
+                      Admin::Cancel_tuteur($_POST['id_u_d'],$_POST['tutorat']);
+                      
+                      $controller_report='admin';
+                      $fonction_back='Spasts_events_list';
+                      
+
+                      AdminController::Spasts_events_list();
+                 }
+           else
+                {   
+                    //echo "gfgfdghdfhxvvdvdfdfdkfhmdfhdmkfdhfdkmlfhdvn;vdkmbnvdfhdvfbnifldhfdklfdhfikhdg".$_POST['id_e_d'];
+                    $controller_report='admin';
+                    $fonction_back='interface_admin';
+                    require_once('views/system/error.php');
+                }
+             
+        }
+        else
+            require_once('views/login.php'); 
+    }
+    
+    public static function show_all_proposal()
+    {
+      if( isset($_SESSION['id_statut']))
+       {
+         
+          $donnees=Admin::Get_all_proposal($_SESSION['id_user']); // on récupère toutes les propositions faites  à des tuteurs
+
+          $controller_report='admin';
+          $fonction_back='interface_selection';
+
+          require_once('views/admin/sent_proposal.php');
+       }
+       else
+          require_once('views/login.php');
+    }
+
+    public function cancel_proposal() // on annule une proposition faite à un tuteur concernant un tutorat particulier
+    {
+      if( isset($_SESSION['id_statut']))
+       {
+         
+          Admin::Cancel_tuteur($_POST['id_u'],$_POST['id_t']);
+
+          AdminController::show_all_proposal();
+       }
+       else
+          require_once('views/login.php');
+    }
+
+    public function end_contract()// l'admin met fin au contrat qui le lie à un tuteur(supprimer de la iste de sélection automatique ) pour un tutorat donné 
+    {
+      if( isset($_SESSION['id_statut']))
+       {
+         
+          Admin::Cancel_tuteur($_POST['id_u'],$_POST['id_t']);
+
+          $controller_report='admin';
+          $fonction_back='interface_selection';
+
+          AdminController::selected_tuteurs(); // on recharge la vue de sélectio des tuteurs
+       }
+       else
+          require_once('views/login.php');
+    }
+
+
+    
     
 
 

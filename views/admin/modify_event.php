@@ -28,15 +28,15 @@
                                                         </div>
                                                         <div class="form-group col-xs-12 col-md-6">
                                                             <label for="lieu">
-                                                                <strong>Lieu</strong><br> 
+                                                                <strong>intitulé du tutorat</strong><br> 
                                                             </label>
-                                                            <select class="form-control" name="lieu">
+                                                            <select class="form-control" name="id_t">
                                                             <?php
                                                                 foreach($donnees as $data)
                                                                        {
                                                                          ?>
-                                                                <option value="<?= $data[0]; ?>" > <?= $data[0] ;?>
-                                                                    <input type="hidden" value="<?= $data[1]; ?>" name="id_t"/>
+                                                                <option value="<?= $data[1]; ?>" > <?= $data[0] ;?>
+                                                                    
                                                                 </option>
                                                             <?php
                                                             }

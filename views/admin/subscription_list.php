@@ -1,5 +1,4 @@
 
-
     <div id="globalContent">
         <div id="wrapper">
             
@@ -14,7 +13,9 @@
                                     <div class="row">
                                         <div class="card debut">
                                             <div class="card-header py-3">
-                                                <p class="text-primary m-0 font-weight-bold">Ils sont disponibles</p>
+                                                <p class="text-primary m-0 font-weight-bold">
+                                                    Date:<?=$data[0]->getDate_evenement();?>&nbsp;&nbsp;Lieu:<?=$data[0]->getLieu();?> </br> Tutorat: <?=$data[1];?>
+                                                </p>
                                                 <?php include('retour.php') ?>
                                             </div>
                                             <div class="card-body">
@@ -53,64 +54,43 @@
                                                     <table class="table dataTable my-0" id="dataTable">
                                                         <thead>
                                                             <tr>
+                                                                
                                                                 <th>Nom</th>
-                                                                <th>Prenom</th>
-                                                                <th>Email</th>
+                                                                <th>Prénom</th>
                                                                 <th>Phone</th>
-                                                                <th>Ville</th>
-                                                                <th>Adresse</th>
-                                                                <th>Code_postal</th>
-                                                                <th>Tutorats</th>
-                                                                <th>Action</th>
-
-                                                               
+                                                                <th>Email</th>
+                                                                <th>Ecole</th>
+                                                                <th>Niveau</th>
+                                                                <th>Action</th> 
                                                             </tr>
+                                                            
                                                         </thead>
                                                         <tbody>
 
                                                             <?php
-                                                            
-                                                             foreach ($donnees as $elt) 
+                                                             foreach ($donnees as $elt)
                                                             {
+                                                              
                                                              ?>
-
-                                                              <form method="post" action="?controller=admin&action=choose_tuteur">
-                                                                
-                                                              <tr >
-
- 
-                                                                  <td> <label><?=$elt['user']->getNom()?></label></td>
-                                                                  <td><label><?=$elt['user']->getPrenom()?></label></td>
-                                                                  <td><label><?=$elt['user']->getEmail()?></label></td>
-                                                                  <td><label ><?=$elt['user']->getPhone()?></label></td>
-                                                                  <td><label ><?=$elt['user']->getVille()?></label></td>
-                                                                  <td><label ><?=$elt['user']->getAdress()?></label></td>
-                                                                  <td><label ><?=$elt['user']->getCode_postal()?></label></td>
-                                                                  <td><label >
-                                                                  <select class="form-control" name="tutorat">
-                                                                  <?php 
-                                                                       foreach($req as $data)
-                                                                       {
-                                                                         ?>
-                                                                        <option value="<?=$data[1];?>"required> <?= $data[0] ;?>
-                                                                            
-                                                                        </option>
-                                                                        
-                                                                         <?php
-                                                                       }
-                                                                       ?>
-                                                                    </select>
-                                                                    </label></td>
-                                                                    <!-- //id_u_c ici correspond à choisir un tuteur-->
-
-                                                                          
-
-                                                                     <td><button class="btn" type="submit"name="choisir" >Choisir</button>
-                                                                     </td><input type="hidden" name="id_u_c" value="<?=$elt['user']->getId_user()?>" >
-                                                                     
-                                                                </tr>
+                                                             <form method="post" action="?controller=admin&action=show_informations">
+                                                              <tr>
+                                                                  
+                                                                  <td><label><?=$elt['user']->getNom();?></label></td> <!-- nom -->
+                                                                  <td><label><?=$elt['user']->getPrenom();?></label></td> <!-- prenom -->
+                                                                  <td><label><?=$elt['user']->getPhone();?></label></td> <!-- phone -->
+                                                                  <td><label ><?=$elt['user']->getEmail();?></label></td> <!-- email-->
+                                                                  <td><label ><?=$elt['user']->getNiveau();?></label></td> <!-- niveau -->
+                                                                  <td><label ><?=$elt['user']->getEcole();?></label></td> <!-- ecole -->
+                                                                    
+                                                                  <td><button class="btn" type="submit" name="consulter" >Consulter</button></td>
+                                                                  
+                                                                  <input type="hidden" name="id_u" value="<?=$elt['user']->getId_user();?>" >
+                                                                  
+                                                                  
+                                                             </tr>
                                                              </form>
                                                             <?php
+                                                             
                                                              }
                                                              ?>
                                                         </tbody>
