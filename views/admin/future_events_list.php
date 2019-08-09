@@ -92,6 +92,7 @@
                                                                   </td>
                                                                   <td><button class="btn" type="submit" name="consulter" >Consulter</button>
                                                                   </td>
+                                                                  <td><button class="btn" type="submit" name="imprimer" >Imprimer</button></td>
 
                                                                 </tr>
                                                                  <input type="hidden" name="id_e" value="<?=$elt['evenement']->getId_evenement()?>" >

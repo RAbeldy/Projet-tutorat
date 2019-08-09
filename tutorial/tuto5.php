@@ -34,7 +34,7 @@ function BasicTable($header, $data)
 function ImprovedTable($header, $data)
 {
 	// Largeurs des colonnes
-	$w = array(40, 35, 45, 40);
+	$w = array(55, 35, 45, 40,20);
 	// En-tête
 	for($i=0;$i<count($header);$i++)
 		$this->Cell($w[$i],7,$header[$i],1,0,'C');
@@ -44,9 +44,11 @@ function ImprovedTable($header, $data)
 	{
 		$this->Cell($w[0],6,$row[0],'LR');
 		$this->Cell($w[1],6,$row[1],'LR');
-		$this->Cell($w[2],6,number_format($row[2],0,',',' '),'LR',0,'R');
-		$this->Cell($w[3],6,number_format($row[3],0,',',' '),'LR',0,'R');
+		$this->Cell($w[2],6,$row[2],'LR',0,'R');
+		$this->Cell($w[3],6,$row[3],'LR',0,'R');
+		$this->Cell($w[4],6,$row[4],'LR');
 		$this->Ln();
+		
 	}
 	// Trait de terminaison
 	$this->Cell(array_sum($w),0,'','T');
@@ -62,7 +64,7 @@ function FancyTable($header, $data)
 	$this->SetLineWidth(.3);
 	$this->SetFont('','B');
 	// En-tête
-	$w = array(40, 35, 45, 40);
+	$w = array(55, 35, 45, 40,20);
 	for($i=0;$i<count($header);$i++)
 		$this->Cell($w[$i],7,$header[$i],1,0,'C',true);
 	$this->Ln();
@@ -76,8 +78,9 @@ function FancyTable($header, $data)
 	{
 		$this->Cell($w[0],6,$row[0],'LR',0,'L',$fill);
 		$this->Cell($w[1],6,$row[1],'LR',0,'L',$fill);
-		$this->Cell($w[2],6,number_format($row[2],0,',',' '),'LR',0,'R',$fill);
-		$this->Cell($w[3],6,number_format($row[3],0,',',' '),'LR',0,'R',$fill);
+		$this->Cell($w[2],6,$row[2],'LR',0,'R',$fill);
+		$this->Cell($w[3],6,$row[3],'LR',0,'R',$fill);
+		$this->Cell($w[4],6,$row[4],'LR',0,'R',$fill);
 		$this->Ln();
 		$fill = !$fill;
 	}
@@ -88,9 +91,9 @@ function FancyTable($header, $data)
 
 $pdf = new PDF();
 // Titres des colonnes
-$header = array('Pays', 'Capitale', 'Superficie (km²)', 'Pop. (milliers)');
+$header= array('tutorat','date','adresse','nombre de places','duree');
 // Chargement des données
-$data = $pdf->LoadData('pays.txt');
+$data = $pdf->LoadData('http://localhost:8888/tests/steve/PDF/future_events_list.txt');
 $pdf->SetFont('Arial','',14);
 $pdf->AddPage();
 $pdf->BasicTable($header,$data);

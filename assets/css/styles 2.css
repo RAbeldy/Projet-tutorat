@@ -1,0 +1,241 @@
+.navbar.navbar-light.navbar-expand-md.navigation-clean-button {
+  background-color: #fab900;
+}
+.btn.btn-light.action-button
+{
+  background: url("imageszozor/fond_jaune.png");
+}
+.nav-link {
+  color: white;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-weight: 400;
+}
+
+#navcol-1 {
+  text-align: center;
+}
+
+@media (min-width: 768px) {
+  #navcol-1 {
+    padding-left: 125px;
+  }
+}
+
+@media (max-width: 576px) {
+  .sign-in-container form h3, .sign-up-container form h3, .overlay-container h1 {
+    font-size: 19px;
+  }
+  form, .overlay-panel {
+    padding: 0 2px;
+  }
+  .ghost, .bouton{
+      width: 145px;
+  }
+  .container#container{
+      min-height: 450px;
+  }
+  a {
+    margin: 5px 0;
+  }
+}
+
+body {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
+input {
+  border-radius: 30px;
+}
+
+#globalContent {
+  flex: 1;
+}
+#content
+{
+  width: 100%;
+}
+.footer-basic {
+  background-color: black;
+  color: white;
+}
+
+#globalContent #wrapper nav{
+    min-height: 70vh;
+}
+
+div#content {
+    width: 100%;
+	background: #ECF0F1;
+}
+
+.block {
+	display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+	padding: 50px;
+}
+
+
+
+.cardImage {
+	width: 100%;
+}
+
+.navigation-clean-button .navbar-text .action-button, .navigation-clean-button .navbar-text .action-button:active, .navigation-clean-button .navbar-text .action-button:hover {
+    background: #56c6c6;
+    border-radius: 20px;
+    font-size: inherit;
+    color: #fff;
+    box-shadow: none;
+    border: none;
+    text-shadow: none;
+    padding: .5rem 1rem;
+    transition: background-color 0.25s;
+    font-size: inherit;
+}
+
+.heading {
+    margin-bottom: auto;
+    text-align: center;
+    color: black;
+}
+
+.p{
+  padding-left: auto;
+  padding-right: auto;
+  padding-bottom: auto;
+  padding-top: auto;
+}
+
+
+#h1bienvenue {
+    text-align: center;
+    padding: 40px 0px;
+}
+
+#middleJumboParagraph {
+    text-align: justify;
+    width: 68%;
+    margin: auto;
+    font-size: 20px;
+    padding: 20px 0px;
+}
+
+.space{
+	padding-top: 20px;
+	padding-bottom: 20px;
+}
+
+.form-contact{
+	margin: auto;
+}
+
+/*login*/
+.login-dark .illustration {
+    text-align: center;
+    padding: 15px 0 20px;
+    font-size: 100px;
+    color: #55c6c6;
+}
+
+.login-dark form {
+    max-width: 500px;
+    width: 100%;
+    background-color: #ffffff;
+    margin: auto;
+	margin-top: 50px;
+	margin-bottom: 50px;
+	padding: 60px;
+}
+
+.login-dark form .form-control {
+    background: none;
+    border: none;
+    border-bottom: 1px solid #434a52;
+    border-radius: 0;
+    box-shadow: none;
+    outline: none;
+    color: inherit;
+}
+/* FIN login*/
+/* admin */
+.card{
+    width: 100%;
+}
+
+#popup{
+  position: absolute;
+  background: #000000bf;
+  z-index: 1000;
+  width: 100%;
+  height: 100%;
+  padding-top: 10%;
+}
+
+/* FIN admin*/
+
+/*POP UP */
+.overlay{
+  position: fixed;
+  left: 0px;
+  top: 0px;
+  background-color: rgba(0,0,0,0.5);
+  width: 100%;
+  height: 100%;
+  display: none;
+}
+.popup{
+  margin: 20% auto;
+  width: 80%;
+  height: 30%;
+
+  text-align: center;
+  background-color: rgb(228,228,228);
+  border-radius: 5px;
+  box-shadow: 15px 20px rgba(0,0,0,0.5);
+  padding: 1em;
+}
+
+/*FIN POPUP UP */
+/* PROFIL */
+
+#avatarPic img{
+  width: 100%;
+  margin-bottom: 50px;
+  border-radius: 50%;
+}
+
+#photoChooser {
+  border-radius: unset;
+}
+/*FIN PROFIL */
+@media (min-width:768px) {
+    .navigation-clean-button {
+        padding-top: 1rem;
+        padding-bottom: 1rem;
+
+    }
+}
+
+@media (max-width:425px) {
+    #middleJumboParagraph {
+		font-size: 11px;
+	}
+	#h1bienvenue {
+		font-size: 25px;
+	}
+	.sidebar .nav-item .nav-link span, .sidebar .nav-item .nav-link i  {
+		font-size: 7px;
+	}
+	.card-text {
+		font-size: 15px;
+	}
+}
+
+
+

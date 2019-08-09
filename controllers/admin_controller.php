@@ -91,8 +91,8 @@ class AdminController
             elseif( isset($_POST['imprimer']))  // on va plutot supprimer cet évènement
             {
                $header= array('tutorat','date','adresse','nombre de places','duree');
-               $path="PDF/future_events_list.txt";
-               
+               $path="http://localhost:8888/tests/steve/PDF/future_events_list.txt";
+
                Admin::Create_pdf($path,$header); 
  
                AdminController::future_events_list();

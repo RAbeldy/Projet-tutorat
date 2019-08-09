@@ -2,7 +2,7 @@
 require_once('connexion.php');
 require_once('models/users.php');
 require_once('models/evenements.php');
-require_once('models/pdf.php');
+
 
 class Admin
 {
@@ -246,17 +246,11 @@ class Admin
     
     public static function Create_pdf($path,$header)  // la variable header correspond aux titres de colonnes du pdf
     {
-        $pdf = new PDF();
+       
         
         
-        // Chargement des données
 
-        $data = $pdf->LoadData($path);
-        $pdf->SetFont('Arial','',14);
-        
-        $pdf->AddPage();
-        $pdf->FancyTable($header,$data);
-        $pdf->Output();
+
     }
     
     
