@@ -137,14 +137,14 @@ class Admin
         $message_txt = 'Bonjour Mr/Mme '.$prenom.' '.$nom.',\nVous avez été sélectionné pour participer aux évènements qui se déroulent à '.$tutorat.' du tutorat de la '.$type_tutorat.' .\n Veuillez donc vous connecter sur votre espace pour accepter ou non cette offre.\nCe message est généré automatiquement, veuillez ne pas répondre.';
         $message_html ='<html><head></head><body><p>Bonjour Mr/Mme '.$prenom.' '.$nom.', </p><p>Vous avez été sélectionné pour participer aux évènements qui se déroulent à <b>'.$tutorat.'</b> du tutorat de la <b>'.$type_tutorat.'</b>.</p><p>Veuillez donc vous connecter sur votre espace pour accepter ou non cette offre.</b></p><p>Ce message est généré <b>automatiquement</b>, veuillez <b>ne pas répondre</b>.</p></body></html>';
                 //Sujet
-        $sujet = "[Yncrea tutorat] Sélection pour le tutorat intitulé ";
+        $sujet = "[Yncrea tutorat] Sélection pour le tutorat intitulé ".$tutorat." ";
                 //envoie du mail
         
         $login_mail= $email;
         include('send_mail.php');
     }
 
-    public static function Choose_tuteur($id_tuteur,$id_tutorat) // l'admin choisit un tuteur qui sera d'office inscrit à ses évènements quand il en créera, ceci en passant l'attribut appartenance à la bonne valeur
+    public static function Send_proposal($id_tuteur,$id_tutorat) // l'admin choisit(envoi une proposition de sélection) un tuteur qui sera d'office inscrit à ses évènements quand il en créera, ceci en passant l'attribut appartenance à la bonne valeur
     {
         $db = Db::getInstance();
          
@@ -155,7 +155,7 @@ class Admin
        
     }
     
-    public static function Cancel_tuteur($id_tuteur,$id_tutorat) // l'admin annule la participation d'un tuteur  à ses évènements quand il en créera, ceci en passant l'attribut appartenance à la bonne valeur
+    public static function Cancel_proposal($id_tuteur,$id_tutorat) // l'admin annule la participation d'un tuteur  à ses évènements quand il en créera, ceci en passant l'attribut appartenance à la bonne valeur
     {
         $db = Db::getInstance();
 
@@ -248,7 +248,7 @@ class Admin
     {
        
         
-        
+        require_once('models/pdf.php');
 
 
     }

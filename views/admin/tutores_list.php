@@ -22,21 +22,7 @@
                                                     <div class="col-12 card-body-title">
                                                         <span>RECHERCHER PAR :</span>
                                                     </div>
-                                                    <div class="col-md-7 text-nowrap">
-                                                        <div class="row text-center">
-                                                            <label style="flex: auto;">Période</label>
-                                                        </div>
-                                                        <div class="row">
-                                                            <div class="col-xs-12 col-md-6">
-                                                                <label class="col-2">De</label>
-                                                                <input class="col-8 offset-2" type="datetime-local"/>
-                                                            </div>
-                                                            <div class="col-xs-12 col-md-6">
-                                                                <label class="col-2">à</label>
-                                                                <input class="col-8 offset-2" type="datetime-local"/>
-                                                            </div>
-                                                        </div>
-                                                    </div>
+                                                    
                                                     <div class="col-md-4 offset-1">
                                                         <div class="row text-center">
                                                             <label style="flex: auto;">TUTORAT</label>

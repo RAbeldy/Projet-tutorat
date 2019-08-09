@@ -57,7 +57,8 @@
                                                                 <th>Tutorat</th>
                                                                 <th>Adresse</th>
                                                                 <th>Code postal</th>
-                                                                <th>Action</th>
+                                                                <th>Accepter</th>
+                                                                <th>Refuser</th>
                                                                    
                                                             </tr>
                                                         </thead>
@@ -75,7 +76,9 @@
                                                                   <td> <label><?=$elt['libelle'];?></label></td>
                                                                   <td><label><?=$elt['adresse'];?></label></td>
                                                                   <td><label><?=$elt['code_postal'];?></label></td> 
-                                                                  <td><button class="btn" type="submit"name="choisir" >Accepter</button>
+                                                                  <td><button class="btn" type="submit"name="accepter" >Accepter</button>
+                                                                  </td>
+                                                                  <td><button class="btn" type="submit"name="refuser" >Refuser</button>
                                                                   </td>
                                                                   <input type="hidden" name="id_t" value="<?=$elt['tutorat'];?>"/>                                                                 
                                                               </tr>

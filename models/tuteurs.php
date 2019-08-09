@@ -241,6 +241,15 @@ class Tuteurs
       $req->execute(array($id_tuteur,$id_tutorat));
 
     }
+    public static function Refuse_proposal($id_tuteur,$id_tutorat) // le tuteur refuse une offre faite par un admin pour  sa participation  à ses évènements quand il en créera, ceci en passant l'attribut appartenance à la bonne valeur
+    {
+        $db = Db::getInstance();
+
+        $req = $db->prepare("DELETE FROM se_destine  WHERE id_user = ? AND id_tutorat=?");
+        $req->execute(array($id_tuteur,$id_tutorat));
+
+        //$req= $db->query("UPDATE tuteurs SET demande = 'NON' WHERE id_tuteurs= ".$id_tuteur." ");
+    }
     
 
 }

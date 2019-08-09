@@ -229,9 +229,17 @@ class TuteursController
     public function accept_proposal() // il accepte une proposition recue pour un tutorat spécifique
     {
         if(isset($_SESSION['id_statut']))// on vérifie que seul un utilisateur connecté peut accéder à ces pages
-        {
-            Tuteurs::Accept_proposal($_SESSION['id_user'],$_POST['id_t']);
-            TuteursController::Show_proposal();
+        {   
+            if( isset($_POST['accepter']))
+            {
+                Tuteurs::Accept_proposal($_SESSION['id_user'],$_POST['id_t']);
+                TuteursController::Show_proposal();
+            }
+            elseif( isset($_POST['refuser']))
+            {
+                Tuteurs::Refuse_proposal($_SESSION['id_user'],$_POST['id_t']);
+                TuteursController::Show_proposal();
+            }
          }
         else
              require_once('views/login.php');

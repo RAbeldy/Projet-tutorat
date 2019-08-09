@@ -203,7 +203,7 @@ class AdminController
                  {
                     //echo "gfgfdghdfhxvvdvdfdfdkfhmdfhdmkfdhfdkmlfhdvn;vdkmbnvdfhdvfbnifldhfdklfdhfikhdg".$_POST['id_e_c'];
                       
-                      Admin::Choose_tuteur($_POST['id_u_c'],$_POST['tutorat']);
+                      Admin::Send_proposal($_POST['id_u_c'],$_POST['tutorat']);
                       $donnees= Admin::Get_sent_proposal($_POST['id_u_c'],$_POST['tutorat'],$_SESSION['id_user']); // on récupère les informations sur la proposition de sélection envoyée
 
                       $controller_report='admin';
@@ -217,7 +217,7 @@ class AdminController
                  {
                     //echo "gfgfdghdfhxvvdvdfdfdkfhmdfhdmkfdhfdkmlfhdvn;vdkmbnvdfhdvfbnifldhfdklfdhfikhdg".$_POST['id_e_d'];
                       
-                      Admin::Cancel_tuteur($_POST['id_u_d'],$_POST['tutorat']);
+                      Admin::Cancel_proposal($_POST['id_u_d'],$_POST['tutorat']);
                       
                       $controller_report='admin';
                       $fonction_back='interface_admin';
@@ -392,7 +392,7 @@ class AdminController
                  {
                     //echo "gfgfdghdfhxvvdvdfdfdkfhmdfhdmkfdhfdkmlfhdvn;vdkmbnvdfhdvfbnifldhfdklfdhfikhdg".$_POST['id_e_c'];
                       
-                      Admin::Choose_tuteur($_POST['id_u_c'],$_POST['tutorat']);
+                      Admin::Send_proposal($_POST['id_u_c'],$_POST['tutorat']);
                       $donnees= Admin::Get_sent_proposal($_POST['id_u_c'],$_POST['tutorat'],$_SESSION['id_user']); // on récupère les informations sur la proposition de sélection envoyée
 
                       $controller_report='admin';
@@ -407,7 +407,7 @@ class AdminController
                  {
                     //echo "gfgfdghdfhxvvdvdfdfdkfhmdfhdmkfdhfdkmlfhdvn;vdkmbnvdfhdvfbnifldhfdklfdhfikhdg".$_POST['id_e_d'];
                       
-                      Admin::Cancel_tuteur($_POST['id_u_d'],$_POST['tutorat']);
+                      Admin::Cancel_proposal($_POST['id_u_d'],$_POST['tutorat']);
                       
                       $controller_report='admin';
                       $fonction_back='Spasts_events_list';
@@ -449,7 +449,7 @@ class AdminController
       if( isset($_SESSION['id_statut']))
        {
          
-          Admin::Cancel_tuteur($_POST['id_u'],$_POST['id_t']);
+          Admin::Cancel_proposal($_POST['id_u'],$_POST['id_t']);
 
           AdminController::show_all_proposal();
        }
@@ -462,7 +462,7 @@ class AdminController
       if( isset($_SESSION['id_statut']))
        {
          
-          Admin::Cancel_tuteur($_POST['id_u'],$_POST['id_t']);
+          Admin::Cancel_proposal($_POST['id_u'],$_POST['id_t']);
 
           $controller_report='admin';
           $fonction_back='interface_selection';

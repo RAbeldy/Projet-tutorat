@@ -162,12 +162,13 @@ class Evenements
         }
         return $list; 
     }
-    public  function Get_future_events($id_user) // afficher les evenements à venir qui ne sont pas des tutorats personnalises 
+    public  function Get_future_events($id_user) // afficher les evenements à venir qui ne sont pas des tutorats personnalisés, pour lesquelles ils ont été sélectionnés et ceux qui sont des immerssions
     {
         $db = Db::getInstance();
         $list=[];
-        $req= $db->prepare(' SELECT t.libelle as libelle,e.id_evenement,e.date_evenement,e.lieu,e.nb_tuteurs,e.nb_places,p.duree as duree FROM evenement as e,tutorat as t, se_destine as se,planning_event as p, type_tutorat as tt WHERE e.id_planning = p.id_planning AND t.id_tutorat= e.id_tutorat AND se.id_tutorat= t.id_tutorat AND se.id_typeTutorat= t.id_typeTutorat AND tt.id_typeTutorat= t.id_typeTutorat AND tt.libelle <> "TUTORAT_PERSONNALISE" AND tt.libelle LIKE "IMMERSION" AND  se.id_user = ?  AND e.date_evenement > NOW() AND e.id_evenement NOT IN (SELECT id_evenement FROM participer_evenement WHERE id_user = ?) ORDER BY  e.date_evenement DESC');
-        $req->execute(array($id_user,$id_user));
+        $req= $db->prepare(' SELECT t.libelle as libelle,e.id_evenement,e.date_evenement,e.lieu,e.nb_tuteurs,e.nb_places,p.duree as duree FROM evenement as e, tutorat as t, se_destine as se,planning_event as p WHERE e.id_planning= p.id_planning AND t.id_tutorat= e.id_tutorat AND  se.id_user= ? AND e.id_tutorat = se.id_tutorat AND e.date_evenement > NOW() AND e.id_evenement NOT IN (SELECT id_evenement FROM participer_evenement WHERE id_user = ?)   UNION 
+          SELECT t.libelle as libelle,e.id_evenement,e.date_evenement,e.lieu,e.nb_tuteurs,e.nb_places,p.duree as duree FROM evenement as e, tutorat as t,type_tutorat as tt , planning_event as p WHERE e.id_planning= p.id_planning AND t.id_tutorat= e.id_tutorat AND t.id_typeTutorat= tt.id_typeTutorat AND tt.libelle LIKE "IMMERSSION%" AND e.date_evenement > NOW() AND e.id_evenement NOT IN (SELECT id_evenement FROM participer_evenement WHERE id_user = ?) ORDER BY date_evenement DESC  ' );
+        $req->execute(array($id_user,$id_user,$id_user));
         
         foreach($req->fetchAll() as $data)
         { 
@@ -189,7 +190,8 @@ class Evenements
         
        $db = Db::getInstance();
        $list=[];
-        $req= $db->query(" SELECT t.libelle as libelle,e.id_evenement,e.date_evenement,e.lieu  FROM evenement as e, tutorat as t, participer_evenement as pe WHERE e.id_evenement=pe.id_evenement  AND e.id_tutorat= t.id_tutorat   AND e.date_evenement > NOW() AND pe.id_user= ".$id_user." ORDER BY e.date_evenement DESC" );
+        $req= $db->prepare(" SELECT t.libelle as libelle,e.id_evenement,e.date_evenement,e.lieu  FROM evenement as e, tutorat as t, participer_evenement as pe WHERE e.id_evenement=pe.id_evenement  AND e.id_tutorat= t.id_tutorat   AND e.date_evenement > NOW() AND pe.id_user= ? ORDER BY e.date_evenement DESC" );
+        $req->execute(array($id_user));
         
         
         foreach($req->fetchAll() as $data)
