@@ -1,5 +1,5 @@
  <div class="d-flex flex-column" id="content-wrapper">
-    <!-- <?php //include('views/alert_view.php'); ?> -->
+  
                 <div id="content">
                     <div class="block">
                         <div class="container">
@@ -11,9 +11,9 @@
                                         <div class="col-xs-12 col-md-6 card-container">
                                             <div class="card avenir">
                                                 <div class="card-body">
-                                                    <h4 class="card-title">A venir</h4>
-                                                    <a href="?controller=evenements&action=display_future_events">
-                                                        <button class="btn" type="button">Tutorats <br/>à venir</button>
+                                                    <h4 class="card-title">Evènements</h4>
+                                                    <a href="?controller=admin&action=events">
+                                                        <button class="btn" type="button">je crée, je consulte</button>
                                                     </a>
                                                 </div>
                                             </div>
@@ -22,28 +22,19 @@
                                             <div class="card historique">
                                                 <div class="card-body">
                                                     <h4 class="card-title">Historique</h4>
-                                                    <a href="?controller=evenements&action=display_pasts_events">
-                                                        <button class="btn" type="button">Tutorats <br/>réalisés</button>
+                                                    <a href="?controller=admin&action=pasts_events_list">
+                                                        <button class="btn" type="button">je valide<br/>leurs participations</button>
                                                     </a>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-xs-12 col-md-6 card-container">
-                                            <div class="card creer">
-                                                <div class="card-body">
-                                                    <h4 class="card-title">Créer</h4>
-                                                    <a href="?controller=tuteurs&action=tuteur_set_event">
-                                                        <button class="btn" type="button">Tutorats <br/>Perso</button>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
+                                        
                                         <div class="col-xs-12 col-md-6 card-container">
                                             <div class="card inscrits">
                                                 <div class="card-body">
-                                                    <h4 class="card-title">Je me suis inscrit à </h4>
-                                                    <a href="?controller=evenements&action=display_subscribed_events">
-                                                        <button class="btn" type="button">Mes inscriptions<br/>validées</button>
+                                                    <h4 class="card-title"> mes tuteurs </h4>
+                                                    <a href="?controller=admin&action=tuteurs_list">
+                                                        <button class="btn" type="button">Je sélectionne <br/>mes tuteurs</button>
                                                     </a>
                                                 </div>
                                             </div>

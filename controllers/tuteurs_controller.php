@@ -52,7 +52,7 @@ class TuteursController
         else
             require_once('views/login.php');  
     }
-    public function notifications()
+    public function notifications() // liste de demandes recues et envoyées
     {
         if( isset($_SESSION['id_statut']))
             require_once('views/tuteurs/notifications_tuteurs.php');

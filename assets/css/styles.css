@@ -80,7 +80,13 @@ div#content {
 	padding: 50px;
 }
 
-
+.jumbotron {
+    background: url(../../assets/img/accueil.jpg);
+    background-size: cover;
+    background-position: center;
+    color: white;
+    box-shadow: 0 0 0 400px rgba(0,0,255,0.3) inset;
+}
 
 .cardImage {
 	width: 100%;
@@ -125,6 +131,29 @@ div#content {
 
 .form-contact{
 	margin: auto;
+}
+
+.dropdown .dropdown-toggle:after{
+    margin-left: .5em;
+    vertical-align: 0.35em;
+	font-size: 30px;
+}
+
+.dropdown-menu.show {
+    background-color: #56c6c6;
+}
+
+.dropdown-menu.show .dropdown-item {
+    color: white;
+    font-size: 16px;
+}
+
+.dropdown-item:hover {
+    background-color: #fab900!important;
+}
+
+.dropdown-toggle.btn:focus {
+    box-shadow: unset;
 }
 
 /*login*/
@@ -205,7 +234,36 @@ div#content {
 #photoChooser {
   border-radius: unset;
 }
+
+#profilPic img{
+	width: 150px;
+	border-radius: 50%;
+	height: 150px;
+	margin-left: 35%;
+}
+
+#profil-name{
+	font-size: 24px;
+	height: 40%;
+    padding-top: 3%;
+}
+
+#profil-mail{
+	font-size: 20px;
+}
+
+#dataTable{
+	padding-left: 10px;
+	padding-right: 10px;
+}
+
+#tableau {
+    margin-left: 10px;
+    margin-right: 10px;
+}
 /*FIN PROFIL */
+
+
 @media (min-width:768px) {
     .navigation-clean-button {
         padding-top: 1rem;

@@ -1,5 +1,6 @@
 <?php
 require('../fpdf.php');
+require_once dirname(__FILE__) . 'PHPExcel.php';
 
 class PDF extends FPDF
 {
@@ -48,7 +49,7 @@ function ImprovedTable($header, $data)
 		$this->Cell($w[3],6,$row[3],'LR',0,'R');
 		$this->Cell($w[4],6,$row[4],'LR');
 		$this->Ln();
-		
+
 	}
 	// Trait de terminaison
 	$this->Cell(array_sum($w),0,'','T');
@@ -101,5 +102,8 @@ $pdf->AddPage();
 $pdf->ImprovedTable($header,$data);
 $pdf->AddPage();
 $pdf->FancyTable($header,$data);
+
+$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
+$objWriter->save(str_replace('.php', '.xls', __FILE__));
 $pdf->Output();
 ?>

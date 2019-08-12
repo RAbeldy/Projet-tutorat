@@ -21,7 +21,7 @@ try {
             'allow_self_signed' => true));                             // TCP port to connect to
 
     //*********************************************************************************************
-    if(isset($nousContacter) && ($nousContacter == true))
+    if(isset($contacter) && ($contacter == true))
     {
         $mail->setFrom($mailAccount, $nom." ".$prenom);
         $mail->addAddress($mailAccount, "");

@@ -225,7 +225,7 @@ require_once('connexion.php');
        $db = Db::getInstance(); 
       
 
-       $req= $db->query("SELECT id_user,nom,prenom,date_naissance,email,phone,chemin_photo FROM user WHERE id_user = ".$id_user."");
+       $req= $db->query("SELECT id_user,nom,prenom,date_naissance,ecole,email,phone,chemin_photo FROM user WHERE id_user = ".$id_user."");
 
        foreach ($req->fetchAll() as $temp) 
       {
@@ -237,6 +237,7 @@ require_once('connexion.php');
         $user->setDate_naissance($temp['date_naissance']);
         $user->setPhone($temp['phone']);
         $user->setChemin_photo($temp['chemin_photo']);
+        $user->setEcole($temp['ecole']);
         
       }
       return $user;

@@ -17,6 +17,6 @@ if (isset($controller_report) && isset($fonction_back))
 
         <p><?php if (isset($error_msg)) {echo $error_msg;}?></p>
         <a href="<?php echo $backUrl;?>"class="">
-            <button name="error_Back" class="btn btn-primary" type="button">Retour page précédente</button>
+            <button name="error_Back" class="btn " type="button">Retour page précédente</button>
         </a>
         

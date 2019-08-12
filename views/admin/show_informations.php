@@ -14,18 +14,31 @@
                                     <div class="row">
                                         <div class="card debut">
                                             <div class="card-header py-3">
-                                                <p class="text-primary m-0 font-weight-bold">
-                                                 <?=$data->getNom();?> <?=$data->getPrenom();?> </br> EMAIL: <?=$data->getEmail();?>
-                                                </p>
-                                                <div class="col-md-4">
-                    <div class="avatar">
-                        <div id="avatarPic">
-                            <img src='<?=$data->getChemin_photo() ;?>' />
-                        </div>
-                        
-                    </div>
-                </div>
                                                 <?php include('retour.php') ?>
+                                                <p class="text-primary m-0 font-weight-bold">
+                                                     <div class="row space">
+                                                        <div class="col-md-5">
+                                                            <div id="profilPic">
+                                                                <img src='<?=$data->getChemin_photo() ;?>'>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-7 profil-text">
+                                                            <div class="row" id="profil-name">
+                                                                <span> nom:  <?=$data->getNom();?> <?=$data->getPrenom();?></span>
+                                                                
+                                                            </div>
+                                                            <div class="row" id="profil-ecole">
+                                                                <span>  ecole: <?=$data->getEcole();?> </span>
+                                                            </div>
+                                                            <div class="row" id="profil-mail">
+                                                            EMAIL:<span> <a href="mailto:<?=$data->getEmail();?>"> <?=$data->getEmail();?></a></span>
+                                                            </div>
+                                                        </div>
+                                                     </div>
+                                                  
+                                                </p>
+                                               
+                                                
                                             </div>
                                             <div class="card-body">
                                                 <div class="row">
@@ -86,7 +99,7 @@
                                                                   <td><label><?=$elt['tutorat'];?></label></td> <!-- nom -->
                                                                   <td><label><?=$elt['evenement']->getDate_evenement();?></label></td> <!-- prenom -->
                                                                   <td><label><?=$elt['evenement']->getLieu();?></label></td> <!-- phone -->
-                                                                  <td><input type="number" name="duree" value="<?=$elt['planning_event']?>"></td> <!-- duree de l'évenement -->    
+                                                                  <td><input type="number" style="width: 30%;" name="duree" value="<?=$elt['planning_event']?>"></td> <!-- duree de l'évenement -->    
                                                                    
                                                                   <?php 
                                                                   if($elt['participer_evenement'] == 'NON')

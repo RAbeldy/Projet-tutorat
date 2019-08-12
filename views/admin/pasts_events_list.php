@@ -56,9 +56,10 @@
                                                                 <th>Tutorat</th>
                                                                 <th>Date</th>
                                                                 <th>Adresse</th>
-                                                                <th>Places</th>
+                                                                <th>Tuteurs demandés</th>
+                                                                <th>Ont participé</th>
                                                                 <th>Horaires</th>
-                                                                <th>Inscription</th>
+                                                                <th>Consulter</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
@@ -76,6 +77,7 @@
                                                                   <td> <label><?=$elt['type_tutorat']?></label></td>
                                                                   <td><label><?=$elt['evenement']->getDate_evenement()?></label></td>
                                                                   <td><label><?=$elt['evenement']->getLieu()?></label></td>
+                                                                  <td><label><?=$elt['evenement']->getNb_tuteurs()?></label></td>
                                                                   <td><label><?=$elt['evenement']->getNb_places()?></label></td>
                                                                   <td><label ><?=$elt['planning_event']?></label></td>
                                                                  

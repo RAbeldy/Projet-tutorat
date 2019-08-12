@@ -77,15 +77,9 @@ class EvenementsController
             $controller_report='admin';
             $fonction_back='future_events_list';
                
-              if($_SESSION['id_statut'] == 11)
-                AdminController::future_events_list();
-              elseif($_SESSION['id_statut'] == 14)
-                require_once('views/admin/mef/interface_admin_mef.php');
-              else
-                require_once('views/admin/mef/interface_admin_mef.php');
-            
-             
-            
+              
+            AdminController::future_events_list();
+                     
     }
     public function display_pasts_events() // afficher les evenements passés auxquels il a participé
     {
@@ -168,7 +162,7 @@ class EvenementsController
 
               require_once('views/tutores/evenements_inscrits_a_venir_view.php');  // on charge la vue adéquate
           }
-          else // il s'agit d'un admin dans ce cas 
+          else // il s'agit d'un tuteur dans ce cas 
           {
               $event = new Evenements();
               $donnees = $event->Get_subscribed_events($_SESSION['id_user']);
@@ -186,23 +180,35 @@ class EvenementsController
     public static function subscribe_to_event()    // souscrire  à un évènement 
     {          
         if( isset($_SESSION['id_statut']))
-           { 
-                $event = new Evenements();
-                if(isset($_POST['id_e']) && $event->nb_places_dispo($_POST['id_e']) > 0)
-                {       
-                        
-                        $event->Subscribe_to_event($_SESSION['id_user'],$_POST['id_e']);
-                        $event->updateNombrePlaces($_POST['id_e'],-1);
+           {   
+                if( preg_match('#^TUTEUR#', $_SESSION['statut']) ) // il s'agit d'un tutore
+                 {
+                    $event = new Evenements();
+                    if(isset($_POST['id_e']) && $event->nb_places_dispo($_POST['id_e']) > 0)
+                    {       
+                            
+                            $event->Subscribe_to_event($_SESSION['id_user'],$_POST['id_e']);
+                            $event->updateNombrePlaces($_POST['id_e'],-1);
 
-                        EvenementsController::display_subscribed_events();
-                }
-                else
-                {   
-                    $message = 'l\'évènement est complet';
-                    $controller_report='evenements';
-                    $fonction_back='Display_future_events';
-                    require_once('views/system/error.php');
-                }
+                            EvenementsController::display_subscribed_events();
+                    }
+                    else
+                    {   
+                        $message = 'l\'évènement est complet';
+                        $controller_report='evenements';
+                        $fonction_back='Display_future_events';
+                        require_once('views/system/error.php');
+                    }
+                  }
+                  else  // il s'agit d'un tutore qui s'inscritt à un évènement
+                  {
+                    $event = new Evenements();
+                    $event->Subscribe_to_event($_SESSION['id_user'],$_POST['id_e']);
+                    Evenements::Update_nbplacesTutores($_POST['id_e'],1);
+
+                    EvenementsController::display_subscribed_events();
+
+                  }
             }
          else
          {
@@ -215,29 +221,62 @@ public function cancel_participation()
     {
      
      if( isset($_SESSION['id_statut']))
-           { 
-                 if(isset($_POST['id_e_c'] ))
+           {   
+                if( preg_match('#TUTEUR#', $_SESSION['statut']) ) // il s'agit d'un tuteur
                  {
-                    //echo "gfgfdghdfhxvvdvdfdfdkfhmdfhdmkfdhfdkmlfhdvn;vdkmbnvdfhdvfbnifldhfdklfdhfikhdg".$_POST['id_e_c'];
-                      $event= new Evenements();
-                      $event->Cancel_participation($_SESSION['id_user'],$_POST['id_e_c']);
-                      $event->updateNombrePlaces($_POST['id_e_c'],1);
-                      require_once('views/tuteurs/interface_tuteur.php');
-                 }
-                 elseif(isset($_POST['id_e_d']))
+                         if(isset($_POST['id_e_c'] ))
+                         {
+                            //echo "gfgfdghdfhxvvdvdfdfdkfhmdfhdmkfdhfdkmlfhdvn;vdkmbnvdfhdvfbnifldhfdklfdhfikhdg".$_POST['id_e_c'];
+                              $event= new Evenements();
+                              $event->Cancel_participation($_SESSION['id_user'],$_POST['id_e_c']);
+                              $event->updateNombrePlaces($_POST['id_e_c'],1);
+                              
+                              EvenementsController::display_subscribed_events();
+                         }
+                         elseif(isset($_POST['id_e_d']))
+                         {
+                            //echo "gfgfdghdfhxvvdvdfdfdkfhmdfhdmkfdhfdkmlfhdvn;vdkmbnvdfhdvfbnifldhfdklfdhfikhdg".$_POST['id_e_d'];
+                              $event= new Evenements();
+                              $event->Delete_event($_SESSION['id_user'],$_POST['id_e_d']);
+                              
+                              EvenementsController::display_subscribed_events();
+                         }
+                         else
+                        {   
+                            //echo "gfgfdghdfhxvvdvdfdfdkfhmdfhdmkfdhfdkmlfhdvn;vdkmbnvdfhdvfbnifldhfdklfdhfikhdg".$_POST['id_e_d'];
+                            $controller_report='evenements';
+                            $fonction_back='Display_subscribed_events';
+                            require_once('views/system/error.php');
+                        }
+                  }
+                elseif ( preg_match('#^TUTORE#', $_SESSION['statut']) ) // il s'agit d'un tutore
                  {
-                    //echo "gfgfdghdfhxvvdvdfdfdkfhmdfhdmkfdhfdkmlfhdvn;vdkmbnvdfhdvfbnifldhfdklfdhfikhdg".$_POST['id_e_d'];
-                      $event= new Evenements();
-                      $event->Delete_event($_SESSION['id_user'],$_POST['id_e_d']);
-                      require_once('views/tuteurs/interface_tuteur.php');
-                 }
-                 else
-                {   
-                    //echo "gfgfdghdfhxvvdvdfdfdkfhmdfhdmkfdhfdkmlfhdvn;vdkmbnvdfhdvfbnifldhfdklfdhfikhdg".$_POST['id_e_d'];
-                    $controller_report='evenements';
-                    $fonction_back='Display_subscribed_events';
-                    require_once('views/system/error.php');
-                }
+                         if(isset($_POST['id_e_c'] ))
+                         {
+                            //echo "gfgfdghdfhxvvdvdfdfdkfhmdfhdmkfdhfdkmlfhdvn;vdkmbnvdfhdvfbnifldhfdklfdhfikhdg".$_POST['id_e_c'];
+                              $event= new Evenements();
+                              $event->Cancel_participation($_SESSION['id_user'],$_POST['id_e_c']);
+                              Evenements::Update_nbplacesTutores($_POST['id_e_c'],-1); // on met à joue le nombre de tutorés inscrits
+                              
+                              EvenementsController::display_subscribed_events(); 
+                         }
+                         elseif(isset($_POST['id_e_d']))
+                         {
+                            //echo "gfgfdghdfhxvvdvdfdfdkfhmdfhdmkfdhfdkmlfhdvn;vdkmbnvdfhdvfbnifldhfdklfdhfikhdg".$_POST['id_e_d'];
+                              $event= new Evenements();
+                              $event->Delete_event($_SESSION['id_user'],$_POST['id_e_d']);
+                              
+                              EvenementsController::display_subscribed_events();
+                         }
+                         else
+                        {   
+                            //echo "gfgfdghdfhxvvdvdfdfdkfhmdfhdmkfdhfdkmlfhdvn;vdkmbnvdfhdvfbnifldhfdklfdhfikhdg".$_POST['id_e_d'];
+                            $controller_report='evenements';
+                            $fonction_back='Display_subscribed_events';
+                            require_once('views/system/error.php');
+                        } 
+                  }
+                
            }
       else
       {
@@ -245,7 +284,7 @@ public function cancel_participation()
       }
     }
 
-    
+
 
     public static function subscription_list()
     {

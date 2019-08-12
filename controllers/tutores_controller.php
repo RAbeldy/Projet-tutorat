@@ -171,6 +171,10 @@ class TutoresController
       {
             if(isset($_SESSION['id_statut']))// on vérifie que seul un utilisateur connecté peut accéder à ces pages
             {    
+                $contacter="";
+                $nom= $_POST['nom'];
+                $mailAccount= $_POST['email']; //  adresse emettrice
+                $login_mail=   // adresse réceptrice( l'administrateur )
                 //Déclaration du message au format texte et au format html (selon ce que les webmails supportent)
                 $message_txt = $_POST['message'];
 

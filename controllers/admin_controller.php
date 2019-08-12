@@ -15,7 +15,7 @@ class AdminController
        {
             if( isset($_SESSION['id_statut']))
             {
-                if($_SESSION['id_statut'] == 11)
+                if(preg_match('#MEF#', $_SESSION['statut']))
                 {
                   require_once('views/admin/mef/interface_admin_mef.php');
                 }
@@ -32,8 +32,7 @@ class AdminController
             else
                 require_once('views/login.php');
        }
-
-
+       
        public function events()
        {
           if( isset($_SESSION['id_statut']))
@@ -93,7 +92,7 @@ class AdminController
                $header= array('tutorat','date','adresse','nombre de places','duree');
                $path="http://localhost:8888/tests/steve/PDF/future_events_list.txt";
 
-               Admin::Create_pdf($path,$header); 
+              // AdminController::export(); 
  
                AdminController::future_events_list();
           
@@ -106,25 +105,37 @@ class AdminController
        public static function future_events_list()
        {
           if( isset($_SESSION['id_statut']))
-          {
-            $donnees = Evenements::Future_events_list($_SESSION['id_user']);
-            
-            $controller_report='admin';
-            $fonction_back='events';
-             
-             // petit code pour saisir les donnees dans un fichier pour telechargement au besoin
-            $myfile = fopen("PDF/future_events_list.txt", "w") or die("Unable to open file!");
-            
-            foreach ($donnees as $elt)
-             {
-              $saut= "\n";
-              $txt= $elt['tutorat'].';'.$elt['evenement']->getDate_evenement().';'.$elt['evenement']->getLieu().';'.$elt['evenement']->getNb_places().';'.$elt['planning_event'].''.$saut ;
-              fwrite($myfile, $txt);
-            }
-            fclose($myfile);
+          { 
+                if(preg_match('#IMMERSSION#', $_SESSION['statut'])) 
+                {
+                   $donnees = Evenements::Future_events_list($_SESSION['id_user']);
+                
+                    $controller_report='admin';
+                    $fonction_back='events';
 
-            
-            require_once('views/admin/future_events_list.php');
+                    require_once('views/admin/immerssion/future_events_list_immerssion.php');
+                }
+                else
+                {
+                $donnees = Evenements::Future_events_list($_SESSION['id_user']);
+                
+                $controller_report='admin';
+                $fonction_back='events';
+                 
+                 // petit code pour saisir les donnees dans un fichier pour telechargement au besoin
+                $myfile = fopen("PDF/future_events_list.txt", "w") or die("Unable to open file!");
+                
+                foreach ($donnees as $elt)
+                 {
+                  $saut= "\n";
+                  $txt= $elt['tutorat'].';'.$elt['evenement']->getDate_evenement().';'.$elt['evenement']->getLieu().';'.$elt['evenement']->getNb_places().';'.$elt['planning_event'].''.$saut ;
+                  fwrite($myfile, $txt);
+                }
+                fclose($myfile);
+
+                
+                require_once('views/admin/future_events_list.php');
+              }
           }
           else
             require_once('views/login.php');
@@ -134,12 +145,24 @@ class AdminController
     {
         if( isset($_SESSION['id_statut']))
         {
-          $donnees = Evenements::Pasts_events_list($_SESSION['id_user']);
+          if(preg_match('#IMMERSSION#', $_SESSION['statut'])) 
+            {
+                $donnees = Evenements::Pasts_events_list($_SESSION['id_user']);
+                
+                $controller_report='admin';
+                $fonction_back='interface_admin';
 
-          $controller_report='admin';
-          $fonction_back='interface_admin';
+                require_once('views/admin/immerssion/pasts_events_list_immerssion.php');
+            }
+          else
+            {
+                $donnees = Evenements::Pasts_events_list($_SESSION['id_user']);
 
-          require_once('views/admin/pasts_events_list.php');
+                $controller_report='admin';
+                $fonction_back='interface_admin';
+
+                require_once('views/admin/pasts_events_list.php');
+             }
         }
         else
           require_once('views/login.php');
@@ -208,7 +231,7 @@ class AdminController
 
                       $controller_report='admin';
                       $fonction_back='interface_admin';
-
+  
                       Admin::Send_selection_mail($donnees[0]->getPrenom(),$donnees[0]->getNom(),$donnees[0]->getEmail(),$donnees[1],$donnees[2]) ;// on envoi le mail de confirmation de sélection
 
                       AdminController::tuteurs_list(); // on charge la vue adéquate
@@ -300,14 +323,31 @@ class AdminController
     {
       if( isset($_SESSION['id_statut']))
        {
-           $data= Users::Get_informations_on_user($_POST['id_u']); // on récupère les info du user en question
-           $donnees = Evenements::Get_informations_events_on_user($_POST['id_u'],$_SESSION['id_user']); // on récupère les évènements que le tuteur a effectué quand c'est un admin en particulier qui l'a crée 
+           if( isset($_POST['consulter']))
+           {
+             $data= Users::Get_informations_on_user($_POST['id_u']); // on récupère les info du user en question
+             $donnees = Evenements::Get_informations_events_on_user($_POST['id_u'],$_SESSION['id_user']); // on récupère les évènements que le tuteur a effectué quand c'est un admin en particulier qui l'a crée 
+
+              $controller_report='admin';
+              $fonction_back='pasts_events_list';
+
+          
+             require_once('views/admin/show_informations.php');
+          }
+          elseif(isset($_POST['annuler']))
+          {
+            $event= new Evenements();
+            $event->Cancel_participation($_POST['id_u'],$_POST['id_e_c']);
+            
+            $donnees = Evenements::Subscription_list($_POST['id_e_c']); // on récupère la liste des participants
+
+            $data= Evenements::Get_informations_on_events($_POST['id_e_c']);  // on récupère la date, le. lieu etc sur l'évenement
 
             $controller_report='admin';
-            $fonction_back='pasts_events_list';
+            $fonction_back='future_events_list';
 
-        
-          require_once('views/admin/show_informations.php');
+              require_once('views/admin/subscription_list.php');
+          }
        }
        else
           require_once('views/login.php');
@@ -348,6 +388,9 @@ class AdminController
     {
       if( isset($_SESSION['id_statut']))
        {
+          $controller_report='admin';
+          $fonction_back='interface_admin';
+
            require_once('views/admin/interface_selection.php') ;
        }
        else
@@ -473,7 +516,9 @@ class AdminController
           require_once('views/login.php');
     }
 
-
+public static function export(){
+  require_once('PHPExcel-1.8/exportTutorat/exportData-xlsx.php');
+}
     
     
 

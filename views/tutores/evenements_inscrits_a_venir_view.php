@@ -62,41 +62,39 @@
                                                                 <th>Tutorat</th>
                                                                 <th>Date</th>
                                                                 <th>Adresse</th>
-                                                                <th>Action</th>
+                                                                <th>Désinscription</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-                                                            <?php
-                                                            if(!is_null($donnees))
+                                                            <?php foreach($donnees as $data)
                                                             {
-                                                             foreach ($donnees as $elt) 
-                                                            {
-                                                                if( $elt['type_tutorat']== 'TUTORAT_PERSONNALISE' )
-                                                                  {
-                                                             ?>
+                                                             ?>   
+                                                             <form method="post" action="?controller=evenements&action=cancel_participation
+                                                              ">
+                                                            <tr>
+                                                                <td><label><?=$data['type_tutorat']?></label></td>
+                                                                <td><label><?=$data['evenement']->getDate_evenement()?></label></td>
+                                                                <td><label><?=$data['evenement']->getLieu()?></label></td>
+                                                                <?php if($data['type_tutorat'] == 'TUTORAT_PERSONNALISE')
+                                                                {
+                                                                ?>
+                                                                      <td><button class="btn" type="submit" name="supprimer" onclick="alert();">Supprimer</button></td>
+                                                                      <input type="hidden" name="id_e_d" value="<?=$data['evenement']->getId_evenement()?>" >
+                                                                <?php 
+                                                                }
+                                                                else
+                                                                {
+                                                                ?>
+                                                                    <td><button class="btn" type="submit" name="annuler" onclick="alert();">Annuler</button></td>
+                                                                    <input type="hidden" name="id_e_c" value="<?=$data['evenement']->getId_evenement()?>" >
+                                                                    <?php
 
-                                                              <form method="post" action="?controller=evenements&action=cancel_participation">
-                                                                
-                                                              <tr >
-
- 
-                                                                  <td> <label><?=$elt['type_tutorat']?></label></td>
-                                                                  <td><label><?=$elt['evenement']->getDate_evenement()?></label></td>
-                                                                  <td><label><?=$elt['evenement']->getLieu()?></label></td>
-                                                                
-                                                                  <td><button class="btn" type="submit" name="annuler" onclick="alert();">Annuler</button>
-                                                                  </td>
-                                                                  <?php
-                                                                  }
-                                                                  
-                                                                  ?>
-                                                                </tr>
-                                                                 <input type="hidden" name="id_e_d" value="<?=$elt['evenement']->getId_evenement()?>" >
-                                                                  <!-- id_e_d signifie identifiant de l'évènement pour une action de suppression-->
-                                                      
-                                                             </form>
+                                                                } // id_e_d correspond a identifiant de l'évènement avec comme action suppression(d pour delete) et id_e_c avec pour action annuler(c pour cancel)
+                                                                ?>
+                                                                    
+                                                            </tr>
+                                                            </form>
                                                             <?php
-                                                             }
                                                              }
                                                              ?>
                                                         </tbody>

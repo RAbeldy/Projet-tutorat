@@ -61,7 +61,9 @@
                                                                 <th>Email</th>
                                                                 <th>Ecole</th>
                                                                 <th>Niveau</th>
-                                                                <th>Action</th> 
+                                                                <th>Consulter</th>
+                                                                <th>Annuler sa participation</th>
+
                                                             </tr>
                                                             
                                                         </thead>
@@ -83,9 +85,10 @@
                                                                   <td><label ><?=$elt['user']->getEcole();?></label></td> <!-- ecole -->
                                                                     
                                                                   <td><button class="btn" type="submit" name="consulter" >Consulter</button></td>
+                                                                  <td><button class="btn" type="submit" name="annuler" >Annuler</button></td>
                                                                   
                                                                   <input type="hidden" name="id_u" value="<?=$elt['user']->getId_user();?>" >
-                                                                  
+                                                                  <input type="hidden" name="id_e_c" value="<?=$data[0]->getId_evenement();?>" >
                                                                   
                                                              </tr>
                                                              </form>

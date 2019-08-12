@@ -1,6 +1,6 @@
 
 
-    <button class="btn" type="submit" name="imprimer" >Imprimer</button>
+    
 
 
                                                                  
@@ -22,45 +22,20 @@
                                                 <?php include('retour.php') ?>
                                             </div>
                                             <div class="card-body">
-                                                <div class="row">
-                                                    <div class="col-12 card-body-title">
-                                                        <span>RECHERCHER PAR :</span>
+                                                    <div class=" rechercher">
+                                                        <td><a href="PHPExcel-1.8/exportTutorat/exportData-xlsx.php"><button class="btn"  name="" > Imprimer</button></a></td>
                                                     </div>
-                                                    <div class="col-md-7 text-nowrap">
-                                                        <div class="row text-center">
-                                                            <label style="flex: auto;">Période</label>
-                                                        </div>
-                                                        <div class="row">
-                                                            <div class="col-xs-12 col-md-6">
-                                                                <label class="col-2">De</label>
-                                                                <input class="col-8 offset-2" type="datetime-local"/>
-                                                            </div>
-                                                            <div class="col-xs-12 col-md-6">
-                                                                <label class="col-2">à</label>
-                                                                <input class="col-8 offset-2" type="datetime-local"/>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-4 offset-1">
-                                                        <div class="row text-center">
-                                                            <label style="flex: auto;">TUTORAT</label>
-                                                        </div>
-                                                        <div class="row">
-                                                            <input type="search" class="form-control form-control-sm" aria-controls="dataTable" placeholder="Rechercher"/>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-12 text-center rechercher">
-                                                        <button class="btn" type="button">RECHERCHER</button>
-                                                    </div>
-                                                </div>
                                                 <div class="table-responsive table mt-2" role="grid" aria-describedby="dataTable_info">
                                                     <table class="table dataTable my-0" id="dataTable">
+                                                            <input type="search" class="form-control-sm rechercher" aria-controls="dataTable" placeholder="Rechercher par nom de tutorat" style="width: 30%; " />
+                                                            <button type="button" class=" btn-default"> Search </button>
                                                         <thead>
                                                             <tr>
                                                                 <th>Tutorat</th>
                                                                 <th>Date</th>
                                                                 <th>Adresse</th>
-                                                                <th>Places</th>
+                                                                <th>Tuteurs demandés</th>
+                                                                <th>Places restantes(tuteurs)</th>
                                                                 <th>Horaires</th>
                                                                 <th>Modifier</th>
                                                                 <th>Supprimer</th>
@@ -82,6 +57,7 @@
                                                                   <td> <label><?=$elt['tutorat']?></label></td>
                                                                   <td><label><?=$elt['evenement']->getDate_evenement()?></label></td>
                                                                   <td><label><?=$elt['evenement']->getLieu()?></label></td>
+                                                                  <td><label><?=$elt['evenement']->getNb_tuteurs()?></label></td>
                                                                   <td><label><?=$elt['evenement']->getNb_places()?></label></td>
                                                                   <td><label ><?=$elt['planning_event']?></label></td>
                                                                  
@@ -92,7 +68,7 @@
                                                                   </td>
                                                                   <td><button class="btn" type="submit" name="consulter" >Consulter</button>
                                                                   </td>
-                                                                  <td><button class="btn" type="submit" name="imprimer" >Imprimer</button></td>
+                                                                  
 
                                                                 </tr>
                                                                  <input type="hidden" name="id_e" value="<?=$elt['evenement']->getId_evenement()?>" >

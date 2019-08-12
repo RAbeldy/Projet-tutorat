@@ -43,7 +43,7 @@
     <!-- login-->
     <link rel="stylesheet" href="assets/css/Login-Form.css?h=20d7842de129d800e792499681f0b672">
 
-
+    
 </head>
 
 <body id="page-top">
@@ -67,7 +67,11 @@
       }
     ?>
     <nav class="navbar navbar-light navbar-expand-md navigation-clean-button">
-    <div class="container"><a href="index.php" class="navbar-brand"> LOGO </a><button data-toggle="collapse" data-target="#navcol-1" class="navbar-toggler"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
+    <div class="container">
+		<a href="index.php" class="navbar-brand"> <img src="assets/img/logo.png" style="width: 60px;"/> </a>
+		<button data-toggle="collapse" data-target="#navcol-1" class="navbar-toggler">
+			<span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span>
+		</button>
         <div class="collapse navbar-collapse"
             id="navcol-1">
             <ul class="nav navbar-nav mr-auto">
@@ -112,34 +116,40 @@
                     </li>
                     <li class="nav-item"><a href="?controller=page&action=contact" class="nav-link">Contact </a>
                     </li>
+
                     <?php
                 }
                 ?>
-
-            </ul>
+				</ul>
+				<div class="dropdown">
+					<button class="btn dropdown-toggle" data-toggle="dropdown" aria-expanded="false" type="button"> <i class="fa fa-user-circle" style="font-size: 40px;"></i> </button>
+					<div class="dropdown-menu" role="menu">
+						<?php
+						if(is_null($_SESSION['id_statut']))
+						{
+						?>
+						<a class="dropdown-item forgot" href="?controller=users&action=connexion" role="presentation">Connexion</a>
+						<?php
+						}
+						else
+						{
+						?>
+						<a class="dropdown-item forgot" href="?controller=users&action=profil" role="presentation">Profil</a>
+						<a class="dropdown-item forgot" href="?controller=users&action=deconnexion" role="presentation">Deconnexion</a>
+						<?php
+						}
+						?>
+					</div>
+				</div>
                 <span class="navbar-text actions">
-                <div>
-                 <?php
-                 if(is_null($_SESSION['id_statut']))
-                 {
-                  ?>
-                   <a class="forgot" href="?controller=users&action=connexion"><button class="btn btn-light action-button" type="button">Connexion</button></a>
-                <?php
-                }
-                else
-                {
-                   ?>
-                   <a class="forgot" href="?controller=users&action=deconnexion"><button class="btn btn-light action-button" type="button">Deconnexion</button></a>
-                <?php
-                }
-                ?>
-                 <!-- FIN du CONTROL sur la navbar horizontale -->
-                </div>
-            </span>
-        </div>
-    </div>
-</nav>
-     <div id="globalContent">
+					<div>
+					 <!-- FIN du CONTROL sur la navbar horizontale -->
+					</div>
+				</span>
+			</div>
+		</div>
+	</nav>
+    <div id="globalContent">
         <div id="wrapper">
             <!-- CONTROL sur la navbar verticale -->
             <?php 
@@ -241,7 +251,39 @@
                                 <i class="fab fa-phoenix-squadron"></i>
                                 <span>Mes listes</span>
                             </a>
-
+                        </li>
+                    </ul>
+                    <div class="text-center d-none d-md-inline">
+                        <button class="btn" id="sidebarToggle" type="button"></button>
+                    </div>
+                </div>
+            </nav>
+            <?php
+            }
+            elseif(isset($_SESSION['statut']) && ($_SESSION['statut']== 'ADMIN_IMMERSSION')) // menu latéral pour admin
+            {
+             ?>
+                <nav class="navbar navbar-dark align-items-start sidebar sidebar-dark accordion bg-gradient-primary p-0">
+                <div class="container-fluid d-flex flex-column p-0">
+                    <a class="navbar-brand d-flex justify-content-center align-items-center sidebar-brand m-0" href="#">
+                        <div class="sidebar-brand-icon rotate-n-15"><i class="far fa-id-card"></i></div>
+                        <div class="sidebar-brand-text mx-3"><span>IMMERSSION</span></div>
+                    </a>
+                    <hr class="sidebar-divider my-0">
+                    <ul class="nav navbar-nav text-light" id="accordionSidebar">
+                        <li class="nav-item" role="presentation">
+                            <a class="nav-link active" href="?controller=admin&action=interface_admin">
+                                <i class="fab fa-phoenix-squadron"></i>
+                                <span>évènements</span>
+                            </a>
+                            <a class="nav-link" href="?controller=admin&action=interface_tutorat">
+                                <i class="fab fa-phoenix-squadron"></i>
+                                <span>Les centres de la Mef</span>
+                            </a>
+                            <a class="nav-link" href="?controller=admin&action=interface_selection">
+                                <i class="fab fa-phoenix-squadron"></i>
+                                <span>Mes listes</span>
+                            </a>
                             
                         </li>
                     </ul>
@@ -285,6 +327,8 @@
     <script src="assets/js/Navbarbuttonsignupsignin-modal-form.js?h=9ce049da3c28fd2ded69977163ac47a3"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.js"></script>
     <script src="assets/js/theme.js?h=6d33b44a6dcb451ae1ea7efc7b5c5e30"></script>
+    
+
     
 </body>
 

@@ -31,7 +31,7 @@ public function connexion()
 	        	{
 	        		require_once('views/tutores/interface_tutore.php');
 	        	}
-	        	elseif($_SESSION['id_statut'] == 8) // admin
+	        	elseif($_SESSION['id_statut'] == 17) // ADMIN_IMMERSSION
 	        	{
 	        		require_once('views/admin/interface_admin.php');
 	        	}
@@ -109,6 +109,17 @@ public function inscription()
 			require_once('views/inscriptionTutore.php');
 		}
 	}
+
+public function profil()
+{
+	if(isset($_SESSION['id_statut']))// on vérifie que seul un utilisateur connecté peut accéder à ces pages
+        { 
+            $data = Users::Get_info($_SESSION['id_user']);    // on récupère les info des user
+            require_once('views/admin/profil_tuteur.php');
+        }
+     else
+       require_once('views/login.php');
+}
 public static function update_account()
         {
             if(isset($_SESSION['id_statut']))// on vérifie que seul un utilisateur connecté peut accéder à ces pages
