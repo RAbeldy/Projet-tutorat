@@ -93,10 +93,18 @@ class TuteursController
     {
         
         if(isset($_SESSION['id_statut']))// on vérifie que seul un utilisateur connecté peut accéder à ces pages
-        {    
+        {  
+
             $tuteurs= new Tuteurs();
-             $tuteurs->Accept_link($_SESSION['id_user'],$_POST['id_u']);
-            require_once('views/tuteurs/notifications_tuteurs.php');
+            if($tuteurs->Accept_link($_SESSION['id_user'],$_POST['id_u']) == 0)
+                require_once('views/tuteurs/notifications_tuteurs.php');
+            else
+             {
+                $message = 'Cette liaison est impossible, vous avez atteint votre quota maximum de liaison';
+                $controller_report='tuteurs';
+                $fonction_back='notifications';
+                require_once('views/system/error.php');
+             }
              
         }
         else
@@ -190,27 +198,39 @@ class TuteursController
         else
             require_once('views/login.php');
     }
-    public function contact()
+    public static function contact()
         {
             if(isset($_SESSION['id_statut']))// on vérifie que seul un utilisateur connecté peut accéder à ces pages
-                require_once('views/contacter.php');
+                { 
+                    $data= Users::Get_contact_admin($_SESSION['id_user']);
+                    require_once('views/contacter.php');
+                }
             else
                 require_once('views/login.php');
         }
-    public function message() // rajouter adresse e-mail
+      public function message() 
       {
             if(isset($_SESSION['id_statut']))// on vérifie que seul un utilisateur connecté peut accéder à ces pages
             {    
+                require ('PHPMailer/PHPMailerAutoload.php');
+                require ('connectToMail.php');
+
+                $contacter= true;
+                $nom= $_SESSION['nom']; 
+                $prenom= $_SESSION['prenom'];
+                
+                $login_mail=  $_POST['email']; // adresse réceptrice( l'administrateur )
                 //Déclaration du message au format texte et au format html (selon ce que les webmails supportent)
                 $message_txt = $_POST['message'];
-
+                
                 
                 $message_html = $_POST['message'];
                 //Sujet
-                $sujet = "[Yncrea tutorat] Message plateforme Yncrea tutorat de: ".$_POST['nom']."";
+                $sujet = "[Yncrea tutorat] Message plateforme Yncrea tutorat de: ".$prenom." ".$nom." ";
                 // on envoie un email de confirmation
                 include('send_mail.php');
-                require_once('views/contacter.php');
+
+                TuteursController::contact();
             }
             else
                 require_once('views/login.php');
@@ -220,6 +240,10 @@ class TuteursController
         if(isset($_SESSION['id_statut']))// on vérifie que seul un utilisateur connecté peut accéder à ces pages
         {
             $donnees= Tuteurs::Get_proposal($_SESSION['id_user']);
+
+            $controller_report='tuteurs';
+            $fonction_back='interface_tuteur'; 
+
             require_once('views/tuteurs/received_proposal.php');
         }
          else

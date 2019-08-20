@@ -23,12 +23,30 @@
                                             </div>
                                             <div class="card-body">
                                                     <div class=" rechercher">
-                                                        <td><a href="PHPExcel-1.8/exportTutorat/exportData-xlsx.php"><button class="btn"  name="" > Imprimer</button></a></td>
+                                                    <!--    <td><a href="controllers/PHPEXCEL-1.8/Examples/01simple-download-xlsx.php"><button class="btn"  name="" > Imprimer</button></a></td>-->
+                                                        <td><a href="controllers/PHPEXCEL-1.8/exportTutorat/exportData-xlsx.php"><button class="btn"  name="" > Imprimer</button></a></td>
                                                     </div>
                                                 <div class="table-responsive table mt-2" role="grid" aria-describedby="dataTable_info">
                                                     <table class="table dataTable my-0" id="dataTable">
-                                                            <input type="search" class="form-control-sm rechercher" aria-controls="dataTable" placeholder="Rechercher par nom de tutorat" style="width: 30%; " />
-                                                            <button type="button" class=" btn-default"> Search </button>
+                                                          <form method="post" action="?controller=admin&action=future_events_list">
+                                                            <div class="col-md-7 text-nowrap">
+                                                                <div class="row text-center">
+                                                                  <label style="flex: auto;">Période</label>
+                                                                </div>
+                                                                <div class="row">
+                                                                    <div class="col-xs-12 col-md-6">
+                                                                        <label class="col-2">De</label>
+                                                                        <input  name="date1" class="form-control" type="datetime-local"/>
+                                                                    </div>
+                                                                    <div class="col-xs-12 col-md-6">
+                                                                        <label class="col-2">à</label>
+                                                                        <input  name="date2" class="form-control" type="datetime-local"/>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                              <input type="search" name="string" class="form-control-sm rechercher" aria-controls="dataTable" placeholder="Rechercher par nom de tutorat" style="width: 30%; " />
+                                                              <button type="submit" name="search" class=" btn-default"> Search </button>
+                                                          </form>
                                                         <thead>
                                                             <tr>
                                                                 <th>Tutorat</th>
@@ -49,6 +67,8 @@
                                                             {
                                                              foreach ($donnees as $elt) 
                                                             {
+                                                              if(!preg_match("#ADMINISTRATION#", $elt['tutorat']) )
+                                                                {
                                                              ?>
 
                                                               <form method="post" action="?controller=admin&action=modify_event">
@@ -68,12 +88,15 @@
                                                                   </td>
                                                                   <td><button class="btn" type="submit" name="consulter" >Consulter</button>
                                                                   </td>
+                                                                  <td><button class="btn" type="submit" name="imprimer" >Imprimer</button>
+                                                                  </td>
                                                                   
 
                                                                 </tr>
                                                                  <input type="hidden" name="id_e" value="<?=$elt['evenement']->getId_evenement()?>" >
                                                              </form>
                                                             <?php
+                                                                }
                                                              }
                                                              }
                                                              ?>

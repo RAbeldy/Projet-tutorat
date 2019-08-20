@@ -1,6 +1,6 @@
 <?php
 require('../fpdf.php');
-require_once dirname(__FILE__) . 'PHPExcel.php';
+
 
 class PDF extends FPDF
 {
@@ -103,7 +103,6 @@ $pdf->ImprovedTable($header,$data);
 $pdf->AddPage();
 $pdf->FancyTable($header,$data);
 
-$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
-$objWriter->save(str_replace('.php', '.xls', __FILE__));
+
 $pdf->Output();
 ?>

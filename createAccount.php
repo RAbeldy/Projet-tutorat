@@ -64,7 +64,7 @@
 			//On regarde si le mail n'est pas déjà utilisé pour un compte valide!
 			if ($request->rowCount() == 0 /*aucun compte avec ce login*/) 
 			{  
-				//On créer un nouveau compte (nouvealle ligne dans bd)
+				//On créer un nouveau compte (nouvelle ligne dans bd)
 				// on insère son adresse
 				$req = $bd->prepare("INSERT INTO adresse (ville,adress,complement_adress,code_postal) VALUES(?,?,?,?)");
 				$code_postal= intval($code_postal);

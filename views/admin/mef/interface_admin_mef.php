@@ -23,7 +23,7 @@
                                                 <div class="card-body">
                                                     <h4 class="card-title">Historique</h4>
                                                     <a href="?controller=admin&action=pasts_events_list">
-                                                        <button class="btn" type="button">je valide<br/>leurs participations</button>
+                                                        <button class="btn" type="button">je valide leurs participations</button>
                                                     </a>
                                                 </div>
                                             </div>
@@ -43,7 +43,7 @@
                                                 <div class="card-body">
                                                     <h4 class="card-title"> mes tuteurs </h4>
                                                     <a href="?controller=admin&action=tuteurs_list">
-                                                        <button class="btn" type="button">Je sélectionne <br/>mes tuteurs</button>
+                                                        <button class="btn" type="button">Je sélectionne mes tuteurs</button>
                                                     </a>
                                                 </div>
                                             </div>

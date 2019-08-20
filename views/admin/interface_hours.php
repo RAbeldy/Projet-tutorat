@@ -13,8 +13,8 @@
                                             <div class="card avenir">
                                                 <div class="card-body">
                                                     <h4 class="card-title">Evènements</h4>
-                                                    <a href="?controller=admin&action=admin_set_event">
-                                                        <button class="btn" type="button">je crée</button>
+                                                    <a href="?controller=admin&action=declare">
+                                                        <button class="btn" type="button">Je déclare mes heures</button>
                                                     </a>
                                                 </div>
                                             </div>
@@ -22,9 +22,9 @@
                                         <div class="col-xs-12 col-md-6 card-container">
                                             <div class="card historique">
                                                 <div class="card-body">
-                                                    <h4 class="card-title">Evenements à venir</h4>
-                                                    <a href="?controller=admin&action=future_events_list">
-                                                        <button class="btn" type="button">je consulte,je modifie</button>
+                                                    <h4 class="card-title">Historique</h4>
+                                                    <a href="?controller=admin&action=declared_hours">
+                                                        <button class="btn" type="button">Je consulte mes heures </button>
                                                     </a>
                                                 </div>
                                             </div>

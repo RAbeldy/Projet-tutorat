@@ -36,7 +36,11 @@ class AdminController
        public function events()
        {
           if( isset($_SESSION['id_statut']))
+            { 
+                $controller_report='admin';
+                $fonction_back='interface_admin';
                 require_once('views/admin/events.php');
+            }
           else
                 require_once('views/login.php');
        }
@@ -44,7 +48,7 @@ class AdminController
        {
           if( isset($_SESSION['id_statut']))
           {    
-             $donnees= Tutorat::Get_lieu_tutorat($_SESSION['id_user']);
+             $donnees= Tutorat::Get_tutorat($_SESSION['id_user']); // on récupère la liste des tutorats qu'il administre
               
              $controller_report='admin';
              $fonction_back='events';
@@ -61,7 +65,7 @@ class AdminController
           {    
              if( isset($_POST['modifier']))
              {
-             $donnees= Tutorat::Get_lieu_tutorat($_SESSION['id_user']);
+             $donnees= Tutorat::Get_tutorat($_SESSION['id_user']); // on récupère la liste des tutorats qu'il administre
              $tab= Evenements::Get_informations_on_events($_POST['id_e']);
               
              $controller_report='admin';
@@ -92,9 +96,9 @@ class AdminController
                $header= array('tutorat','date','adresse','nombre de places','duree');
                $path="http://localhost:8888/tests/steve/PDF/future_events_list.txt";
 
-              // AdminController::export(); 
+               AdminController::export(); 
  
-               AdminController::future_events_list();
+               //AdminController::future_events_list();
           
             }
           }
@@ -106,10 +110,18 @@ class AdminController
        {
           if( isset($_SESSION['id_statut']))
           { 
-                if(preg_match('#IMMERSSION#', $_SESSION['statut'])) 
+
+                if(preg_match('#IMMERSION#', $_SESSION['statut'])) 
                 {
-                   $donnees = Evenements::Future_events_list($_SESSION['id_user']);
-                
+                  if(isset($_POST['search'])) // il s'agit d'une recherche 
+                   {
+                    $tab = Evenements::Future_events_list($_SESSION['id_user']);
+                    $donnees= Evenements::Find_occurrences_date($tab,$_POST['string'],$_POST['date1'],$_POST['date2']);
+                   }
+                   else //  affichage de données normal
+                   {
+                    $donnees = Evenements::Future_events_list($_SESSION['id_user']);
+                   }
                     $controller_report='admin';
                     $fonction_back='events';
 
@@ -117,24 +129,32 @@ class AdminController
                 }
                 else
                 {
-                $donnees = Evenements::Future_events_list($_SESSION['id_user']);
-                
-                $controller_report='admin';
-                $fonction_back='events';
-                 
-                 // petit code pour saisir les donnees dans un fichier pour telechargement au besoin
-                $myfile = fopen("PDF/future_events_list.txt", "w") or die("Unable to open file!");
-                
-                foreach ($donnees as $elt)
-                 {
-                  $saut= "\n";
-                  $txt= $elt['tutorat'].';'.$elt['evenement']->getDate_evenement().';'.$elt['evenement']->getLieu().';'.$elt['evenement']->getNb_places().';'.$elt['planning_event'].''.$saut ;
-                  fwrite($myfile, $txt);
-                }
-                fclose($myfile);
+                    if(isset($_POST['search'])) // il s'agit d'une recherche 
+                    {
+                      $tab = Evenements::Future_events_list($_SESSION['id_user']);
+                      $donnees= Evenements::Find_occurrences_date($tab,$_POST['string'],$_POST['date1'],$_POST['date2']);
+                    }
+                    else //  affichage de données normal
+                    {
+                      $donnees = Evenements::Future_events_list($_SESSION['id_user']);
+                    }
+                    
+                    $controller_report='admin';
+                    $fonction_back='events';
+                     
+                     // petit code pour saisir les donnees dans un fichier pour telechargement au besoin
+                    $myfile = fopen("PDF/future_events_list.txt", "w") or die("Unable to open file!");
+                    
+                    foreach ($donnees as $elt)
+                     {
+                      $saut= "\n";
+                      $txt= $elt['tutorat'].';'.$elt['evenement']->getDate_evenement().';'.$elt['evenement']->getLieu().';'.$elt['evenement']->getNb_places().';'.$elt['planning_event'].''.$saut ;
+                      fwrite($myfile, $txt);
+                    }
+                    fclose($myfile);
 
-                
-                require_once('views/admin/future_events_list.php');
+                    
+                    require_once('views/admin/future_events_list.php');
               }
           }
           else
@@ -168,14 +188,14 @@ class AdminController
           require_once('views/login.php');
     }
      
-     public static function tuteurs_list() // lsite des tuteurs 
+     public static function tuteurs_list() // liste des tuteurs 
     {
         
         if(isset($_SESSION['id_statut']))// on vérifie que seul un utilisateur connecté peut accéder à ces pages
         {
             
             $donnees= Admin::Get_all_tuteurs($_SESSION['id_user']);
-            $req= Tutorat::Get_lieu_tutorat($_SESSION['id_user']);
+            $req= Tutorat::Get_tutorat($_SESSION['id_user']);  // on récupère la liste des tutorats qu'il administre pour affecter des tuteurs pour un tutorat en particulier
 
             $controller_report='admin';
             $fonction_back='interface_admin';
@@ -218,8 +238,8 @@ class AdminController
             require_once('views/login.php');
     }
 
-    public function choose_tuteur() // l'admin sélectionnes ses tuteurs
-    {
+    public function choose_tuteur() // l'admin sélectionne ses tuteurs
+    { 
       if(isset($_SESSION['id_statut']))// on vérifie que seul un utilisateur connecté peut accéder à ces pages
         {
            if(isset($_POST['id_u_c'] ))
@@ -277,7 +297,7 @@ class AdminController
      {
          if( isset($_SESSION['id_statut']))
          {
-            $donnees= Tutorat::Get_lieu_tutorat($_SESSION['id_user']); // on récupère les lieux de tutorat qu'il dirige
+            $donnees= Tutorat::Get_tutorat($_SESSION['id_user']); // on récupère les lieux de tutorat qu'il dirige
 
             $controller_report='admin';
             $fonction_back='interface_admin';
@@ -292,7 +312,7 @@ class AdminController
      {
        if( isset($_SESSION['id_statut']))
        {
-          $donnees=Tutorat::Get_type_tutorat();  // on charge l'interface de création de tutorat
+          $donnees=Tutorat::Get_all_type_tutorat();  // on charge l'interface de création de tutorat
 
           $controller_report='admin';
           $fonction_back='interface_tutorat';
@@ -325,7 +345,7 @@ class AdminController
        {
            if( isset($_POST['consulter']))
            {
-             $data= Users::Get_informations_on_user($_POST['id_u']); // on récupère les info du user en question
+             $data= Users::Get_info($_POST['id_u']); // on récupère les info du user en question
              $donnees = Evenements::Get_informations_events_on_user($_POST['id_u'],$_SESSION['id_user']); // on récupère les évènements que le tuteur a effectué quand c'est un admin en particulier qui l'a crée 
 
               $controller_report='admin';
@@ -364,20 +384,75 @@ class AdminController
        else
           require_once('views/login.php');
     }
+    
+    public static function declared_hours()  // on affiche les heures déclarées par un admin
+    {
+      if( isset($_SESSION['id_statut']))
+       {
+           $donnees = Evenements::Get_past_events($_SESSION['id_user']);
+
+           $controller_report='admin';
+           $fonction_back='interface_hours';
+
+           require_once('views/admin/declared_hours.php');
+       }
+       else
+          require_once('views/login.php');
+    }
+    
+    public static function declare()  // on affiche le formulaire de déclaration des heures pour un admin
+    {
+      if( isset($_SESSION['id_statut']))
+       {
+           $donnees= Tutorat::Get_tutorat($_SESSION['id_user']);  // on récupère la liste des tutorats qu'il administre
+           $controller_report='admin';
+           $fonction_back='interface_hours';
+
+           require_once('views/admin/declare_hours.php');
+       }
+       else
+          require_once('views/login.php');
+    }
+    public static function interface_hours()  // interface de déclaration(consultation) des heures pour un admin
+    {
+      if( isset($_SESSION['id_statut']))
+       {
+           $controller_report='admin';
+           $fonction_back='interface_admin';
+
+           require_once('views/admin/interface_hours.php');
+       }
+       else
+          require_once('views/login.php');
+    }
 
     public function link()
      {
        if( isset($_SESSION['id_statut']))
        {   
            if( isset($_POST['lier']))
-           Admin::link($_POST['id_tuteur'],$_POST['id_tutore']);
+           {
+            if(Admin::link($_POST['id_tuteur'],$_POST['id_tutore']) == 0)
+              AdminController:: tutores_list(); // on charge la liste des tu
+            else
+            {
+                $message = 'Cette liaison est impossible, ce tuteur a atteint son quota maximum de liaison';
+                $controller_report='admin';
+                $fonction_back='tutores_list';
+                require_once('views/system/error.php');
+            }
+
+           }
          elseif(isset($_POST['supprimer']))
+         {
            Admin::Delete_link($_POST['id_tutore']);
+         
 
           $controller_report='admin';
           $fonction_back='interface_tutorat';
 
           AdminController:: tutores_list(); // on charge la liste des tu
+        }
        }
        else
           require_once('views/login.php');
@@ -412,16 +487,17 @@ class AdminController
           require_once('views/login.php');
     }
 
-    public static function Spasts_events_list() // liste des évènements passés( pour pouvoir faire la sélection de tuteurs d'ou le préfixe S)
+    public static function Sfuture_events_list() // liste des évènements passés( pour pouvoir faire la sélection de tuteurs d'ou le préfixe S)
     {
         if( isset($_SESSION['id_statut']))
         {
-          $donnees = Evenements::Pasts_events_list($_SESSION['id_user']);
+          $donnees = Evenements::Future_events_list($_SESSION['id_user']);
+          $data= Admin::Selected_tuteurs($_SESSION['id_user']);
 
           $controller_report='admin';
           $fonction_back='interface_selection';
 
-          require_once('views/admin/Spasts_events_list.php');
+          require_once('views/admin/Sfuture_events_list.php');
         }
         else
           require_once('views/login.php');
@@ -439,12 +515,12 @@ class AdminController
                       $donnees= Admin::Get_sent_proposal($_POST['id_u_c'],$_POST['tutorat'],$_SESSION['id_user']); // on récupère les informations sur la proposition de sélection envoyée
 
                       $controller_report='admin';
-                      $fonction_back='Spasts_events_list';
+                      $fonction_back='Sfuture_events_list';
                       
                       Admin::Send_selection_mail($donnees[0]->getPrenom(),$donnees[0]->getNom(),$donnees[0]->getEmail(),$donnees[1],$donnees[2]) ;// on envoi le mail de confirmation de sélection
 
                       
-                      AdminController::Spasts_events_list();
+                      AdminController::Sfuture_events_list();
                  }
            elseif(isset($_POST['id_u_d']))
                  {
@@ -453,10 +529,10 @@ class AdminController
                       Admin::Cancel_proposal($_POST['id_u_d'],$_POST['tutorat']);
                       
                       $controller_report='admin';
-                      $fonction_back='Spasts_events_list';
+                      $fonction_back='Sfuture_events_list';
                       
 
-                      AdminController::Spasts_events_list();
+                      AdminController::Sfuture_events_list();
                  }
            else
                 {   
@@ -516,11 +592,50 @@ class AdminController
           require_once('views/login.php');
     }
 
-public static function export(){
-  require_once('PHPExcel-1.8/exportTutorat/exportData-xlsx.php');
+public static function export()
+{
+  $donnees = Evenements::Future_events_list($_SESSION['id_user']);
+  
+  require_once('controllers/PHPExcel-1.8/exportTutorat/exportData-xlsx.php');
 }
     
-    
+ public static function contact()
+        {
+            if(isset($_SESSION['id_statut']))// on vérifie que seul un utilisateur connecté peut accéder à ces pages
+                { 
+                    $data= Users::Get_contact_admin($_SESSION['id_user']);
+                    require_once('views/contacter.php');
+                }
+            else
+                require_once('views/login.php');
+        }
+  public function message() // à completer lors de la création de la table de suivi des admin
+      {
+        if(isset($_SESSION['id_statut']))// on vérifie que seul un utilisateur connecté peut accéder à ces pages
+        {    
+
+                require ('PHPMailer/PHPMailerAutoload.php');
+                require ('connectToMail.php');
+
+                $contacter= true;
+                $nom= $_SESSION['nom']; 
+                $prenom= $_SESSION['prenom'];
+                
+                $login_mail=  $_POST['email']; // adresse réceptrice( l'administrateur )
+                //Déclaration du message au format texte et au format html (selon ce que les webmails supportent)
+                $message_txt = $_POST['message'];
+                
+                
+                $message_html = $_POST['message'];
+                //Sujet
+                $sujet = "[Yncrea tutorat] Message plateforme Yncrea tutorat de: ".$nom." ".$prenom." ";
+                // on envoie un email de confirmation
+                include('send_mail.php');
+                TutoresController::contact();
+        }
+        else
+                require_once('views/login.php');
+      }   
 
 
 }

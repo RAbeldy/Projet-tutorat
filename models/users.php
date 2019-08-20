@@ -159,7 +159,7 @@ require_once('connexion.php');
     public static function Get_info($id_user) // pour la page de modification de compte
     {
       $db = Db::getInstance();
-      $req= $db->query("SELECT ville,adress,complement_adress,code_postal,u.chemin_photo as chemin_photo FROM adresse as a,user as u WHERE a.id_adresse = u.id_adresse AND u.id_user = $id_user ");
+      $req= $db->query("SELECT ville,adress,complement_adress,code_postal,u.chemin_photo as chemin_photo,u.nom as nom,u.prenom as prenom,u.email as email,u.niveau as niveau, u.ecole as ecole FROM adresse as a,user as u WHERE a.id_adresse = u.id_adresse AND u.id_user = $id_user ");
 
       foreach ($req->fetchAll() as $temp) 
       {
@@ -169,6 +169,11 @@ require_once('connexion.php');
         $user->setVille($temp['ville']);
         $user->setCom_adress($temp['complement_adress']); 
         $user->setChemin_photo($temp['chemin_photo']); 
+        $user->setNom($temp['nom']);
+        $user->setPrenom($temp['prenom']);
+        $user->setEmail($temp['email']);
+        $user->setNiveau($temp['niveau']);
+        $user->setEcole($temp['ecole']);
       }
       return $user;
     }
@@ -197,7 +202,7 @@ require_once('connexion.php');
          $request=$db->query('SELECT avst.id_statut as id_statut,e.libelle as libelle,s.libelle as libelle_statut,us.nom as nom,us.prenom as prenom,us.email as mail from user as us, avoir_statut as avst, etat as e,statut as s WHERE  avst.id_user=us.id_user AND e.id_etat = avst.id_etat AND avst.id_statut = s.id_statut AND avst.id_user = '.$_SESSION['id_user'].'');
          $res = $request->fetch();
 
-         $_SESSION['mail']=$res['mail'];
+         $_SESSION['email']=$res['mail'];
          $_SESSION['nom']=$res['nom'];
          $_SESSION['prenom']=$res['prenom'];
          $_SESSION['id_statut']=$res['id_statut'];
@@ -213,14 +218,14 @@ require_once('connexion.php');
     return ($request->rowCount()) ;
  }
 
- public static function Set_picture_path($id_user)
+ public  function Set_picture_path($id_user)
  {
-  $db=Db::getInstance();
-  $req= $db->prepare("UPDATE user SET chemin_photo= ? WHERE id_user= $id_user");
-  $req->execute(array( $this->chemin_photo));
+      $db=Db::getInstance();
+      $req= $db->prepare("UPDATE user SET chemin_photo= ? WHERE id_user= $id_user");
+      $req->execute(array( $this->chemin_photo));
  }
 
- public static function Get_informations_on_user($id_user)
+ public static function Get_informations_on_user($id_user) // la meme que get_info plus haut ( à dégager)
     {
        $db = Db::getInstance(); 
       
@@ -242,6 +247,25 @@ require_once('connexion.php');
       }
       return $user;
     }
+  public static function Get_contact_admin($id_user) // on récupère les contacts des admin en charge
+  {
+    $db = Db::getInstance(); 
+    $list= [];
+    $req= $db->prepare("SELECT u.nom,u.prenom,u.email,s.libelle as libelle FROM user as u,administrer as a,se_destine as se, avoir_statut as at, statut as s WHERE se.id_tutorat = a.id_tutorat AND se.id_typeTutorat = a.id_typeTutorat AND u.id_user= a.id_admin AND u.id_user= at.id_user AND at.id_statut = s.id_statut AND se.id_user= ? UNION 
+        SELECT u.nom,u.prenom,u.email,s.libelle as libelle FROM user as u , avoir_statut as at , statut as s WHERE u.id_user = at.id_user AND at.id_statut= s.id_statut  AND s.libelle = 'ADMIN_IMMERSION' UNION
+        SELECT u.nom,u.prenom,u.email,s.libelle  as libelle FROM user as u , avoir_statut as at , statut as s WHERE u.id_user = at.id_user AND at.id_statut= s.id_statut AND s.libelle = 'ADMIN_TUTORAT_PERSO' UNION
+         SELECT u.nom,u.prenom,u.email,s.libelle  as libelle FROM user as u , avoir_statut as at , statut as s WHERE u.id_user = at.id_user AND at.id_statut= s.id_statut AND s.libelle = 'GESTIONNAIRE_COMPTE' ORDER BY nom ");
+    $req->execute(array($id_user));
+     
+     foreach ($req->fetchAll() as $temp) 
+      {
+        $user= new Users();
+        $user->setEmail($temp['email']);
+
+        $list []= array($user,$temp['libelle']);
+      }
+    return $list;
+  }
 
    public static function display_all()
      {

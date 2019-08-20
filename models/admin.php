@@ -92,7 +92,7 @@ class Admin
     {
        $db = Db::getInstance();
         $list=[];
-        $req= $db->prepare("SELECT tt.libelle as libelle_type, t.id_tutorat as id_tutorat,t.libelle as libelle,u.id_user,u.nom,u.prenom,u.email FROM user as u, administrer as a, type_tutorat as tt, tutorat as t,se_destine as se WHERE a.id_tutorat= se.id_tutorat AND a.id_typeTutorat= se.id_typeTutorat AND se.id_tutorat= t.id_tutorat AND se.id_typeTutorat = t.id_typeTutorat AND tt.id_typeTutorat= t.id_typeTutorat AND u.id_user= se.id_user AND a.id_admin= ?  ");
+        $req= $db->prepare("SELECT tt.libelle as libelle_type, t.id_tutorat as id_tutorat,t.libelle as libelle,u.id_user,u.nom,u.prenom,u.email FROM user as u, administrer as a, type_tutorat as tt, tutorat as t,se_destine as se,tuteurs as tu WHERE a.id_tutorat= se.id_tutorat AND a.id_typeTutorat= se.id_typeTutorat AND se.id_tutorat= t.id_tutorat AND se.id_typeTutorat = t.id_typeTutorat AND tt.id_typeTutorat= t.id_typeTutorat AND u.id_user= se.id_user AND tu.id_tuteurs= se.id_user AND  a.id_admin= ?  ");
         $req->execute(array($id_admin));
 
         foreach ($req->fetchAll() as $data)
@@ -187,40 +187,62 @@ class Admin
     {
         $db = Db::getInstance();
         
-
-        $req = $db->prepare(" INSERT INTO matchs (id_tuteurs,id_tutores) VALUES (?,?)");
-        $req->execute(array($id_tuteur,$id_tutore));
-        
-        // l'etat du tutoré passe à occupé
-        $req = $db->prepare("UPDATE avoir_statut SET id_etat = (SELECT id_etat FROM etat WHERE libelle = 'OCCUPE') WHERE id_user = ?");
-        $req->execute(array($id_tutore));
-
         $nb= Admin::Get_nb_links($id_tuteur) ;
-        $nb= $nb + 1 ;
+        while ( $data= $nb->fetch()) {
+           $nb1 = $data['nb_linksmef'];
+           $nb2 = $data['nb_max_mef'];
+        }
+         
+        if( $nb1 < $nb2) // on vérifie que le nombre de liaisons est inférieure à celui défini
+        {
+            
+            $req = $db->prepare(" INSERT INTO matchs (id_tuteurs,id_tutores) VALUES (?,?)");
+            $req->execute(array($id_tuteur,$id_tutore));
+            
+            // l'etat du tutoré passe à occupé
+            $req = $db->prepare("UPDATE avoir_statut SET id_etat = (SELECT id_etat FROM etat WHERE libelle = 'OCCUPE') WHERE id_user = ?");
+            $req->execute(array($id_tutore));
 
-        $req= $db->query("UPDATE tuteurs SET nb_linksmef= ".$nb." WHERE id_tuteurs= ".$id_tuteur."  ");
+           
+            $nb1= ($nb1 + 1) ;
+
+            $req= $db->query("UPDATE tuteurs SET nb_linksmef= ".$nb1." WHERE id_tuteurs= ".$id_tuteur."  ");
+
+            return 0;
+        }
+        else
+        {
+             
+            return 1;
+        }  
     }
 
     public static function Get_nb_links($id_tuteur) // nombre de liaisons dans le cadre de la mef
     {
         $db = Db::getInstance();
 
-        $req= $db->query("SELECT nb_linksmef FROM tuteurs  WHERE id_tuteurs= ".$id_tuteur." ");
+        $req= $db->query("SELECT nb_linksmef,nb_max_mef FROM tuteurs  WHERE id_tuteurs= ".$id_tuteur." ");
         
         
-        return $nb= $req->fetch()['nb_linksmef'];
+        return $req;
     }
     
     /* on ne va pas leur permmettre de mettre fin à leur collaboration seul un admin pourra le faire ou alors automatiquement à la fin d'une année*/
     public static function Delete_link($id_tutore)
     {
-       $db = Db::getInstance();
+       $db= Db::getInstance();
        $id= $db->query("SELECT id_tuteurs FROM matchs WHERE id_tutores= ".$id_tutore.""); // on récupère l'id du tuteur avec qui il est en relation
-       $nb= Admin::Get_nb_links($id->fetch()['id_tuteurs']) ;
-        $nb= $nb-1;
-
+       $id_tuteur= $id->fetch()['id_tuteurs'];
+       
+       $nb= Admin::Get_nb_links($id_tuteur) ;
+       while ( $data= $nb->fetch()) {
+           $nb1 = $data['nb_linksmef'];
+           $nb2 = $data['nb_max_mef'];
+        }
+        $nb1= ($nb1 - 1);
+        
         $req= $db->prepare("UPDATE tuteurs SET nb_linksmef= ? WHERE id_tuteurs= ? ");
-        $req->execute(array($nb,$id->fetch()['id_tuteurs']));
+        $req->execute(array($nb1,$id_tuteur));
 
         $req = $db->prepare(" DELETE FROM matchs WHERE id_tutores= ? ");
         $req->execute(array($id_tutore)); 

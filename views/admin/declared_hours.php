@@ -1,9 +1,4 @@
 
-<!-- ce fichier est identique à pasts_events_list à la seule différence qu'il permettra la selection des tuteurs d'ou le préfixe S-->
-
-    <div id="globalContent">
-        <div id="wrapper">
-            
             <div class="d-flex flex-column" id="content-wrapper">
                 <div id="content">
                     <div class="block">
@@ -15,7 +10,9 @@
                                     <div class="row">
                                         <div class="card debut">
                                             <div class="card-header py-3">
-                                                <p class="text-primary m-0 font-weight-bold">Les evenements passés</p>
+                                                <p class="text-primary m-0 font-weight-bold">
+                                                    Historique
+                                                </p>
                                                 <?php include('retour.php') ?>
                                             </div>
                                             <div class="card-body">
@@ -57,13 +54,12 @@
                                                                 <th>Tutorat</th>
                                                                 <th>Date</th>
                                                                 <th>Adresse</th>
-                                                                <th>Places</th>
-                                                                <th>Horaires</th>
-                                                                <th>Inscription</th>
+                                                                <th>Heures</th>
+                                                                <th>Validé</th>
+                                                                <th>Action</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-
                                                             <?php
                                                             if(!is_null($donnees))
                                                             {
@@ -71,21 +67,53 @@
                                                             {
                                                              ?>
 
-                                                              <form method="post" action="?controller=evenements&action=Ssubscription_list">
+                                                              <form method="post" action="?controller=users&action=claim_hours">
                                                                 
                                                               <tr>
+
+ 
                                                                   <td> <label><?=$elt['type_tutorat']?></label></td>
                                                                   <td><label><?=$elt['evenement']->getDate_evenement()?></label></td>
                                                                   <td><label><?=$elt['evenement']->getLieu()?></label></td>
-                                                                  <td><label><?=$elt['evenement']->getNb_places()?></label></td>
-                                                                  <td><label ><?=$elt['planning_event']?></label></td>
-                                                                 
-
-                                                                  <td><button class="btn" type="submit" name="consulter" >Consulter</button>
+                                                                  <?php
+                                                                  if( $elt['participer_evenement'] == 'NON' )
+                                                                  {
+                                                                    ?>
+                                                                    <td><label > <strong ><span style="color: red;" ><?=$elt['planning_event'];?>  </span>
+                                                                      
+                                                                        
+                                                                      </strong>
+                                                                    </label></td>
+                                                                  
+                                                                  <td><label ><strong ><span style="color: red;" ><?=$elt['participer_evenement']?></span></strong></label></td>
+                                                                  
+                                                                  <td><button class="btn" onclick="openModal();" id="btnPopup"> Réclamer</button>
                                                                   </td>
-
+                                                                  <div id= "overlay" class="overlay"> 
+                                                                         <div id="popup" class="popup">
+                                                                            <h2> Confirmer </h2>
+                                                                            <p>
+                                                                                <button class="btn" onclick="openModal();" id="close" name="annuler" >annuler</button>
+                                                                            <button class="btn" onsubmit="openModal();" id="submit" type="submit" name="valider">valider</button>
+                                                                            </p>
+                                                                         </div>
+                                                                  </div>
+                                                                  <?php
+                                                                  }
+                                                                  else
+                                                                  {
+                                                                    ?>
+                                                                    <td><label > <strong ><span style="color: green;" ><?=$elt['planning_event'];?>  </span></strong>
+                                                                      <td><label ><span style="color: green;" ><?=$elt['participer_evenement']?></span></label></td>
+                                                                    <td><label title="deja pris en compte" class="btn" name="pris en compte">Pris en compte</label> 
+                                                                  </td>
+                                                                  <?php
+                                                                  }
+                                                                  ?>
                                                                 </tr>
                                                                  <input type="hidden" name="id_e" value="<?=$elt['evenement']->getId_evenement()?>" >
+                                                        
+                                                      
                                                              </form>
                                                             <?php
                                                              }
@@ -106,23 +134,26 @@
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
 
 <script type="text/javascript">
-        function alert()
+
+
+var btnPopup = document.getElementById('btnPopup');
+var close =    document.getElementById('close');
+var submit =   document.getElementById('submit');
+
+
+        function openModal() 
         {
-            confirm('etes vous sur de vouloir vous inscrir?');
+            var overlay = document.getElementById("overlay");
+            if (overlay.style.display == 'block') 
+            {
+                overlay.style.display = 'none' ;
+            } 
+            else 
+            {
+                overlay.style.display = 'block';
+            }
         }
-
-        
     </script>
-
-
-
-
-
-
-
-
     

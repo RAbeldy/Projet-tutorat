@@ -21,7 +21,7 @@ if (isset($controller_report) && isset($fonction_back))
                 <h2 class="text-center"><?= $message ?></h2>
                 <i class="fa fa-exclamation-triangle fa-5x"></i><br/><br/>
                 <p><?php if (isset($error_msg)) {echo $error_msg;}?></p>
-                <a href="<?php echo $backUrl;?>"class="form-group"><button name="error_Back" class="btn btn-primary" type="button">Retour page précédente</button></a>
+                <a href="<?php echo $backUrl;?>"class="form-group"><button name="error_Back" class="btn " type="button">Retour page précédente</button></a>
             </div>
         </div>
     </div>

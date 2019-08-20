@@ -16,18 +16,38 @@ class EvenementsController
             $event->setLieu( $_POST['lieu']);
             $event->setDuree( $_POST['duree']);
             
-            if( $event->Tuteur_set_event($_SESSION['id_user'],$_POST['id']) == 0) // on a récupéré l'identifiant de celui avec qui il aura un tutorat personnalisé ou alors l'identifiant du lieu
-            {   
-                require_once('views/tuteurs/interface_tuteur.php');
-              
-            } 
-            else
+            var_dump($_POST['id_2']);
+            if($_POST['id_2'] == "") // le tuteur crée un évènement avec un seul de ses tutorés
             {
-                $message = 'Vous avez déja un évènement prévu à cette date et à cette heure, rendez vous dans la rubrique "je me suis inscrit à " pour le supprimer, puis dans "créer évènement", créer en un nouveau si vous le souhaitez';
-                $controller_report='tuteurs';
-                $fonction_back='tuteurs_set_event';
-                require_once('views/system/error.php');
-            } 
+              if( $event->Tuteur_set_event($_SESSION['id_user'],$_POST['id_1']) == 0) // on a récupéré l'identifiant de celui avec qui il aura un tutorat personnalisé ou alors l'identifiant du lieu
+              {   
+                  require_once('views/tuteurs/interface_tuteur.php');
+                
+              } 
+              else
+              {
+                  $message = 'Vous avez déja un évènement prévu à cette date et à cette heure, rendez vous dans la rubrique "je me suis inscrit à " pour le supprimer, puis dans "créer évènement", créer en un nouveau si vous le souhaitez';
+                  $controller_report='tuteurs';
+                  $fonction_back='tuteurs_set_event';
+                  require_once('views/system/error.php');
+              } 
+            }
+            else // le tuteur crée un évènement avec 2 de ses tutorés
+            {
+              if( $event->Tuteur_set_event_withBoth($_SESSION['id_user'],$_POST['id_1'],$_POST['id_2']) == 0) // on a récupéré l'identifiant de celui avec qui il aura un tutorat personnalisé ou alors l'identifiant du lieu
+              {   
+                  require_once('views/tuteurs/interface_tuteur.php');
+                
+              } 
+              else
+              {
+                  $message = 'Vous avez déja un évènement prévu à cette date et à cette heure, rendez vous dans la rubrique "je me suis inscrit à " pour le supprimer, puis dans "créer évènement", créer en un nouveau si vous le souhaitez';
+                  $controller_report='tuteurs';
+                  $fonction_back='tuteurs_set_event';
+
+                  require_once('views/system/error.php');
+              } 
+            }
       }
       else
            require_once('views/login.php'); 
@@ -89,8 +109,8 @@ class EvenementsController
           if( preg_match('#^TUTORE#', $_SESSION['statut']) ) // une regex sur le statut du user pour savoir qui est connecté
           {   
                
-              $event = new Evenements();
-              $donnees = $event->Get_past_events($_SESSION['id_user']);
+              
+              $donnees = Evenements::Get_past_events($_SESSION['id_user']);
 
               $controller_report='tutores';
               $fonction_back='interface_tutore';
@@ -101,8 +121,8 @@ class EvenementsController
           {
 
              
-              $event = new Evenements();
-              $donnees = $event->Get_past_events($_SESSION['id_user']);
+              
+              $donnees = Evenements::Get_past_events($_SESSION['id_user']);
 
               $controller_report='tuteurs';
               $fonction_back='interface_tuteur';
@@ -187,10 +207,19 @@ class EvenementsController
                     if(isset($_POST['id_e']) && $event->nb_places_dispo($_POST['id_e']) > 0)
                     {       
                             
-                            $event->Subscribe_to_event($_SESSION['id_user'],$_POST['id_e']);
+                            if($event->Subscribe_to_event($_SESSION['id_user'],$_POST['id_e'])== 0)
+                            {
                             $event->updateNombrePlaces($_POST['id_e'],-1);
 
                             EvenementsController::display_subscribed_events();
+                            }
+                            else
+                            {
+                              $message = 'Vous etes déja inscrit à cet évènement';
+                              $controller_report='tuteurs';
+                              $fonction_back='display_future_events';
+                              require_once('views/system/error.php');
+                            }
                     }
                     else
                     {   
@@ -200,14 +229,51 @@ class EvenementsController
                         require_once('views/system/error.php');
                     }
                   }
-                  else  // il s'agit d'un tutore qui s'inscritt à un évènement
+                  elseif( preg_match('#^TUTORE#', $_SESSION['statut']) )  // il s'agit d'un tutore qui s'inscritt à un évènement
                   {
                     $event = new Evenements();
-                    $event->Subscribe_to_event($_SESSION['id_user'],$_POST['id_e']);
-                    Evenements::Update_nbplacesTutores($_POST['id_e'],1);
+                    if($event->Subscribe_to_event($_SESSION['id_user'],$_POST['id_e']) == 0)
+                    {
+                        Evenements::Update_nbplacesTutores($_POST['id_e'],1);
 
-                    EvenementsController::display_subscribed_events();
+                        EvenementsController::display_subscribed_events();
+                    }
+                    else
+                    {
+                      $message = 'Vous etes déja inscrit à cet évènement';
+                      $controller_report='evenements';
+                      $fonction_back='Display_future_events';
+                      require_once('views/system/error.php');
+                    }
 
+                  }
+                  else // il s'agit d'un admin qui inscrit un tuteur à un évènement
+                  {
+                     $event = new Evenements();
+                    if(isset($_POST['id_e']) && $event->nb_places_dispo($_POST['id_e']) > 0)
+                    {       
+                            
+                            if($event->Subscribe_to_event($_POST['id_u'],$_POST['id_e']) == 0)
+                            {
+                              $event->updateNombrePlaces($_POST['id_e'],-1);
+
+                              AdminController::Sfuture_events_list();
+                            }
+                            else
+                            {
+                              $message = 'Ce tuteur est déja inscrit à cet évènement';
+                              $controller_report='admin';
+                              $fonction_back='Sfuture_events_list';
+                              require_once('views/system/error.php');
+                            }
+                    }
+                    else
+                    {   
+                        $message = 'l\'évènement est complet';
+                        $controller_report='evenements';
+                        $fonction_back='Display_future_events';
+                        require_once('views/system/error.php');
+                    }
                   }
             }
          else
@@ -308,7 +374,7 @@ public function cancel_participation()
           $data= Evenements::Get_informations_on_events($_POST['id_e']);  // on récupère la date, le. lieu etc sur l'évenement
           $req= Tutorat::Get_lieu_tutorat($_SESSION['id_user']); // on récupère la liste des tutorats que l'admin administre
           $controller_report='admin';
-          $fonction_back='Spasts_events_list';
+          $fonction_back='Sfuture_events_list';
 
           require_once('views/admin/Ssubscription_list.php');
        }    
@@ -316,50 +382,39 @@ public function cancel_participation()
           require_once('views/login.php');
     }
     
-    // fonctions de recherche par tutorat et par nom
-    public function search_tutorat_name()//on affiche les evenements en fonction de leurs libelle
+    public function declare_hours()  // on valide les heures concernant un évènement(administration dans le cas des administrateurs)
     {
       if( isset($_SESSION['id_statut']))
-        {  
-          if( isset( $_POST['name_tutorat'])) // une regex sur le statut du user pour savoir qui est connecté
-          {   
-                  
-                  $donnees = Evenements::FindTutoratByName($_SESSION['id_user'],$_POST['name_tutorat']);
+       {
+           // une instance de la classe evenements
 
-                  $controller_report='tutores';
-                  $fonction_back='interface_tutore';
+            $event = new Evenements(); 
+            $event->setDate_evenement( $_POST['date_creation']);
+            $event->setLieu( $_POST['lieu']);
+            $event->setDuree( $_POST['duree']);
 
-                  require_once('views/admin/vauban/future_event.php'); // on charge la vue adéquate
-              
-          }
-          else
-             require_once('views/admin/vauban/past_event');
-        }
-        else
-            require_once('views/login.php');
+           if( $event->Declare_hours($_SESSION['id_user'],$_POST['id_t']) == 0) // l'admin déclarelui memeses heures effectuées
+            {
+                  AdminController::interface_hours(); // on recharge. la page de déclaration d'heure
+            } 
+            else
+            {
+                $message = 'Vous avez déja un évènement prévu à cette date et à cette heure, rendez vous dans la rubrique "je me suis inscrit à " pour le supprimer, puis dans "créer évènement", créer en un nouveau si vous le souhaitez';
+                $controller_report='admin';
+                $fonction_back='admin_set_event';
+                require_once('views/system/error.php');
+            }
+
+          
+
+       }
+       else
+          require_once('views/login.php');
     }
+    
+    
+    
 
-    public function search_tutorat_date()//affichage des events par periode
-    {
-       if( isset($_SESSION['id_user']))
-        {  
-          if( isset( $_POST['date_debut']) && isset($_POST['date_fin'])) // une regex sur le statut du user pour savoir qui est connecté
-          {   
-                  
-                  $donnees = Evenements::FindTutoratByDate($_SESSION['id_user'],$_POST['date_debut'], $_POST['date_fin']);
-
-                  $controller_report='tutores';
-                  $fonction_back='interface_tutore';
-
-                  require_once('views/admin/vauban/future_event.php');  // on charge la vue adéquate
-              
-          }
-          else
-             require_once('views/admin/vauban/past_event');
-        }
-        else
-            require_once('views/login.php');
-    }
 }
 
 

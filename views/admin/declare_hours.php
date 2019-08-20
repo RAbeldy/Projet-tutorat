@@ -13,12 +13,12 @@
                                         <div class="card debut">
                                             <div class="card-header py-3">
                                                 <p class="text-primary m-0 font-weight-bold">
-                                                    Créer
+                                                    Je déclare mes heures d'administration
                                                     <?php include('retour.php') ?>
                                                 </p>
                                             </div>
                                             <div class="card-body">
-                                                <form method="post" action="?controller=evenements&action=tuteur_set_event" onsubmit="javascript:test_date();javascript:id();javascript:message();">
+                                                <form method="post" action="?controller=evenements&action=declare_hours" onsubmit="javascript:test_date();javascript:message();">
                                                     <div class="row">
                                                         <div class="form-group col-xs-12 col-md-6">
                                                             <label for="date">
@@ -27,46 +27,29 @@
                                                             <input  id = "event" class="form-control" type="datetime-local" name="date_creation"  onchange = 'javascript:test_date();' required/>
                                                         </div>
                                                         <div class="form-group col-xs-12 col-md-6">
+                                                            <label for="tutorat">
+                                                                <strong>intitulé tutorat</strong><br> 
+                                                            </label>
+                                                            <select class="form-control" name="id_t">
+                                                            <?php
+                                                                foreach($donnees as $data)
+                                                                       {
+                                                                         ?>
+                                                                <option value="<?= $data[1]; ?>" required> <?= $data[0] ;?>
+                                                                    
+                                                                </option>
+                                                            <?php
+                                                            }
+                                                            ?>
+
+                                                            </select>
+                                                            
+                                                        </div>
+                                                        <div class="form-group col-12">
                                                             <label for="lieu">
-                                                                <strong>Lieu</strong><br> 
+                                                                <strong> Lieu </strong><br> 
                                                             </label>
-                                                            <input class="form-control" type="text" placeholder="Lieu" name="lieu"  />
-                                                        </div>
-                                                        <div class="form-group col-12">
-                                                            <label for="tutore">
-                                                                <strong>Tutoré 1</strong><br>
-                                                            </label>
-                                                            <select class="form-control" name="id_1" id="id_1">
-                                                                
-                                                            <?php
-                                                                foreach ($donnees as $elt) 
-                                                            {
-                                                             ?>
-                                                                <option value="<?= $elt->getId_user(); ?>"> <?= $elt->getNom().' '.$elt->getPrenom() ;?></option>
-                                                            <?php
-                                                            }
-                                                            ?>
-                                                                
-                                                            </select>
-                                                             
-                                                        </div>
-                                                        <div class="form-group col-12">
-                                                            <label for="tutore">
-                                                                <strong>Tutoré 2</strong><br>
-                                                            </label>
-                                                            <select class="form-control" name="id_2" id="id_2">
-                                                                <option value=""> Aucun </option>
-                                                            <?php
-                                                                foreach ($donnees as $elt) 
-                                                            {
-                                                             ?>
-                                                                <option value="<?= $elt->getId_user(); ?>"> <?= $elt->getNom().' '.$elt->getPrenom() ;?></option>
-                                                            <?php
-                                                            }
-                                                            ?>
-                                                                
-                                                            </select>
-                                                             
+                                                            <input  id = "event" class="form-control" type="text" name="lieu"  required/>
                                                         </div>
                                                         <div class="form-group col-12">
                                                             <label for="tutore">
@@ -80,13 +63,12 @@
                                                                 <option value="5">5 h</option>
                                                                 <option value="6">6 h</option>
                                                                 <option value="7">7 h</option>
-                                                                <option value="8">8 h</option>
 
                                                             </select>
                                                         </div>
                                                     </div>
                                                     <div class="form-group text-center col-12">
-                                                        <button class="btn" type="submit">CREER</button>
+                                                        <button class="btn" type="submit">Déclarer</button>
                                                     </div>
                                                 </form>
                                             </div>
@@ -110,20 +92,13 @@
              var dd = String(today.getDate()).padStart(2, '0');// Day config 
              today = yyyy + '-' + mm + '-' + dd;
              day = dd + '/' + mm + '/' + yyyy; 
-             if (document.getElementById('event').value < today) {
-                alert(" Entrer une date ultérieure à celle d'aujourd'hui: " +day);
+             if (document.getElementById('event').value > today) {
+                alert(" Entrer une date antérieure à celle d'aujourd'hui: " +day);
                 return -1;
 
                     }
-                } 
-            function id()
-            {
-                var id1= document.getElementById('id_1').value;
-                var id2= document.getElementById('id_2').value;
-                if( document.getElementById('id_1').value == document.getElementById('id_2').value)
-                {
-                    alert(" Vous avez sélectionné deux fois le meme tutoré: ");
-                    return -1;
-                }
-            }        
+                }  
+                  
           </script>
+
+         

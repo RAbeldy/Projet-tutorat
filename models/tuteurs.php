@@ -1,7 +1,9 @@
 <?php
 require_once('connexion.php');
-require('users.php');
-require('evenements.php');
+require('models/users.php');
+require('models/evenements.php');
+
+
 class Tuteurs
 {
 	private $nb_max_mef;
@@ -89,23 +91,42 @@ class Tuteurs
 
     public function Accept_link($id_tuteur,$id_tutore)
     {
-        $db = Db::getInstance();
-        $req = $db->prepare("UPDATE en_attente SET statut_liaison ='ACTIF',date_debut = NOW() WHERE id_tuteurs =? AND id_tutores = ? AND provenance='TUTORE' ");
-        $req->execute(array($id_tuteur,$id_tutore));
+        
 
-        $req = $db->prepare(" INSERT INTO matchs (id_tuteurs,id_tutores) VALUES (?,?)");
-        $req->execute(array($id_tuteur,$id_tutore));
+        $nb= Tuteurs:: Get_nb_links($id_tuteur) ;
+        while ( $data= $nb->fetch()) {
+           $nb1 = $data['nb_linksperso'];
+           $nb2 = $data['nb_max_perso'];
+        }
+        
+        if( $nb1 < $nb2) // on vérifie que le nombre de liaisons est inférieure à celui défini
+        {
+            $db = Db::getInstance();
 
-        // on met à jour le nombre de liaisons
-        $nb= Admin::Get_nb_links($id_tuteur) + 1;
+            $req = $db->prepare("UPDATE en_attente SET statut_liaison ='ACTIF',date_debut = NOW() WHERE id_tuteurs =? AND id_tutores = ? AND provenance='TUTORE' ");
+            $req->execute(array($id_tuteur,$id_tutore));
 
-        $req= $db->query("INSERT INTO tuteurs(nb_linksperso) VALUES( ".$nb.")  ");
+            $req = $db->prepare(" INSERT INTO matchs (id_tuteurs,id_tutores) VALUES(?,?)");
+            $req->execute(array($id_tuteur,$id_tutore));
+
+            // on met à jour le nombre de liaisons
+            $nb1=$nb1 + 1;
+
+            $req= $db->prepare("INSERT INTO tuteurs(nb_linksperso) VALUES(?) WHERE id_tuteurs = ?  ");
+            $req->execute(array($nb1,$id_tuteur));
+
+            return 0;
+        }
+        else
+        {
+            return 1;
+        }
     }
     public static function Get_nb_links($id_tuteur) // nombre de liaisons dans le cadre du tutorat personnalisé
     {
         $db = Db::getInstance();
 
-        $req= $db->query("SELECT nb_linksperso FROM tuteurs  WHERE id_tuteurs= ".$id_tuteur." ");
+        $req= $db->query("SELECT nb_linksperso,nb_max_perso FROM tuteurs  WHERE id_tuteurs= ".$id_tuteur." ");
 
         return $req;
     }

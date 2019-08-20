@@ -81,11 +81,11 @@ class Tutorat
 
 
 
-	public static function Get_lieu_tutorat($id_admin)  // liste des lieux où se passe un type de tutorat en particulier( IL NE L'AURA QUE LORQUE LE SUPERAMIN LUI AURA DONNE LA GESTION DU TUTORAT EN QUESTION)
+	public static function Get_tutorat($id_admin)  // liste des lieux(tutorats) où se passe un type de tutorat en particulier( IL NE L'AURA QUE LORQUE LE SUPERAMIN LUI AURA DONNE LA GESTION DU TUTORAT EN QUESTION)
     {
         $db = Db::getInstance();
         $list=[];
-        $req = $db->query("SELECT t.libelle as libelle,t.id_tutorat as id_tutorat FROM tutorat as t, administrer as a WHERE t.id_tutorat =   a.id_tutorat AND a.id_admin= ".$id_admin." ");
+        $req = $db->query("SELECT t.libelle as libelle,t.id_tutorat as id_tutorat FROM tutorat as t, administrer as a WHERE t.id_tutorat =   a.id_tutorat AND t.id_typeTutorat= a.id_typeTutorat AND  a.id_admin= ".$id_admin." ");
 
       foreach ($req->fetchAll() as $data)
       {
@@ -94,11 +94,25 @@ class Tutorat
       return $list ;
     }
 
-    public static function Get_type_tutorat()
+    public static function Get_all_type_tutorat() // récupère tous les types de tuttorat existants
     {
     	$db = Db::getInstance();
         $list=[];
         $req = $db->query("SELECT libelle , id_typeTutorat  FROM type_tutorat  ");
+
+        foreach ($req->fetchAll() as $data)
+      {
+       $list []= array($data['libelle'],$data['id_typeTutorat']);
+      }
+      return $list ;
+    }
+
+    public static function Get_type_tutorat($id_admin) // récupère tous les types de tuttorat qu'un admin  gère
+    {
+    	$db = Db::getInstance();
+        $list=[];
+        $req = $db->prepare("SELECT libelle , id_typeTutorat  FROM type_tutorat as tt, administrer as a WHERE tt.id_typeTutorat = a.id_typeTutorat AND a.id_admin = ? ORDER BY  libelle ");
+        $req->execute(array($id_admin));
 
         foreach ($req->fetchAll() as $data)
       {

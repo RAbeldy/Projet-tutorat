@@ -53,25 +53,25 @@ $objPHPExcel->getProperties()->setCreator("Maarten Balliauw")
 							 ->setKeywords("office 2007 openxml php")
 							 ->setCategory("Test result file");
 
-
+       
 	if( isset($_SESSION['id_statut']))
           {
-            $donnees = Evenements::Future_events_list($_SESSION['id_user']);
-            $i=1;            
+           
+                    
+            
             foreach ($donnees as $elt)
              {
 				// Add some data
 				$objPHPExcel->setActiveSheetIndex(0)
-				            ->setCellValue('A'.$i, $elt['tutorat']) 
-				            ->setCellValue('B'.$i, $elt['evenement']->getDate_evenement())
-				            ->setCellValue('C'.$i, $elt['evenement']->getLieu())
-				            ->setCellValue('D'.$i, $elt['evenement']->getNb_places())
-				            ->setCellValue('E'.$i, $elt['planning_event']);
-                $i+=1;
+				            ->setCellValue('A1', 'Hello')
+				            ->setCellValue('B2', 'world!')
+				            ->setCellValue('C1', 'Hello')
+				            ->setCellValue('D2', 'world!');
+                
              }        
           }
           else
-            require_once('views/login.php');
+            //require_once('../../views/Login.php');
 
 
 // Miscellaneous glyphs, UTF-8

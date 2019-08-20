@@ -62,7 +62,8 @@
                                                                 <th>Email</th>
                                                                 <th>Ecole</th>
                                                                 <th>Niveau</th>
-                                                                <th>Action</th> 
+                                                                <th>Tutorat </th> 
+                                                                <th>Sélectionner </th> 
                                                             </tr>
                                                             
                                                         </thead>

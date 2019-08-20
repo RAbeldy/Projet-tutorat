@@ -35,7 +35,7 @@ public function connexion()
 	        	{
 	        		require_once('views/admin/interface_admin.php');
 	        	}
-	        	elseif($_SESSION['id_statut'] == 6) // validateur
+	        	elseif($_SESSION['id_statut'] == 6) // GESTIONNAIRE_COMPTE
 	        	{
 	        		require_once('views/admin/interface_superadmin.php');
 	        	}
@@ -53,7 +53,7 @@ public function connexion()
 	        	}
 	        	elseif($_SESSION['id_statut'] == 1) // superadmin
 	        	{
-	        		require_once('views/admin/interface_superadmin.php');
+	        		require_once('views/super_admin/interface_superadmin.php');
 	        	}
 	        	else
 	        	{
@@ -82,9 +82,13 @@ public function redirection() // redirection vers interface en fonction du statu
         if( $_SESSION['id_statut'] == 11)
         	require_once('views/admin/mef/interface_admin_mef.php');
         elseif($_SESSION['id_statut'] == 14)
-        	require_once('views/admin/mef/interface_admin_mef.php'); // à compléter
+        	require_once('views/admin/mef/interface_admin.php'); // à compléter
+        elseif($_SESSION['id_statut'] == 13)
+        	require_once('views/admin/mef/interface_tuteur.php');
+        elseif($_SESSION['id_statut'] == 16)
+        	require_once('views/admin/mef/interface_tutore.php');
         else
-        	require_once('views/admin/mef/interface_admin_mef.php');
+        	require_once('views/admin/mef/interface_admin.php');
     }
   else
     require_once('views/login.php');
@@ -115,7 +119,7 @@ public function profil()
 	if(isset($_SESSION['id_statut']))// on vérifie que seul un utilisateur connecté peut accéder à ces pages
         { 
             $data = Users::Get_info($_SESSION['id_user']);    // on récupère les info des user
-            require_once('views/admin/profil_tuteur.php');
+            require_once('views/mon_profil.php');
         }
      else
        require_once('views/login.php');
@@ -220,7 +224,7 @@ public function set_picture_path($target_file)
 {
 	$user = new Users();
 	$user->setChemin_photo($target_file);
-	Users::Set_picture_path($_SESSION['id_user']);
+	$user->Set_picture_path($_SESSION['id_user']);
 }
 public function deconnexion()
 {

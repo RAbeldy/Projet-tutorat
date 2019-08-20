@@ -23,17 +23,14 @@ try {
     //*********************************************************************************************
     if(isset($contacter) && ($contacter == true))
     {
+        
         $mail->setFrom($mailAccount, $nom." ".$prenom);
-        $mail->addAddress($mailAccount, "");
-        $mail->addReplyTo($login_mail, $nom." ".$prenom);
-        if($attachement != null)
-        {
-            foreach ($attachement as $file) {
-                $mail->addAttachment($file['tmp_name'], $file['name']);
-                //$attachement doit contenir le path absolue de la pièce jointe
-            }
-        }
-    } else {
+        $mail->addAddress($login_mail, "");
+        $mail->addReplyTo($mailAccount, $nom." ".$prenom);
+        
+    }
+    else {
+        
         $mail->setFrom($mailAccount, "Yncrea tutorat");
         $mail->addAddress($login_mail, "");                     // Add a recipient  // Name is optional
         $mail->addReplyTo($mailAccount, "Yncrea tutorat");
@@ -52,6 +49,7 @@ try {
 
     $mail->send();
     //echo 'Message has been sent';
+
 } catch (Exception $e) {
     //echo 'Message could not be sent. Mailer Error: ' ,$mail->ErrorInfo;
 }

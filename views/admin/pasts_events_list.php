@@ -69,8 +69,11 @@
                                                             {
                                                              foreach ($donnees as $elt) 
                                                             {
+                                                                if(!preg_match("#ADMINISTRATION#", $elt['type_tutorat']) )
+                                                                {
                                                              ?>
-
+                                                                
+                                                                
                                                               <form method="post" action="?controller=evenements&action=subscription_list">
                                                                 
                                                               <tr>
@@ -88,7 +91,9 @@
                                                                 </tr>
                                                                  <input type="hidden" name="id_e" value="<?=$elt['evenement']->getId_evenement()?>" >
                                                              </form>
+                                                                
                                                             <?php
+                                                                }
                                                              }
                                                              }
                                                              ?>
