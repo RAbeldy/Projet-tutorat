@@ -116,7 +116,7 @@
 			                $addtutoré->execute(array($login_mail, $nationa));
 
 			                // on insère dans la table se_destine 
-			                $addtutoré = $bd->prepare("INSERT INTO se_destine(id_user,id_tutorat,id_typeTutorat) VALUES((SELECT id_user FROM user  WHERE email = ?),?,(SELECT id_typeTutorat FROM administrer WHERE id_tutorat= ?))");
+			                $addtutoré = $bd->prepare("INSERT INTO se_destine(id_user,id_tutorat,id_typeTutorat) VALUES((SELECT id_user FROM user  WHERE email = ?),?,(SELECT id_typeTutorat FROM administrer WHERE id_tutorat= ? AND id_admin= ".$_SESSION['id_user']."))");
 			                $addtutoré->execute(array($id_typeTutorat,$id_typeTutorat));
 			               
 

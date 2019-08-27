@@ -93,8 +93,21 @@ class Tutorat
       }
       return $list ;
     }
+    
+    public static function Get_working_tutorat($id_tuteur)  // liste des tutorats pour lesquels un tuteur travaille( ceux pour lesquels il a été choisi)
+    {
+        $db = Db::getInstance();
+        $list=[];
+        $req = $db->query("SELECT t.libelle as libelle,t.id_tutorat as id_tutorat FROM tutorat as t, se_destine as se WHERE t.id_tutorat =   se.id_tutorat AND t.id_typeTutorat= se.id_typeTutorat AND  se.id_user= ".$id_tuteur." ");
 
-    public static function Get_all_type_tutorat() // récupère tous les types de tuttorat existants
+      foreach ($req->fetchAll() as $data)
+      {
+       $list []= array($data['libelle'],$data['id_tutorat']);
+      }
+      return $list ;
+    }
+
+    public static function Get_all_type_tutorat() // récupère tous les types de tutorat existants
     {
     	$db = Db::getInstance();
         $list=[];
@@ -107,7 +120,7 @@ class Tutorat
       return $list ;
     }
 
-    public static function Get_type_tutorat($id_admin) // récupère tous les types de tuttorat qu'un admin  gère
+    public static function Get_type_tutorat($id_admin) // récupère tous les types de tutorat qu'un admin  gère
     {
     	$db = Db::getInstance();
         $list=[];

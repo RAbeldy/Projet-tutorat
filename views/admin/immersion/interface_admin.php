@@ -39,7 +39,16 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        
+                                        <div class="col-xs-12 col-md-6 card-container">
+                                            <div class="card inscrits">
+                                                <div class="card-body">
+                                                    <h4 class="card-title"> les tutores </h4>
+                                                    <a href="?controller=admin&action=tutores_list">
+                                                        <button class="btn" type="button">Ils ont  <br/>participé</button>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

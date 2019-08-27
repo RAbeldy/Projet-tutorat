@@ -58,7 +58,7 @@
                                                                 <th>Date</th>
                                                                 <th>Adresse</th>
                                                                 <th>Tuteurs demandés</th>
-                                                                <th>Ont participé</th>
+                                                                <th>Sont inscrits</th>
                                                                 <th>Horaires</th>
                                                                 <th>Mes tuteurs</th>
                                                                 <th>Inscrire</th>

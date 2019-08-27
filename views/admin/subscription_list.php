@@ -54,7 +54,7 @@
                                                     <table class="table dataTable my-0" id="dataTable">
                                                         <thead>
                                                             <tr>
-                                                                
+                                                                <th>Statut</th>
                                                                 <th>Nom</th>
                                                                 <th>Prénom</th>
                                                                 <th>Phone</th>
@@ -76,7 +76,7 @@
                                                              ?>
                                                              <form method="post" action="?controller=admin&action=show_informations">
                                                               <tr>
-                                                                  
+                                                                  <td><label><?=$elt['statut']?></label></td> <!-- statut -->
                                                                   <td><label><?=$elt['user']->getNom();?></label></td> <!-- nom -->
                                                                   <td><label><?=$elt['user']->getPrenom();?></label></td> <!-- prenom -->
                                                                   <td><label><?=$elt['user']->getPhone();?></label></td> <!-- phone -->
@@ -89,6 +89,7 @@
                                                                   
                                                                   <input type="hidden" name="id_u" value="<?=$elt['user']->getId_user();?>" >
                                                                   <input type="hidden" name="id_e_c" value="<?=$data[0]->getId_evenement();?>" >
+                                                                  <input type="hidden" name="statut" value="<?=$elt['statut'];?>" >
                                                                   
                                                              </tr>
                                                              </form>

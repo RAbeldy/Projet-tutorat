@@ -99,7 +99,15 @@
                     </li>
                 <?php
                 }
-                elseif(isset($_SESSION['statut']) && ($_SESSION['statut'] == 'ADMIN_MEF'))
+                elseif(isset($_SESSION['statut']) && ($_SESSION['statut'] == 'SUPER_ADMIN'))
+                { 
+                ?>
+                    <li class="nav-item"><a href="#" class="nav-link">Les tutorats que je dirige </a>
+                    </li>
+                    
+                <?php
+                }
+                elseif(isset($_SESSION['statut']))
                 { 
                 ?>
                     <li class="nav-item"><a href="#" class="nav-link">Les tutorats que je dirige </a>
@@ -268,14 +276,14 @@
             </nav>
             <?php
             }
-            elseif(isset($_SESSION['statut']) && ($_SESSION['statut']== 'ADMIN_IMMERSSION')) // menu latéral pour admin
+            elseif(isset($_SESSION['statut']) && ($_SESSION['statut']== 'ADMIN_IMMERSION')) // menu latéral pour admin
             {
              ?>
                 <nav class="navbar navbar-dark align-items-start sidebar sidebar-dark accordion bg-gradient-primary p-0">
                 <div class="container-fluid d-flex flex-column p-0">
                     <a class="navbar-brand d-flex justify-content-center align-items-center sidebar-brand m-0" href="#">
                         <div class="sidebar-brand-icon rotate-n-15"><i class="far fa-id-card"></i></div>
-                        <div class="sidebar-brand-text mx-3"><span>IMMERSSION</span></div>
+                        <div class="sidebar-brand-text mx-3"><span>IMMERSION</span></div>
                     </a>
                     <hr class="sidebar-divider my-0">
                     <ul class="nav navbar-nav text-light" id="accordionSidebar">
@@ -287,6 +295,171 @@
                             <a class="nav-link" href="?controller=admin&action=interface_tutorat">
                                 <i class="fab fa-phoenix-squadron"></i>
                                 <span>Mes centres de tutorat</span>
+                            </a>
+                            <a class="nav-link" href="?controller=admin&action=interface_hours">
+                                <i class="fab fa-phoenix-squadron"></i>
+                                <span>Mes Heures</span>
+                            </a>
+                            <a class="nav-link" href="?controller=admin&action=interface_selection">
+                                <i class="fab fa-phoenix-squadron"></i>
+                                <span>Mes listes</span>
+                            </a>
+                            <a class="nav-link" href="?controller=admin&action=contact">
+                                <i class="fab fa-phoenix-squadron"></i>
+                                <span>Questions / Support</span>
+                            </a>
+                            
+                        </li>
+                    </ul>
+                    <div class="text-center d-none d-md-inline">
+                        <button class="btn" id="sidebarToggle" type="button"></button>
+                    </div>
+                </div>
+            </nav>
+            <?php
+            }
+            elseif(isset($_SESSION['statut']) && ($_SESSION['statut']== 'ADMIN_LYCEES_COLLEGES')) // menu latéral pour admin
+            {
+             ?>
+                <nav class="navbar navbar-dark align-items-start sidebar sidebar-dark accordion bg-gradient-primary p-0">
+                <div class="container-fluid d-flex flex-column p-0">
+                    <a class="navbar-brand d-flex justify-content-center align-items-center sidebar-brand m-0" href="#">
+                        <div class="sidebar-brand-icon rotate-n-15"><i class="far fa-id-card"></i></div>
+                        <div class="sidebar-brand-text mx-3"><span>LYCEES / COLLEGES</span></div>
+                    </a>
+                    <hr class="sidebar-divider my-0">
+                    <ul class="nav navbar-nav text-light" id="accordionSidebar">
+                        <li class="nav-item" role="presentation">
+                            <a class="nav-link active" href="?controller=admin&action=interface_admin">
+                                <i class="fab fa-phoenix-squadron"></i>
+                                <span>évènements</span>
+                            </a>
+                            <a class="nav-link" href="?controller=admin&action=interface_tutorat">
+                                <i class="fab fa-phoenix-squadron"></i>
+                                <span>Mes centres de tutorat</span>
+                            </a>
+                            <a class="nav-link" href="?controller=admin&action=interface_hours">
+                                <i class="fab fa-phoenix-squadron"></i>
+                                <span>Mes Heures</span>
+                            </a>
+                            <a class="nav-link" href="?controller=admin&action=interface_selection">
+                                <i class="fab fa-phoenix-squadron"></i>
+                                <span>Mes listes</span>
+                            </a>
+                            <a class="nav-link" href="?controller=admin&action=contact">
+                                <i class="fab fa-phoenix-squadron"></i>
+                                <span>Questions / Support</span>
+                            </a>
+                            
+                        </li>
+                    </ul>
+                    <div class="text-center d-none d-md-inline">
+                        <button class="btn" id="sidebarToggle" type="button"></button>
+                    </div>
+                </div>
+            </nav>
+            <?php
+            }
+            elseif(isset($_SESSION['statut']) && ($_SESSION['statut'] == 'ADMIN_APSCO')) // menu latéral pour admin
+            {
+             ?>
+                <nav class="navbar navbar-dark align-items-start sidebar sidebar-dark accordion bg-gradient-primary p-0">
+                <div class="container-fluid d-flex flex-column p-0">
+                    <a class="navbar-brand d-flex justify-content-center align-items-center sidebar-brand m-0" href="#">
+                        <div class="sidebar-brand-icon rotate-n-15"><i class="far fa-id-card"></i></div>
+                        <div class="sidebar-brand-text mx-3"><span>APSCO FIVE</span></div>
+                    </a>
+                    <hr class="sidebar-divider my-0">
+                    <ul class="nav navbar-nav text-light" id="accordionSidebar">
+                        <li class="nav-item" role="presentation">
+                            <a class="nav-link active" href="?controller=admin&action=interface_admin">
+                                <i class="fab fa-phoenix-squadron"></i>
+                                <span> évènements </span>
+                            </a>
+                            <a class="nav-link" href="?controller=admin&action=interface_tutorat">
+                                <i class="fab fa-phoenix-squadron"></i>
+                                <span>Mes centres de tutorat</span>
+                            </a>
+                            <a class="nav-link" href="?controller=admin&action=interface_hours">
+                                <i class="fab fa-phoenix-squadron"></i>
+                                <span>Mes Heures</span>
+                            </a>
+                            <a class="nav-link" href="?controller=admin&action=interface_selection">
+                                <i class="fab fa-phoenix-squadron"></i>
+                                <span>Mes listes</span>
+                            </a>
+                            <a class="nav-link" href="?controller=admin&action=contact">
+                                <i class="fab fa-phoenix-squadron"></i>
+                                <span>Questions / Support</span>
+                            </a>
+                            
+                        </li>
+                    </ul>
+                    <div class="text-center d-none d-md-inline">
+                        <button class="btn" id="sidebarToggle" type="button"></button>
+                    </div>
+                </div>
+            </nav>
+            <?php
+            }
+            elseif(isset($_SESSION['statut']) && ($_SESSION['statut']== 'ADMIN_VAUBAN')) // menu latéral pour admin
+            {
+             ?>
+                <nav class="navbar navbar-dark align-items-start sidebar sidebar-dark accordion bg-gradient-primary p-0">
+                <div class="container-fluid d-flex flex-column p-0">
+                    <a class="navbar-brand d-flex justify-content-center align-items-center sidebar-brand m-0" href="#">
+                        <div class="sidebar-brand-icon rotate-n-15"><i class="far fa-id-card"></i></div>
+                        <div class="sidebar-brand-text mx-3"><span>VAUBAN</span></div>
+                    </a>
+                    <hr class="sidebar-divider my-0">
+                    <ul class="nav navbar-nav text-light" id="accordionSidebar">
+                        <li class="nav-item" role="presentation">
+                            <a class="nav-link active" href="?controller=admin&action=interface_admin">
+                                <i class="fab fa-phoenix-squadron"></i>
+                                <span>évènements</span>
+                            </a>
+                            <a class="nav-link" href="?controller=admin&action=interface_tutorat">
+                                <i class="fab fa-phoenix-squadron"></i>
+                                <span>Mes centres de tutorat</span>
+                            </a>
+                            <a class="nav-link" href="?controller=admin&action=interface_hours">
+                                <i class="fab fa-phoenix-squadron"></i>
+                                <span>Mes Heures</span>
+                            </a>
+                            <a class="nav-link" href="?controller=admin&action=interface_selection">
+                                <i class="fab fa-phoenix-squadron"></i>
+                                <span>Mes listes</span>
+                            </a>
+                            <a class="nav-link" href="?controller=admin&action=contact">
+                                <i class="fab fa-phoenix-squadron"></i>
+                                <span>Questions / Support</span>
+                            </a>
+                            
+                        </li>
+                    </ul>
+                    <div class="text-center d-none d-md-inline">
+                        <button class="btn" id="sidebarToggle" type="button"></button>
+                    </div>
+                </div>
+            </nav>
+            <?php
+            }
+
+            elseif(isset($_SESSION['statut']) && ($_SESSION['statut']== 'ADMIN_TUTORAT_PERSONNALISE')) // menu latéral pour admin
+            {
+             ?>
+                <nav class="navbar navbar-dark align-items-start sidebar sidebar-dark accordion bg-gradient-primary p-0">
+                <div class="container-fluid d-flex flex-column p-0">
+                    <a class="navbar-brand d-flex justify-content-center align-items-center sidebar-brand m-0" href="#">
+                        <div class="sidebar-brand-icon rotate-n-15"><i class="far fa-id-card"></i></div>
+                        <div class="sidebar-brand-text mx-3"><span>TUTORAT </br> PERSONNALISE</span></div>
+                    </a>
+                    <hr class="sidebar-divider my-0">
+                    <ul class="nav navbar-nav text-light" id="accordionSidebar">
+                        <li class="nav-item" role="presentation">
+                            <a class="nav-link active" href="?controller=admin&action=interface_admin">
+                                <i class="fab fa-phoenix-squadron"></i>
+                                <span>évènements</span>
                             </a>
                             <a class="nav-link" href="?controller=admin&action=interface_hours">
                                 <i class="fab fa-phoenix-squadron"></i>
@@ -322,23 +495,27 @@
                     <hr class="sidebar-divider my-0">
                     <ul class="nav navbar-nav text-light" id="accordionSidebar">
                         <li class="nav-item" role="presentation">
-                            <a class="nav-link" href="SUTuteur.html">
-                                <i class="fab fa-phoenix-squadron"></i>
-                                <span>Tuteur</span>
-                            </a>
-                            <a class="nav-link" href="SUTutore.html">
-                                <i class="fab fa-phoenix-squadron"></i>
-                                <span>Tutoré</span>
-                            </a>
-                            <a class="nav-link" href="SUEvenement.html">
+                            <a class="nav-link" href="?controller=superadmin&action=interface_superadmin">
                                 <i class="fab fa-phoenix-squadron"></i>
                                 <span>Evenement</span>
                             </a>
-                            <a class="nav-link" href="SUTutorat.html">
+                            <a class="nav-link" href="?controller=superadmin&action=interface_tuteur">
                                 <i class="fab fa-phoenix-squadron"></i>
-                                <span>Tutorat</span>
+                                <span>Tuteur</span>
                             </a>
-                            <a class="nav-link" href="?controller=super_admin&action=contact">
+                            <a class="nav-link" href="?controller=superadmin&action=interface_tutore">
+                                <i class="fab fa-phoenix-squadron"></i>
+                                <span>Tutoré</span>
+                            </a>
+                            <a class="nav-link" href="?controller=superadmin&action=interface_tutorat">
+                                <i class="fab fa-phoenix-squadron"></i>
+                                <span>Tutorats</span>
+                            </a>
+                            <a class="nav-link" href="#">
+                                <i class="fab fa-phoenix-squadron"></i>
+                                <span>Déclaration / heure</span>
+                            </a>
+                            <a class="nav-link" href="#">
                                     <i class="fab fa-phoenix-squadron"></i>
                                     <span>Questions / Support</span>
                             </a>
@@ -399,6 +576,7 @@
             <!-- FIN de CONTROL sur la navbar verticale -->
     <div id="content">
         <?php
+        require_once('arbre_navigation.php');
         require_once('routes.php');
         ?>
     </div>

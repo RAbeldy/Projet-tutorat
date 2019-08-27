@@ -72,7 +72,7 @@
                                                              <form method="post" action="?controller=evenements&action=cancel_participation
                                                               ">
                                                             <tr>
-                                                                <td><label><?=$data['type_tutorat']?></label></td>
+                                                                <td><label><?=$data['tutorat']?></label></td>
                                                                 <td><label><?=$data['evenement']->getDate_evenement()?></label></td>
                                                                 <td><label><?=$data['evenement']->getLieu()?></label></td>
                                                                 <?php if($data['type_tutorat'] == 'TUTORAT_PERSONNALISE')

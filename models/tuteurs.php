@@ -1,7 +1,7 @@
 <?php
 require_once('connexion.php');
-require('models/users.php');
-require('models/evenements.php');
+
+
 
 
 class Tuteurs
@@ -119,6 +119,9 @@ class Tuteurs
         }
         else
         {
+            // l'etat du tuteur passe à occupé
+            $req = $db->prepare("UPDATE avoir_statut SET id_etat = (SELECT id_etat FROM etat WHERE libelle = 'OCCUPE') WHERE id_user = ?");
+            $req->execute(array($id_tuteur));
             return 1;
         }
     }
@@ -136,7 +139,7 @@ class Tuteurs
         $db = Db::getInstance();
         $list=[];
         
-        $req= $db->query("SELECT DISTINCT u.id_user,u.nom,u.prenom,u.date_naissance,u.email,u.phone,a.ville ,a.adress ,a.code_postal  FROM user as u,adresse as a, avoir_statut as at, tutores as t, etat as e WHERE e.id_etat= at.id_etat AND e.libelle= 'LIBRE' AND  at.id_user = u.id_user AND t.id_tutores= u.id_user AND   u.id_adresse = a.id_adresse AND u.id_user NOT IN (SELECT id_tutores as id_user FROM matchs) AND u.id_user NOT IN (SELECT id_tutores as id_user FROM en_attente)  ORDER BY nom ASC");
+        $req= $db->query("SELECT DISTINCT u.id_user,u.nom,u.prenom,u.date_naissance,u.email,u.phone,a.ville ,a.adress ,a.code_postal  FROM user as u,adresse as a, avoir_statut as at, tutores as t, etat as e WHERE e.id_etat= at.id_etat AND e.libelle= 'LIBRE' AND  at.id_user = u.id_user AND t.id_tutores= u.id_user AND   u.id_adresse = a.id_adresse AND u.id_user NOT IN (SELECT id_tutores as id_user FROM matchs)   ORDER BY nom ASC");
         
       foreach ($req->fetchAll() as $data)
       {
@@ -157,7 +160,7 @@ class Tuteurs
         
     }
 
-    public function Get_working_list($id_user)
+    public static function Get_working_list($id_user)
     {
         $db = Db::getInstance();
         $list=[];
@@ -181,6 +184,31 @@ class Tuteurs
         $list []= $users;
       }
       return $list ;
+    }
+    public static function Get_specific_working_list($id_tuteur,$id_tutorat)
+    {
+       $db = Db::getInstance();
+        $list=[];
+        $req = $db->prepare(" SELECT  u.id_user,u.nom,u.prenom,u.date_naissance,u.email,u.phone,a.ville ,a.adress ,a.code_postal  FROM user as u,adresse as a,matchs as m,se_destine as se WHERE   u.id_adresse = a.id_adresse AND u.id_user= m.id_tutores   AND m.id_tuteurs =  ? AND se.id_user= u.id_user AND se.id_tutorat= ? ORDER BY nom ASC");
+        $req->execute(array($id_tuteur,$id_tutorat));
+
+        
+      foreach ($req->fetchAll() as $data)
+      {
+        $users= new Users();
+        $users->setId_user($data['id_user']);
+        $users->setNom($data['nom']);
+        $users->setPrenom($data['prenom']);
+        $users->setDate_naissance($data['date_naissance']);
+        $users->setEmail($data['email']);
+        $users->setPhone($data['phone']);
+        $users->setAdress($data['adress']);
+        $users->setVille($data['ville']);
+        $users->setCode_postal($data['code_postal']);
+
+        $list []= $users;
+      }
+      return $list ; 
     }
     public function Get_all_tutores()
     {

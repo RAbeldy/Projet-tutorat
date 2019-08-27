@@ -53,7 +53,7 @@ $objPHPExcel->getProperties()->setCreator("Maarten Balliauw")
 							 ->setKeywords("office 2007 openxml php")
 							 ->setCategory("Test result file");
 
-       
+       var_dump($tab);
 	if( isset($_SESSION['id_statut']))
           {
            

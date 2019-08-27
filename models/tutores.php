@@ -105,6 +105,9 @@ class Tutores
         }
         else
         {
+            // l'etat du tuteur passe à occupé
+            $req = $db->prepare("UPDATE avoir_statut SET id_etat = (SELECT id_etat FROM etat WHERE libelle = 'OCCUPE') WHERE id_user = ?");
+            $req->execute(array($id_tuteur));
             return 1;
         }
 
@@ -119,11 +122,11 @@ class Tutores
         return $req;
     }
 
-    public function Get_working_list($id_user)
+    public static function Get_working_list($id_user)
     {
         $db = Db::getInstance();
         $list=[];
-        $req = $db->prepare(" SELECT DISTINCT u.id_user,u.nom,u.prenom,u.date_naissance,u.email,u.phone,a.ville ,a.adress ,a.code_postal  FROM user as u, statut as s,adresse as a, avoir_statut as at,matchs as m WHERE at.id_statut = s.id_statut AND at.id_user = u.id_user AND  u.id_adresse = a.id_adresse AND u.id_user= m.id_tuteurs AND m.id_tutores =  ? ORDER BY nom ASC ");
+        $req = $db->prepare(" SELECT DISTINCT u.id_user,u.nom,u.prenom,u.date_naissance,u.ecole,u.niveau,u.email,u.phone,a.ville ,a.adress ,a.code_postal  FROM user as u, statut as s,adresse as a, avoir_statut as at,matchs as m WHERE at.id_statut = s.id_statut AND at.id_user = u.id_user AND  u.id_adresse = a.id_adresse AND u.id_user= m.id_tuteurs AND m.id_tutores =  ? ORDER BY nom ASC ");
         $req->execute(array($id_user));
 
         
@@ -134,6 +137,8 @@ class Tutores
         $users->setNom($data['nom']);
         $users->setPrenom($data['prenom']);
         $users->setDate_naissance($data['date_naissance']);
+        $users->setEcole($data['ecole']);
+        $users->setNiveau($data['niveau']);
         $users->setEmail($data['email']);
         $users->setPhone($data['phone']);
         $users->setAdress($data['adress']);
@@ -150,7 +155,7 @@ class Tutores
         $db = Db::getInstance();
         $list=[];
         
-        $req= $db->query("SELECT DISTINCT u.id_user,u.nom,u.prenom,u.date_naissance,u.email,u.phone,a.ville ,a.adress ,a.code_postal FROM user as u, statut as s,adresse as a, avoir_statut as at,tuteurs as t WHERE at.id_statut = s.id_statut AND at.id_user = u.id_user AND t.id_tuteurs = u.id_user AND t.nb_linksperso <= t.nb_max_perso AND  u.id_adresse = a.id_adresse AND s.libelle= 'TUTEUR'  ORDER BY nom ASC");
+        $req= $db->query("SELECT DISTINCT u.id_user,u.nom,u.prenom,u.date_naissance,u.email,u.phone,a.ville ,a.adress ,a.code_postal FROM user as u, statut as s,adresse as a, avoir_statut as at,tuteurs as t,etat as e WHERE at.id_statut = s.id_statut AND at.id_user = u.id_user AND t.id_tuteurs = u.id_user AND e.id_etat= at.id_etat AND e.libelle= 'LIBRE' AND  u.id_adresse = a.id_adresse AND s.libelle= 'TUTEUR'  ORDER BY nom ASC");
         
       foreach ($req->fetchAll() as $data)
       {

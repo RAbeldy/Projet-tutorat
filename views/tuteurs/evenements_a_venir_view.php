@@ -53,6 +53,7 @@
                                                     <table class="table dataTable my-0" id="dataTable">
                                                         <thead>
                                                             <tr>
+                                                                <th>Type_tutorat</th>
                                                                 <th>Tutorat</th>
                                                                 <th>Date</th>
                                                                 <th>Adresse</th>
@@ -64,18 +65,19 @@
                                                         <tbody>
 
                                                             <?php
-                                                            if(!is_null($donnees))
-                                                            {
+                                                            
                                                              foreach ($donnees as $elt) 
                                                             {
+                                                              if(!preg_match('#TUTORAT_PERSONNALISE#',$elt['tutorat']))
+                                                              {
                                                              ?>
 
                                                               <form method="post" action="?controller=evenements&action=subscribe_to_event">
                                                                 
                                                               <tr >
 
- 
-                                                                  <td> <label><?=$elt['type_tutorat']?></label></td>
+                                                                  <td><label><?=$elt['type_tutorat']?></label></td>
+                                                                  <td> <label><?=$elt['tutorat']?></label></td>
                                                                   <td><label><?=$elt['evenement']->getDate_evenement()?></label></td>
                                                                   <td><label><?=$elt['evenement']->getLieu()?></label></td>
                                                                   <td><label><?=$elt['evenement']->getNb_places()?></label></td>
@@ -103,7 +105,7 @@
                                                              </form>
                                                             <?php
                                                              }
-                                                             }
+                                                           }
                                                              ?>
                                                         </tbody>
                                                         <tfoot>

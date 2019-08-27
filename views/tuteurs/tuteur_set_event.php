@@ -18,7 +18,7 @@
                                                 </p>
                                             </div>
                                             <div class="card-body">
-                                                <form method="post" action="?controller=evenements&action=tuteur_set_event" onsubmit="javascript:test_date();javascript:id();javascript:message();">
+                                                <form method="post" action="?controller=evenements&action=tuteur_set_event&id=<?=$id;?>" onsubmit="javascript:test_date();javascript:id();javascript:message();">
                                                     <div class="row">
                                                         <div class="form-group col-xs-12 col-md-6">
                                                             <label for="date">
@@ -36,7 +36,7 @@
                                                             <label for="tutore">
                                                                 <strong>Tutoré 1</strong><br>
                                                             </label>
-                                                            <select class="form-control" name="id_1" id="id_1">
+                                                            <select class="form-control" name="id_1" id="id_1" required>
                                                                 
                                                             <?php
                                                                 foreach ($donnees as $elt) 

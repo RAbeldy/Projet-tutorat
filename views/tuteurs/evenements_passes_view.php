@@ -51,6 +51,7 @@
                                                     <table class="table dataTable my-0" id="dataTable">
                                                         <thead>
                                                             <tr>
+                                                              <th>Type_tutorat</th>
                                                                 <th>Tutorat</th>
                                                                 <th>Date</th>
                                                                 <th>Adresse</th>
@@ -71,8 +72,8 @@
                                                                 
                                                               <tr>
 
- 
                                                                   <td> <label><?=$elt['type_tutorat']?></label></td>
+                                                                  <td> <label><?=$elt['tutorat']?></label></td>
                                                                   <td><label><?=$elt['evenement']->getDate_evenement()?></label></td>
                                                                   <td><label><?=$elt['evenement']->getLieu()?></label></td>
                                                                   <?php
@@ -100,8 +101,8 @@
                                                                   }
                                                                   ?>
                                                                 </tr>
-                                                                 <input type="hidden" name="id_e" value="<?=$elt['evenement']->getId_evenement()?>" >
-                                                        
+                                                                 <input type="hidden" name="id_e"value="<?=$elt['evenement']->getId_evenement()?>" >
+                                                                 <input type="hidden" name="id_e"value="<?=$elt['tutorat'];?>" >
                                                       
                                                              </form>
                                                             <?php

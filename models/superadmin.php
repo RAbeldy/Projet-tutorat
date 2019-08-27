@@ -4,7 +4,7 @@ require_once('models/users.php');
 require_once('models/evenements.php');
 
 
-class Admin
+class Superadmin
 {
 	
 

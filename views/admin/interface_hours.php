@@ -13,7 +13,7 @@
                                             <div class="card avenir">
                                                 <div class="card-body">
                                                     <h4 class="card-title">Evènements</h4>
-                                                    <a href="?controller=admin&action=declare">
+                                                    <a href="?controller=admin&action=declare_hours">
                                                         <button class="btn" type="button">Je déclare mes heures</button>
                                                     </a>
                                                 </div>

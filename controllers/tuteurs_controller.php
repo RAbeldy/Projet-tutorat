@@ -1,7 +1,9 @@
 <?php
-require_once('models/tuteurs.php');
+
 require_once('models/evenements.php');
 require_once('models/users.php');
+require_once('models/tuteurs.php');
+require_once('models/tutorat.php');
 /* Définition du controller */
 class TuteursController
 {
@@ -14,20 +16,45 @@ class TuteursController
             require_once('views/login.php');
     }
     public function tuteur_set_event()
-    {   if(isset($_SESSION['id_statut']))// on vérifie que seul un utilisateur connecté peut accéder à ces pages
+    {   
+        if(isset($_SESSION['id_statut']))// on vérifie que seul un utilisateur connecté peut accéder à ces pages
           {
             $tuteurs = new Tuteurs();
-            $donnees = $tuteurs->Get_working_list($_SESSION['id_user']);
-
+            if(isset($_GET['id']))
+            {
+              $donnees = $tuteurs->Get_specific_working_list($_SESSION['id_user'],$_GET['id']); // liste des tuteurs avec qui je travaille dans un tutorat donné autre que le tutorat personnalisé
+              $id= $_GET['id']; // il s'agit de l'id du tutorat pour lequel le tuteur veut créer un évènement
+            }
+            else // il s'agit d'un tutorat personnalisé simple
+            {
+              $donnees = $tuteurs->Get_working_list($_SESSION['id_user']); // liste des tuteurs avec qui je travaille
+              $id= null; // il s'agit de l'id du tutorat pour lequel le tuteur veut créer un évènement
+            }
+ 
             $controller_report='tuteurs';
-            $fonction_back='interface_tuteur';
-
+            $fonction_back='events_creation';
+            
+            
             require_once('views/tuteurs/tuteur_set_event.php'); // on charge la vue adéquate
           }
         else
             require_once('views/login.php');
     }
+    
+    public function events_creation()
+    {
+        if(isset($_SESSION['id_statut']))
+        {
+            $donnees= Tutorat::Get_working_tutorat($_SESSION['id_user']); // liste des tutorats pour lequels je travaille
 
+            $controller_report='tuteurs';
+            $fonction_back='interface_tuteur';
+
+            require_once('views/tuteurs/events_creation.php');
+        }
+        else
+            require_once('views/login.php');
+    }
     public function selection_tutores()
     {
         if(isset($_SESSION['id_statut']))// on vérifie que seul un utilisateur connecté peut accéder à ces pages

@@ -48,7 +48,8 @@
                                                                 <th>Adresse</th>
                                                                 <th>Code_postal</th>
                                                                 <th>tuteurs disponibles</th>
-                                                                <th> Action</th>
+                                                                <th> Consulter</th>
+                                                                <th> Lier/supprimer</th>
                                                                 
 
                                                                
@@ -89,7 +90,8 @@
                                                                            ?>
                                                                      </select>
                                                                   </label></td>
-
+                                                                  <td><button class="btn" type="submit"name="consulter" >consulter</button>
+                                                                      </td>
                                                                   <?php
                                                                    if($elt['etat'] == 'LIBRE')
                                                                    {

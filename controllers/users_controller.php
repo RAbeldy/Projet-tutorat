@@ -31,9 +31,9 @@ public function connexion()
 	        	{
 	        		require_once('views/tutores/interface_tutore.php');
 	        	}
-	        	elseif($_SESSION['id_statut'] == 17) // ADMIN_IMMERSSION
+	        	elseif($_SESSION['id_statut'] == 17) // ADMIN_IMMERSION
 	        	{
-	        		require_once('views/admin/interface_admin.php');
+	        		require_once('views/admin/immersion/interface_admin.php');
 	        	}
 	        	elseif($_SESSION['id_statut'] == 6) // GESTIONNAIRE_COMPTE
 	        	{
@@ -43,17 +43,25 @@ public function connexion()
 	        	{
 	        		require_once('views/admin/mef/interface_admin_mef.php');
 	        	}
-	        	elseif($_SESSION['id_statut'] == 14) // sup_lycee
-	        	{
-	        		require_once('views/admin/interface_superadmin.php');
-	        	}
 	        	elseif($_SESSION['id_statut'] == 15) // admin_vauban
 	        	{
-	        		require_once('views/admin/interface_superadmin.php');
+	        		require_once('views/admin/interface_admin.php');
+	        	}
+	        	elseif($_SESSION['id_statut'] == 18) // admin_lycees_colleges
+	        	{
+	        		require_once('views/admin/interface_admin.php');
+	        	}
+	        	elseif($_SESSION['id_statut'] == 20) // admin_apsco
+	        	{
+	        		require_once('views/admin/interface_admin.php');
+	        	}
+	        	elseif($_SESSION['id_statut'] == 8) // ADMIN_TUTORAT_PERSONNALISE
+	        	{
+	        		require_once('views/admin/personnalise/interface_admin.php');
 	        	}
 	        	elseif($_SESSION['id_statut'] == 1) // superadmin
 	        	{
-	        		require_once('views/super_admin/interface_superadmin.php');
+	        		require_once('views/superadmin/interface_superadmin.php');
 	        	}
 	        	else
 	        	{
@@ -82,9 +90,9 @@ public function redirection() // redirection vers interface en fonction du statu
         if( $_SESSION['id_statut'] == 11)
         	require_once('views/admin/mef/interface_admin_mef.php');
         elseif($_SESSION['id_statut'] == 14)
-        	require_once('views/admin/mef/interface_admin.php'); // à compléter
+        	require_once('views/admin/interface_admin.php'); // à compléter
         elseif($_SESSION['id_statut'] == 13)
-        	require_once('views/admin/mef/interface_tuteur.php');
+        	require_once('views/admin/interface_tuteur.php');
         elseif($_SESSION['id_statut'] == 16)
         	require_once('views/admin/mef/interface_tutore.php');
         else

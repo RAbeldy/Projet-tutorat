@@ -16,39 +16,75 @@ class EvenementsController
             $event->setLieu( $_POST['lieu']);
             $event->setDuree( $_POST['duree']);
             
-            var_dump($_POST['id_2']);
-            if($_POST['id_2'] == "") // le tuteur crée un évènement avec un seul de ses tutorés
+            var_dump($_POST['id_2']); 
+            if(is_null($_GET['id'] ))
             {
-              if( $event->Tuteur_set_event($_SESSION['id_user'],$_POST['id_1']) == 0) // on a récupéré l'identifiant de celui avec qui il aura un tutorat personnalisé ou alors l'identifiant du lieu
-              {   
-                  require_once('views/tuteurs/interface_tuteur.php');
-                
-              } 
-              else
+              if($_POST['id_2'] == "") // le tuteur crée un évènement avec un seul de ses tutorés
               {
-                  $message = 'Vous avez déja un évènement prévu à cette date et à cette heure, rendez vous dans la rubrique "je me suis inscrit à " pour le supprimer, puis dans "créer évènement", créer en un nouveau si vous le souhaitez';
-                  $controller_report='tuteurs';
-                  $fonction_back='tuteurs_set_event';
-                  require_once('views/system/error.php');
-              } 
-            }
-            else // le tuteur crée un évènement avec 2 de ses tutorés
-            {
-              if( $event->Tuteur_set_event_withBoth($_SESSION['id_user'],$_POST['id_1'],$_POST['id_2']) == 0) // on a récupéré l'identifiant de celui avec qui il aura un tutorat personnalisé ou alors l'identifiant du lieu
-              {   
-                  require_once('views/tuteurs/interface_tuteur.php');
-                
-              } 
-              else
+                if( $event->Tuteur_set_event($_SESSION['id_user'],$_POST['id_1']) == 0) // on a récupéré l'identifiant de celui avec qui il aura un tutorat personnalisé ou alors l'identifiant du lieu
+                {   
+                    require_once('views/tuteurs/interface_tuteur.php');
+                  
+                } 
+                else
+                {
+                    $message = 'Vous avez déja un évènement prévu à cette date et à cette heure, rendez vous dans la rubrique "je me suis inscrit à " pour le supprimer, puis dans "créer évènement", créer en un nouveau si vous le souhaitez';
+                    $controller_report='tuteurs';
+                    $fonction_back='tuteurs_set_event';
+                    require_once('views/system/error.php');
+                } 
+              }
+              else // le tuteur crée un évènement avec 2 de ses tutorés
               {
-                  $message = 'Vous avez déja un évènement prévu à cette date et à cette heure, rendez vous dans la rubrique "je me suis inscrit à " pour le supprimer, puis dans "créer évènement", créer en un nouveau si vous le souhaitez';
-                  $controller_report='tuteurs';
-                  $fonction_back='tuteurs_set_event';
+                if( $event->Tuteur_set_event_withBoth($_SESSION['id_user'],$_POST['id_1'],$_POST['id_2']) == 0) // on a récupéré l'identifiant de celui avec qui il aura un tutorat personnalisé ou alors l'identifiant du lieu
+                {   
+                    require_once('views/tuteurs/interface_tuteur.php');
+                  
+                } 
+                else
+                {
+                    $message = 'Vous avez déja un évènement prévu à cette date et à cette heure, rendez vous dans la rubrique "je me suis inscrit à " pour le supprimer, puis dans "créer évènement", créer en un nouveau si vous le souhaitez';
+                    $controller_report='tuteurs';
+                    $fonction_back='tuteurs_set_event';
 
-                  require_once('views/system/error.php');
-              } 
+                    require_once('views/system/error.php');
+                } 
+              }
             }
-      }
+            else
+            {
+              if($_POST['id_2'] == "") // le tuteur crée un évènement avec un seul de ses tutorés
+              {
+                if( $event->Tuteur_set_specific_event($_SESSION['id_user'],$_POST['id_1'],$_GET['id']) == 0) // on a récupéré l'identifiant de celui avec qui il aura un tutorat personnalisé ou alors l'identifiant du lieu
+                {   
+                    require_once('views/tuteurs/interface_tuteur.php');
+                } 
+                else
+                {
+                    $message = 'Vous avez déja un évènement prévu à cette date et à cette heure, rendez vous dans la rubrique "je me suis inscrit à " pour le supprimer, puis dans "créer évènement", créer en un nouveau si vous le souhaitez';
+                    $controller_report='tuteurs';
+                    $fonction_back='tuteurs_set_event';
+                    require_once('views/system/error.php');
+                } 
+              }
+              else // le tuteur crée un évènement avec 2 de ses tutorés
+              {
+                if( $event->Tuteur_set_specific_event_withBoth($_SESSION['id_user'],$_POST['id_1'],$_POST['id_2'],$_GET['id']) == 0) // on a récupéré l'identifiant de celui avec qui il aura un tutorat personnalisé ou alors l'identifiant du lieu
+                {   
+                    require_once('views/tuteurs/interface_tuteur.php');
+                  
+                } 
+                else
+                {
+                    $message = 'Vous avez déja un évènement prévu à cette date et à cette heure, rendez vous dans la rubrique "je me suis inscrit à " pour le supprimer, puis dans "créer évènement", créer en un nouveau si vous le souhaitez';
+                    $controller_report='tuteurs';
+                    $fonction_back='tuteurs_set_event';
+
+                    require_once('views/system/error.php');
+                } 
+              }
+            }
+    }
       else
            require_once('views/login.php'); 
     }

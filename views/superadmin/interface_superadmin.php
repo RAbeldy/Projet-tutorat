@@ -11,7 +11,7 @@
                                         <div class="col-xs-12 col-md-6 card-container">
                                             <div class="card avenir">
                                                 <div class="card-body">
-                                                    <h4 class="card-title">Evènements</h4>
+                                                    <h4 class="card-title">Création évènements</h4>
                                                     <a href="?controller=admin&action=events">
                                                         <button class="btn" type="button">je crée, je consulte</button>
                                                     </a>
@@ -21,14 +21,23 @@
                                         <div class="col-xs-12 col-md-6 card-container">
                                             <div class="card historique">
                                                 <div class="card-body">
-                                                    <h4 class="card-title">Historique</h4>
+                                                    <h4 class="card-title">Les évènements</h4>
                                                     <a href="?controller=admin&action=pasts_events_list">
-                                                        <button class="btn" type="button">je valide<br/>leurs participations</button>
+                                                        <button class="btn" type="button">passés, à venir</button>
                                                     </a>
                                                 </div>
                                             </div>
                                         </div>
-                                        
+                                        <div class="col-xs-12 col-md-6 card-container">
+                                            <div class="card creer">
+                                                <div class="card-body">
+                                                    <h4 class="card-title">Mes tutorés</h4>
+                                                    <a href="?controller=admin&action=interface_tutores_mef">
+                                                        <button class="btn" type="button">J'inscris, je consulte</button>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
                                         <div class="col-xs-12 col-md-6 card-container">
                                             <div class="card inscrits">
                                                 <div class="card-body">
@@ -39,7 +48,6 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        
                                     </div>
                                 </div>
                             </div>

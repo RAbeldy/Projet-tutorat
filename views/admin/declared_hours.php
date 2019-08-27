@@ -72,7 +72,7 @@
                                                               <tr>
 
  
-                                                                  <td> <label><?=$elt['type_tutorat']?></label></td>
+                                                                  <td> <label><?=$elt['tutorat']?></label></td>
                                                                   <td><label><?=$elt['evenement']->getDate_evenement()?></label></td>
                                                                   <td><label><?=$elt['evenement']->getLieu()?></label></td>
                                                                   <?php
@@ -104,7 +104,7 @@
                                                                   {
                                                                     ?>
                                                                     <td><label > <strong ><span style="color: green;" ><?=$elt['planning_event'];?>  </span></strong>
-                                                                      <td><label ><span style="color: green;" ><?=$elt['participer_evenement']?></span></label></td>
+                                                                      <td><label ><strong ><span style="color: green;" ><?=$elt['participer_evenement']?></span></strong></label></td>
                                                                     <td><label title="deja pris en compte" class="btn" name="pris en compte">Pris en compte</label> 
                                                                   </td>
                                                                   <?php

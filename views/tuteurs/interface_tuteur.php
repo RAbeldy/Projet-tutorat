@@ -32,8 +32,8 @@
                                             <div class="card creer">
                                                 <div class="card-body">
                                                     <h4 class="card-title">Créer</h4>
-                                                    <a href="?controller=tuteurs&action=tuteur_set_event">
-                                                        <button class="btn" type="button">Tutorats <br/>Perso</button>
+                                                    <a href="?controller=tuteurs&action=events_creation">
+                                                        <button class="btn" type="button">Tutorats <br/>auxquels je suis affilié</button>
                                                     </a>
                                                 </div>
                                             </div>

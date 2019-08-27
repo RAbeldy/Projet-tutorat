@@ -4,6 +4,15 @@
                     <div class="block">
                         <div class="container">
                             <div class="row">
+                                <div class="offset-md-2 col-md-10 space">
+                                    <span class="navig_flech">
+                                        <a href="">EVENEMENTS </a>
+                                        > 
+                                        <a href="">CONSULTER/MODIFIER </a>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="row">
                                 <div class="col-md-2">
                                     <?php include('retour.php') ?>
                                 </div>

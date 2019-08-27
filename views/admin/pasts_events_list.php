@@ -69,7 +69,7 @@
                                                             {
                                                              foreach ($donnees as $elt) 
                                                             {
-                                                                if(!preg_match("#ADMINISTRATION#", $elt['type_tutorat']) )
+                                                                if(!preg_match("#ADMINISTRATION#", $elt['tutorat']) )
                                                                 {
                                                              ?>
                                                                 
@@ -77,7 +77,7 @@
                                                               <form method="post" action="?controller=evenements&action=subscription_list">
                                                                 
                                                               <tr>
-                                                                  <td> <label><?=$elt['type_tutorat']?></label></td>
+                                                                  <td> <label><?=$elt['tutorat']?></label></td>
                                                                   <td><label><?=$elt['evenement']->getDate_evenement()?></label></td>
                                                                   <td><label><?=$elt['evenement']->getLieu()?></label></td>
                                                                   <td><label><?=$elt['evenement']->getNb_tuteurs()?></label></td>

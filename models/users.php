@@ -177,7 +177,7 @@ require_once('connexion.php');
       }
       return $user;
     }
-
+    
     public function Deconnexion()
     {
       session_destroy();
@@ -199,9 +199,10 @@ require_once('connexion.php');
          
          
          //on recupere l'ID du statut de l'user
-         $request=$db->query('SELECT avst.id_statut as id_statut,e.libelle as libelle,s.libelle as libelle_statut,us.nom as nom,us.prenom as prenom,us.email as mail from user as us, avoir_statut as avst, etat as e,statut as s WHERE  avst.id_user=us.id_user AND e.id_etat = avst.id_etat AND avst.id_statut = s.id_statut AND avst.id_user = '.$_SESSION['id_user'].'');
+         $request=$db->query('SELECT avst.id_statut as id_statut,e.libelle as libelle,s.libelle as libelle_statut, us.nom as nom,us.prenom as prenom,us.email as mail from user as us, avoir_statut as avst, etat as e,statut as s WHERE  avst.id_user=us.id_user AND e.id_etat = avst.id_etat AND avst.id_statut = s.id_statut AND avst.id_user = '.$_SESSION['id_user'].'');
          $res = $request->fetch();
-
+         
+         
          $_SESSION['email']=$res['mail'];
          $_SESSION['nom']=$res['nom'];
          $_SESSION['prenom']=$res['prenom'];

@@ -156,6 +156,16 @@ div#content {
     box-shadow: unset;
 }
 
+.navig_flech, .navig_flech a {
+    color: #fab900;
+	font-weight: 700;
+}
+
+.navig_flech a:hover {
+    color: #29292a;
+    text-decoration: underline;
+}
+
 /*login*/
 .login-dark .illustration {
     text-align: center;

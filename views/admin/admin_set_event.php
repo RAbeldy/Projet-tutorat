@@ -71,6 +71,7 @@
                                                                 <option value="5">5 h</option>
                                                                 <option value="6">6 h</option>
                                                                 <option value="7">7 h</option>
+                                                                <option value="8">8 h</option>
 
                                                             </select>
                                                         </div>

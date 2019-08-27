@@ -1,4 +1,4 @@
- 
+
 
     <div id="globalContent">
         <div id="wrapper">
@@ -14,13 +14,10 @@
                                     <div class="row">
                                         <div class="card debut">
                                             <div class="card-header py-3">
-                                                <p class="text-primary m-0 font-weight-bold">
-                                                    Inscrits
-                                                </p>
+                                                <p class="text-primary m-0 font-weight-bold">Les evenements passés</p>
                                                 <?php include('retour.php') ?>
                                             </div>
                                             <div class="card-body">
-                                                <form method="post" action="traitement.php">
                                                 <div class="row">
                                                     <div class="col-12 card-body-title">
                                                         <span>RECHERCHER PAR :</span>
@@ -29,7 +26,6 @@
                                                         <div class="row text-center">
                                                             <label style="flex: auto;">Période</label>
                                                         </div>
-                                                       
                                                         <div class="row">
                                                             <div class="col-xs-12 col-md-6">
                                                                 <label class="col-2">De</label>
@@ -50,53 +46,52 @@
                                                         </div>
                                                     </div>
                                                     <div class="col-12 text-center rechercher">
-                                                    <a href="traitement.php"><button class="btn" type="button" name="rechercher">RECHERCHER</button></a>
+                                                        <button class="btn" type="button">RECHERCHER</button>
                                                     </div>
-                                                
                                                 </div>
-                                                </form>
                                                 <div class="table-responsive table mt-2" role="grid" aria-describedby="dataTable_info">
                                                     <table class="table dataTable my-0" id="dataTable">
                                                         <thead>
                                                             <tr>
-                                                                <th>Type_tutorat</th>
                                                                 <th>Tutorat</th>
                                                                 <th>Date</th>
                                                                 <th>Adresse</th>
-                                                                <th>Désinscription</th>
+                                                                <th>Tutores inscrits</th>
+                                                                <th>Tuteurs demandés</th>
+                                                                <th>Ont participé</th>
+                                                                <th>Horaires</th>
+                                                                <th>Consulter</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-                                                            <?php foreach($donnees as $data)
-                                                            {
-                                                             ?>   
-                                                             <form method="post" action="?controller=evenements&action=cancel_participation
-                                                              ">
-                                                            <tr>
-                                                                <td><label><?=$data['type_tutorat']?></label></td>
-                                                                <td><label><?=$data['tutorat']?></label></td>
-                                                                <td><label><?=$data['evenement']->getDate_evenement()?></label></td>
-                                                                <td><label><?=$data['evenement']->getLieu()?></label></td>
-                                                                <?php if($data['type_tutorat'] == 'TUTORAT_PERSONNALISE' OR $data['type_tutorat'] =='MEF' )
-                                                                {
-                                                                ?>
-                                                                      <td><button class="btn" type="submit" name="supprimer" onclick="alert();">Supprimer</button></td>
-                                                                      <input type="hidden" name="id_e_d" value="<?=$data['evenement']->getId_evenement()?>" >
-                                                                <?php 
-                                                                }
-                                                                else
-                                                                {
-                                                                ?>
-                                                                    <td><button class="btn" type="submit" name="annuler" onclick="alert();">Annuler</button></td>
-                                                                    <input type="hidden" name="id_e_c" value="<?=$data['evenement']->getId_evenement()?>" >
-                                                                    <?php
 
-                                                                } // id_e_d correspond a identifiant de l'évènement avec comme action suppression(d pour delete) et id_e_c avec pour action annuler(c pour cancel)
-                                                                ?>
-                                                                    
-                                                            </tr>
-                                                            </form>
                                                             <?php
+                                                            if(!is_null($donnees))
+                                                            {
+                                                             foreach ($donnees as $elt) 
+                                                            {
+                                                             ?>
+
+                                                              <form method="post" action="?controller=evenements&action=subscription_list">
+                                                                
+                                                              <tr>
+                                                                  <td> <label><?=$elt['type_tutorat']?></label></td>
+                                                                  <td><label><?=$elt['evenement']->getDate_evenement()?></label></td>
+                                                                  <td><label><?=$elt['evenement']->getLieu()?></label></td>
+                                                                  <td><label><?=$elt['evenement']->getNb_places_tutores()?></label></td>
+                                                                  <td><label><?=$elt['evenement']->getNb_tuteurs()?></label></td>
+                                                                  <td><label><?=$elt['evenement']->getNb_places()?></label></td>
+                                                                  <td><label ><?=$elt['planning_event']?></label></td>
+                                                                 
+
+                                                                  <td><button class="btn" type="submit" name="consulter" >Consulter</button>
+                                                                  </td>
+
+                                                                </tr>
+                                                                 <input type="hidden" name="id_e" value="<?=$elt['evenement']->getId_evenement()?>" >
+                                                             </form>
+                                                            <?php
+                                                             }
                                                              }
                                                              ?>
                                                         </tbody>
@@ -117,10 +112,20 @@
         </div>
     </div>
 
-    <script type="text/javascript">
+<script type="text/javascript">
         function alert()
         {
-            confirm('etes vous sur de vouloir supprimer?');
+            confirm('etes vous sur de vouloir vous inscrir?');
         }
+
+        
     </script>
+
+
+
+
+
+
+
+
     

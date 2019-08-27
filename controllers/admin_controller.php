@@ -1,9 +1,13 @@
 <?php
 
 require_once('models/evenements.php');
+require_once('models/tutores.php');
+require_once('models/tuteurs.php');
 require_once('models/users.php');
 require_once('models/admin.php');
 require_once('models/tutorat.php');
+
+
 
 
 
@@ -19,19 +23,21 @@ class AdminController
                 {
                   require_once('views/admin/mef/interface_admin_mef.php');
                 }
+                elseif(preg_match('#IMMERSION#', $_SESSION['statut']))
+                {
+                  require_once('views/admin/immersion/interface_admin.php');
+                }
+                elseif(preg_match('#PERSONNALISE#', $_SESSION['statut']))
+                {
+                  require_once('views/admin/personnalise/interface_admin.php');
+                }
                 else
                   require_once('views/admin/interface_admin.php');
             }
             else
                 require_once('views/login.php');
        }
-      public function interface_admin_tuteur()
-       {
-            if( isset($_SESSION['id_statut']))
-                require_once('views/admin/interface_admin_tuteur.php');
-            else
-                require_once('views/login.php');
-       }
+      
        
        public function events()
        {
@@ -81,8 +87,10 @@ class AdminController
 
               $controller_report='admin';
               $fonction_back='future_events_list';
-
-              require_once('views/admin/subscription_list.php');
+               if( preg_match('#PERSONNALISE#', $_SESSION['statut']) )
+              require_once('views/admin/personnalise/subscription_list.php');
+              else
+                require_once('views/admin/subscription_list.php');
             }
             elseif( isset($_POST['supprimer']))  // on va plutot supprimer cet évènement
             {
@@ -95,6 +103,7 @@ class AdminController
             {
                $header= array('tutorat','date','adresse','nombre de places','duree');
                $path="http://localhost:8888/tests/steve/PDF/future_events_list.txt";
+               
 
                AdminController::export(); 
  
@@ -125,7 +134,40 @@ class AdminController
                     $controller_report='admin';
                     $fonction_back='events';
 
-                    require_once('views/admin/immerssion/future_events_list_immerssion.php');
+                    require_once('views/admin/immersion/future_events_list_immerssion.php');
+                }
+                elseif(preg_match('#PERSONNALISE#', $_SESSION['statut'])) 
+                {
+                  if(isset($_POST['search'])) // il s'agit d'une recherche 
+                   {
+                    $tab = Evenements::Future_events_list_admin($_SESSION['id_user']);
+                    $donnees= Evenements::Find_occurrences_date($tab,$_POST['string'],$_POST['date1'],$_POST['date2']);
+                   }
+                   else //  affichage de données normal
+                   {
+                    $donnees = Evenements::Future_events_list_admin($_SESSION['id_user']);
+                   }
+                    $controller_report='admin';
+                    $fonction_back='interface_admin';
+
+                    require_once('views/admin/personnalise/future_events_list.php');
+                }
+                elseif(preg_match('#MEF#', $_SESSION['statut'])) 
+                {
+                  if(isset($_POST['search'])) // il s'agit d'une recherche 
+                   {
+                    $tab = Evenements::Future_events_list_admin($_SESSION['id_user']);
+                    $donnees= Evenements::Find_occurrences_date($tab,$_POST['string'],$_POST['date1'],$_POST['date2']);
+                   }
+                   else //  affichage de données normal
+                   {
+                    $donnees = Evenements::Future_events_list_admin($_SESSION['id_user']);
+                  
+                   }
+                    $controller_report='admin';
+                    $fonction_back='events';
+
+                    require_once('views/admin/personnalise/future_events_list.php');
                 }
                 else
                 {
@@ -172,11 +214,29 @@ class AdminController
                 $controller_report='admin';
                 $fonction_back='interface_admin';
 
-                require_once('views/admin/immerssion/pasts_events_list_immerssion.php');
+                require_once('views/admin/immersion/pasts_events_list_immerssion.php');
+            }
+            elseif(preg_match('#PERSONNALISE#', $_SESSION['statut'])) 
+            {
+                $donnees = Evenements::Pasts_events_list_admin($_SESSION['id_user']);
+                
+                $controller_report='admin';
+                $fonction_back='interface_admin';
+
+                require_once('views/admin/personnalise/pasts_events_list.php');
+            }
+            elseif(preg_match('#MEF#', $_SESSION['statut'])) 
+            {
+                $donnees = Evenements::Pasts_events_list_admin($_SESSION['id_user']);
+                
+                $controller_report='admin';
+                $fonction_back='interface_admin';
+
+                require_once('views/admin/personnalise/pasts_events_list.php');
             }
           else
             {
-                $donnees = Evenements::Pasts_events_list($_SESSION['id_user']);
+                $donnees = Evenements::Pasts_events_list_admin($_SESSION['id_user']);
 
                 $controller_report='admin';
                 $fonction_back='interface_admin';
@@ -188,19 +248,32 @@ class AdminController
           require_once('views/login.php');
     }
      
+     
      public static function tuteurs_list() // liste des tuteurs 
     {
         
         if(isset($_SESSION['id_statut']))// on vérifie que seul un utilisateur connecté peut accéder à ces pages
         {
-            
-            $donnees= Admin::Get_all_tuteurs($_SESSION['id_user']);
-            $req= Tutorat::Get_tutorat($_SESSION['id_user']);  // on récupère la liste des tutorats qu'il administre pour affecter des tuteurs pour un tutorat en particulier
+            if(preg_match('#PERSONNALISE#', $_SESSION['statut']))
+            {
+              $donnees= Admin::Get_all_tuteurs($_SESSION['id_user']);
+              
 
-            $controller_report='admin';
-            $fonction_back='interface_admin';
+              $controller_report='admin';
+              $fonction_back='interface_selection';
 
-            require_once('views/admin/tuteurs_list.php');
+              require_once('views/admin/personnalise/state_tuteurs_list.php');
+            }
+            else
+            {
+              $donnees= Admin::Not_selected_tuteurs($_SESSION['id_user']);
+              $req= Tutorat::Get_tutorat($_SESSION['id_user']);  // on récupère la liste des tutorats qu'il administre pour affecter des tuteurs pour un tutorat en particulier
+
+              $controller_report='admin';
+              $fonction_back='interface_admin';
+
+              require_once('views/admin/tuteurs_list.php'); 
+            }
         }
         else
             require_once('views/login.php');  
@@ -211,19 +284,41 @@ class AdminController
         
         if(isset($_SESSION['id_statut']))// on vérifie que seul un utilisateur connecté peut accéder à ces pages
         {
-           
-            $donnees= Admin::Get_my_tutores($_SESSION['id_user']);
-            $data= Admin::Get_free_tuteurs();
+              if(preg_match('#IMMERSION#', $_SESSION['statut'])) 
+              {
+                $donnees= Admin::Get_tutores_signedUp_event($_SESSION['id_user']); // liste des tutorés qui sont inscrits à ses evenements
 
-            $controller_report='admin';
-            $fonction_back='interface_tutores_mef';
+                $controller_report='admin';
+                $fonction_back='interface_admin';
 
-            require_once('views/admin/tutores_list.php');
-        }
-        else
-            require_once('views/login.php');  
+                require_once('views/admin/immersion/tutores_signedUp_event.php');
+              }
+
+              elseif(preg_match('#PERSONNALISE#',$_SESSION['statut'])) 
+              {
+                $donnees= Admin::Get_all_tutores();
+
+                $controller_report='admin';
+                $fonction_back='interface_selection';
+
+                require_once('views/admin/personnalise/state_tutores_list.php');
+              }
+         
+              elseif(preg_match('#MEF#', $_SESSION['statut']))
+               {
+                    $donnees= Admin::Get_my_tutores($_SESSION['id_user']);
+                    $data= Admin::Get_free_tuteurs();
+
+                    $controller_report='admin';
+                    $fonction_back='interface_tutores_mef';
+
+                    require_once('views/admin/personnalise/state_tutores_list.php');
+                }
+         
     }
-
+    else
+            require_once('views/login.php'); 
+}
     public function interface_tutores_mef()
     {
         if(isset($_SESSION['id_statut']))// on vérifie que seul un utilisateur connecté peut accéder à ces pages
@@ -308,7 +403,7 @@ class AdminController
                 require_once('views/login.php');
      }
 
-     public function create_center()  // il s'agit de la vue
+     public function create_center()  // il s'agit de la vue de création d'un centre
      {
        if( isset($_SESSION['id_statut']))
        {
@@ -346,19 +441,26 @@ class AdminController
            if( isset($_POST['consulter']))
            {
              $data= Users::Get_info($_POST['id_u']); // on récupère les info du user en question
+             if(preg_match('#MEF#', $_SESSION['statut']))
+                  $donnees = Evenements::Get_my_events_list($_POST['id_u'],$_SESSION['id_user']);
+             else
              $donnees = Evenements::Get_informations_events_on_user($_POST['id_u'],$_SESSION['id_user']); // on récupère les évènements que le tuteur a effectué quand c'est un admin en particulier qui l'a crée 
 
               $controller_report='admin';
-              $fonction_back='pasts_events_list';
+              $fonction_back='interface_admin';
 
-          
+            
              require_once('views/admin/show_informations.php');
           }
           elseif(isset($_POST['annuler']))
           {
             $event= new Evenements();
             $event->Cancel_participation($_POST['id_u'],$_POST['id_e_c']);
-            
+            if( $_POST['statut'] == 'TUTEUR')
+            $event->updateNombrePlaces($_POST['id_e_c'],1);
+            else
+              Evenements::Update_nbplacesTutores($_POST['id_e_c'],-1); // on met à jour le nombre de tutorés inscrits
+
             $donnees = Evenements::Subscription_list($_POST['id_e_c']); // on récupère la liste des participants
 
             $data= Evenements::Get_informations_on_events($_POST['id_e_c']);  // on récupère la date, le. lieu etc sur l'évenement
@@ -366,7 +468,11 @@ class AdminController
             $controller_report='admin';
             $fonction_back='future_events_list';
 
-              require_once('views/admin/subscription_list.php');
+              if(preg_match('#PERSONNALISE#', $_SESSION['statut']))
+                  require_once('views/admin/personnalise/subscription_list.php');
+              else
+                require_once('views/admin/subscription_list.php');
+
           }
        }
        else
@@ -400,7 +506,7 @@ class AdminController
           require_once('views/login.php');
     }
     
-    public static function declare()  // on affiche le formulaire de déclaration des heures pour un admin
+    public static function declare_hours()  // on affiche le formulaire de déclaration des heures pour un admin
     {
       if( isset($_SESSION['id_statut']))
        {
@@ -443,15 +549,42 @@ class AdminController
             }
 
            }
-         elseif(isset($_POST['supprimer']))
+          elseif(isset($_POST['supprimer']))
+          { 
+             if(isset($_POST['id_tutore']))
+             {
+               Admin::Delete_link($_POST['id_tutore']);
+               AdminController:: tutores_list(); // on charge la liste des tu
+             }
+             elseif(isset($_POST['id_tuteur']))
+             {
+               Admin::Delete_link($_POST['id_tuteur']);
+               AdminController:: tuteurs_list(); // on charge la liste des tu
+             }
+
+         }
+         elseif(isset($_POST['consulter']))
          {
-           Admin::Delete_link($_POST['id_tutore']);
-         
+            if(isset($_POST['id_tutore']))
+            {
+              $donnees= Tutores::Get_working_list($_POST['id_tutore']);
+              $data= Users::Get_info($_POST['id_tutore']);
 
-          $controller_report='admin';
-          $fonction_back='interface_tutorat';
+              $controller_report='admin';
+              $fonction_back='tutores_list';
 
-          AdminController:: tutores_list(); // on charge la liste des tu
+              require_once("views/admin/show_tutores_links.php");
+            }
+            elseif(isset($_POST['id_tuteur']))
+            {
+              $donnees= Tuteurs::Get_working_list($_POST['id_tuteur']);
+              $data= Users::Get_info($_POST['id_tuteur']);
+
+              $controller_report='admin';
+              $fonction_back='tuteurs_list';
+
+              require_once("views/admin/show_tuteurs_links.php");
+         }
         }
        }
        else
@@ -461,12 +594,22 @@ class AdminController
     
     public function interface_selection()
     {
-      if( isset($_SESSION['id_statut']))
+      if( isset($_SESSION['id_statut']) )
        {
-          $controller_report='admin';
-          $fonction_back='interface_admin';
+          if(preg_match('#PERSONNALISE#',$_SESSION['statut']))
+          {
+            $controller_report='admin';
+            $fonction_back='interface_admin';
+
+           require_once('views/admin/personnalise/interface_selection.php') ;
+         }
+         else
+         {
+            $controller_report='admin';
+            $fonction_back='interface_admin';
 
            require_once('views/admin/interface_selection.php') ;
+         }
        }
        else
           require_once('views/login.php');

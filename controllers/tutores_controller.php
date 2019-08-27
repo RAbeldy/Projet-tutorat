@@ -1,8 +1,9 @@
 <?php
+require_once('models/users.php');
 require_once('models/tuteurs.php');
 require_once('models/tutores.php');
 require_once('models/evenements.php');
-require_once('models/users.php');
+
 /* Définition du controller */
 class TutoresController
 {
@@ -113,8 +114,8 @@ class TutoresController
             
             if(isset($_SESSION['id_statut']))// on vérifie que seul un utilisateur connecté peut accéder à ces pages
             {    
-                 $tuteurs= new Tutores();
-                 $donnees=$tuteurs->Get_working_list($_SESSION['id_user']);
+                 
+                 $donnees=Tutores::Get_working_list($_SESSION['id_user']);
 
                  $controller_report='tutores';
                  $fonction_back='selection_tuteurs';
