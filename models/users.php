@@ -185,7 +185,7 @@ require_once('connexion.php');
     }
 
 
- public function Connexion($email,$pwd)
+ public  static function Connexion($email,$pwd)
  {  
       
     $db = Db::getInstance();

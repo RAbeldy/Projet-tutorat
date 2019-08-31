@@ -136,7 +136,7 @@
 						if(is_null($_SESSION['id_statut']))
 						{
 						?>
-						<a class="dropdown-item forgot" href="?controller=users&action=connexion" role="presentation">Connexion</a>
+						<a class="dropdown-item forgot" href="?controller=users&action=login" role="presentation">Connexion</a>
 						<?php
 						}
 						else

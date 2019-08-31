@@ -4,7 +4,6 @@ require_once('models/users.php');
 class UsersController
 {
 
-
 public function choixStatut()
 {
 	require_once('views/choix_statut_signup.php');
@@ -17,100 +16,96 @@ public function login()
 public function connexion()
 {
 	//intance e la classe modele
-        $user= new Users();
         if(isset($_POST['email']) && isset($_POST['password']))
         {
-            
-	        if($user->Connexion($_POST['email'],$_POST['password'])== 1)
+	        if(Users::Connexion($_POST['email'],$_POST['password'])== 1)
 	        { 
-	        	if($_SESSION['id_statut'] == 13) // tuteur
-	        	{
-	        		require_once('views/tuteurs/interface_tuteur.php');
-	        	}
-	        	elseif($_SESSION['id_statut'] == 16)// tutoré
-	        	{
-	        		require_once('views/tutores/interface_tutore.php');
-	        	}
-	        	elseif($_SESSION['id_statut'] == 17) // ADMIN_IMMERSION
-	        	{
-	        		require_once('views/admin/immersion/interface_admin.php');
-	        	}
-	        	elseif($_SESSION['id_statut'] == 6) // GESTIONNAIRE_COMPTE
-	        	{
-	        		require_once('views/admin/interface_superadmin.php');
-	        	}
-	        	elseif($_SESSION['id_statut'] == 11) // ADMIN_MEF
-	        	{
-	        		require_once('views/admin/mef/interface_admin_mef.php');
-	        	}
-	        	elseif($_SESSION['id_statut'] == 15) // admin_vauban
-	        	{
-	        		require_once('views/admin/interface_admin.php');
-	        	}
-	        	elseif($_SESSION['id_statut'] == 18) // admin_lycees_colleges
-	        	{
-	        		require_once('views/admin/interface_admin.php');
-	        	}
-	        	elseif($_SESSION['id_statut'] == 20) // admin_apsco
-	        	{
-	        		require_once('views/admin/interface_admin.php');
-	        	}
-	        	elseif($_SESSION['id_statut'] == 8) // ADMIN_TUTORAT_PERSONNALISE
-	        	{
-	        		require_once('views/admin/personnalise/interface_admin.php');
-	        	}
-	        	elseif($_SESSION['id_statut'] == 1) // superadmin
-	        	{
-	        		require_once('views/superadmin/interface_superadmin.php');
-	        	}
-	        	else
-	        	{
-	        		$message= 'interface pas encore crée';
-	        		$controller_report='evenements';
-                    $fonction_back='Display_future_events';
-                    require_once('views/system/error.php');
-	        	}
-	        }
-	        else
-	        {
-	 
-	           require_once('views/login.php');
-	        }
+		        if(isset($_SESSION['id_statut']))
+        	    {	
+        	    	$idStaut = $_SESSION['id_statut'];
+        	    	switch ($idStaut) {
+        	    		case 13:
+        	    		# tuteur
+        	    			require_once('views/tuteurs/interface_tuteur.php');
+        	    			break;
+        	    		case 16:
+        	    		# tutoré
+        	    			require_once('views/tutores/interface_tutore.php');
+        	    			break;
+        	    		case 17:
+        	    			# ADMIN_IMMERSION
+        	    		     require_once('views/admin/immersion/interface_admin.php');
+        	    			break;
+        	    		case 6:
+        	    			# GESTIONNAIRE_COMPTE
+        	    		      require_once('views/admin/interface_superadmin.php');
+        	    			break;
+        	    		case 11:
+        	    			# ADMIN_MEF
+        	    		       require_once('views/admin/interface_superadmin.php');
+        	    			break;
+                        case 15:
+                        	# admin_vauban
+                             require_once('views/admin/interface_admin.php');
+                        	break;
+                        case 18:
+                        	# admin_lycees_colleges
+                              require_once('views/admin/interface_admin.php');
+                        	break;
+                        case 20:
+                        	# admin_apsco
+                              require_once('views/admin/interface_admin.php');
+                        	break;
+                        case 8:
+                        	# ADMIN_TUTORAT_PERSONNALISE
+                              require_once('views/admin/personnalise/interface_admin.php');
+                        	break;
+                        case 1:
+                        	# superadmin
+                              require_once('views/superadmin/interface_superadmin.php');
+                        	break;
+        	    		
+        	    		default:
+        	    			# GESTIONNAIRE_COMPTE
+		        	    		$message= 'interface pas encore crée';
+				        		$controller_report='evenements';
+			                    $fonction_back='Display_future_events';
+			                    require_once('views/system/error.php');
+        	    			break;
+        	    	}
+		        }
+		    }	    
    		}
-	    else
-	    {
-	    	require_once('views/login.php');
-	    }
 }
 
 public function redirection() // redirection vers interface en fonction du statut
-{
-  if(isset($_SESSION['id_statut']))// on vérifie que seul un utilisateur connecté peut accéder à ces pages
-    { 
-        if( $_SESSION['id_statut'] == 11)
-        	require_once('views/admin/mef/interface_admin_mef.php');
-        elseif($_SESSION['id_statut'] == 14)
-        	require_once('views/admin/interface_admin.php'); // à compléter
-        elseif($_SESSION['id_statut'] == 13)
-        	require_once('views/admin/interface_tuteur.php');
-        elseif($_SESSION['id_statut'] == 16)
-        	require_once('views/admin/mef/interface_tutore.php');
-        else
-        	require_once('views/admin/mef/interface_admin.php');
-    }
-  else
-    require_once('views/login.php');
-  
-}
+	{
+	  if(isset($_SESSION['id_statut']))// on vérifie que seul un utilisateur connecté peut accéder à ces pages
+	    { 
+	        if( $_SESSION['id_statut'] == 11)
+	        	require_once('views/admin/mef/interface_admin_mef.php');
+	        elseif($_SESSION['id_statut'] == 14)
+	        	require_once('views/admin/interface_admin.php'); // à compléter
+	        elseif($_SESSION['id_statut'] == 13)
+	        	require_once('views/admin/interface_tuteur.php');
+	        elseif($_SESSION['id_statut'] == 16)
+	        	require_once('views/admin/mef/interface_tutore.php');
+	        else
+	        	require_once('views/admin/mef/interface_admin.php');
+	    }
+	  else
+	    require_once('views/login.php');
+	  
+	}
 public function resetPassword()
-{
-	require_once('views/reset_password_view.php');
-}
+	{
+		require_once('views/reset_password_view.php');
+	}
 
 public function forgotPassword()
-{
-	require_once('views/forgot_password_view.php');
-}
+	{
+		require_once('views/forgot_password_view.php');
+	}
 
 public function inscription()
 	{
@@ -123,15 +118,15 @@ public function inscription()
 	}
 
 public function profil()
-{
-	if(isset($_SESSION['id_statut']))// on vérifie que seul un utilisateur connecté peut accéder à ces pages
-        { 
-            $data = Users::Get_info($_SESSION['id_user']);    // on récupère les info des user
-            require_once('views/mon_profil.php');
-        }
-     else
-       require_once('views/login.php');
-}
+	{
+		if(isset($_SESSION['id_statut']))// on vérifie que seul un utilisateur connecté peut accéder à ces pages
+	        { 
+	            $data = Users::Get_info($_SESSION['id_user']);    // on récupère les info des user
+	            require_once('views/mon_profil.php');
+	        }
+	     else
+	       require_once('views/login.php');
+	}
 public static function update_account()
         {
             if(isset($_SESSION['id_statut']))// on vérifie que seul un utilisateur connecté peut accéder à ces pages
@@ -229,17 +224,17 @@ public function upload_file()
    }
 }
 public function set_picture_path($target_file)
-{
-	$user = new Users();
-	$user->setChemin_photo($target_file);
-	$user->Set_picture_path($_SESSION['id_user']);
-}
+	{
+		$user = new Users();
+		$user->setChemin_photo($target_file);
+		$user->Set_picture_path($_SESSION['id_user']);
+	}
 public function deconnexion()
-{
-	$user= new Users();
-	$user->Deconnexion();
-    require_once('views/login.php');
-}	
+	{
+		$user= new Users();
+		$user->Deconnexion();
+	    require_once('views/login.php');
+	}	
 
 }
 ?>
