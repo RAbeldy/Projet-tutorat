@@ -102,10 +102,34 @@ class EvenementsController
             {    
               if($_SESSION['id_statut'] == 11)
                 require_once('views/admin/mef/interface_admin_mef.php');
-              elseif($_SESSION['id_statut'] == 14)
-                require_once('views/admin/mef/interface_admin_mef.php');
+              elseif($_SESSION['id_statut'] == 17)
+                require_once('views/admin/immersion/interface_admin.php');
               else
-                require_once('views/admin/mef/interface_admin_mef.php');
+                require_once('views/admin/interface_admin.php');
+            } 
+            else
+            {
+                $message = 'Vous avez déja un évènement prévu à cette date et à cette heure, rendez vous dans la rubrique "je me suis inscrit à " pour le supprimer, puis dans "créer évènement", créer en un nouveau si vous le souhaitez';
+                $controller_report='admin';
+                $fonction_back='admin_set_event';
+                require_once('views/system/error.php');
+            }
+            
+    }
+    public function superadmin_set_event()
+    {
+      // une instance de la classe tuteur
+            $event = new Evenements(); 
+            $event->setDate_evenement( $_POST['date_creation']);
+            $event->setDuree( $_POST['duree']);
+            $event->setNb_tuteurs($_POST['nb_tuteurs']);
+            $event->setNb_tutores($_POST['nb_tutores']);
+
+            $data= Tutorat::Get_idAdmin_tutorat($_POST['id_t']); // on récupère l'id de l'admin qui gère ce tutorat
+            
+            if( $event->Admin_set_event($data[0]->getId_user(),$_POST['id_t']) == 0) // on a récupéré l'identifiant de celui avec qui il aura un tutorat personnalisé ou alors l'identifiant du lieu
+            {    
+                require_once('views/superadmin/events.php');
             } 
             else
             {

@@ -77,7 +77,7 @@
             <ul class="nav navbar-nav mr-auto">
                 <!-- CONTROL  sur la navbar horizontale -->
                 <?php
-                if(isset($_SESSION['statut']) &&($_SESSION['statut']== 'TUTEUR')) // id_statut d'un  tuteur
+                if(isset($_SESSION['statut']) && ($_SESSION['statut']== 'TUTEUR')) // id_statut d'un  tuteur
                  {
                   ?>
                 <li class="nav-item"><a href="?controller=tuteurs&action=interface_tuteur" class="nav-link">Mon tutorat </a>
@@ -136,7 +136,7 @@
 						if(is_null($_SESSION['id_statut']))
 						{
 						?>
-						<a class="dropdown-item forgot" href="?controller=users&action=connexion" role="presentation">Connexion</a>
+						<a class="dropdown-item forgot" href="?controller=users&action=login" role="presentation">Connexion</a>
 						<?php
 						}
 						else
@@ -511,11 +511,11 @@
                                 <i class="fab fa-phoenix-squadron"></i>
                                 <span>Tutorats</span>
                             </a>
-                            <a class="nav-link" href="#">
+                            <a class="nav-link" href="?controller=superadmin&action=interface_hours">
                                 <i class="fab fa-phoenix-squadron"></i>
                                 <span>Déclaration / heure</span>
                             </a>
-                            <a class="nav-link" href="#">
+                            <a class="nav-link" href="?controller=superadmin&action=contact">
                                     <i class="fab fa-phoenix-squadron"></i>
                                     <span>Questions / Support</span>
                             </a>

@@ -412,13 +412,13 @@ class AdminController
           $controller_report='admin';
           $fonction_back='interface_tutorat';
 
-          require_once('views/admin/create_center.php');
+          require_once('views/admin/create_tutorat_center.php');
        }
           else
                 require_once('views/login.php');
      }
 
-     public function tutorat_center_list()
+     public function tutorat_center_list() // liste des tutorats que je dirige
      {
        if( isset($_SESSION['id_statut']))
        {

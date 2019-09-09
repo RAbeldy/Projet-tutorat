@@ -159,7 +159,7 @@ require_once('connexion.php');
     public static function Get_info($id_user) // pour la page de modification de compte
     {
       $db = Db::getInstance();
-      $req= $db->query("SELECT ville,adress,complement_adress,code_postal,u.chemin_photo as chemin_photo,u.nom as nom,u.prenom as prenom,u.email as email,u.niveau as niveau, u.ecole as ecole FROM adresse as a,user as u WHERE a.id_adresse = u.id_adresse AND u.id_user = $id_user ");
+      $req= $db->query("SELECT ville,adress,complement_adress,code_postal,u.password as password,u.chemin_photo as chemin_photo,u.nom as nom,u.prenom as prenom,u.email as email,u.niveau as niveau, u.ecole as ecole FROM adresse as a,user as u WHERE a.id_adresse = u.id_adresse AND u.id_user = ".$id_user." ");
 
       foreach ($req->fetchAll() as $temp) 
       {
@@ -169,6 +169,7 @@ require_once('connexion.php');
         $user->setVille($temp['ville']);
         $user->setCom_adress($temp['complement_adress']); 
         $user->setChemin_photo($temp['chemin_photo']); 
+        $user->setPassword($temp['password']); 
         $user->setNom($temp['nom']);
         $user->setPrenom($temp['prenom']);
         $user->setEmail($temp['email']);
@@ -286,7 +287,73 @@ require_once('connexion.php');
       }
       return $list;
      }    
-     
+    public static function create_account($id_tutorat)
+    {
+      $db=Db::getInstance();
+
+      $req= $db->query("SELECT id_admin FROM administrer WHERE id_tutorat= ".$id_tutorat."");
+      
+      if($req->rowCount()== 0)
+      { 
+        $req= $db->prepare("SELECT tt.libelle as libelle FROM type_tutorat as tt,tutorat as t WHERE t.id_tutorat= ? AND t.id_typeTutorat= tt.id_typeTutorat ");
+        $req->execute(array($id_tutorat));
+        $res= $req->fetch()['libelle'];
+        
+                
+        
+        $req= $db->prepare("SELECT id_user FROM user WHERE prenom= ?"); // je compte le nombre compte admin de ce type qui existent deja
+        $req->execute(array($res));
+        $nb= $req->rowCount() + 1;
+
+        $today = date('y-m-j');
+        $req= $db->prepare("INSERT INTO user(nom,prenom,date_naissance,email,password) VALUES('ADMIN',?,?,?,'az')");
+
+        $res= $res ;
+        $email= 'ADMIN'.$nb.'.'.$res.'@yncrea.tutorat.fr';
+        $req->execute(array($res,$today,$email));
+        
+        $req= $db->prepare("INSERT INTO avoir_statut (id_user,id_statut_compte,id_statut,id_etat) VALUES ((SELECT id_user FROM user WHERE nom='ADMIN' AND prenom = ? ORDER BY date_naissance DESC LIMIT 1),(SELECT id_statut_compte FROM statut_compte  WHERE libelle = 'VALIDE'),(SELECT id_statut FROM statut WHERE libelle LIKE ? ),(SELECT id_etat FROM etat as e WHERE e.libelle = 'LIBRE')) ");
+        $req->execute(array($res,'%'.$res.'%'));
+
+        $req= $db->prepare("INSERT INTO administrer(id_admin,id_tutorat,id_typeTutorat) VALUES((SELECT id_user FROM user WHERE nom='ADMIN' AND prenom = ? ORDER BY date_naissance DESC LIMIT 1),?,(SELECT id_typeTutorat FROM tutorat WHERE id_tutorat= ?)) ");
+        $req->execute(array($res,$id_tutorat,$id_tutorat));
+
+        return 0;
+      }
+      else
+        return 1;
+
+    }
+
+    public static function Get_working_tuteurs()  // liste des tuteurs pour qui des heures ont deja été validées (et la somme de ces heures)
+    {
+
+      $db=Db::getInstance();
+      $req= $db->query("SELECT ville,adress,complement_adress,code_postal,u.id_user,u.nom as nom,u.prenom as prenom,u.email as email,u.niveau as niveau, u.ecole as ecole,u.phone, SUM(vh.durée) as nb_heure FROM adresse as a,user as u,tuteurs as tu,validation_heure as vh WHERE a.id_adresse = u.id_adresse AND u.id_user = tu.id_tuteurs AND u.id_user = vh.id_tuteurs  GROUP BY id_user ORDER BY nom" );
+
+       foreach ($req->fetchAll() as $temp) 
+      {
+        $user= new Users();
+        $user->setAdress($temp['adress']);
+        $user->setCode_postal($temp['code_postal']);
+        $user->setVille($temp['ville']);
+        $user->setCom_adress($temp['complement_adress']); 
+        
+        
+        $user->setId_user($temp['id_user']); 
+        $user->setNom($temp['nom']);
+        $user->setPrenom($temp['prenom']);
+        $user->setEmail($temp['email']);
+        $user->setNiveau($temp['niveau']);
+        $user->setEcole($temp['ecole']);
+
+        $list []= array('user' => $user,'heure'=>$temp['nb_heure']);
+      }
+      return $list;
+
+    }
+
+    
 
      
     

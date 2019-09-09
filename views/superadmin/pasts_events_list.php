@@ -23,11 +23,12 @@
                                             </div>
                                             <div class="card-body">
                                                     <div class=" rechercher">
-                                                        <td><a href="controllers/PHPExcel-1.8/exportTutorat/exportData-xlsx.php"><button class="btn"  name="" > Imprimer</button></a></td>
+                                                    <!--    <td><a href="controllers/PHPEXCEL-1.8/Examples/01simple-download-xlsx.php"><button class="btn"  name="" > Imprimer</button></a></td>-->
+                                                        <td><a href="controllers/PHPEXCEL-1.8/exportTutorat/exportData-xlsx.php"><button class="btn"  name="" > Imprimer</button></a></td>
                                                     </div>
                                                 <div class="table-responsive table mt-2" role="grid" aria-describedby="dataTable_info">
                                                     <table class="table dataTable my-0" id="dataTable">
-                                                            <form method="post" action="?controller=admin&action=future_events_list">
+                                                          <form method="post" action="?controller=admin&action=future_events_list">
                                                             <div class="col-md-7 text-nowrap">
                                                                 <div class="row text-center">
                                                                   <label style="flex: auto;">Période</label>
@@ -48,16 +49,15 @@
                                                           </form>
                                                         <thead>
                                                             <tr>
+                                                                <th>Type_tutorat</th>
                                                                 <th>Tutorat</th>
                                                                 <th>Date</th>
                                                                 <th>Adresse</th>
-                                                                <th>Tutores inscrits</th>
                                                                 <th>Tuteurs demandés</th>
                                                                 <th>Places restantes(tuteurs)</th>
                                                                 <th>Horaires</th>
-                                                                <th>Modifier</th>
-                                                                <th>Supprimer</th>
                                                                 <th>Consulter</th>
+                                                                <th>Imprimer</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
@@ -67,25 +67,24 @@
                                                             {
                                                              foreach ($donnees as $elt) 
                                                             {
+                                                              if(!preg_match("#ADMINISTRATION#", $elt['tutorat']) )
+                                                                {
                                                              ?>
 
-                                                              <form method="post" action="?controller=admin&action=modify_event">
+                                                              <form method="post" action="?controller=superadmin&action=modify_event">
                                                                 
                                                               <tr>
+                                                                  <td> <label><?=$elt['type_tutorat']?></label></td>
                                                                   <td> <label><?=$elt['tutorat']?></label></td>
                                                                   <td><label><?=$elt['evenement']->getDate_evenement()?></label></td>
                                                                   <td><label><?=$elt['evenement']->getLieu()?></label></td>
-                                                                  <td><label><?=$elt['evenement']->getNb_places_tutores()?></label></td>
                                                                   <td><label><?=$elt['evenement']->getNb_tuteurs()?></label></td>
                                                                   <td><label><?=$elt['evenement']->getNb_places()?></label></td>
                                                                   <td><label ><?=$elt['planning_event']?></label></td>
-                                                                 
 
-                                                                  <td><button class="btn" type="submit" name="modifier" >Modifier</button>
-                                                                  </td>
-                                                                  <td><button class="btn" type="submit" name="supprimer" >Supprimer</button>
-                                                                  </td>
                                                                   <td><button class="btn" type="submit" name="consulter" >Consulter</button>
+                                                                  </td>
+                                                                  <td><button class="btn" type="submit" name="imprimer" >Imprimer</button>
                                                                   </td>
                                                                   
 
@@ -93,6 +92,7 @@
                                                                  <input type="hidden" name="id_e" value="<?=$elt['evenement']->getId_evenement()?>" >
                                                              </form>
                                                             <?php
+                                                                }
                                                              }
                                                              }
                                                              ?>

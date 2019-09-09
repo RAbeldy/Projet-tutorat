@@ -387,7 +387,7 @@ class Evenements
         return $list;
 
     }
-    public static function Pasts_events_list_admin($id_admin) // liste des evenements que les tutores de la mef vont faire(tutorats personnamisés)
+    public static function Pasts_events_list_admin($id_admin) // liste des evenements que les tutores de la mef vont faire(tutorats personnalisés)
     {
       $db = Db::getInstance();
         $list=[];
@@ -454,7 +454,52 @@ class Evenements
 
     }
 
-    
+    public static function Future_events_list_superadmin() // liste des évènements à venir  
+    {
+       $db = Db::getInstance();
+        $list=[];
+        $req = $db->query(' SELECT DISTINCT tt.libelle as libelle_type ,t.libelle as libelle,e.id_evenement,e.date_evenement,e.lieu,e.nb_places_tutores,e.nb_tuteurs,e.nb_places,p.duree as duree FROM evenement as e,tutorat as t,planning_event as p,type_tutorat as tt WHERE e.id_tutorat= t.id_tutorat AND e.id_planning = p.id_planning AND t.id_typeTutorat= tt.id_typeTutorat AND e.date_evenement > NOW()  ORDER BY  e.date_evenement DESC');
+        
+
+        foreach($req->fetchAll() as $data)
+        { 
+          $event= new Evenements();
+          $event->setId_evenement($data['id_evenement']);
+          $event->setDate_evenement($data['date_evenement']);
+          $event->setNb_tuteurs($data['nb_tuteurs']);
+          $event->setLieu($data['lieu']);
+          $event->setNb_places($data['nb_places']);
+          $event->setNb_places_tutores($data['nb_places_tutores']);
+         
+          $list []= array('evenement' => $event,'type_tutorat'=>$data['libelle_type'],'tutorat' => $data['libelle'],'planning_event' => $data['duree']);
+        }
+        return $list;
+
+    }
+
+    public static function Pasts_events_list_superadmin() // liste des évènements passés 
+    {
+       $db = Db::getInstance();
+        $list=[];
+        $req = $db->query(' SELECT tt.libelle as libelle_type ,t.libelle as libelle,e.id_evenement,e.date_evenement,e.lieu,e.nb_places_tutores,e.nb_tuteurs,e.nb_places,p.duree as duree FROM evenement as e,participer_evenement as pe,tutorat as t,planning_event as p,type_tutorat as tt WHERE e.id_evenement= pe.id_evenement AND e.id_tutorat= t.id_tutorat AND e.id_planning = p.id_planning AND t.id_typeTutorat= tt.id_typeTutorat AND e.date_evenement < NOW()  ORDER BY  e.date_evenement DESC');
+        
+
+        foreach($req->fetchAll() as $data)
+        { 
+          $event= new Evenements();
+          $event->setId_evenement($data['id_evenement']);
+          $event->setDate_evenement($data['date_evenement']);
+          $event->setNb_tuteurs($data['nb_tuteurs']);
+          $event->setLieu($data['lieu']);
+          $event->setNb_places($data['nb_places']);
+          $event->setNb_places_tutores($data['nb_places_tutores']);
+         
+          $list []= array('evenement' => $event,'type_tutorat'=>$data['libelle_type'],'tutorat' => $data['libelle'],'planning_event' => $data['duree']);
+        }
+        return $list;
+
+    }
+
 
     public static function Subscription_list($id_evenement) // liste des participants à un évènement qu'un admin a crée 
     {
@@ -588,7 +633,30 @@ class Evenements
         }
         $req= $db->query("DELETE FROM participer_evenement WHERE id_evenement= ".$id_evenement." "); // dans ce cas on supprime en meme tant le tuteur et le tutoré s'il s'était inscrit à cet évènement
     }
+    
 
+    public static function Get_validated_events($id_tuteur)  // liste des évèenements qui ont déja été validés
+    {
+
+      $db=Db::getInstance();
+      $list = [];
+      $req= $db->prepare("SELECT t.libelle as libelle,e.id_evenement,e.date_evenement,e.lieu,pe.duree as duree,vh.payer as payé FROM evenement as e, validation_heure as vh, planning_event as pe, tutorat as t WHERE t.id_tutorat = e.id_tutorat AND  e.id_evenement= vh.id_evenement AND vh.id_tuteurs= ? AND e.id_planning= pe.id_planning  " );
+      $req->execute(array($id_tuteur));
+
+      foreach($req->fetchAll() as $data)
+        { 
+          $event= new Evenements();
+          $event->setId_evenement($data['id_evenement']);
+          $event->setDate_evenement($data['date_evenement']);
+          $event->setLieu($data['lieu']);
+          
+         
+          $list []= array('evenement' => $event,'tutorat' => $data['libelle'],'planning_event' => $data['duree'],'payé'=>['payé']);
+        }
+
+        return $list;
+
+    }
     public  function Get_nb_inscrits($id_evenement) // le nombre de tuteurs deja. inscrits à l'évènement
     {
         $db = Db::getInstance(); 

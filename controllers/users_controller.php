@@ -37,7 +37,7 @@ public function connexion()
 	        	}
 	        	elseif($_SESSION['id_statut'] == 6) // GESTIONNAIRE_COMPTE
 	        	{
-	        		require_once('views/admin/interface_superadmin.php');
+	        		require_once('views/admin/interface_gestionnaire.php');
 	        	}
 	        	elseif($_SESSION['id_statut'] == 11) // ADMIN_MEF
 	        	{
@@ -62,7 +62,7 @@ public function connexion()
 	        	elseif($_SESSION['id_statut'] == 1) // superadmin
 	        	{
 	        		require_once('views/superadmin/interface_superadmin.php');
-	        	}
+	        	} 
 	        	else
 	        	{
 	        		$message= 'interface pas encore crée';
@@ -234,6 +234,29 @@ public function set_picture_path($target_file)
 	$user->setChemin_photo($target_file);
 	$user->Set_picture_path($_SESSION['id_user']);
 }
+
+   public function create_account() // ils 'agit de l'action de créer à ne pas confondre dans le controller admin
+     {
+       if( isset($_SESSION['id_statut']))
+       {
+            var_dump($_POST['id_t']);
+          if( Users::create_account($_POST['id_t']) == 0)
+          {
+           
+           require_once('views/superadmin/interface_tutorat.php');
+          }
+          else
+          {
+          	$message = ' Un administrateur est déja en charge de ce tutorat, pour affecter sa gestion à une autre personne, il est primordial de rompre le contrat avec l\'administrateur actuel. Rendez-vous donc dans la page "les centres de tutorat" si tel est votre souhait ';
+            $controller_report='superadmin';
+            $fonction_back='interface_account_creation';
+
+            require_once('views/system/error.php');
+          } 
+       }
+          else
+            require_once('views/login.php');
+     }
 public function deconnexion()
 {
 	$user= new Users();

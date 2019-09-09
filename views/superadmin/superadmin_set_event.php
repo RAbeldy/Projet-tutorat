@@ -18,7 +18,7 @@
                                                 </p>
                                             </div>
                                             <div class="card-body">
-                                                <form method="post" action="?controller=evenements&action=tuteur_set_event&id=<?=$id;?>" onsubmit="javascript:test_date();javascript:id();javascript:message();">
+                                                <form method="post" action="?controller=evenements&action=superadmin_set_event" onsubmit="javascript:test_date();javascript:message();">
                                                     <div class="row">
                                                         <div class="form-group col-xs-12 col-md-6">
                                                             <label for="date">
@@ -28,45 +28,36 @@
                                                         </div>
                                                         <div class="form-group col-xs-12 col-md-6">
                                                             <label for="lieu">
-                                                                <strong>Lieu</strong><br> 
+                                                                <strong>intitulé tutorat</strong><br> 
                                                             </label>
-                                                            <input class="form-control" type="text" placeholder="Lieu" name="lieu"  />
-                                                        </div>
-                                                        <div class="form-group col-12">
-                                                            <label for="tutore">
-                                                                <strong>Tutoré 1</strong><br>
-                                                            </label>
-                                                            <select class="form-control" name="id_1" id="id_1" required>
-                                                                
+                                                            <select class="form-control" name="id_t">
                                                             <?php
-                                                                foreach ($donnees as $elt) 
-                                                            {
-                                                             ?>
-                                                                <option value="<?= $elt->getId_user(); ?>"> <?= $elt->getNom().' '.$elt->getPrenom() ;?></option>
+                                                                foreach($donnees as $data)
+                                                                       {
+                                                                         ?>
+                                                                <option value="<?= $data[1]; ?>" required> <?= $data[0] ;?>
+                                                                    
+                                                                </option>
                                                             <?php
                                                             }
                                                             ?>
-                                                                
+
                                                             </select>
+                                                            
+                                                        </div>
+                                                        <div class="form-group col-xs-12 col-md-6">
+                                                            <label for="tutore">
+                                                                <strong>nombre de Tutorés</strong><br>
+                                                            </label>
+                                                            <input type="number" class="form-control" name="nb_tutores" >
+                                                            
                                                              
                                                         </div>
-                                                        <div class="form-group col-12">
+                                                        <div class="form-group col-xs-12 col-md-6">
                                                             <label for="tutore">
-                                                                <strong>Tutoré 2</strong><br>
+                                                                <strong>nombre de Tuteurs</strong><br>
                                                             </label>
-                                                            <select class="form-control" onchange="javascript:id();" name="id_2" id="id_2">
-                                                                <option value=""> Aucun </option>
-                                                            <?php
-                                                                foreach ($donnees as $elt) 
-                                                            {
-                                                             ?>
-                                                                <option value="<?= $elt->getId_user(); ?>"> <?= $elt->getNom().' '.$elt->getPrenom() ;?></option>
-                                                            <?php
-                                                            }
-                                                            ?>
-                                                                
-                                                            </select>
-                                                             
+                                                            <input type="number" class="form-control" name="nb_tuteurs">
                                                         </div>
                                                         <div class="form-group col-12">
                                                             <label for="tutore">
@@ -115,15 +106,7 @@
                 return -1;
 
                     }
-                } 
-            function id()
-            {
-                var id1= document.getElementById('id_1').value;
-                var id2= document.getElementById('id_2').value;
-                if( document.getElementById('id_1').value == document.getElementById('id_2').value)
-                {
-                    alert(" Vous avez sélectionné deux fois le meme tutoré: ");
-                    return -1;
-                }
-            }        
+                }         
           </script>
+
+         

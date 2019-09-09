@@ -11,24 +11,23 @@
                                         <div class="col-xs-12 col-md-6 card-container">
                                             <div class="card avenir">
                                                 <div class="card-body">
-                                                    <h4 class="card-title">Création évènements</h4>
-                                                    <a href="?controller=superadmin&action=interface_set_event">
-                                                        <button class="btn" type="button">je crée</button>
+                                                    <h4 class="card-title">Décompte des heures pour la période </h4>
+                                                    <a href="?controller=superadmin&action=validated_hours">
+                                                        <button class="btn" type="button">Je consulte</button>
                                                     </a>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="col-xs-12 col-md-6 card-container">
-                                            <div class="card historique">
+                                            <div class="card avenir">
                                                 <div class="card-body">
-                                                    <h4 class="card-title">Les évènements</h4>
-                                                    <a href="?controller=superadmin&action=events">
-                                                        <button class="btn" type="button">passés, à venir</button>
+                                                    <h4 class="card-title">Décompte des heures payées </h4>
+                                                    <a href="?controller=superadmin&action=paid_hours">
+                                                        <button class="btn" type="button">Je consulte</button>
                                                     </a>
                                                 </div>
                                             </div>
                                         </div>
-                                        
                                         
                                     </div>
                                 </div>
@@ -36,4 +35,4 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div>  

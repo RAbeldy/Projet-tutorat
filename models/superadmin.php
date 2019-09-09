@@ -65,60 +65,7 @@ class Superadmin
       return $list ;
     }
 
-    public static function Get_all_tuteurs()  // liste de tous les  tuteurs 
-    {
-        $db = Db::getInstance();
-        $list=[];
-        $req= $db->query("SELECT DISTINCT u.id_user,u.nom,u.prenom,u.date_naissance,u.ecole,u.niveau,u.email,u.phone,a.ville ,a.adress ,a.code_postal,e.libelle as libelle FROM user as u,adresse as a, avoir_statut as at,tuteurs as t,etat as e WHERE   at.id_user = u.id_user AND at.id_etat = e.id_etat AND   u.id_adresse = a.id_adresse  AND  t.id_tuteurs= u.id_user  ORDER BY nom ASC");
-      
-        
-      foreach ($req->fetchAll() as $data)
-      {
-        $users= new Users();
-        $users->setId_user($data['id_user']);
-        $users->setNom($data['nom']);
-        $users->setPrenom($data['prenom']);
-        $users->setDate_naissance($data['date_naissance']);
-        $users->setEcole($data['ecole']);
-        $users->setNiveau($data['niveau']);
-        $users->setEmail($data['email']);
-        $users->setPhone($data['phone']);
-        $users->setAdress($data['adress']);
-        $users->setVille($data['ville']);
-        $users->setCode_postal($data['code_postal']);
-
-        $list []= array('user'=>$users,'etat'=>$data['libelle']);
-      }
-      return $list ;
-        
-    }
-    public static function Get_all_tutores()  // liste de tous les  tutores
-    {
-        $db = Db::getInstance();
-        $list=[];
-        $req= $db->query("SELECT DISTINCT u.id_user,u.nom,u.prenom,u.date_naissance,u.ecole,u.niveau,u.email,u.phone,a.ville ,a.adress ,a.code_postal,e.libelle as libelle FROM user as u,adresse as a, avoir_statut as at,tutores as t,etat as e WHERE at.id_user = u.id_user AND at.id_etat = e.id_etat AND u.id_adresse = a.id_adresse AND t.id_tutores= u.id_user  ORDER BY nom ASC");
-        
-        
-      foreach ($req->fetchAll() as $data)
-      {
-        $users= new Users();
-        $users->setId_user($data['id_user']);
-        $users->setNom($data['nom']);
-        $users->setPrenom($data['prenom']);
-        $users->setDate_naissance($data['date_naissance']);
-        $users->setEcole($data['ecole']);
-        $users->setNiveau($data['niveau']);
-        $users->setEmail($data['email']);
-        $users->setPhone($data['phone']);
-        $users->setAdress($data['adress']);
-        $users->setVille($data['ville']);
-        $users->setCode_postal($data['code_postal']);
-
-        $list []= array('user'=>$users,'etat'=>$data['libelle']);
-      }
-      return $list ;
-        
-    }
+    
     public static function Not_selected_tuteurs($id_admin)  // liste des tuteurs qui n'ont pas déja été sélectionné
     {
         $db = Db::getInstance();
@@ -146,12 +93,12 @@ class Superadmin
       return $list ;
         
     }
-    public static function Selected_tuteurs($id_admin) // liste des tuteurs qu'un admin a choisi et qui ont accepté de travailler pour ce tutorat 
+    public static function All_selected_tuteurs() // liste des tuteurs qu'un admin a choisi et qui ont accepté de travailler pour ce tutorat 
     {
       $db = Db::getInstance();
       $list=[];
-      $req= $db->prepare("SELECT u.id_user,u.nom,u.prenom,u.date_naissance,u.email,u.phone ,a.ville ,a.adress ,a.code_postal,se.liaison,tt.id_tutorat as id_tutorat,tt.libelle as libelle  FROM user as u,adresse as a, avoir_statut as at,tuteurs as t, se_destine as se,administrer as ad,tutorat as tt WHERE at.id_user = u.id_user AND  u.id_adresse = a.id_adresse AND t.id_tuteurs= u.id_user AND tt.id_tutorat= se.id_tutorat AND  ad.id_tutorat = se.id_tutorat AND ad.id_typeTutorat = se.id_typeTutorat AND ad.id_admin= ? AND t.id_tuteurs= se.id_user AND se.liaison = 'OUI' ORDER BY nom ASC ");
-      $req->execute(array($id_admin));
+      $req= $db->query("SELECT u.id_user,u.nom,u.prenom,u.date_naissance,u.email,u.phone ,a.ville ,a.adress ,a.code_postal,se.liaison,tt.libelle as libelle_type,t.libelle  as libelle,e.libelle as libelle_etat FROM user as u,adresse as a, avoir_statut as at,tuteurs as tu, se_destine as se,type_tutorat as tt, tutorat as t,etat as e WHERE e.id_etat =at.id_etat AND at.id_user = u.id_user AND u.id_adresse = a.id_adresse AND tu.id_tuteurs= u.id_user AND t.id_tutorat= se.id_tutorat AND t.id_typeTutorat= se.id_typeTutorat AND tt.id_typeTutorat= t.id_typeTutorat AND tu.id_tuteurs= se.id_user AND se.liaison = 'OUI' ORDER BY nom ASC ");
+     
 
       foreach ($req->fetchAll() as $data)
       {
@@ -166,10 +113,34 @@ class Superadmin
         $users->setVille($data['ville']);
         $users->setCode_postal($data['code_postal']);
 
-        $list []= array('user'=>$users,'se_destine'=>$data['liaison'],'tutorat'=>$data['id_tutorat'],'libelle'=>$data['libelle']);
+        $list []= array('user'=>$users,'se_destine'=>$data['liaison'],'type_tutorat'=>$data['libelle_type'],'tutorat'=>$data['libelle'],'etat'=>$data['libelle_etat']);
       }
       return $list ;
     } 
+    public static function All_selected_tutores() // liste des tutores qu'un admin a inscrit 
+    {
+      $db = Db::getInstance();
+      $list=[];
+      $req= $db->query("SELECT u.id_user,u.nom,u.prenom,u.date_naissance,u.email,u.phone ,a.ville ,a.adress ,a.code_postal,se.liaison,tt.libelle as libelle_type,t.libelle  as libelle,e.libelle as libelle_etat FROM user as u,adresse as a, avoir_statut as at,tutores as tu, se_destine as se,type_tutorat as tt, tutorat as t ,etat as e WHERE e.id_etat =at.id_etat AND at.id_user = u.id_user AND  u.id_adresse = a.id_adresse AND tu.id_tutores= u.id_user AND t.id_tutorat= se.id_tutorat AND t.id_typeTutorat= se.id_typeTutorat AND tt.id_typeTutorat= t.id_typeTutorat  AND tu.id_tutores= se.id_user AND se.liaison = 'OUI' ORDER BY nom ASC ");
+      
+
+      foreach ($req->fetchAll() as $data)
+      {
+        $users= new Users();
+        $users->setId_user($data['id_user']);
+        $users->setNom($data['nom']);
+        $users->setPrenom($data['prenom']);
+        $users->setDate_naissance($data['date_naissance']);
+        $users->setEmail($data['email']);
+        $users->setPhone($data['phone']);
+        $users->setAdress($data['adress']);
+        $users->setVille($data['ville']);
+        $users->setCode_postal($data['code_postal']);
+
+        $list []= array('user'=>$users,'se_destine'=>$data['liaison'],'type_tutorat'=>$data['libelle_type'],'tutorat'=>$data['libelle'],'etat'=>$data['libelle_etat']);
+      }
+      return $list ;
+    }
     
     public static function Get_all_proposal($id_admin) // récupère la liste de toutes les propositions envoyées
     {
