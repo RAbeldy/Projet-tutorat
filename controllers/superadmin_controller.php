@@ -486,7 +486,7 @@ class SuperadminController
          {
            
            $donnees= Tutorat::Get_static_account();
-
+          
            $controller_report='superadmin'; 
            $fonction_back='interface_tutorat';
 
@@ -501,7 +501,7 @@ class SuperadminController
        if( isset($_SESSION['id_statut']))
          { 
              $donnees= Tutorat::Get_working_account($_POST['id_u']);
-             $data= Users::Get_info($_POST['id_u']); // on récupère les informations de ce compte admin
+             $data= Users::Get_admin($_POST['id_u']); // on récupère les informations de ce compte admin
 
              $controller_report='superadmin'; 
              $fonction_back='interface_tutorat';
@@ -532,7 +532,7 @@ class SuperadminController
              else
              {
                $donnees= Tutorat::Get_tutorat($_POST['id_admin']); // on récupère la liste des tutorats associiés à ce compte statique admin
-               $data= Users::Get_info($_POST['id_admin']); // on récupère les informations de ce compte admin
+               $data= Users::Get_admin($_POST['id_admin']); // on récupère les informations de ce compte admin
                $res= Tutorat::Get_available_tutorat($_POST['id_type']); // on récupère la liste des tutorats qui ne sont pas encore affectés
 
                $controller_report='superadmin'; 
@@ -549,7 +549,7 @@ class SuperadminController
      {
       if(isset($_SESSION['id_statut']))// on vérifie que seul un utilisateur connecté peut accéder à ces pages
       { 
-        $donnees= Users::Get_working_tuteurs(); // liste des tuteurs qui apparaissent dans la table de validation des heures
+        $donnees= Users::Get_unpaidHours_tuteurs(); // liste des tuteurs qui ont des heures impayees 
         
         $controller_report='superadmin'; 
         $fonction_back='interface_hours';
@@ -567,7 +567,7 @@ class SuperadminController
         $donnees= Evenements::Get_validated_events($_POST['id_u']); // liste des tuteurs qui ont déja été payé au moins une fois
 
         $controller_report='superadmin'; 
-        $fonction_back='interface_hours';
+        $fonction_back='validated_hours';
 
         require_once('views/superadmin/hours_history.php');
       }
@@ -578,21 +578,22 @@ class SuperadminController
      {
       if(isset($_SESSION['id_statut']))// on vérifie que seul un utilisateur connecté peut accéder à ces pages
       { 
-        $donnees= Evenements::Get_validated_events($_POST['id_u']); // liste des tuteurs qui ont déja été payé au moins une fois
+        $donnees= Evenements::Get_paid_events($_POST['id_u']); // liste des tuteurs qui ont déja été payé au moins une fois
 
         $controller_report='superadmin'; 
-        $fonction_back='interface_hours';
+        $fonction_back='paid_hours';
 
         require_once('views/superadmin/hours_history.php');
       }
       else 
         require_once('views/login.php');
      }
+
      public function paid_hours()  // HISTORIQUE des evenements validés et payés en fonction des tuteurs
      {
       if(isset($_SESSION['id_statut']))// on vérifie que seul un utilisateur connecté peut accéder à ces pages
       { 
-        $donnees= Users::Get_working_tuteurs(); // liste des tuteurs qui apparaissent dans la table de validation des heures
+        $donnees= Users::Get_paidHours_tuteurs(); // liste des tuteurs et de leurs heures deja payées
 
         $controller_report='superadmin'; 
         $fonction_back='interface_hours';
@@ -614,8 +615,8 @@ public static function export()
         {
             if(isset($_SESSION['id_statut']))// on vérifie que seul un utilisateur connecté peut accéder à ces pages
                 { 
-                    $data= Users::Get_contact_admin($_SESSION['id_user']);
-                    require_once('views/contacter.php');
+                    $data= Users::Get_all_contact_admin(); // on récupère le contact de tous les admin du site(ceux qui en ont la gestion)
+                    require_once('views/superadmin/contacter.php');
                 }
             else
                 require_once('views/login.php');
@@ -642,7 +643,7 @@ public static function export()
                 $sujet = "[Yncrea tutorat] Message plateforme Yncrea tutorat de: ".$nom." ".$prenom." ";
                 // on envoie un email de confirmation
                 include('send_mail.php');
-                TutoresController::contact();
+                SuperadminController::contact();
         }
         else
                 require_once('views/login.php');

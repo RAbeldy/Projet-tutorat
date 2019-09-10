@@ -635,12 +635,34 @@ class Evenements
     }
     
 
-    public static function Get_validated_events($id_tuteur)  // liste des évèenements qui ont déja été validés
+    public static function Get_validated_events($id_tuteur)  // liste des évènements qui ont déja été validés(pour le super-admin)
     {
 
       $db=Db::getInstance();
       $list = [];
-      $req= $db->prepare("SELECT t.libelle as libelle,e.id_evenement,e.date_evenement,e.lieu,pe.duree as duree,vh.payer as payé FROM evenement as e, validation_heure as vh, planning_event as pe, tutorat as t WHERE t.id_tutorat = e.id_tutorat AND  e.id_evenement= vh.id_evenement AND vh.id_tuteurs= ? AND e.id_planning= pe.id_planning  " );
+      $req= $db->prepare("SELECT t.libelle as libelle,e.id_evenement,e.date_evenement,e.lieu,pe.duree as duree,vh.payer as payé FROM evenement as e, validation_heure as vh, planning_event as pe, tutorat as t WHERE t.id_tutorat = e.id_tutorat AND  e.id_evenement= vh.id_evenement AND vh.id_tuteurs= ? AND vh.payer = 'NON' AND  e.id_planning= pe.id_planning  " );
+      $req->execute(array($id_tuteur));
+
+      foreach($req->fetchAll() as $data)
+        { 
+          $event= new Evenements();
+          $event->setId_evenement($data['id_evenement']);
+          $event->setDate_evenement($data['date_evenement']);
+          $event->setLieu($data['lieu']);
+          
+         
+          $list []= array('evenement' => $event,'tutorat' => $data['libelle'],'planning_event' => $data['duree'],'payé'=>['payé']);
+        }
+
+        return $list;
+
+    }
+    public static function Get_paid_events($id_tuteur)  // liste des évèenements qui ont déja été payés (pour le super-admin)
+    {
+
+      $db=Db::getInstance();
+      $list = [];
+      $req= $db->prepare("SELECT t.libelle as libelle,e.id_evenement,e.date_evenement,e.lieu,pe.duree as duree,vh.payer as payé FROM evenement as e, validation_heure as vh, planning_event as pe, tutorat as t WHERE t.id_tutorat = e.id_tutorat AND  e.id_evenement= vh.id_evenement AND vh.id_tuteurs= ?  AND vh.payer= 'OUI' AND e.id_planning= pe.id_planning  " );
       $req->execute(array($id_tuteur));
 
       foreach($req->fetchAll() as $data)

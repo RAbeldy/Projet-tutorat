@@ -112,7 +112,7 @@ class TutoratController
        $fonction_back='interface_tutorat';
        
        
-       header('location:?controller=superadmin&action=static_account');
+       require_once('views/superadmin/interface_tutorat.php');
         }
         else
         {
@@ -130,13 +130,14 @@ class TutoratController
   {
     if( isset($_SESSION['id_statut']))
     {
+      
        Tutorat::Add_tutorat($_POST['id_t'],$_POST['id_admin']);
 
        $controller_report='superadmin';
        $fonction_back='interface_tutorat';
        
        
-       header('location:?controller=superadmin&action=static_account');
+       require_once('views/superadmin/interface_tutorat.php');
     }
     else
       require_once('views/login.php');

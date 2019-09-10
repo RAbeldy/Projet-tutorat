@@ -14,14 +14,12 @@
                                     <div class="row">
                                         <div class="card debut">
                                             <div class="card-header py-3">
-                                                <p class="text-primary m-0 font-weight-bold">Liste des tuteurs actifs</p>
+                                                <p class="text-primary m-0 font-weight-bold">Cumul des heures impayées</p>
                                                 <?php include('retour.php') ?>
                                             </div>
                                             <div class="card-body">
                                                 <div class="row">
-                                                    <div class="col-12 card-body-title">
-                                                        <span>RECHERCHER PAR :</span>
-                                                    </div>
+                                                    
                                                     <div class="col-md-7 text-nowrap">
                                                         <div class="row text-center">
                                                             <label style="flex: auto;">Période</label>

@@ -230,7 +230,7 @@ class TuteursController
             if(isset($_SESSION['id_statut']))// on vérifie que seul un utilisateur connecté peut accéder à ces pages
                 { 
                     $data= Users::Get_contact_admin($_SESSION['id_user']);
-                    require_once('views/contacter.php');
+                    require_once('views/tuteurs/contacter.php');
                 }
             else
                 require_once('views/login.php');

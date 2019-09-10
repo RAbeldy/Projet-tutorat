@@ -207,7 +207,7 @@ class Tutorat
      $req->execute(array($id_admin,$id_user));
 
      $data= Users::Get_info($id_user);
-     $donnees= Users::Get_info($id_admin);
+     $donnees= Users::Get_admin($id_admin);
      $tab= Tutorat::Get_specific_static_account($id_admin);
      
      //Déclaration du message au format texte et au format html (selon ce que les webmails supportent)
@@ -284,7 +284,7 @@ class Tutorat
     public static function Get_static_account() // on récupère la liste des comptes statiques présents dans la table administrer
     {
       $db = Db::getInstance();
-      $req= $db->query("SELECT DISTINCT u.nom,u.prenom,ad.id_admin as id_admin,ad.id_typeTutorat as id_typeTutorat,tt.libelle as libelle_type  FROM user as u,type_tutorat as tt,administrer as ad WHERE u.id_user= ad.id_admin  AND ad.id_typeTutorat= tt.id_typeTutorat  ORDER BY libelle_type");
+      $req= $db->query("SELECT DISTINCT u.nom,u.prenom,u.id_user,ad.id_typeTutorat as id_typeTutorat,tt.libelle as libelle_type  FROM user as u,type_tutorat as tt,administrer as ad WHERE u.id_user= ad.id_admin  AND ad.id_typeTutorat= tt.id_typeTutorat  ORDER BY libelle_type");
 
       foreach($req->fetchAll() as $data)
       {
@@ -295,7 +295,7 @@ class Tutorat
         $tutorat->setId_typeTutorat($data['id_typeTutorat']);
         
         
-        $user->setId_user($data['id_admin']);
+        $user->setId_user($data['id_user']);
         $user->setNom($data['nom']);
         $user->setPrenom($data['prenom']);
         
@@ -492,8 +492,8 @@ class Tutorat
     public static function Add_tutorat($id_tutorat,$id_admin) // on confie la gestion d'un tutorat à un compte admin
     {
       $db = Db::getInstance();
-      $req= $db->prepare("INSERT INTO administrer(id_admin,id_tutorat,id_typeTutorat) VALUES(?,?,(SELECT id_typeTutorat FROM tutorat WHERE id_tutorat=?)");
-      $req->execute(array($id_tutorat,$id_admin,$id_tutorat));
+      $req= $db->prepare("INSERT INTO administrer(id_admin,id_tutorat,id_typeTutorat) VALUES(?,?,(SELECT id_typeTutorat FROM tutorat WHERE id_tutorat=?))");
+      $req->execute(array($id_admin,$id_tutorat,$id_tutorat));
     }
 
     public static function Tutorat_center_list($id_admin)

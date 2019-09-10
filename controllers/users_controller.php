@@ -137,7 +137,10 @@ public static function update_account()
             if(isset($_SESSION['id_statut']))// on vérifie que seul un utilisateur connecté peut accéder à ces pages
             { 
                 $donnees = Users::Get_info($_SESSION['id_user']);    // on récupère les info des user
-                require_once('views/update_account.php');
+                if($_SESSION['id_statut'] == 1)
+                	require_once('views/superadmin/update_account.php');
+            	else
+            		require_once('views/update_account.php');
             }
             else
                 require_once('views/login.php');
@@ -148,14 +151,20 @@ public function modify_account()
     {
             if(isset($_SESSION['id_statut']))   // on vérifie que seul un utilisateur connecté peut accéder à ces pages
             { 
-                $tuteurs = new Users();
-                $tuteurs->setVille($_POST['ville']);
-                $tuteurs->setAdress($_POST['adresse']);
-                $tuteurs->setCom_adress($_POST['complement_adresse']);
-                $tuteurs->setCode_postal($_POST['code_postal']);
-                $tuteurs->setPassword($_POST['password']);
+                $user = new Users();
+
+                $user->setVille($_POST['ville']);
+                $user->setAdress($_POST['adresse']);
+                $user->setCom_adress($_POST['complement_adresse']);
+                $user->setCode_postal($_POST['code_postal']);
+                $user->setPassword($_POST['password']);
+                if( isset($_POST['nom']) && isset($_POST['prenom']))
+                {
+                	$user->setNom($_POST['nom']);
+                	$user->setPrenom($_POST['prenom']);
+                }
                 
-                $tuteurs->Modify_info($_SESSION['id_user']);    // on update les infos du user
+                $user->Modify_info($_SESSION['id_user']);    // on update les infos du user
                 if(!empty($_FILES["fileToUpload"]["name"]))
                 $this->upload_file();  // on va uploader la photo
 

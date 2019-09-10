@@ -179,6 +179,27 @@ require_once('connexion.php');
       return $user;
     }
     
+    public static function Get_admin($id_admin) // meme fonction que get_info mais adaptée aux comptes statiques( qui n'ont pas d'adresse)
+    {
+      $db = Db::getInstance();
+      $req= $db->query("SELECT u.password as password,u.chemin_photo as chemin_photo,u.id_user,u.nom as nom,u.prenom as prenom,u.email as email,u.niveau as niveau, u.ecole as ecole FROM user as u WHERE  u.id_user = ".$id_admin." ");
+
+      foreach ($req->fetchAll() as $temp) 
+      {
+        $user= new Users();
+        
+        $user->setChemin_photo($temp['chemin_photo']); 
+        $user->setPassword($temp['password']);
+        $user->setId_user($temp['id_user']); 
+        $user->setNom($temp['nom']);
+        $user->setPrenom($temp['prenom']);
+        $user->setEmail($temp['email']);
+        $user->setNiveau($temp['niveau']);
+        $user->setEcole($temp['ecole']);
+      }
+      return $user;
+    }
+
     public function Deconnexion()
     {
       session_destroy();
@@ -253,11 +274,27 @@ require_once('connexion.php');
   {
     $db = Db::getInstance(); 
     $list= [];
-    $req= $db->prepare("SELECT u.nom,u.prenom,u.email,s.libelle as libelle FROM user as u,administrer as a,se_destine as se, avoir_statut as at, statut as s WHERE se.id_tutorat = a.id_tutorat AND se.id_typeTutorat = a.id_typeTutorat AND u.id_user= a.id_admin AND u.id_user= at.id_user AND at.id_statut = s.id_statut AND se.id_user= ? UNION 
-        SELECT u.nom,u.prenom,u.email,s.libelle as libelle FROM user as u , avoir_statut as at , statut as s WHERE u.id_user = at.id_user AND at.id_statut= s.id_statut  AND s.libelle = 'ADMIN_IMMERSION' UNION
-        SELECT u.nom,u.prenom,u.email,s.libelle  as libelle FROM user as u , avoir_statut as at , statut as s WHERE u.id_user = at.id_user AND at.id_statut= s.id_statut AND s.libelle = 'ADMIN_TUTORAT_PERSO' UNION
-         SELECT u.nom,u.prenom,u.email,s.libelle  as libelle FROM user as u , avoir_statut as at , statut as s WHERE u.id_user = at.id_user AND at.id_statut= s.id_statut AND s.libelle = 'GESTIONNAIRE_COMPTE' ORDER BY nom ");
+    $req= $db->prepare("SELECT DISTINCT u.nom,u.prenom,u.email,s.libelle as libelle FROM user as u,administrer as a,se_destine as se, avoir_statut as at, statut as s, suivi_administrateurs as sa WHERE sa.id_user = u.id_user AND se.id_tutorat = a.id_tutorat AND se.id_typeTutorat = a.id_typeTutorat AND a.id_admin= sa.id_admin AND a.id_admin= at.id_user AND at.id_statut = s.id_statut AND se.id_user= ? UNION 
+        SELECT u.nom,u.prenom,u.email,s.libelle as libelle FROM user as u , avoir_statut as at , statut as s, suivi_administrateurs as sa, administrer as a WHERE sa.id_user = u.id_user AND a.id_admin= sa.id_admin AND u.id_user = at.id_user AND at.id_statut= s.id_statut  AND s.libelle = 'ADMIN_IMMERSION' UNION
+        SELECT u.nom,u.prenom,u.email,s.libelle  as libelle FROM user as u , avoir_statut as at , statut as s, suivi_administrateurs as sa , administrer as a WHERE sa.id_user = u.id_user AND  a.id_admin = at.id_user AND a.id_admin= sa.id_admin AND at.id_statut= s.id_statut AND s.libelle = 'ADMIN_TUTORAT_PERSO' UNION
+         SELECT u.nom,u.prenom,u.email,s.libelle  as libelle FROM user as u , avoir_statut as at , statut as s , suivi_administrateurs as sa , administrer as a WHERE sa.id_user = u.id_user AND a.id_admin = at.id_user AND a.id_admin= sa.id_admin AND at.id_statut= s.id_statut AND s.libelle = 'GESTIONNAIRE_COMPTE' ORDER BY nom ");
     $req->execute(array($id_user));
+     
+     foreach ($req->fetchAll() as $temp) 
+      {
+        $user= new Users();
+        $user->setEmail($temp['email']);
+
+        $list []= array($user,$temp['libelle']);
+      }
+    return $list;
+  }
+  public static function Get_all_contact_admin() // on récupère les contacts des admin en charge de tous les comptes statiques administrés  (pour le super admin)
+  {
+    $db = Db::getInstance(); 
+    $list= [];
+    $req= $db->query("SELECT DISTINCT u.nom,u.prenom,u.email,s.libelle as libelle FROM user as u,suivi_administrateurs as sa,administrer as ad,avoir_statut as at, statut as s WHERE sa.id_user = u.id_user AND ad.id_admin= sa.id_admin AND at.id_user= ad.id_admin AND at.id_statut = s.id_statut ORDER BY nom ");
+    
      
      foreach ($req->fetchAll() as $temp) 
       {
@@ -297,7 +334,7 @@ require_once('connexion.php');
       { 
         $req= $db->prepare("SELECT tt.libelle as libelle FROM type_tutorat as tt,tutorat as t WHERE t.id_tutorat= ? AND t.id_typeTutorat= tt.id_typeTutorat ");
         $req->execute(array($id_tutorat));
-        $res= $req->fetch()['libelle'];
+        $res= $req->fetch()['libelle']; // libelle du type de tutorat( du type de compte)
         
                 
         
@@ -308,15 +345,15 @@ require_once('connexion.php');
         $today = date('y-m-j');
         $req= $db->prepare("INSERT INTO user(nom,prenom,date_naissance,email,password) VALUES('ADMIN',?,?,?,'az')");
 
-        $res= $res ;
+        //$res= $res ;
         $email= 'ADMIN'.$nb.'.'.$res.'@yncrea.tutorat.fr';
         $req->execute(array($res,$today,$email));
         
-        $req= $db->prepare("INSERT INTO avoir_statut (id_user,id_statut_compte,id_statut,id_etat) VALUES ((SELECT id_user FROM user WHERE nom='ADMIN' AND prenom = ? ORDER BY date_naissance DESC LIMIT 1),(SELECT id_statut_compte FROM statut_compte  WHERE libelle = 'VALIDE'),(SELECT id_statut FROM statut WHERE libelle LIKE ? ),(SELECT id_etat FROM etat as e WHERE e.libelle = 'LIBRE')) ");
-        $req->execute(array($res,'%'.$res.'%'));
+        $req= $db->prepare("INSERT INTO avoir_statut (id_user,id_statut_compte,id_statut,id_etat) VALUES ((SELECT id_user FROM user WHERE email= ? ORDER BY date_naissance DESC LIMIT 1),(SELECT id_statut_compte FROM statut_compte  WHERE libelle = 'VALIDE'),(SELECT id_statut FROM statut WHERE libelle LIKE ? ),(SELECT id_etat FROM etat as e WHERE e.libelle = 'LIBRE')) ");
+        $req->execute(array($email,$res,'%'.$res.'%'));
 
-        $req= $db->prepare("INSERT INTO administrer(id_admin,id_tutorat,id_typeTutorat) VALUES((SELECT id_user FROM user WHERE nom='ADMIN' AND prenom = ? ORDER BY date_naissance DESC LIMIT 1),?,(SELECT id_typeTutorat FROM tutorat WHERE id_tutorat= ?)) ");
-        $req->execute(array($res,$id_tutorat,$id_tutorat));
+        $req= $db->prepare("INSERT INTO administrer(id_admin,id_tutorat,id_typeTutorat) VALUES((SELECT id_user FROM user WHERE email= ? ORDER BY date_naissance DESC LIMIT 1),?,(SELECT id_typeTutorat FROM tutorat WHERE id_tutorat= ?)) ");
+        $req->execute(array($email,$id_tutorat,$id_tutorat));
 
         return 0;
       }
@@ -325,11 +362,12 @@ require_once('connexion.php');
 
     }
 
-    public static function Get_working_tuteurs()  // liste des tuteurs pour qui des heures ont deja été validées (et la somme de ces heures)
+    public static function Get_unpaidHours_tuteurs()  // liste des tuteurs qui ont des heures impayees
     {
 
       $db=Db::getInstance();
-      $req= $db->query("SELECT ville,adress,complement_adress,code_postal,u.id_user,u.nom as nom,u.prenom as prenom,u.email as email,u.niveau as niveau, u.ecole as ecole,u.phone, SUM(vh.durée) as nb_heure FROM adresse as a,user as u,tuteurs as tu,validation_heure as vh WHERE a.id_adresse = u.id_adresse AND u.id_user = tu.id_tuteurs AND u.id_user = vh.id_tuteurs  GROUP BY id_user ORDER BY nom" );
+      $list=[];
+      $req= $db->query("SELECT ville,adress,complement_adress,code_postal,u.id_user,u.nom as nom,u.prenom as prenom,u.email as email,u.niveau as niveau, u.ecole as ecole,u.phone, SUM(vh.durée) as nb_heure FROM adresse as a,user as u,tuteurs as tu,validation_heure as vh WHERE a.id_adresse = u.id_adresse AND u.id_user = tu.id_tuteurs AND u.id_user = vh.id_tuteurs AND vh.payer= 'NON'  GROUP BY id_user ORDER BY nom" );
 
        foreach ($req->fetchAll() as $temp) 
       {
@@ -352,7 +390,35 @@ require_once('connexion.php');
       return $list;
 
     }
+  
+  public static function Get_paidHours_tuteurs()  // liste des tuteurs qui ont des heures impayees
+    {
 
+      $db=Db::getInstance();
+      $list=[];
+      $req= $db->query("SELECT ville,adress,complement_adress,code_postal,u.id_user,u.nom as nom,u.prenom as prenom,u.email as email,u.niveau as niveau, u.ecole as ecole,u.phone, SUM(vh.durée) as nb_heure FROM adresse as a,user as u,tuteurs as tu,validation_heure as vh WHERE a.id_adresse = u.id_adresse AND u.id_user = tu.id_tuteurs AND u.id_user = vh.id_tuteurs AND vh.payer= 'OUI'  GROUP BY id_user ORDER BY nom" );
+
+       foreach ($req->fetchAll() as $temp) 
+      {
+        $user= new Users();
+        $user->setAdress($temp['adress']);
+        $user->setCode_postal($temp['code_postal']);
+        $user->setVille($temp['ville']);
+        $user->setCom_adress($temp['complement_adress']); 
+        
+        
+        $user->setId_user($temp['id_user']); 
+        $user->setNom($temp['nom']);
+        $user->setPrenom($temp['prenom']);
+        $user->setEmail($temp['email']);
+        $user->setNiveau($temp['niveau']);
+        $user->setEcole($temp['ecole']);
+
+        $list []= array('user' => $user,'heure'=>$temp['nb_heure']);
+      }
+      return $list;
+
+    }
     
 
      

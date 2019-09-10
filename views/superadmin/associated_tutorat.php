@@ -28,9 +28,9 @@
                                                 <div class="table-responsive table mt-2" role="grid" aria-describedby="dataTable_info">
                                                     <form method="post" action="?controller=tutorat&action=add_tutorat"> 
                                                               
-                                                                <div class="form-group col-xs-12 col-md-6 row">
-                                                                    <label class="col-xs-12 " >
-                                                                    <select  name="id_t">
+                                                                <div class="form-group row">
+                                                                    <label class="col-xs-12 col-md-4" style="margin-top: auto;margin-bottom: auto;">
+                                                                    <select class="col-12"  name="id_t">
                                                                         <?php
                                                                             foreach($res as $value)
                                                                            {
@@ -44,7 +44,7 @@
 
                                                                     </select></label>
                                                         
-                                                                <button class="btn" type="submit">Affecter la gestion de ce tutorat à ce compte</button>
+                                                                <button class="btn" type="submit">Affecter ce tutorat à ce compte</button>
                                                         </div>
                                                             <input type="hidden" name="id_admin" value="<?= $data->getId_user();?>">
                                                                 

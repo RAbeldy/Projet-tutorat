@@ -18,7 +18,7 @@
                                     <div class="row">
                                         <div class="card debut">
                                             <div class="card-header py-3">
-                                                <p class="text-primary m-0 font-weight-bold">Les evenements à venir</p>
+                                                <p class="text-primary m-0 font-weight-bold">Détails des heures</p>
                                                 <?php include('retour.php') ?>
                                             </div>
                                             <div class="card-body">
@@ -53,7 +53,6 @@
                                                                 <th>Date</th>
                                                                 <th>Adresse</th>
                                                                 <th>Horaires</th>
-                              
                                                                 <th>Consulter</th>
                                                             </tr>
                                                         </thead>
@@ -74,15 +73,13 @@
                                                                   <td> <label><?=$elt['tutorat']?></label></td>
                                                                   <td><label><?=$elt['evenement']->getDate_evenement()?></label></td>
                                                                   <td><label><?=$elt['evenement']->getLieu()?></label></td>
-                                                                  <td><label><?=$elt['evenement']->getNb_tuteurs()?></label></td>
-                                                                  <td><label><?=$elt['evenement']->getNb_places()?></label></td>
                                                                   <td><label ><?=$elt['planning_event']?></label></td>
                                                                  
 
                                                                  
                                                                   <td><button class="btn" type="submit" name="consulter" >Consulter</button>
                                                                   </td>
-                                                                  <td><button class="btn" type="submit" name="imprimer" >Imprimer</button>
+                                                                 
                                                                   </td>
                                                                   
 

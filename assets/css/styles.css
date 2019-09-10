@@ -1,3 +1,24 @@
+@font-face {
+	font-family: 'Keytin-Light';
+	src: url('fonts/Keytin-Light.ttf');
+}
+
+@font-face {
+	font-family: 'Nexa-Light';
+	src: url('fonts/Nexa-Light.otf');
+}
+
+body {
+	font-family: 'Playfair Display', serif;
+}
+
+h1, h2, h3, h4, h5 {
+	font-family: 'Keytin-Light';
+	font-size: 50px;
+    letter-spacing: 2px;
+    font-weight: 600;
+}
+
 .navbar.navbar-light.navbar-expand-md.navigation-clean-button {
   background-color: #fab900;
 }
