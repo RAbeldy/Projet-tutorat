@@ -26,12 +26,24 @@ class TutoratController
 
           if($tutorat->Create_center() == 0)
             {
-              $donnees= Tutorat::tutorat_center_list($_SESSION['id_statut']);
-
-              $controller_report='admin';
-              $fonction_back='interface_tutorat';
-
-              require_once('views/admin/tutorat_center_list.php');
+              
+               
+               if(preg_match('#MEF#',$_SESSION['statut']))
+               {
+                  $controller_report='admin';
+                  $fonction_back='interface_tutorat';
+               
+                  $donnees= Tutorat::tutorat_center_list($_SESSION['id_user']);
+                  require_once('views/admin/tutorat_center_list.php');
+               }
+              else
+                {
+                  $controller_report='superadmin';
+                  $fonction_back='interface_tutorat';
+                  
+                  $donnees= Tutorat::Get_all_tutorat();
+                  require_once('views/superadmin/tutorat_center_list.php');
+                }
             }
           else
           {
@@ -53,7 +65,7 @@ class TutoratController
             
           if(Tutorat::Create_type_center($_POST['type_tutorat'])== 0)
           {
-            $controller_report='admin';
+            $controller_report='superadmin';
             $fonction_back='interface_tutorat';
 
             require_once('views/superadmin/interface_tutorat.php');
@@ -108,11 +120,11 @@ class TutoratController
     {
        if(Tutorat::Remove_tutorat($_POST['id_t'],$_POST['id_admin']) == 0)
          {
-       $controller_report='superadmin';
-       $fonction_back='interface_tutorat';
+           $controller_report='superadmin';
+           $fonction_back='interface_tutorat';
        
        
-       require_once('views/superadmin/interface_tutorat.php');
+           require_once('views/superadmin/interface_tutorat.php');
         }
         else
         {

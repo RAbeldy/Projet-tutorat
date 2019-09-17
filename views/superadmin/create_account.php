@@ -18,7 +18,7 @@
                                                 </p>
                                             </div>
                                             <div class="card-body">
-                                                <form method="post" action="?controller=users&action=create_account" onsubmit="javascript:test_date();javascript:message();">
+                                                <form method="post" action="?controller=users&action=create_account" onsubmit="javascript:message();">
                                                     <div class="row">
                                                         
                                                         <div class="form-group text-center col-12">
@@ -60,14 +60,9 @@
     </div>
 
     <script type="text/javascript">
-         function test_date()
+         function message()
           {
-            var today = new Date();
-           var mm = String(today.getMonth() + 1).padStart(2, '0'); //first month January takes 0. 
-            var yyyy = today.getFullYear(); // year takes all e.g: 2019 => 2019
-             var dd = String(today.getDate()).padStart(2, '0');// Day config 
-             today = yyyy + '-' + mm + '-' + dd;
-             day = dd + '/' + mm + '/' + yyyy; 
+           
              if (document.getElementById('event').value < today) {
                 alert(" Entrer une date ultérieure à celle d'aujourd'hui: " +day);
                 return -1;

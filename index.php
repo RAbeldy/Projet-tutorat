@@ -20,19 +20,15 @@
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css?h=f20836d04db9c2e94df06e239fab9fd8">
     <link rel="stylesheet" href="assets/fonts/ionicons.min.css?h=0692f36eb27607e4837760bbbf813d92">
     <link rel="stylesheet" href="assets/css/Footer-Basic.css?h=d15dfcb68fabe0442ff06063b052477c">
-    <link rel="stylesheet" href="assets/css/styles.css?h=1637acf6632f17b3758401ceb35eb91e">
+    <link rel="stylesheet" href="assets/css/styles.css?">
     <!-- sign up-->
-    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css"> 
     <link rel="stylesheet" href="assets/fonts/font-awesome.min.css">
     <link rel="stylesheet" href="assets/fonts/ionicons.min.css">
-    <link rel="stylesheet" href="assets/css/-Login-form-Page-BS4--1.css">
     <link rel="stylesheet" href="assets/css/-Login-form-Page-BS4-.css">
     <link rel="stylesheet" href="assets/css/Login-Form-Clean.css">
     <link rel="stylesheet" href="assets/css/Login-Form-Dark.css">
     <link rel="stylesheet" href="assets/css/Login-screen.css">
-    <link rel="stylesheet" href="assets/css/styles.css">
     <!-- navbar latérale et tuteur et evenements-->
-    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css?h=f20836d04db9c2e94df06e239fab9fd8">
     <link rel="stylesheet" href="assets/fonts/ionicons.min.css?h=0692f36eb27607e4837760bbbf813d92">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i">
     <link rel="stylesheet" href="assets/fonts/fontawesome-all.min.css?h=0692f36eb27607e4837760bbbf813d92">
@@ -160,13 +156,13 @@
 	</nav>
     <div id="globalContent">
         <div id="wrapper">
-            <!-- CONTROL sur la navbar verticale -->
-            <?php 
-             if( isset($_SESSION['statut'])&& ($_SESSION['statut']== 'TUTEUR') )
-             {
-                ?>
-                <nav class="navbar navbar-dark align-items-start sidebar sidebar-dark accordion bg-gradient-primary p-0">
-                    <div class="container-fluid d-flex flex-column p-0">
+			<nav id="lateralSideBar" class="navbar navbar-dark align-items-start sidebar sidebar-dark accordion bg-gradient-primary p-0">
+				<div class="container-fluid d-flex flex-column p-0">
+					<!-- CONTROL sur la navbar verticale -->
+					<?php 
+					 if( isset($_SESSION['statut'])&& ($_SESSION['statut']== 'TUTEUR') )
+					 {
+						?>
                         <a class="navbar-brand d-flex justify-content-center align-items-center sidebar-brand m-0" href="#">
                             <div class="sidebar-brand-icon rotate-n-15"><i class="far fa-id-card"></i></div>
                             <div class="sidebar-brand-text mx-3"><span>Tuteur</span></div>
@@ -196,16 +192,11 @@
                                 </a>
                             </li>
                         </ul>
-                        <div class="text-center d-none d-md-inline"><button class="btn rounded-circle border-0" id="sidebarToggle" type="button"></button></div>
-                    </div>
-                </nav>
-            <?php
-           }
-           elseif(isset($_SESSION['statut']) && preg_match('#^TUTORE#', $_SESSION['statut']) == 1)
-            {
-             ?>
-                <nav class="navbar navbar-dark align-items-start sidebar sidebar-dark accordion bg-gradient-primary p-0">
-                    <div class="container-fluid d-flex flex-column p-0">
+					<?php
+				   }
+				   elseif(isset($_SESSION['statut']) && preg_match('#^TUTORE#', $_SESSION['statut']) == 1)
+					{
+					 ?>
                         <a class="navbar-brand d-flex justify-content-center align-items-center sidebar-brand m-0" href="#">
                             <div class="sidebar-brand-icon rotate-n-15"><i class="far fa-id-card"></i></div>
                             <div class="sidebar-brand-text mx-3"><span>Tutore</span></div>
@@ -231,16 +222,11 @@
                                 </a>
                             </li>
                         </ul>
-                        <div class="text-center d-none d-md-inline"><button class="btn rounded-circle border-0" id="sidebarToggle" type="button"></button></div>
-                    </div>
-                </nav>
-            <?php
-            }
-            elseif(isset($_SESSION['statut']) && ($_SESSION['statut']== 'ADMIN_MEF')) // menu latéral pour admin
-            {
-             ?>
-                <nav class="navbar navbar-dark align-items-start sidebar sidebar-dark accordion bg-gradient-primary p-0">
-                <div class="container-fluid d-flex flex-column p-0">
+				<?php
+				}
+				elseif(isset($_SESSION['statut']) && ($_SESSION['statut']== 'ADMIN_MEF')) // menu latéral pour admin
+				{
+				 ?>
                     <a class="navbar-brand d-flex justify-content-center align-items-center sidebar-brand m-0" href="#">
                         <div class="sidebar-brand-icon rotate-n-15"><i class="far fa-id-card"></i></div>
                         <div class="sidebar-brand-text mx-3"><span>MEF</span></div>
@@ -270,18 +256,11 @@
                             </a>
                         </li>
                     </ul>
-                    <div class="text-center d-none d-md-inline">
-                        <button class="btn" id="sidebarToggle" type="button"></button>
-                    </div>
-                </div>
-            </nav>
-            <?php
-            }
-            elseif(isset($_SESSION['statut']) && ($_SESSION['statut']== 'ADMIN_IMMERSION')) // menu latéral pour admin
-            {
-             ?>
-                <nav class="navbar navbar-dark align-items-start sidebar sidebar-dark accordion bg-gradient-primary p-0">
-                <div class="container-fluid d-flex flex-column p-0">
+				<?php
+				}
+				elseif(isset($_SESSION['statut']) && ($_SESSION['statut']== 'ADMIN_IMMERSION')) // menu latéral pour admin
+				{
+				 ?>
                     <a class="navbar-brand d-flex justify-content-center align-items-center sidebar-brand m-0" href="#">
                         <div class="sidebar-brand-icon rotate-n-15"><i class="far fa-id-card"></i></div>
                         <div class="sidebar-brand-text mx-3"><span>IMMERSION</span></div>
@@ -309,21 +288,13 @@
                                 <i class="fab fa-phoenix-squadron"></i>
                                 <span>Questions / Support</span>
                             </a>
-                            
                         </li>
                     </ul>
-                    <div class="text-center d-none d-md-inline">
-                        <button class="btn" id="sidebarToggle" type="button"></button>
-                    </div>
-                </div>
-            </nav>
-            <?php
-            }
-            elseif(isset($_SESSION['statut']) && ($_SESSION['statut']== 'ADMIN_LYCEES_COLLEGES')) // menu latéral pour admin
-            {
-             ?>
-                <nav class="navbar navbar-dark align-items-start sidebar sidebar-dark accordion bg-gradient-primary p-0">
-                <div class="container-fluid d-flex flex-column p-0">
+				<?php
+				}
+				elseif(isset($_SESSION['statut']) && ($_SESSION['statut']== 'ADMIN_LYCEES_COLLEGES')) // menu latéral pour admin
+				{
+				 ?>
                     <a class="navbar-brand d-flex justify-content-center align-items-center sidebar-brand m-0" href="#">
                         <div class="sidebar-brand-icon rotate-n-15"><i class="far fa-id-card"></i></div>
                         <div class="sidebar-brand-text mx-3"><span>LYCEES / COLLEGES</span></div>
@@ -351,21 +322,13 @@
                                 <i class="fab fa-phoenix-squadron"></i>
                                 <span>Questions / Support</span>
                             </a>
-                            
                         </li>
                     </ul>
-                    <div class="text-center d-none d-md-inline">
-                        <button class="btn" id="sidebarToggle" type="button"></button>
-                    </div>
-                </div>
-            </nav>
-            <?php
-            }
-            elseif(isset($_SESSION['statut']) && ($_SESSION['statut'] == 'ADMIN_APSCO')) // menu latéral pour admin
-            {
-             ?>
-                <nav class="navbar navbar-dark align-items-start sidebar sidebar-dark accordion bg-gradient-primary p-0">
-                <div class="container-fluid d-flex flex-column p-0">
+				<?php
+				}
+				elseif(isset($_SESSION['statut']) && ($_SESSION['statut'] == 'ADMIN_APSCO')) // menu latéral pour admin
+				{
+				 ?>
                     <a class="navbar-brand d-flex justify-content-center align-items-center sidebar-brand m-0" href="#">
                         <div class="sidebar-brand-icon rotate-n-15"><i class="far fa-id-card"></i></div>
                         <div class="sidebar-brand-text mx-3"><span>APSCO FIVE</span></div>
@@ -396,18 +359,11 @@
                             
                         </li>
                     </ul>
-                    <div class="text-center d-none d-md-inline">
-                        <button class="btn" id="sidebarToggle" type="button"></button>
-                    </div>
-                </div>
-            </nav>
-            <?php
-            }
-            elseif(isset($_SESSION['statut']) && ($_SESSION['statut']== 'ADMIN_VAUBAN')) // menu latéral pour admin
-            {
-             ?>
-                <nav class="navbar navbar-dark align-items-start sidebar sidebar-dark accordion bg-gradient-primary p-0">
-                <div class="container-fluid d-flex flex-column p-0">
+				<?php
+				}
+				elseif(isset($_SESSION['statut']) && ($_SESSION['statut']== 'ADMIN_VAUBAN')) // menu latéral pour admin
+				{
+				 ?>
                     <a class="navbar-brand d-flex justify-content-center align-items-center sidebar-brand m-0" href="#">
                         <div class="sidebar-brand-icon rotate-n-15"><i class="far fa-id-card"></i></div>
                         <div class="sidebar-brand-text mx-3"><span>VAUBAN</span></div>
@@ -438,19 +394,12 @@
                             
                         </li>
                     </ul>
-                    <div class="text-center d-none d-md-inline">
-                        <button class="btn" id="sidebarToggle" type="button"></button>
-                    </div>
-                </div>
-            </nav>
-            <?php
-            }
+				<?php
+				}
 
-            elseif(isset($_SESSION['statut']) && ($_SESSION['statut']== 'ADMIN_TUTORAT_PERSONNALISE')) // menu latéral pour admin
-            {
-             ?>
-                <nav class="navbar navbar-dark align-items-start sidebar sidebar-dark accordion bg-gradient-primary p-0">
-                <div class="container-fluid d-flex flex-column p-0">
+				elseif(isset($_SESSION['statut']) && ($_SESSION['statut']== 'ADMIN_TUTORAT_PERSONNALISE')) // menu latéral pour admin
+				{
+				 ?>
                     <a class="navbar-brand d-flex justify-content-center align-items-center sidebar-brand m-0" href="#">
                         <div class="sidebar-brand-icon rotate-n-15"><i class="far fa-id-card"></i></div>
                         <div class="sidebar-brand-text mx-3"><span>TUTORAT </br> PERSONNALISE</span></div>
@@ -477,18 +426,11 @@
                             
                         </li>
                     </ul>
-                    <div class="text-center d-none d-md-inline">
-                        <button class="btn" id="sidebarToggle" type="button"></button>
-                    </div>
-                </div>
-            </nav>
-            <?php
-            }
-            elseif(isset($_SESSION['statut']) && ($_SESSION['statut'] == 'SUPER_ADMIN')) // menu latéral pour admin
-            {
-             ?>
-                <nav class="navbar navbar-dark align-items-start sidebar sidebar-dark accordion bg-gradient-primary p-0">
-                <div class="container-fluid d-flex flex-column p-0">
+				<?php
+				}
+				elseif(isset($_SESSION['statut']) && ($_SESSION['statut'] == 'SUPER_ADMIN')) // menu latéral pour admin
+				{
+				 ?>
                     <a class="navbar-brand d-flex justify-content-center align-items-center sidebar-brand m-0" href="#">
                         <div class="sidebar-brand-icon rotate-n-15"><i class="far fa-id-card"></i></div>
                         <div class="sidebar-brand-text mx-3"><span>SUPER_ADMIN</span></div>
@@ -523,18 +465,11 @@
                             
                         </li>
                     </ul>
-                    <div class="text-center d-none d-md-inline">
-                        <button class="btn" id="sidebarToggle" type="button"></button>
-                    </div>
-                </div>
-            </nav>
-            <?php
-            }
-            elseif(isset($_SESSION['statut']) && ($_SESSION['statut']== 'GESTIONNAIRE_COMPTE')) // menu latéral pour admin
-            {
-             ?>
-                <nav class="navbar navbar-dark align-items-start sidebar sidebar-dark accordion bg-gradient-primary p-0">
-                <div class="container-fluid d-flex flex-column p-0">
+				<?php
+				}
+				elseif(isset($_SESSION['statut']) && ($_SESSION['statut']== 'GESTIONNAIRE_COMPTE')) // menu latéral pour admin
+				{
+				 ?>
                     <a class="navbar-brand d-flex justify-content-center align-items-center sidebar-brand m-0" href="#">
                         <div class="sidebar-brand-icon rotate-n-15"><i class="far fa-id-card"></i></div>
                         <div class="sidebar-brand-text mx-3"><span>GESTION DES COMPTES</span></div>
@@ -554,35 +489,41 @@
                                     <i class="fab fa-phoenix-squadron"></i>
                                     <span>Questions / Support</span>
                             </a>
-                            
-                            
                         </li>
                     </ul>
-                    <div class="text-center d-none d-md-inline">
-                        <button class="btn" id="sidebarToggle" type="button"></button>
-                    </div>
+				<?php
+				}
+				else //  on bloque l'afficahge de la navbar si pas connecté
+				{
+				  ?>
+					<script type="text/javascript">
+					document.getElementById("lateralSideBar").style.display = "none";
+					</script>
+				<?php
+				}
+				?>
                 </div>
             </nav>
-            <?php
-            }
-            else //  on bloque l'afficahge de la navbar si pas connecté
-            {
-              ?>               
-                <nav style="display: none;" class="navbar navbar-dark align-items-start sidebar sidebar-dark accordion bg-gradient-primary p-0">
-                    
-                </nav>
-            <?php
-            }
-            ?>
             <!-- FIN de CONTROL sur la navbar verticale -->
-    <div id="content">
-        <?php
-        require_once('arbre_navigation.php');
-        require_once('routes.php');
-        ?>
-    </div>
-   </div>
-</div>
+			<div id="content">
+				<div class="row">
+					<div class="col-xs-12 col-md-3">
+						<button type="button" id="sidebarCollapse" class="btn ">
+							<span></span>
+							<span></span>
+							<span></span>
+						</button>
+					</div>
+					<?php
+						require_once('arbre_navigation.php');
+					?>
+				</div>
+				<?php
+				require_once('routes.php');
+				?>
+			</div>
+		</div>
+	</div>
     <div class="footer-basic">
         <footer>
             <div class="social"><a href="#"><i class="icon ion-social-instagram"></i></a><a href="#"><i class="icon ion-social-snapchat"></i></a><a href="#"><i class="icon ion-social-twitter"></i></a><a href="#"><i class="icon ion-social-facebook"></i></a></div>
@@ -599,6 +540,15 @@
     <script src="assets/js/Navbarbuttonsignupsignin-modal-form.js?h=9ce049da3c28fd2ded69977163ac47a3"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.js"></script>
     <script src="assets/js/theme.js?h=6d33b44a6dcb451ae1ea7efc7b5c5e30"></script>
+    <script src="assets/js/dynmenu.js"></script>
+    <script type="text/javascript">
+		$(document).ready(function () {
+			$('#sidebarCollapse').on('click', function () {
+				$('#lateralSideBar').toggleClass('active');
+				$(this).toggleClass('active');
+			});
+		});
+	</script>
     
 
     

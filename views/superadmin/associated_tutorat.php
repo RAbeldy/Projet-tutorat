@@ -22,6 +22,12 @@
                                                     
                                                     <div class="col-md-7 text-nowrap">
                                                         <span style="color: black; font-style: oblique;">   Compte:  </span> <?= $data->getNom();?> <?= $data->getPrenom();?></br>
+
+                                                       <span style="color: black; font-style: oblique;"> Mot de passe: </span>   <?= $data->getPassword();?>
+                                                        <form method="post" action="?controller=superadmin&action=update_password"> 
+                                                            <button class="btn" type="submit">Modifier le mot de passe admin</button>
+                                                            <input type="hidden" name="id_admin" value="<?= $data->getId_user();?>">
+                                                       </form>
                                                     </div>
                                                     
                                                 </div>
@@ -81,6 +87,7 @@
                                                                   <td><button class="btn" type="submit" name="retirer" >Retirer</button>  </td>                                                     
                                                               </tr>
                                                                  <input type="hidden" name="id_t" value="<?=$elt['tutorat']->getId_tutorat()?>" >
+                                                                 
                                                                  <input type="hidden" name="id_admin" value="<?= $data->getId_user();?>">
                                                             </form>
 

@@ -83,8 +83,66 @@ input {
   color: white;
 }
 
-#globalContent #wrapper nav{
-    min-height: 70vh;
+#wrapper {
+    display: flex;
+    align-items: stretch;
+    perspective: 1500px; 
+}
+
+#lateralSideBar {
+    min-width: 250px;
+    max-width: 250px;
+    min-height: 74vh;
+    transition: all 0.6s cubic-bezier(0.945, 0.020, 0.270, 0.665);
+    transform-origin: center left; /* Set the transformed position of sidebar to center left side. */
+}
+
+#lateralSideBar.active {
+    margin-left: -250px;
+    transform: rotateY(100deg); /* Rotate sidebar vertically by 100 degrees. */
+}
+
+#sidebarCollapse {
+    width: 40px;
+    height: 40px;
+    background: #f5f5f5;
+    border-radius: 0px;
+	padding: 1px 6px;
+	margin-top: 18px;
+    margin-left: 18px;
+    box-shadow: unset;
+}
+
+#sidebarCollapse span {
+    width: 80%;
+    height: 2px;
+    margin: 0 auto;
+    display: block;
+    background: #fab900;
+    transition: all 0.8s cubic-bezier(0.810, -0.330, 0.345, 1.375);
+}
+
+#sidebarCollapse span:first-of-type {
+    /* rotate first one */
+    transform: rotate(45deg) translate(2px, 2px);
+}
+
+#sidebarCollapse span:nth-of-type(2) {
+    /* second one is not visible */
+    opacity: 0;
+}
+
+#sidebarCollapse span:last-of-type {
+    /* rotate third one */
+    transform: rotate(-45deg) translate(1px, -1px);
+}
+
+#sidebarCollapse.active span {
+    /* no rotation */
+    transform: none;
+    /* all bars are visible */
+    opacity: 1;
+    margin: 5px auto;
 }
 
 div#content {
@@ -299,7 +357,37 @@ div#content {
     .navigation-clean-button {
         padding-top: 1rem;
         padding-bottom: 1rem;
+    }
+}
 
+@media (max-width: 768px) {
+    #lateralSideBar {
+        margin-left: -250px;
+        transform: rotateY(100deg);
+    }
+    #lateralSideBar.active {
+        margin-left: 0;
+        transform: none;
+    }
+    #sidebarCollapse span:first-of-type,
+    #sidebarCollapse span:nth-of-type(2),
+    #sidebarCollapse span:last-of-type {
+        transform: none;
+        opacity: 1;
+        margin: 5px auto;
+    }
+	
+    #sidebarCollapse.active span {
+        margin: 0 auto;
+    }
+    #sidebarCollapse.active span:first-of-type {
+        transform: rotate(45deg) translate(2px, 2px);
+    }
+    #sidebarCollapse.active span:nth-of-type(2) {
+        opacity: 0;
+    }
+    #sidebarCollapse.active span:last-of-type {
+        transform: rotate(-45deg) translate(1px, -1px);
     }
 }
 

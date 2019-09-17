@@ -35,7 +35,7 @@
                                                                 foreach($donnees as $data)
                                                                        {
                                                                          ?>
-                                                                <option value="<?= $data[1]; ?>" required> <?= $data[0] ;?>
+                                                                <option value="<?= $data['tutorat']->getId_tutorat(); ?>" required> <?= $data['tutorat']->getLibelle() ;?>
                                                                     
                                                                 </option>
                                                             <?php

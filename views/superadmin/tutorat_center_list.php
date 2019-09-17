@@ -55,10 +55,12 @@
                                                             
                                                              foreach ($donnees as $elt) 
                                                             {
+                                                                if(!preg_match('#IMMERSION#', $elt['tutorat']->getLibelle()))
+                                                                {
                                                              ?> 
                                                              <form method="post" action="?controller=tutorat&action=delete_tutorat"> 
                                                               <tr >
-                                          
+                                                                 
                                                                   <td> <label><?=$elt['type_tutorat']?></label></td>
                                                                   <td> <label><?=$elt['tutorat']->getLibelle()?></label></td>
                                                                   <td><label><?=$elt['tutorat']->getAdresse()?></label></td>
@@ -69,7 +71,7 @@
                                                                  <input type="hidden" name="id_t" value="<?=$elt['tutorat']->getId_tutorat()?>" >
                                                             </form>
                                                             <?php
-                                                             
+                                                             }
                                                              }
                                                              ?>
                                                         </tbody>

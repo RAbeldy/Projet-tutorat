@@ -4,7 +4,6 @@ $(document).ready(
 		const regex = /=([a-zA-Z_]*)/gm;
 		var url = window.location  + "";
 		var arr = url.match(regex);
-		console.log(arr[0] + " " + arr[1]);
 		var actualPage;
 		if(arr[0] == "=superadmin"){
 			if((arr[1] == "=interface_superadmin") ||

@@ -231,28 +231,31 @@ class Tutorat
          $db = Db::getInstance();
          $req= $db->prepare("SELECT u.id_user as id_user,u.email as email FROM user as u,suivi_administrateurs as su WHERE su.id_user= u.id_user AND  su.id_admin= ?");
          $req->execute(array($id_admin));
-         while( $elt= $req->fetch())
+         if($req->rowCount() == 1)
          {
-           $email= $elt['email'];
-           $id_user=$elt['id_user'];
-         }
-         
+           while( $elt= $req->fetch())
+           {
+             $email= $elt['email'];
+             $id_user=$elt['id_user'];
+           }
+           
 
-         $data= Users::Get_info($id_user); // info sur la le tuteur
-         $tab= Tutorat::Get_specific_static_account($id_admin); // info sur le compte statique 
+           $data= Users::Get_info($id_user); // info sur la le tuteur
+           $tab= Tutorat::Get_specific_static_account($id_admin); // info sur le compte statique 
 
-         //Déclaration du message au format texte et au format html (selon ce que les webmails supportent)
-        $message_txt = 'Bonjour Mr/Mme '.$data->getPrenom().' '.$data->getNom().',\nVous n\'etes à compter de ce jour plus adminsitrateur du type de tutorat '.$tab['type_tutorat'].' .\n Vous ne pourez donc plus vous connecter avec les identifiants que vous aviez recu.\nCe message est généré automatiquement, veuillez ne pas répondre.';
-        $message_html ='<html><head></head><body><p>Bonjour Mr/Mme '.$data->getPrenom().' '.$data->getNom().', </p><p>Vous n\'etes à compter de ce jour plus adminsitrateur du type de tutorat  <b>'.$tab['type_tutorat'].'</b>.</p><p>Vous ne pourez donc plus vous connecter avec les identifiants que vous aviez recu. </p></b></p><p>Ce message est généré <b>automatiquement</b>, veuillez <b>ne pas répondre</b>.</p></body></html>';
-                //Sujet
-        $sujet = "[Yncrea tutorat] Vous etes destitué  ";
-                //envoie du mail
-        
-         $req= $db->prepare("DELETE FROM suivi_administrateurs WHERE id_admin=? ");
-         $req->execute(array($id_admin)); // on supprime de la table suivi_administrateurs
+           //Déclaration du message au format texte et au format html (selon ce que les webmails supportent)
+          $message_txt = 'Bonjour Mr/Mme '.$data->getPrenom().' '.$data->getNom().',\nVous n\'etes à compter de ce jour plus adminsitrateur du type de tutorat '.$tab['type_tutorat'].' .\n Vous ne pourez donc plus vous connecter avec les identifiants que vous aviez recu.\nCe message est généré automatiquement, veuillez ne pas répondre.';
+          $message_html ='<html><head></head><body><p>Bonjour Mr/Mme '.$data->getPrenom().' '.$data->getNom().', </p><p>Vous n\'etes à compter de ce jour plus adminsitrateur du type de tutorat  <b>'.$tab['type_tutorat'].'</b>.</p><p>Vous ne pourez donc plus vous connecter avec les identifiants que vous aviez recu. </p></b></p><p>Ce message est généré <b>automatiquement</b>, veuillez <b>ne pas répondre</b>.</p></body></html>';
+                  //Sujet
+          $sujet = "[Yncrea tutorat] Vous etes destitué  ";
+                  //envoie du mail
+          
+           $req= $db->prepare("DELETE FROM suivi_administrateurs WHERE id_admin=? ");
+           $req->execute(array($id_admin)); // on supprime de la table suivi_administrateurs
 
-        $login_mail= $email;
-        include('send_mail.php');
+          $login_mail= $email;
+          include('send_mail.php');
+      }
 
          
     }
@@ -304,15 +307,18 @@ class Tutorat
       }
       return $list ;
     }
-    public function Delete_static_account($id_admin) // on supprime un compte statique
+    public static function Delete_static_account($id_admin) // on supprime un compte statique
     {
       $db = Db::getInstance();
       Tutorat::Delete_affectation($id_admin); // on destitue le tuteur qui gérait le compte et tout le nécessaire
 
-      $req= $db->prepare("DELETE FROM suivi_administrateurs WHERE id_admin= ?");
+      $req= $db->prepare("DELETE FROM suivi_administrateurs WHERE id_admin= ? ");
       $req->execute(array($id_admin));
 
-      $req= $db->prepare(array("DELETE FROM administrer WHERE id_admin= ? "));
+      $req= $db->prepare("DELETE FROM administrer WHERE id_admin= ? ");
+      $req->execute(array($id_admin));
+
+      $req= $db->prepare("DELETE FROM user  WHERE id_user= ?");
       $req->execute(array($id_admin));
 
     }

@@ -349,7 +349,7 @@ class AdminController
   
                       Admin::Send_selection_mail($donnees[0]->getPrenom(),$donnees[0]->getNom(),$donnees[0]->getEmail(),$donnees[1],$donnees[2]) ;// on envoi le mail de confirmation de sélection
 
-                      AdminController::tuteurs_list(); // on charge la vue adéquate
+                      AdminController::tuteurs_list(); // on charge la vue adéquates
                  }
            elseif(isset($_POST['id_u_d']))
                  {

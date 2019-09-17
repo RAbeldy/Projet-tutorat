@@ -156,6 +156,44 @@ require_once('connexion.php');
       $req->execute(array($this->getVille(),$this->getAdress(),$this->getCom_adress(),$this->getCode_postal(),$id_user));
       */
     }
+    public static function Update_password($id_admin)
+    {
+      require 'connectToMail.php';
+      require 'PHPMailer/PHPMailerAutoload.php';
+
+      $db = Db::getInstance();
+
+      $req= $db->prepare("UPDATE user as u  SET password= ? WHERE u.id_user = ?");
+      $password= self::randomKey(); // on appelle la méthode random key
+      $req->execute(array($password,$id_admin));
+
+      $req= $db->prepare("SELECT u.id_user as id_user,u.email as email FROM user as u,suivi_administrateurs as su WHERE su.id_user= u.id_user AND  su.id_admin= ?");
+         $req->execute(array($id_admin));
+         if($req->rowCount() == 1) // on vérifie si le compte est associé à un tuteur
+         {
+           while( $elt= $req->fetch())
+           {
+             $email= $elt['email'];
+             $id_user=$elt['id_user'];
+           }
+           
+
+           $data= Users::Get_info($id_user); // info sur la le tuteur
+           $tab= Tutorat::Get_specific_static_account($id_admin); // info sur le compte statique 
+           $donnees= Users::Get_admin($id_admin);
+
+           //Déclaration du message au format texte et au format html (selon ce que les webmails supportent)
+          $message_txt = 'Bonjour Mr/Mme '.$data->getPrenom().' '.$data->getNom().',\nLe mot de passe adminsitrateur du type de tutorat '.$tab['type_tutorat'].' a été mis à jour.\n veuillez donc tenir compte de cette modification pour vous connecter à nouveau.\nLe nouveau mot de passe est donc: '.$donnees->getPassword().' \nCe message est généré automatiquement, veuillez ne pas répondre.';
+          $message_html ='<html><head></head><body><p>Bonjour Mr/Mme '.$data->getPrenom().' '.$data->getNom().', </p><p>Le mot de passe administrateur  du type de tutorat  <b>'.$tab['type_tutorat'].' a été mis à jour</b>.</p><p>Veuillez donc tenir compte de cette modification pour vous connecter à nouveau.<p>Le nouveau mot de passe est donc: '.$donnees->getPassword().'</p> .</p></b></p><p>Ce message est généré <b>automatiquement</b>, veuillez <b>ne pas répondre</b>.</p></body></html>';
+                  //Sujet
+          $sujet = "[Yncrea tutorat] Mot de passe mis à jour ";
+
+          $login_mail= $data->getEmail();
+          include('send_mail.php');
+      }
+
+    }
+
     public static function Get_info($id_user) // pour la page de modification de compte
     {
       $db = Db::getInstance();
@@ -338,19 +376,30 @@ require_once('connexion.php');
         
                 
         
-        $req= $db->prepare("SELECT id_user FROM user WHERE prenom= ?"); // je compte le nombre compte admin de ce type qui existent deja
+        $req= $db->prepare("SELECT nom FROM user WHERE prenom= ?"); // je compte le nombre compte admin de ce type qui existent deja
         $req->execute(array($res));
-        $nb= $req->rowCount() + 1;
+
+        $tab= $req->fetch()['nom'];
+         
+          
+        for( $i = 0; $i < strlen($tab) ; $i++)
+        {
+          $tab= str_split($tab);
+            if(is_numeric($tab[$i]))
+              $array[$i]= $tab[$i];
+        }
+        
+        $nb= implode($array) + 1; // on transforme le tableau en string
 
         $today = date('y-m-j');
-        $req= $db->prepare("INSERT INTO user(nom,prenom,date_naissance,email,password) VALUES('ADMIN',?,?,?,'az')");
+        $req= $db->prepare("INSERT INTO user(nom,prenom,date_naissance,email,password) VALUES(?,?,?,?,'az')");
 
-        //$res= $res ;
-        $email= 'ADMIN'.$nb.'.'.$res.'@yncrea.tutorat.fr';
-        $req->execute(array($res,$today,$email));
+        $nom= 'ADMIN'.$nb ;
+        $email= 'ADMIN'.$nb.'.'.$res.'@tutorat-yncrea.fr';
+        $req->execute(array($nom,$res,$today,$email));
         
         $req= $db->prepare("INSERT INTO avoir_statut (id_user,id_statut_compte,id_statut,id_etat) VALUES ((SELECT id_user FROM user WHERE email= ? ORDER BY date_naissance DESC LIMIT 1),(SELECT id_statut_compte FROM statut_compte  WHERE libelle = 'VALIDE'),(SELECT id_statut FROM statut WHERE libelle LIKE ? ),(SELECT id_etat FROM etat as e WHERE e.libelle = 'LIBRE')) ");
-        $req->execute(array($email,$res,'%'.$res.'%'));
+        $req->execute(array($email,'%'.$res.'%'));
 
         $req= $db->prepare("INSERT INTO administrer(id_admin,id_tutorat,id_typeTutorat) VALUES((SELECT id_user FROM user WHERE email= ? ORDER BY date_naissance DESC LIMIT 1),?,(SELECT id_typeTutorat FROM tutorat WHERE id_tutorat= ?)) ");
         $req->execute(array($email,$id_tutorat,$id_tutorat));
@@ -420,7 +469,17 @@ require_once('connexion.php');
 
     }
     
-
+   static function randomKey() 
+   {
+      $alphabet = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
+      $key = array(); //remember to declare $pass as an array
+      $alphaLength = strlen($alphabet) - 1; //put the length -1 in cache
+      for ($i = 0; $i < 8; $i++) {
+          $n = rand(0, $alphaLength);
+          $key[] = $alphabet[$n];
+      }
+      return implode($key); //turn the array into a string thanks to implode function
+  }
      
     
   }

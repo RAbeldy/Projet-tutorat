@@ -58,6 +58,8 @@ class SuperadminController
      {
          if( isset($_SESSION['id_statut']))
          {
+            $donnees=Tutorat::Get_all_type_tutorat();  // on charge l'interface de création de tutorat 
+            
             $controller_report='superadmin'; 
             $fonction_back='interface_superadmin';
 
@@ -70,6 +72,7 @@ class SuperadminController
      {
          if( isset($_SESSION['id_statut']))
          {
+            $donnees=Tutorat::Get_all_type_tutorat();  // on charge l'interface de création de tutorat
             $controller_report='superadmin'; 
             $fonction_back='interface_tutorat';
 
@@ -198,27 +201,24 @@ class SuperadminController
            $controller_report='superadmin'; 
            $fonction_back='interface_set_event';
            switch ($type) {
-             case 'vauban':
+             case 'VAUBAN':
                $donnees= Tutorat::Get_specific_tutorat_list(8); // on récupère la liste des tutorats associés à ce type de tutorat
                require_once('views/superadmin/superadmin_set_event.php');
                break;
-             case 'vacance':
-               $donnees= Tutorat::Get_specific_tutorat_list(2); // on récupère la liste des tutorats associés à ce type de tutorat
-               require_once('views/superadmin/superadmin_set_event.php');
-               break;
-             case 'samedi':
+             
+             case 'IMMERSION':
                $donnees= Tutorat::Get_specific_tutorat_list(1); // on récupère la liste des tutorats associés à ce type de tutorat
                require_once('views/superadmin/superadmin_set_event.php');
                break;
-             case 'apsco':
+             case 'APSCO':
                $donnees= Tutorat::Get_specific_tutorat_list(5); // on récupère la liste des tutorats associés à ce type de tutorat
                require_once('views/superadmin/superadmin_set_event.php');
                break;
-             case 'lycee':
+             case 'LYCEES':
                $donnees= Tutorat::Get_specific_tutorat_list(6); // on récupère la liste des tutorats associés à ce type de tutorat
                require_once('views/superadmin/superadmin_set_event.php');
                break;
-             case 'college':
+             case 'COLLEGE':
                $donnees= Tutorat::Get_specific_tutorat_list(7); // on récupère la liste des tutorats associés à ce type de tutorat
                require_once('views/superadmin/superadmin_set_event.php');
                break;
@@ -364,8 +364,7 @@ class SuperadminController
      {
        if( isset($_SESSION['id_statut']))
        {
-          $donnees=Tutorat::Get_all_type_tutorat();  // on charge l'interface de création de tutorat
-
+          
           $controller_report='superadmin';
           $fonction_back='interface_tutorat';
 
@@ -421,45 +420,26 @@ class SuperadminController
      {
        if( isset($_SESSION['id_statut']))
          {
-           $type= $_GET['type'];
+         
+           $id_type= htmlspecialchars($_GET['type']);
 
            $controller_report='superadmin'; 
            $fonction_back='interface_account_creation';
-
-           switch ($type) {
-             case 'vauban':
-               $donnees= Tutorat::Get_specific_tutorat_list(8); // on récupère la liste des tutorats associés à ce type de tutorat
-               require_once('views/superadmin/create_account.php');
-               break;
-             case 'vacance':
-               $donnees= Tutorat::Get_specific_tutorat_list(2); // on récupère la liste des tutorats associés à ce type de tutorat
-               require_once('views/superadmin/create_account.php');
-               break;
-             case 'samedi':
-               $donnees= Tutorat::Get_specific_tutorat_list(1); // on récupère la liste des tutorats associés à ce type de tutorat
-               require_once('views/superadmin/create_account.php');
-               break;
-             case 'apsco':
-               $donnees= Tutorat::Get_specific_tutorat_list(5); // on récupère la liste des tutorats associés à ce type de tutorat
-               require_once('views/superadmin/create_account.php');
-               break;
-             case 'lycee':
-               $donnees= Tutorat::Get_specific_tutorat_list(6); // on récupère la liste des tutorats associés à ce type de tutorat
-               require_once('views/superadmin/create_account.php');
-               break;
-             case 'college':
-               $donnees= Tutorat::Get_specific_tutorat_list(7); // on récupère la liste des tutorats associés à ce type de tutorat
-               require_once('views/superadmin/create_account.php');
-               break;
-             case 'mef':
-               $donnees= Tutorat::Get_specific_tutorat_list(4); // on récupère la liste des tutorats associés à ce type de tutorat
-               require_once('views/superadmin/create_account.php');
-               break;
-             default:
-               require_once('views/superadmin/interface_account_creation.php');
-               break;
-           }
            
+
+            
+               $donnees= Tutorat::Get_specific_tutorat_list($id_type); // on récupère la liste des tutorats associés à ce type de tutorat
+               if(empty($donnees))
+               {
+                $message = ' Ce type de tutorat ne possède pas encore de tutorat associé et ne peut donc pas faire l\'objet d\'une administration. Vous etes donc prié d\'affecter un tutorat à ce type dans la rubrique "je crée un centre de tutorat" avant de procéder à cette action. Merci ';
+               
+                 $controller_report='superadmin';
+                 $fonction_back='interface_account_creation';
+
+                 require_once('views/system/error.php');
+               }
+               else
+                 require_once('views/superadmin/create_account.php'); 
          }
          else
            require_once('views/login.php');
@@ -543,6 +523,16 @@ class SuperadminController
           }
          else
            require_once('views/login.php');
+     }
+     public function update_password() // interface pour mettre à jour le mot de passe d'un compte statique admin
+     {
+       if(isset($_SESSION['id_statut']))// on vérifie que seul un utilisateur connecté peut accéder à ces pages
+       { 
+          Users::update_password($_POST['id_admin']);
+          SuperadminController::static_account();
+       }
+       else
+        require_once('views/login.php');
      }
 
      public function validated_hours() // liste des tuteurs et du cumul de leurs heures sur la période

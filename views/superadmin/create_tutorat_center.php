@@ -28,13 +28,18 @@
                                                                   <?php 
                                                                        foreach($donnees as $data)
                                                                        {
+                                                                        if(!preg_match('#TUTORAT#', $data[0]))
+                                                                        {
                                                                          ?>
+                                                                        
+
                                                                         <option value="<?=$data[1];?>"required> <?= $data[0] ;?>
                                                                             
                                                                         </option>
                                                                         
                                                                          <?php
                                                                        }
+                                                                   }
                                                                        ?>
                                                             </select>
 

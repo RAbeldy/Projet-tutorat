@@ -12,6 +12,7 @@ public function choixStatut()
 // page d'authentification
 public function login()  
 	{
+		echo "hfchv,vhvvvbjhluk;hkjghjdgw";
 	  require_once('login.php');
 	}
 public function connexion()
@@ -251,7 +252,7 @@ public function set_picture_path($target_file)
             var_dump($_POST['id_t']);
           if( Users::create_account($_POST['id_t']) == 0)
           {
-
+           
            require_once('views/superadmin/interface_tutorat.php');
           }
           else
