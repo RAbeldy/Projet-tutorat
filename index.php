@@ -44,6 +44,7 @@
 </head>
 
 <body id="page-top">
+
     <?php
       if(is_null($_SESSION['id_statut']))
         { echo "non connecté";
@@ -548,6 +549,9 @@
 				$(this).toggleClass('active');
 			});
 		});
+
+		
+       window.history.replaceState('','','/index.php');
 	</script>
     
 
