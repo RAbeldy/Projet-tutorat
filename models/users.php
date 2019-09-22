@@ -263,6 +263,7 @@ require_once('connexion.php');
          $res = $request->fetch();
          
          
+         $_SESSION['connecté']='connecté';
          $_SESSION['email']=$res['mail'];
          $_SESSION['nom']=$res['nom'];
          $_SESSION['prenom']=$res['prenom'];
@@ -381,22 +382,20 @@ require_once('connexion.php');
 
         $tab= $req->fetch()['nom'];
          
-          
-        for( $i = 0; $i < strlen($tab) ; $i++)
-        {
-          $tab= str_split($tab);
-            if(is_numeric($tab[$i]))
-              $array[$i]= $tab[$i];
-        }
-        
-        $nb= implode($array) + 1; // on transforme le tableau en string
+        $req= $db->prepare("SELECT phone FROM user WHERE prenom = ? ORDER BY phone DESC LIMIT 1");
+        $req->execute(array($res));
+        $nb= $req->fetch()['phone'] + 1;
 
+        if(is_null($nb)) // l'indice des comptes statiques commence à 1
+          $nb= 1;
+        
+        
         $today = date('y-m-j');
-        $req= $db->prepare("INSERT INTO user(nom,prenom,date_naissance,email,password) VALUES(?,?,?,?,'az')");
+        $req= $db->prepare("INSERT INTO user(nom,prenom,date_naissance,email,phone,password) VALUES(?,?,?,?,?,'az')");
 
         $nom= 'ADMIN'.$nb ;
         $email= 'ADMIN'.$nb.'.'.$res.'@tutorat-yncrea.fr';
-        $req->execute(array($nom,$res,$today,$email));
+        $req->execute(array($nom,$res,$today,$email,$nb));
         
         $req= $db->prepare("INSERT INTO avoir_statut (id_user,id_statut_compte,id_statut,id_etat) VALUES ((SELECT id_user FROM user WHERE email= ? ORDER BY date_naissance DESC LIMIT 1),(SELECT id_statut_compte FROM statut_compte  WHERE libelle = 'VALIDE'),(SELECT id_statut FROM statut WHERE libelle LIKE ? ),(SELECT id_etat FROM etat as e WHERE e.libelle = 'LIBRE')) ");
         $req->execute(array($email,'%'.$res.'%'));

@@ -1,9 +1,18 @@
 <?php
   require_once('connexion.php');
-
+  if (isset($_GET['controller']) && isset($_GET['action']))
+  {
+      $controller = $_GET['controller'];
+      $action     = $_GET['action'];
+  } 
+  else 
+  {
+        $controller = 'page';
+        $action     = 'home';
+      }
   session_start();
-  if(!isset($_SESSION['id_user']))
-  $_SESSION['id_statut'] = null;
+  if(!isset($_SESSION['connecté']))
+  $_SESSION['connecté'] = 'non connecté';
 
 ?>
 
@@ -44,25 +53,18 @@
 </head>
 
 <body id="page-top">
-
     <?php
-      if(is_null($_SESSION['id_statut']))
-        { echo "non connecté";
-          echo $_SESSION['id_statut'];
+      if($_SESSION['connecté'] == 'non connecté')
+        { 
+            echo $_SESSION['connecté'];
         }
        else
         {
-          echo "connecté";
+          echo $_SESSION['connecté'];
           echo $_SESSION['id_statut'];
          }
 
-      if (isset($_GET['controller']) && isset($_GET['action'])) {
-        $controller = $_GET['controller'];
-        $action     = $_GET['action'];
-      } else {
-        $controller = 'page';
-        $action     = 'home';
-      }
+
     ?>
     <nav class="navbar navbar-light navbar-expand-md navigation-clean-button">
     <div class="container">
@@ -131,7 +133,7 @@
 					<button class="btn dropdown-toggle" data-toggle="dropdown" aria-expanded="false" type="button"> <i class="fa fa-user-circle" style="font-size: 40px;"></i> </button>
 					<div class="dropdown-menu" role="menu">
 						<?php
-						if(is_null($_SESSION['id_statut']))
+						if($_SESSION['connecté'] == 'non connecté')
 						{
 						?>
 						<a class="dropdown-item forgot" href="?controller=users&action=login" role="presentation">Connexion</a>
@@ -175,10 +177,6 @@
                                     <i class="fab fa-phoenix-squadron"></i>
                                     <span>Evénement</span>
                                 </a>
-                                <a class="nav-link" href="?controller=users&action=update_account">
-                                    <i class="fab fa-phoenix-squadron"></i>
-                                    <span>Mon Compte</span>
-                                </a>
                                 <a class="nav-link" href="?controller=tuteurs&action=notifications">
                                     <i class="fab fa-phoenix-squadron"></i>
                                     <span>Notifications</span>
@@ -208,10 +206,6 @@
                                 <a class="nav-link active" href="?controller=tutores&action=interface_tutore">
                                     <i class="fab fa-phoenix-squadron"></i>
                                     <span>Evénement</span>
-                                </a>
-                                <a class="nav-link" href="?controller=users&action=update_account">
-                                    <i class="fab fa-phoenix-squadron"></i>
-                                    <span>Mon Compte</span>
                                 </a>
                                 <a class="nav-link" href="?controller=tutores&action=notifications">
                                     <i class="fab fa-phoenix-squadron"></i>
@@ -549,9 +543,6 @@
 				$(this).toggleClass('active');
 			});
 		});
-
-		
-       window.history.replaceState('','','/index.php');
 	</script>
     
 

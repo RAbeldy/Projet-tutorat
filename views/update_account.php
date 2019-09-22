@@ -13,11 +13,14 @@
                         <div id="profilPic">
                             <img src='<?=$donnees->getChemin_photo() ;?>' />
                         </div>
-                        <input id="photoChooser" type="file" name="fileToUpload" title="PNG , JPG ,JPEG , GIF uniquements" id="fileToUpload">
+						<div class="photo-chooser">
+							<input type="file" class="photo-chooser-input" id="photoChooser"/>
+							<label class="custom-file-label" for="customFile">Choisir une photo</label>
+						</div>
                     </div>
                 </div>
                 <div class="col-md-8 profil">
-                    <h1>Profile </h1>
+                    <h1>Profil </h1>
                     <hr>
                     <div class="form-row">
                         <div class="col-sm-12 col-md-6">

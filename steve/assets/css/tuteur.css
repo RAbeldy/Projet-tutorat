@@ -1,0 +1,29 @@
+.card-container{
+    padding: 0.75rem;
+    text-align: center;
+}
+.card {
+    border-left: .25rem solid #fab900!important;
+}
+.card-title {
+    color: #29292a;
+    text-transform: uppercase;
+}
+.card-body .btn {
+    background-color: #fab900;
+    color: white;
+}
+.card-body .btn:hover {
+    background-color: white;
+    color: #fab900;
+    font-weight: 700;
+}
+
+@media(max-width: 920px){
+    .card-title {
+        font-size: 15px;
+    }
+    .card-body .btn {
+        font-size: 15px;
+    }
+}

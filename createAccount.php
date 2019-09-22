@@ -118,8 +118,6 @@
 			                // on insère dans la table se_destine 
 			                $addtutoré = $bd->prepare("INSERT INTO se_destine(id_user,id_tutorat,id_typeTutorat,liaison) VALUES((SELECT id_user FROM user  WHERE email = ?),?,(SELECT id_typeTutorat FROM administrer WHERE id_tutorat= ? AND id_admin= ".$_SESSION['id_user']."),'OUI')");
 			                $addtutoré->execute(array($id_typeTutorat,$id_typeTutorat));
-			               
-
 						}
 						else // c'est un étudiant normal qui fait l'inscription 
 						{
@@ -143,30 +141,31 @@
                         //$req->execute(array($niveau,$ecole;));
 
                          if( isset($_SESSION['id_statut']) && $_SESSION['id_statut'] == 11)
-				         	header('location:index.php?controller=users&action=redirection');
+				         	require_once('index.php?controller=users&action=redirection');
 				         else
-				         	header('location:index.php?controller=users&action=connexion');
+				         	require_once('index.php?controller=users&action=connexion');
 					}
 
-
-				
 			}
 			else 
 			{
 				//login déjà utilisé pour un compte valide
-				exit("Failed_login");
+				$_SESSION['alert']= "Failed_login";
+				header('location:index.php?controller=users&action=login');
 				//On le redirige vers la page d'accueil
 			}
 		}
 		else {
 			//pwd et confirmation différente
 			//login déjà utilisé pour un compte valide
-			exit("Failed_password");
+			$_SESSION['alert']= "Failed_password";
+			header('location:index.php?controller=users&action=login');
 		     }
 	}
 	else{
 		//Champs non remplis
 		//login déjà utilisé pour un compte valide
-		exit("Failed");
+		$_SESSION['alert']= "Champs non remplis";
+		header('location:index.php?controller=users&action=choixStatut');
 	}
 ?>

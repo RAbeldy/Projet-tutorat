@@ -12,7 +12,7 @@
 													</p>
 												</div>
 												
-												<div class="form-group">
+												<div class="form-group space">
 													<select class="form-control" name="email">
 														<?php foreach( $data as $elt) 
 														{

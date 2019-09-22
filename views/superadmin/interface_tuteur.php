@@ -23,7 +23,7 @@
                                                 <div class="card-body">
                                                     <h4 class="card-title">Les tuteurs</h4>
                                                     <a href="?controller=superadmin&action=tuteurs_belonging_list">
-                                                        <button class="btn" type="button">Listés en fonction de leur appartenance</button>
+                                                        <button class="btn" type="button">Selon l'appartenance</button>
                                                     </a>
                                                 </div>
                                             </div>

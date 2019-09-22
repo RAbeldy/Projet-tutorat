@@ -13,8 +13,10 @@
                                     <div class="row">
                                         <div class="card debut">
                                             <div class="card-header py-3">
-                                                <p class="text-primary m-0 font-weight-bold">
-                                                    Date:<?=$data[0]->getDate_evenement();?>&nbsp;&nbsp;Lieu:<?=$data[0]->getLieu();?> </br> Tutorat: <?=$data[1];?>
+                                                <p class="text-primary m-0 font-weight-bold text-left specialTab">
+                                                    Date: <?=$data[0]->getDate_evenement();?><br/>
+													Lieu: <?=$data[0]->getLieu();?> </br> 
+													Tutorat: <?=$data[1];?>
                                                 </p>
                                                 <?php include('retour.php') ?>
                                             </div>

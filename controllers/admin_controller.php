@@ -16,29 +16,29 @@ class AdminController
 {
 
      public function interface_admin()
-       {
+     {
             if( isset($_SESSION['id_statut']))
             {
-                if(preg_match('#MEF#', $_SESSION['statut']))
+                switch ($_SESSION['statut']) 
                 {
-                  require_once('views/admin/mef/interface_admin_mef.php');
-                }
-                elseif(preg_match('#IMMERSION#', $_SESSION['statut']))
-                {
-                  require_once('views/admin/immersion/interface_admin.php');
-                }
-                elseif(preg_match('#PERSONNALISE#', $_SESSION['statut']))
-                {
-                  require_once('views/admin/personnalise/interface_admin.php');
-                }
-                else
-                  require_once('views/admin/interface_admin.php');
+                   case 'MEF':
+                      require_once('views/admin/mef/interface_admin_mef.php');
+                    break;
+                    case 'IMMERSION':
+                      require_once('views/admin/immersion/interface_admin.php');
+                    break;
+                    case 'PERSONNALISE':
+                      require_once('views/admin/personnalise/interface_admin.php');
+                    break;
+                    default:
+                      require_once('views/admin/interface_admin.php'); // interface_admin
+                    break;
+                }  
             }
             else
                 require_once('views/login.php');
        }
       
-       
        public function events()
        {
           if( isset($_SESSION['id_statut']))

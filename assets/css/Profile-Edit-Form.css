@@ -69,10 +69,6 @@ div.avatar-bg {
   border-top: .2rem solid #d7cece!important;
 }
 
-.form-row > .col, .form-row > [class*=col-] {
-  background-color: #f2f2f1;
-}
-
 .btn.btn-primary.form-btn.profil {
   background-color: #8980bc;
 }

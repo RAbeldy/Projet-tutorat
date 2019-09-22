@@ -1,6 +1,6 @@
 <?php
-	$mailAccount = 'bricenicodem.simeupouomegne@esprit.tn';
-	$mail_password ='brlmfkdkrlgzwzhq';
-	$mail_host = 'smtp.gmail.com';
+	$mailAccount = 'contact@tutorat-yncrea.fr';
+	$mail_password ='Tutoratyncrea19';
+	$mail_host = 'ssl0.ovh.net';
 	$mail_port = 25;
 ?>

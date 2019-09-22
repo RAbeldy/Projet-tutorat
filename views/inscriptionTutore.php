@@ -118,48 +118,48 @@ function validateForm() {
         <div class="form-group" id="ifYes" style="display:block;">
         
             <div class="form-group">
-                <input class="form-control" type="text" name="nom" id="a" placeholder="Nom" >
+                <input class="form-control" type="text" name="nom" id="a" placeholder="Nom" required>
             </div>
             <div class="form-group">
-                <input class="form-control" type="text" name="prenom" id="b" placeholder="Prénom" >
+                <input class="form-control" type="text" name="prenom" id="b" placeholder="Prénom"  required>
             </div>
             <div class="form-group">
-                <input class="form-control" type="date" name="date_naiss" id="c" placeholder="Date de naissance" >
+                <input class="form-control" type="date" name="date_naiss" id="c" placeholder="Date de naissance" required>
             </div>
             <div class="form-group">
-                <input class="form-control" type="text" name="nationalite" id="d" placeholder="Nationalité" >
+                <input class="form-control" type="text" name="nationalite" id="d" placeholder="Nationalité" required>
             </div>
             <div class="form-group">
-                <input class="form-control" type="text" name="phone" id="e" placeholder="tel" >
+                <input class="form-control" type="text" name="phone" id="e" placeholder="tel" required>
             </div>
             <div class="form-group">
-                <input class="form-control"  type="email" name="email" id="numero2" placeholder="Email" >
+                <input class="form-control"  type="email" name="email" id="numero2" placeholder="Email" required>
             </div>
             <div class="form-group">
-                <input class="form-control" type="password" name="password" id="password" placeholder="Mot de passe" onkeyup='javascript:check();' >
+                <input class="form-control" type="password" name="password" id="password" placeholder="Mot de passe" onkeyup='javascript:check();'  required>
             </div>
             <div class="form-group">
-                <input class="form-control" type="password" name="confirmer_password" id="confirm_password" placeholder="Confirmer mot de passe" onkeyup='javascript:check();' >
+                <input class="form-control" type="password" name="confirmer_password" id="confirm_password" placeholder="Confirmer mot de passe" onkeyup='javascript:check();' required >
             <span id='message'></span>
             </div>
             <div class="form-group">
-                <input class="form-control" type="text" name="ecole" id="f" placeholder="École" >
+                <input class="form-control" type="text" name="ecole" id="f" placeholder="École" required>
             </div>
             
             <div class= "form-group"> 
-                  <input class="form-control" type="text" name="niveau" id="g" placeholder="niveau scolaire" > 
+                  <input class="form-control" type="text" name="niveau" id="g" placeholder="niveau scolaire" required > 
             </div>
             <div class= "form-group">
-                <input class="form-control" type="text" name="adresse" id="h" placeholder="Adresse" >
+                <input class="form-control" type="text" name="adresse" id="h" placeholder="Adresse" required>
             </div>            
             <div class= "form-group">
-                <input class="form-control" type="text" name="complement_adresse" id="i" placeholder="Complément Adresse" >               
+                <input class="form-control" type="text" name="complement_adresse" id="i" placeholder="Complément Adresse"  required>               
             </div>
             <div class="form-group">
-                <input class="form-control" type="text" name="ville" id="j" placeholder="Ville" >
+                <input class="form-control" type="text" name="ville" id="j" placeholder="Ville" required>
             </div>
             <div class="form-group">
-                <input class="form-control" type="number" name="code_postal" id="k" placeholder="code postal" >
+                <input class="form-control" type="number" name="code_postal" id="k" placeholder="code postal" required >
             </div>
                                                              
             <div class="form-group">

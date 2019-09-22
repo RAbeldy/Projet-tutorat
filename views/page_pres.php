@@ -9,24 +9,51 @@
             </div>
         </header>
 		
-            <script>
-				var i = 0;
-                carousel();
+		<script>
+			var i = 0;
+			carousel();
 
-                function carousel() {
-					var x = document.getElementById("jumbotron");
-					x.style.backgroundImage = "url(assets/img/" + i +".jpg)";
-					i++;
-					if(i >= 4)
-						i = 0;
-					setTimeout(carousel, 2000); // Change image every 2 seconds
-                }
-            </script>
+			function carousel() {
+				var x = document.getElementById("jumbotron");
+				x.style.backgroundImage = "url(assets/img/" + i +".jpg)";
+				i++;
+				if(i >= 4)
+					i = 0;
+				setTimeout(carousel, 2000); // Change image every 2 seconds
+			}
+		</script>
 
 
         <div class="container">
             <section class="portfolio-block skills">
                 <div class="container">
+					<div class="row">
+						<div class="col-lg-6">
+							<div class="pres_image">
+								<img src="assets/img/1.jpg" alt="">
+							</div>
+						</div>
+						<div class="col-lg-6">
+							<div class="intro_content">
+								<div class="intro_title_container">
+									<h1 class="pres_title">Tutorat YNCREA</h1>
+								</div>
+								<div class="pres_text">
+									<p>
+										Morbi ut dapibus dui. Sed ut iaculis elit, quis varius mauris. Integer ut ultricies orci
+										, lobortis egestas sem. Morbi ut dapibus dui. Sed ut iaculis elit.Morbi ut dapibus dui. 
+										Sed ut iaculis elit, quis varius mauris. Integer ut ultricies orci, lobo rtis egestas sem. 
+										Morbi ut dapibus dui. Sed ut iaculis elit. Morbi ut dapibus dui. Sed ut iaculis elit, quis 
+										varius mauris. Integer ut ultricies orci, lobortis egestas sem. Morbi ut dapibus dui. Sed ut 
+										iaculis elit.
+									</p>
+								</div>
+								<div class="pres_button">
+									<a href="#">En savoir plus ...</a>
+								</div>
+							</div>
+						</div>
+					</div>
                     <div class="row">
                         <div class="col-md-4 space">
                             <div class="card special-skill-item border-0">

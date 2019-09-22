@@ -1,11 +1,19 @@
 @font-face {
-	font-family: 'Keytin-Light';
-	src: url('fonts/Keytin-Light.ttf');
+    font-family: 'Dekar-Light';
+    src: url('fonts/Dekar/Dekar-Light.eot') format('eot'),
+         url('fonts/Dekar/Dekar-Light.woff') format('woff'),
+         url('fonts/Dekar/Dekar-Light.woff2') format('woff2'),
+         url('fonts/Dekar/Dekar-Light.ttf') format('truetype'),
+         url('fonts/Dekar/Dekar-Light.otf') format('opentype');
 }
 
 @font-face {
-	font-family: 'Nexa-Light';
-	src: url('fonts/Nexa-Light.otf');
+    font-family: 'Dekar-Regular';
+    src: url('fonts/Dekar/Dekar-Regular.eot') format('eot'),
+         url('fonts/Dekar/Dekar-Regular.woff') format('woff'),
+         url('fonts/Dekar/Dekar-Regular.woff2') format('woff2'),
+         url('fonts/Dekar/Dekar-Regular.ttf') format('truetype'),
+         url('fonts/Dekar/Dekar-Regular.otf') format('opentype');
 }
 
 body {
@@ -13,24 +21,28 @@ body {
 }
 
 h1, h2, h3, h4, h5 {
-	font-family: 'Keytin-Light';
-	font-size: 50px;
-    letter-spacing: 2px;
     font-weight: 600;
 }
 
-.navbar.navbar-light.navbar-expand-md.navigation-clean-button {
+.navbar {
   background-color: #fab900;
 }
+
 .btn.btn-light.action-button
 {
   background: url("imageszozor/fond_jaune.png");
 }
+
 .nav-link {
-  color: white;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  font-weight: 400;
+	color: white;
+	text-transform: uppercase;
+	letter-spacing: 3px;
+	font-weight: 400;
+	font-size: 20px;
+}
+
+.nav-link:hover {
+	color: black;
 }
 
 #navcol-1 {
@@ -90,6 +102,7 @@ input {
 }
 
 #lateralSideBar {
+	font-family: 'Dekar-Light';
     min-width: 250px;
     max-width: 250px;
     min-height: 74vh;
@@ -143,6 +156,11 @@ input {
     /* all bars are visible */
     opacity: 1;
     margin: 5px auto;
+}
+
+#lateralSideBar .nav-link * {
+	font-size: 13px;
+    font-weight: 900;
 }
 
 div#content {
@@ -210,6 +228,77 @@ div#content {
 
 .form-contact{
 	margin: auto;
+}
+
+.pres_image img{
+	width: 100%;
+}
+
+.pres_button {
+    width: 174px;
+    height: 59px;
+    background: #fab900;
+    text-align: center;
+	padding: 16px 10px;
+	transition: all 300ms ease;
+}
+
+.pres_button:hover {
+    transform: translateZ(10px);
+}
+
+.pres_button a{
+	color: white;
+	text-transform: uppercase;
+}
+
+.pres_button a:hover{
+	text-decoration: none;
+}
+
+.pres_button a::after
+{
+	display: block;
+	position: absolute;
+	top: 0;
+	left: 50%;
+	-webkit-transform: translateX(-50%);
+	-moz-transform: translateX(-50%);
+	-ms-transform: translateX(-50%);
+	-o-transform: translateX(-50%);
+	transform: translateX(-50%);
+	width: 50%;
+	height: 100%;
+	background: #FFFFFF;
+	content: '';
+	opacity: ;
+	-webkit-transition: all 300ms ease;
+	-moz-transition: all 300ms ease;
+	-ms-transition: all 300ms ease;
+	-o-transition: all 300ms ease;
+	transition: all 300ms ease;
+	z-index: -1;
+}
+
+.pres_button:hover a::after
+{
+	width: 100%;
+	opacity: 1;
+}
+
+.pres_button:hover a
+{
+	color: #fab900;
+}
+
+.pres_title
+{
+	font-size: 80px;
+	color: black;
+}
+
+.pres_text {
+    margin-top: 32px;
 }
 
 .dropdown .dropdown-toggle:after{
@@ -321,14 +410,25 @@ div#content {
 }
 
 #photoChooser {
-  border-radius: unset;
+	border-radius: unset;
+	position: relative;
+    z-index: 2;
+    width: 100%;
+    height: calc(2.25rem + 2px);
+    margin: 0;
+    opacity: 0;
+	margin-top: 30px;
+}
+
+.custom-file-label{
+	margin-top: 230px;
 }
 
 #profilPic img{
-	width: 150px;
+	width: 200px;
 	border-radius: 50%;
-	height: 150px;
-	margin-left: 35%;
+	height: 200px;
+	margin-left: 5%;
 }
 
 #profil-name{
@@ -349,6 +449,23 @@ div#content {
 #tableau {
     margin-left: 10px;
     margin-right: 10px;
+}
+
+.specialTab {
+    margin-left: 65px!important;
+	font-size: 20px!important;
+}
+
+.btn-login{
+    color: white;
+	text-transform: uppercase;
+}
+
+.btn-login:hover{
+    color: #55c6c6;
+	background-color: white;
+	border: 2px solid #55c6c6!important;
+	font-weight: 900!important;
 }
 /*FIN PROFIL */
 

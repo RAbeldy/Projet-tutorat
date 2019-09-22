@@ -33,7 +33,7 @@
                                                 <div class="card-body">
                                                     <h4 class="card-title">Créer</h4>
                                                     <a href="?controller=tuteurs&action=events_creation">
-                                                        <button class="btn" type="button">Tutorats <br/>auxquels je suis affilié</button>
+                                                        <button class="btn" type="button">Tutorats <br/>d'affiliation</button>
                                                     </a>
                                                 </div>
                                             </div>
@@ -41,7 +41,7 @@
                                         <div class="col-xs-12 col-md-6 card-container">
                                             <div class="card inscrits">
                                                 <div class="card-body">
-                                                    <h4 class="card-title">Je me suis inscrit à </h4>
+                                                    <h4 class="card-title">Inscriptions </h4>
                                                     <a href="?controller=evenements&action=display_subscribed_events">
                                                         <button class="btn" type="button">Mes inscriptions<br/>validées</button>
                                                     </a>

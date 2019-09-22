@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>TUTORAT</title>
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css?h=f20836d04db9c2e94df06e239fab9fd8">
+    <link rel="stylesheet" href="assets/fonts/ionicons.min.css?h=0692f36eb27607e4837760bbbf813d92">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i">
+    <link rel="stylesheet" href="assets/fonts/fontawesome-all.min.css?h=0692f36eb27607e4837760bbbf813d92">
+    <link rel="stylesheet" href="assets/css/Footer-Basic.css?h=d15dfcb68fabe0442ff06063b052477c">
+    <link rel="stylesheet" href="assets/css/styles.css?h=1637acf6632f17b3758401ceb35eb91e">
+    <link rel="stylesheet" href="assets/css/menu.css">
+    <link rel="stylesheet" href="assets/css/evenement.css">
+</head>
+
+<body>
+    <nav class="navbar navbar-light navbar-expand-md navigation-clean-button">
+        <div class="container"><a href="#" class="navbar-brand"> LOGO </a><button data-toggle="collapse" data-target="#navcol-1" class="navbar-toggler"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
+            <div class="collapse navbar-collapse"
+                id="navcol-1">
+                <ul class="nav navbar-nav mr-auto">
+                    <li class="nav-item"><a href="#" class="nav-link">Accueil </a>
+                    </li>
+                    <li class="nav-item"><a href="#" class="nav-link">Equipe </a>
+                    </li>
+                    <li class="nav-item"><a href="#" class="nav-link">Contact </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div id="globalContent">
+        <div id="wrapper">
+            <nav class="navbar navbar-dark align-items-start sidebar sidebar-dark accordion bg-gradient-primary p-0">
+				<div class="container-fluid d-flex flex-column p-0">
+					<a class="navbar-brand d-flex justify-content-center align-items-center sidebar-brand m-0" href="#">
+						<div class="sidebar-brand-icon rotate-n-15"><i class="far fa-id-card"></i></div>
+						<div class="sidebar-brand-text mx-3"><span>Tutore</span></div>
+					</a>
+					<hr class="sidebar-divider my-0">
+					<ul class="nav navbar-nav text-light" id="accordionSidebar">
+						<li class="nav-item" role="presentation">
+							<a class="nav-link active" href="interfaceTutore.html">
+								<i class="fab fa-phoenix-squadron"></i>
+								<span>Evénement</span>
+							</a>
+							<a class="nav-link" href="contact.html">
+								<i class="fab fa-phoenix-squadron"></i>
+								<span>Contact</span>
+							</a>
+						</li>
+					</ul>
+					<div class="text-center d-none d-md-inline"><button class="btn rounded-circle border-0" id="sidebarToggle" type="button"></button></div>
+				</div>
+			</nav>
+			<div class="d-flex flex-column" id="content-wrapper">
+				<div id="content">
+					<div class="block">
+						<div class="container">
+							<div class="row">
+								<div class="col-md-1">
+								</div>
+								<div class="col-xs-12 col-md-10">
+									<div class="row">
+										<div class="card debut">
+											<div class="card-header py-3">
+												<p class="text-primary m-0 font-weight-bold">
+													Historique tutorat personnalisé
+												</p>
+											</div>
+											<div class="card-body">
+												<div class="row">
+													<div class="col-12 text-center rechercher">
+														<a href="tutore-evenement-historique-global.html"><button class="btn" type="button">HISTORIQUE TUTORAT GLOBAL</button></a>
+													</div>
+													<div class="col-12 card-body-title">
+														<span>RECHERCHER PAR :</span>
+													</div>
+													<div class="col-12 text-nowrap">
+														<div class="row text-center">
+															<label style="flex: auto;">Période</label>
+														</div>
+														<div class="row">
+															<div class="col-xs-12 col-md-6">
+																<label class="col-2">De</label>
+																<input class="col-8 offset-2" type="date"/>
+															</div>
+															<div class="col-xs-12 col-md-6">
+																<label class="col-2">à</label>
+																<input class="col-8 offset-2" type="date"/>
+															</div>
+														</div>
+													</div>
+													<div class="col-12 text-center rechercher">
+														<button class="btn" type="button">RECHERCHER</button>
+													</div>
+												</div>
+												<div class="table-responsive table mt-2" role="grid" aria-describedby="dataTable_info">
+													<table class="table dataTable my-0" id="dataTable">
+														<thead>
+															<tr>
+																<th>Tutorat</th>
+																<th>Date</th>
+																<th>Adresse</th>
+																<th>Participation</th>
+																<th>Heures</th>
+															</tr>
+														</thead>
+														<tbody>
+															<tr>
+																<td><label>Lycée La Salle</label></td>
+																<td><label>12/05/2019</label></td>
+																<td><label>Anguissa</label></td>
+																<td>OK</td>
+																<td><label>4</label></td>
+															</tr>
+															<tr>
+																<td><label>APSCO Fives</label></td>
+																<td><label>12/05/2019</label></td>
+																<td><label>Efoulan</label></td>
+																<td>OK</td>
+																<td><label>6</label></td>
+															</tr>
+															<tr>
+																<td><label>Samedi</label></td>
+																<td><label>12/05/2019</label></td>
+																<td><label>HEI</label></td>
+																<td><button class="btn" type="button">VALIDER</button></td>
+																<td><label>7</label></td>
+															</tr>
+														</tbody>
+														<tfoot>
+															<tr></tr>
+														</tfoot>
+													</table>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+        </div>
+    </div>
+    <div class="footer-basic">
+        <footer>
+            <div class="social"><a href="#"><i class="icon ion-social-instagram"></i></a><a href="#"><i class="icon ion-social-snapchat"></i></a><a href="#"><i class="icon ion-social-twitter"></i></a><a href="#"><i class="icon ion-social-facebook"></i></a></div>
+            <ul class="list-inline">
+                <li class="list-inline-item"><a href="#">Accueil</a></li>
+                <li class="list-inline-item"><a href="#">Equipe</a></li>
+                <li class="list-inline-item"><a href="#">Contact</a></li>
+            </ul>
+            <p class="copyright">Tutorat YNCREA © 2019</p>
+        </footer>
+    </div>
+    <script src="assets/js/jquery.min.js?h=1dd785e1de9a32e236b624ae268bb803"></script>
+    <script src="assets/bootstrap/js/bootstrap.min.js?h=63715b63ee49d5fe4844c2ecae071373"></script>
+    <script src="assets/js/Navbarbuttonsignupsignin-modal-form.js?h=9ce049da3c28fd2ded69977163ac47a3"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.js"></script>
+    <script src="assets/js/theme.js?h=6d33b44a6dcb451ae1ea7efc7b5c5e30"></script>
+</body>
+
+</html>
