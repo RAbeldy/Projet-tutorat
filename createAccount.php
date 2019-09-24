@@ -150,7 +150,7 @@
 			else 
 			{
 				//login déjà utilisé pour un compte valide
-				$_SESSION['alert']= "Failed_login";
+				$_SESSION['alert']= "<strong>Failed_login</strong>";
 				header('location:index.php?controller=users&action=login');
 				//On le redirige vers la page d'accueil
 			}
@@ -158,14 +158,14 @@
 		else {
 			//pwd et confirmation différente
 			//login déjà utilisé pour un compte valide
-			$_SESSION['alert']= "Failed_password";
+			$_SESSION['alert']= "<strong>Failed_password</strong>";
 			header('location:index.php?controller=users&action=login');
 		     }
 	}
 	else{
 		//Champs non remplis
 		//login déjà utilisé pour un compte valide
-		$_SESSION['alert']= "Champs non remplis";
+		$_SESSION['alert']= "<strong>Champs non remplis</strong>";
 		header('location:index.php?controller=users&action=choixStatut');
 	}
 ?>
