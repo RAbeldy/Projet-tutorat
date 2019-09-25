@@ -33,7 +33,7 @@
 
   // we're adding an entry for the new controller and its actions
   $controllers = array(
-                       'users' => ['login','inscription','save_user','connexion','deconnexion','resetPassword','forgotPassword', 'choixStatut','update_account','modify_account','profil','claim_hours','create_account','redirection'],
+                       'users' => ['login','inscription','save_user','connexion','deconnexion','resetPassword','forgotPassword', 'choixStatut','update_account','modify_account','profil','create_account','redirection'],
                        'page'=>['home','contact'],
 
                        'tuteurs'=>['interface_tuteur','tuteur_set_event','events_creation','selection_tutores','tutores_list','notifications','waiting_list','link','accept_link','delete_link','working_list','wish_list','cancel_wish','contact','message','show_proposal','accept_proposal'],

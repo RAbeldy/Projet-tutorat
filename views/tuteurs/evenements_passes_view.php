@@ -84,16 +84,16 @@
 
                                                                   <td><label ><strong ><span style="color: red;" ><?=$elt['participer_evenement']?></span></strong></label></td>
                                                                   
-                                                                  <td><button class="btn" type="submit" name="réclamer" title="il est conseillé de patienter au moins une semaine pour que l'évènement soit validé. Dès lors, vous pouvez faire une réclamation en toute légitimité" onclick="alert();">Réclamer</button>
+                                                                  <td><button class="btn" type="submit" name="réclamer" title="il est conseillé de patienter au moins une semaine pour que l'évènement soit validé. Dès lors, vous pouvez faire une réclamation en toute légitimité" onclick="alert();">Pas encore validé</button>
                                                                   </td>
                                                                   <?php
                                                                   }
                                                                   else
                                                                   {
                                                                     ?>
-                                                                    <td><label ><strong ><span style="color: red;" ><?=$elt['planning_event']?></span></strong></label></td>
+                                                                    <td><label ><strong ><span style="color: green;" ><?=$elt['planning_event']?></span></strong></label></td>
 
-                                                                    <td><label ><strong ><span style="color: red;" ><?=$elt['participer_evenement']?></span></strong></label></td>
+                                                                    <td><label ><strong ><span style="color: green;" ><?=$elt['participer_evenement']?></span></strong></label></td>
                                                                     
                                                                     <td><label title="plus de places disponibles" class="btn" name="s'inscrire">Pris en compte</label>
                                                                   </td>

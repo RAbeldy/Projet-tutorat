@@ -118,6 +118,8 @@
 			                // on insère dans la table se_destine 
 			                $addtutoré = $bd->prepare("INSERT INTO se_destine(id_user,id_tutorat,id_typeTutorat,liaison) VALUES((SELECT id_user FROM user  WHERE email = ?),?,(SELECT id_typeTutorat FROM administrer WHERE id_tutorat= ? AND id_admin= ".$_SESSION['id_user']."),'OUI')");
 			                $addtutoré->execute(array($id_typeTutorat,$id_typeTutorat));
+			               
+
 						}
 						else // c'est un étudiant normal qui fait l'inscription 
 						{

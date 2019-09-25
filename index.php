@@ -1,18 +1,9 @@
 <?php
   require_once('connexion.php');
-  if (isset($_GET['controller']) && isset($_GET['action']))
-  {
-      $controller = $_GET['controller'];
-      $action     = $_GET['action'];
-  } 
-  else 
-  {
-        $controller = 'page';
-        $action     = 'home';
-      }
+
   session_start();
-  if(!isset($_SESSION['connecté']))
-  $_SESSION['connecté'] = 'non connecté';
+  if(!isset($_SESSION['id_user']))
+  $_SESSION['id_statut'] = null;
 
 ?>
 
@@ -54,86 +45,91 @@
 
 <body id="page-top">
     <?php
-      if($_SESSION['connecté'] == 'non connecté')
-        { 
-            echo $_SESSION['connecté'];
+      if(is_null($_SESSION['id_statut']))
+        { echo "non connecté";
+          echo $_SESSION['id_statut'];
         }
        else
         {
-          echo $_SESSION['connecté'];
+          echo "connecté";
           echo $_SESSION['id_statut'];
          }
 
-
+      if (isset($_GET['controller']) && isset($_GET['action'])) {
+        $controller = $_GET['controller'];
+        $action     = $_GET['action'];
+      } else {
+        $controller = 'page';
+        $action     = 'home';
+      }
     ?>
-    <nav class="navbar navbar-light navbar-expand-md navigation-clean-button">
-    <div class="container">
-        <a href="index.php" class="navbar-brand"> <img src="assets/img/logo1.png" style="width: 175px;"/> </a>
-        <button data-toggle="collapse" data-target="#navcol-1" class="navbar-toggler">
-            <span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse"
-            id="navcol-1">
-            <ul class="nav navbar-nav mr-auto">
-                <!-- CONTROL  sur la navbar horizontale -->
-                <?php
-                if(isset($_SESSION['statut']) && ($_SESSION['statut']== 'TUTEUR')) // id_statut d'un  tuteur
-                 {
-                  ?>
-                <li class="nav-item"><a href="?controller=tuteurs&action=interface_tuteur" class="nav-link">Mon tutorat </a>
-                </li>
-                 <li class="nav-item"><a href="?controller=tuteurs&action=selection_tutores" class="nav-link">Mes Tutorés </a>
-                </li>
-                 <li class="nav-item"><a href="#" class="nav-link">Le tutorat: ce que je dois savoir </a>
-                </li>
-                <?php
-                }
-                elseif(isset($_SESSION['statut']) && preg_match('#^TUTORE#', $_SESSION['statut']) == 1)
-                { 
-                ?>
-                    <li class="nav-item"><a href="?controller=tutores&action=interface_tutore" class="nav-link">Mon tutorat </a>
-                    </li>
-                     <li class="nav-item"><a href="?controller=tutores&action=selection_tuteurs" class="nav-link">Mon Tuteur </a>
-                    </li>
-                     <li class="nav-item"><a href="#" class="nav-link">Le tutorat: ce que je dois savoir </a>
-                    </li>
-                <?php
-                }
-                elseif(isset($_SESSION['statut']) && ($_SESSION['statut'] == 'SUPER_ADMIN'))
-                { 
-                ?>
-                    <li class="nav-item"><a href="#" class="nav-link">Les tutorats que je dirige </a>
-                    </li>
-                    
-                <?php
-                }
-                elseif(isset($_SESSION['statut']))
-                { 
-                ?>
-                    <li class="nav-item"><a href="#" class="nav-link">Les tutorats que je dirige </a>
-                    </li>
-                    
-                <?php
-                }
-                else
-                {
-                    ?>
-                     <li class="nav-item"><a href="#" class="nav-link">Accueil </a>
-                    </li>
-                    <li class="nav-item"><a href="#" class="nav-link">Equipe </a>
-                    </li>
-                    <li class="nav-item"><a href="?controller=page&action=contact" class="nav-link">Contact </a>
-                    </li>
+    <nav class="navbar navbar-expand-md">
+		<div class="container-fluid">
+			<a href="index.php" class="navbar-brand"> <img src="assets/img/logo1.png" style="width: 175px;"/> </a>
+			<button data-toggle="collapse" data-target="#navcol-1" class="navbar-toggler">
+				<span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navcol-1">
+				<ul class="nav navbar-nav mr-auto">
+					<!-- CONTROL  sur la navbar horizontale -->
+					<?php
+					if(isset($_SESSION['statut']) && ($_SESSION['statut']== 'TUTEUR')) // id_statut d'un  tuteur
+					 {
+					  ?>
+					<li class="nav-item"><a href="?controller=tuteurs&action=interface_tuteur" class="nav-link">Mon tutorat </a>
+					</li>
+					 <li class="nav-item"><a href="?controller=tuteurs&action=selection_tutores" class="nav-link">Mes Tutorés </a>
+					</li>
+					 <li class="nav-item"><a href="#" class="nav-link">Le tutorat: ce que je dois savoir </a>
+					</li>
+					<?php
+					}
+					elseif(isset($_SESSION['statut']) && preg_match('#^TUTORE#', $_SESSION['statut']) == 1)
+					{ 
+					?>
+						<li class="nav-item"><a href="?controller=tutores&action=interface_tutore" class="nav-link">Mon tutorat </a>
+						</li>
+						 <li class="nav-item"><a href="?controller=tutores&action=selection_tuteurs" class="nav-link">Mon Tuteur </a>
+						</li>
+						 <li class="nav-item"><a href="#" class="nav-link">Le tutorat: ce que je dois savoir </a>
+						</li>
+					<?php
+					}
+					elseif(isset($_SESSION['statut']) && ($_SESSION['statut'] == 'SUPER_ADMIN'))
+					{ 
+					?>
+						<li class="nav-item"><a href="#" class="nav-link">Les tutorats que je dirige </a>
+						</li>
+						
+					<?php
+					}
+					elseif(isset($_SESSION['statut']))
+					{ 
+					?>
+						<li class="nav-item"><a href="#" class="nav-link">Les tutorats que je dirige </a>
+						</li>
+						
+					<?php
+					}
+					else
+					{
+						?>
+						 <li class="nav-item"><a href="#" class="nav-link">Accueil </a>
+						</li>
+						<li class="nav-item"><a href="#" class="nav-link">Equipe </a>
+						</li>
+						<li class="nav-item"><a href="?controller=page&action=contact" class="nav-link">Contact </a>
+						</li>
 
-                    <?php
-                }
-                ?>
+						<?php
+					}
+					?>
 				</ul>
 				<div class="dropdown">
 					<button class="btn dropdown-toggle" data-toggle="dropdown" aria-expanded="false" type="button"> <i class="fa fa-user-circle" style="font-size: 40px;"></i> </button>
 					<div class="dropdown-menu" role="menu">
 						<?php
-						if($_SESSION['connecté'] == 'non connecté')
+						if(is_null($_SESSION['id_statut']))
 						{
 						?>
 						<a class="dropdown-item forgot" href="?controller=users&action=login" role="presentation">Connexion</a>
@@ -173,9 +169,13 @@
                         <hr class="sidebar-divider my-0">
                         <ul class="nav navbar-nav text-light" id="accordionSidebar">
                             <li class="nav-item" role="presentation">
-                                <a class="nav-link active" href="?controller=tuteurs&action=interface_tuteur">
+                                <a class="nav-link" href="?controller=tuteurs&action=interface_tuteur">
                                     <i class="fab fa-phoenix-squadron"></i>
-                                    <span>Evénement</span>
+                                    <span>évènements</span>
+                                </a>
+                                <a class="nav-link" href="?controller=users&action=update_account">
+                                    <i class="fab fa-phoenix-squadron"></i>
+                                    <span>Mon Compte</span>
                                 </a>
                                 <a class="nav-link" href="?controller=tuteurs&action=notifications">
                                     <i class="fab fa-phoenix-squadron"></i>
@@ -207,6 +207,10 @@
                                     <i class="fab fa-phoenix-squadron"></i>
                                     <span>Evénement</span>
                                 </a>
+                                <a class="nav-link" href="?controller=users&action=update_account">
+                                    <i class="fab fa-phoenix-squadron"></i>
+                                    <span>Mon Compte</span>
+                                </a>
                                 <a class="nav-link" href="?controller=tutores&action=notifications">
                                     <i class="fab fa-phoenix-squadron"></i>
                                     <span>Notifications</span>
@@ -229,7 +233,7 @@
                     <hr class="sidebar-divider my-0">
                     <ul class="nav navbar-nav text-light" id="accordionSidebar">
                         <li class="nav-item" role="presentation">
-                            <a class="nav-link active" href="?controller=admin&action=interface_admin">
+                            <a class="nav-link" href="?controller=admin&action=interface_admin">
                                 <i class="fab fa-phoenix-squadron"></i>
                                 <span>évènements</span>
                             </a>

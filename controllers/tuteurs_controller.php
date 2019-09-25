@@ -223,7 +223,7 @@ class TuteursController
             require_once('views/tuteurs/interface_tuteur.php');
         }
         else
-            require_once('views/Login.php');
+            require_once('views/login.php');
     }
     public static function contact()
         {
@@ -233,7 +233,7 @@ class TuteursController
                     require_once('views/tuteurs/contacter.php');
                 }
             else
-                require_once('views/Login.php');
+                require_once('views/login.php');
         }
       public function message() 
       {
@@ -260,7 +260,7 @@ class TuteursController
                 TuteursController::contact();
             }
             else
-                require_once('views/Login.php');
+                require_once('views/login.php');
       }
     public static function show_proposal() // on affiche les différentes propositions recues par un tuteur
     {

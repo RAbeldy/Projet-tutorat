@@ -620,7 +620,7 @@ public static function export()
         {
             if(isset($_SESSION['id_statut']))// on vérifie que seul un utilisateur connecté peut accéder à ces pages
                 { 
-                    $data= Users::Get_all_contact_admin(); // on récupère le contact de tous les admin du site(ceux qui en ont la gestion)
+                    $data= Users::Get_all_contact_admin($_SESSION['id_user']); // on récupère le contact de tous les admin du site(ceux qui en ont la gestion)
                     require_once('views/superadmin/contacter.php');
                 }
             else

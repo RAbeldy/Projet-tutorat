@@ -328,11 +328,13 @@ require_once('connexion.php');
       }
     return $list;
   }
-  public static function Get_all_contact_admin() // on récupère les contacts des admin en charge de tous les comptes statiques administrés  (pour le super admin)
+  public static function Get_all_contact_admin($id_user) // on récupère les contacts des admin en charge de tous les comptes statiques administrés  (le super admin y compris)
   {
     $db = Db::getInstance(); 
     $list= [];
-    $req= $db->query("SELECT DISTINCT u.nom,u.prenom,u.email,s.libelle as libelle FROM user as u,suivi_administrateurs as sa,administrer as ad,avoir_statut as at, statut as s WHERE sa.id_user = u.id_user AND ad.id_admin= sa.id_admin AND at.id_user= ad.id_admin AND at.id_statut = s.id_statut ORDER BY nom ");
+    $req= $db->prepare("SELECT DISTINCT u.nom,u.prenom,u.email,s.libelle as libelle FROM user as u,suivi_administrateurs as sa,administrer as ad,avoir_statut as at, statut as s WHERE sa.id_user = u.id_user AND ad.id_admin= sa.id_admin AND at.id_user= ad.id_admin AND at.id_statut = s.id_statut AND sa.id_user <> ?UNION 
+      SELECT DISTINCT u.nom,u.prenom,u.email,s.libelle as libelle FROM user as u,avoir_statut as at, statut as s WHERE u.id_user= at.id_user AND  s.id_statut = 1  AND at.id_statut = s.id_statut AND u.id_user <> ?ORDER BY nom ");
+    $req->execute(array($id_user,$id_user));
     
      
      foreach ($req->fetchAll() as $temp) 

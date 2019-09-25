@@ -107,45 +107,45 @@ function validateForm() {
                 </div>
 
                 <div class="form-group">
-                    <input class="form-control" type="text" name="nom" id="a" placeholder="Nom" required >
+                    <input class="form-control" type="text" name="nom" id="a" placeholder="Nom" >
                 </div>
                 <div class="form-group">
-                    <input class="form-control" type="text" name="prenom" id="b" placeholder="Prénom" required >
+                    <input class="form-control" type="text" name="prenom" id="b" placeholder="Prénom" >
                 </div>
                 
                 <div class="form-group">
                     <input class="form-control" type="number" minlength="10" id="c" maxlength="14" name="phone" id="b" placeholder="tel"
-                       required >
+                        >
                 </div>
                 <div class="form-group">
-                    <input class="form-control" type="date" name="date_naiss" id="d" placeholder="Date de naissance" required >
+                    <input class="form-control" type="date" name="date_naiss" id="d" placeholder="Date de naissance" >
                 </div>
                 <div class="form-group">
-                    <input class="form-control" type="email" name="email" id="numero1" placeholder="Email" required >
+                    <input class="form-control" type="email" name="email" id="numero1" placeholder="Email" >
                 </div>
                 <div class="form-group">
                     <input class="form-control" type="password" name="password" id="passworde" placeholder="Mot de passe"       
-                    onkeyup='javascript:checke();' required >
+                    onkeyup='javascript:checke();' >
                 </div>
                 <div class="form-group">
-                    <input class="form-control" type="password" name="confirmer_password" id="confirme_password" placeholder="Confirmer mot de passe" onkeyup='javascript:checke();' required >
+                    <input class="form-control" type="password" name="confirmer_password" id="confirme_password" placeholder="Confirmer mot de passe" onkeyup='javascript:checke();'  >
                  <span id='mess'></span>
                 </div>
                 <div class="form-group">
-                    <input class="form-control" type="text" name="ecole" id="e" placeholder="École" required >
+                    <input class="form-control" type="text" name="ecole" id="e" placeholder="École" >
                 </div>
                 
                 <div class="form-group">
-                    <input class="form-control" type="text" name="adresse" id="f" placeholder="Adresse" required>
+                    <input class="form-control" type="text" name="adresse" id="f" placeholder="Adresse" >
                 </div>
                 <div class="form-group">
-                    <input class="form-control" type="text" name="complement_adresse" id="g" placeholder="Complément Adresse" required >               
+                    <input class="form-control" type="text" name="complement_adresse" id="g" placeholder="Complément Adresse" >               
                 </div>
                 <div class="form-group">
-                    <input class="form-control" type="text" name="ville" id="h" placeholder="Ville" required>
+                    <input class="form-control" type="text" name="ville" id="h" placeholder="Ville" >
                 </div>    
                 <div class="form-group">
-                    <input class="form-control" type="number" name="code_postal" id="i" placeholder="code postal" required >
+                    <input class="form-control" type="number" name="code_postal" id="i" placeholder="code postal" >
                 </div>
                 <div class="form-group">
                     <button class="btn btn-primary btn-block" type="submit" 
