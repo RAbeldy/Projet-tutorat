@@ -5,8 +5,7 @@ require_once('models/users.php');
 require_once('models/admin.php');
 require_once('models/superadmin.php');
 require_once('models/tutorat.php');
-
-
+require_once('controllers/users_controller.php');
 
 
 
@@ -18,25 +17,34 @@ class SuperadminController
        {
             if( isset($_SESSION['id_statut']))
             {
+              if($_SESSION['id_statut']== 1)
                 require_once('views/superadmin/interface_superadmin.php');
+              else
+                require_once('views/admin/gestion/interface_gestionnaire.php');
             }
             else
                 require_once('views/login.php');
        }
      public function interface_tutore()
      {
-           if( isset($_SESSION['id_statut']))
+           if( isset($_SESSION['id_statut']) )
             {
-                require_once('views/superadmin/interface_tutore.php');
+                if( $_SESSION['id_statut'] == 1)
+                   require_once('views/superadmin/interface_tutore.php');
+                else
+                   UsersController::deconnexion();
             }
             else
                 require_once('views/login.php');
      }
      public function interface_tuteur()
      {
-           if( isset($_SESSION['id_statut']))
+           if( isset($_SESSION['id_statut']) )
             {
+              if( $_SESSION['id_statut'] == 1)
                 require_once('views/superadmin/interface_tuteur.php');
+              else
+              UsersController::deconnexion();
             }
             else
                 require_once('views/login.php');
@@ -46,6 +54,7 @@ class SuperadminController
      {
          if( isset($_SESSION['id_statut']))
          {
+
             $controller_report='superadmin'; 
             $fonction_back='interface_superadmin';
 
@@ -56,53 +65,74 @@ class SuperadminController
      }
      public function interface_set_event()  
      {
-         if( isset($_SESSION['id_statut']))
+         if( isset($_SESSION['id_statut'])  )
          {
+          if( $_SESSION['id_statut'] == 1)
+          {
             $donnees=Tutorat::Get_all_type_tutorat();  // on charge l'interface de création de tutorat 
             
             $controller_report='superadmin'; 
             $fonction_back='interface_superadmin';
 
                 require_once('views/superadmin/interface_set_event.php');
+          }
+          else
+              UsersController::deconnexion();
          }
           else
                 require_once('views/login.php');
      }
      public function interface_account_creation()  
      {
-         if( isset($_SESSION['id_statut']))
+         if( isset($_SESSION['id_statut']) )
          {
+          if( $_SESSION['id_statut'] == 1)
+          {
             $donnees=Tutorat::Get_all_type_tutorat();  // on charge l'interface de création de tutorat
             $controller_report='superadmin'; 
             $fonction_back='interface_tutorat';
 
                 require_once('views/superadmin/interface_account_creation.php');
+          }
+          else
+              UsersController::deconnexion();
          }
           else
                 require_once('views/login.php');
      }
      public function interface_hours()  
      {
-         if( isset($_SESSION['id_statut']))
+         if( isset($_SESSION['id_statut']) )
          {
+          if( $_SESSION['id_statut'] == 1)
+          {
             $controller_report='superadmin'; 
             $fonction_back='interface_tutorat';
 
                 require_once('views/superadmin/interface_hours.php');
+          }
+          else
+              UsersController::deconnexion();
+
          }
           else
                 require_once('views/login.php');
      }
      public function tuteurs_list()
      {
-        if( isset($_SESSION['id_statut']))
+        if( isset($_SESSION['id_statut']) )
          {
-           $donnees= Admin::Get_all_tuteurs($_SESSION['id_user']);
+          if( $_SESSION['id_statut'] == 1)
+          {
+             $donnees= Admin::Get_all_tuteurs($_SESSION['id_user']);
 
-           $controller_report='superadmin'; 
-           $fonction_back='interface_tuteur';
+             $controller_report='superadmin'; 
+             $fonction_back='interface_tuteur';
 
-           require_once('views/superadmin/tuteurs_list.php');
+             require_once('views/superadmin/tuteurs_list.php');
+           }
+           else
+              UsersController::deconnexion();
          }
          else
            require_once('views/login.php');
@@ -110,83 +140,112 @@ class SuperadminController
 
      public function tutores_list()
      {
-        if( isset($_SESSION['id_statut']))
+        if( isset($_SESSION['id_statut']) )
          {
-           $donnees= Admin::Get_all_tutores($_SESSION['id_user']);
+          if( $_SESSION['id_statut'] == 1)
+          {
+             $donnees= Admin::Get_all_tutores($_SESSION['id_user']);
 
-           $controller_report='superadmin'; 
-           $fonction_back='interface_tutore';
+             $controller_report='superadmin'; 
+             $fonction_back='interface_tutore';
 
-           require_once('views/superadmin/tutores_list.php');
+             require_once('views/superadmin/tutores_list.php');
+           }
+           else
+              UsersController::deconnexion();
          }
          else
            require_once('views/login.php');
      }
      public function tuteurs_belonging_list()
      {
-        if( isset($_SESSION['id_statut']))
+        if( isset($_SESSION['id_statut']) )
          {
-           $donnees= Superadmin::All_selected_tuteurs();
+          if( $_SESSION['id_statut'] == 1)
+          {
+             $donnees= Superadmin::All_selected_tuteurs();
 
-           $controller_report='superadmin'; 
-           $fonction_back='interface_tuteur';
+             $controller_report='superadmin'; 
+             $fonction_back='interface_tuteur';
 
-           require_once('views/superadmin/belonging_list.php');
+             require_once('views/superadmin/belonging_list.php');
+           }
+           else
+              UsersController::deconnexion();
          }
          else
            require_once('views/login.php');
      }
      public function tutores_belonging_list()
      {
-        if( isset($_SESSION['id_statut']))
+        if( isset($_SESSION['id_statut']) )
          {
-           $donnees= Superadmin::All_selected_tutores();
+          if( $_SESSION['id_statut'] == 1)
+          {
+             $donnees= Superadmin::All_selected_tutores();
 
-           $controller_report='superadmin'; 
-           $fonction_back='interface_tutore';
+             $controller_report='superadmin'; 
+             $fonction_back='interface_tutore';
 
-           require_once('views/superadmin/belonging_list.php');
+             require_once('views/superadmin/belonging_list.php');
+           }
+           else
+              UsersController::deconnexion();
          }
          else
            require_once('views/login.php');
      }
      public function events()
      {
-        if( isset($_SESSION['id_statut']))
+        if( isset($_SESSION['id_statut']) )
          {
-          
-           $controller_report='superadmin'; 
-           $fonction_back='interface_superadmin';
+          if( $_SESSION['id_statut'] == 1)
+          {
+             $controller_report='superadmin'; 
+             $fonction_back='interface_superadmin';
 
-           require_once('views/superadmin/events.php');
+             require_once('views/superadmin/events.php');
+           }
+           else
+              UsersController::deconnexion();
          }
          else
            require_once('views/login.php');
      } 
      public function future_events_list()
      {
-       if( isset($_SESSION['id_statut']))
+       if( isset($_SESSION['id_statut']) )
          {
-           $donnees= Evenements::Future_events_list_superadmin();
+          if( $_SESSION['id_statut'] == 1)
+            {
+               $donnees= Evenements::Future_events_list_superadmin();
 
-           $controller_report='superadmin'; 
-           $fonction_back='events';
+               $controller_report='superadmin'; 
+               $fonction_back='events';
 
-           require_once('views/superadmin/future_events_list.php');
+               require_once('views/superadmin/future_events_list.php');
+             }
+             else
+              UsersController::deconnexion();
          }
          else
            require_once('views/login.php');
      }
      public function pasts_events_list()
      {
-      if( isset($_SESSION['id_statut']))
+      if( isset($_SESSION['id_statut']) )
          {
-           $donnees= Evenements::Pasts_events_list_superadmin();
+          if( $_SESSION['id_statut'] == 1)
+            {
+               $donnees= Evenements::Pasts_events_list_superadmin();
 
-           $controller_report='superadmin'; 
-           $fonction_back='events';
+               $controller_report='superadmin'; 
+               $fonction_back='events';
 
-           require_once('views/superadmin/pasts_events_list.php');
+               require_once('views/superadmin/pasts_events_list.php');
+             }
+             else
+              UsersController::deconnexion();
          }
          else
            require_once('views/login.php');
@@ -194,38 +253,43 @@ class SuperadminController
      
      public function set_event() // il s'agit de la vue de création ici, l'insertion se fait dans le controller evenement
      {
-       if( isset($_SESSION['id_statut']))
+       if( isset($_SESSION['id_statut']) )
          {
-           $type= $_GET['type'];
+          if( $_SESSION['id_statut'] == 1)
+            {
+               $type= $_GET['type'];
 
-           $controller_report='superadmin'; 
-           $fonction_back='interface_set_event';
-           switch ($type) {
-             case 'VAUBAN':
-               $donnees= Tutorat::Get_specific_tutorat_list(8); // on récupère la liste des tutorats associés à ce type de tutorat
-               require_once('views/superadmin/superadmin_set_event.php');
-               break;
-             
-             case 'IMMERSION':
-               $donnees= Tutorat::Get_specific_tutorat_list(1); // on récupère la liste des tutorats associés à ce type de tutorat
-               require_once('views/superadmin/superadmin_set_event.php');
-               break;
-             case 'APSCO':
-               $donnees= Tutorat::Get_specific_tutorat_list(5); // on récupère la liste des tutorats associés à ce type de tutorat
-               require_once('views/superadmin/superadmin_set_event.php');
-               break;
-             case 'LYCEES':
-               $donnees= Tutorat::Get_specific_tutorat_list(6); // on récupère la liste des tutorats associés à ce type de tutorat
-               require_once('views/superadmin/superadmin_set_event.php');
-               break;
-             case 'COLLEGE':
-               $donnees= Tutorat::Get_specific_tutorat_list(7); // on récupère la liste des tutorats associés à ce type de tutorat
-               require_once('views/superadmin/superadmin_set_event.php');
-               break;
-             default:
-               require_once('views/superadmin/interface_set_event.php');
-               break;
-           }
+               $controller_report='superadmin'; 
+               $fonction_back='interface_set_event';
+               switch ($type) {
+                 case 'VAUBAN':
+                   $donnees= Tutorat::Get_specific_tutorat_list(8); // on récupère la liste des tutorats associés à ce type de tutorat
+                   require_once('views/superadmin/superadmin_set_event.php');
+                   break;
+                 
+                 case 'IMMERSION':
+                   $donnees= Tutorat::Get_specific_tutorat_list(1); // on récupère la liste des tutorats associés à ce type de tutorat
+                   require_once('views/superadmin/superadmin_set_event.php');
+                   break;
+                 case 'APSCO':
+                   $donnees= Tutorat::Get_specific_tutorat_list(5); // on récupère la liste des tutorats associés à ce type de tutorat
+                   require_once('views/superadmin/superadmin_set_event.php');
+                   break;
+                 case 'LYCEES':
+                   $donnees= Tutorat::Get_specific_tutorat_list(6); // on récupère la liste des tutorats associés à ce type de tutorat
+                   require_once('views/superadmin/superadmin_set_event.php');
+                   break;
+                 case 'COLLEGE':
+                   $donnees= Tutorat::Get_specific_tutorat_list(7); // on récupère la liste des tutorats associés à ce type de tutorat
+                   require_once('views/superadmin/superadmin_set_event.php');
+                   break;
+                 default:
+                   require_once('views/superadmin/interface_set_event.php');
+                   break;
+               }
+             }
+             else
+              UsersController::deconnexion();
            
          }
          else
@@ -234,7 +298,7 @@ class SuperadminController
      
      public function modify_event()
        {
-        if( isset($_SESSION['id_statut']))
+        if( isset($_SESSION['id_statut']) && $_SESSION['id_statut'] == 1)
           {    
              if( isset($_POST['modifier']))
              {
@@ -281,7 +345,7 @@ class SuperadminController
        }
        public static function show_informations()
         {
-          if( isset($_SESSION['id_statut']))
+          if( isset($_SESSION['id_statut']) )
            {
                if( isset($_POST['consulter']))
                {
@@ -320,35 +384,45 @@ class SuperadminController
         }
      public static function future_subscription_list()
       {
-         if( isset($_SESSION['id_statut']))
+         if( isset($_SESSION['id_statut']) )
          {
-            $donnees = Evenements::Subscription_list($_POST['id_e']); // on récupère la liste des participants
-            $data= Evenements::Get_informations_on_events($_POST['id_e']);  // on récupère la date, le. lieu etc sur l'évenement
-            $controller_report='superadmin';
-            $fonction_back='future_events_list';
+          if( $_SESSION['id_statut'] == 1)
+            {
+              $donnees = Evenements::Subscription_list($_POST['id_e']); // on récupère la liste des participants
+              $data= Evenements::Get_informations_on_events($_POST['id_e']);  // on récupère la date, le. lieu etc sur l'évenement
+              $controller_report='superadmin';
+              $fonction_back='future_events_list';
 
-            require_once('views/superadmin/subscription_list.php');
+              require_once('views/superadmin/subscription_list.php');
+            }
+            else
+              UsersController::deconnexion();
          }    
          else
             require_once('views/login.php');
       }
      public static function pasts_subscription_list()
       {
-         if( isset($_SESSION['id_statut']))
+         if( isset($_SESSION['id_statut']) )
          {
-            $donnees = Evenements::Subscription_list($_POST['id_e']); // on récupère la liste des participants
-            $data= Evenements::Get_informations_on_events($_POST['id_e']);  // on récupère la date, le. lieu etc sur l'évenement
-            $controller_report='superadmin';
-            $fonction_back='pasts_events_list';
+            if( $_SESSION['id_statut'] == 1)
+            {
+              $donnees = Evenements::Subscription_list($_POST['id_e']); // on récupère la liste des participants
+              $data= Evenements::Get_informations_on_events($_POST['id_e']);  // on récupère la date, le. lieu etc sur l'évenement
+              $controller_report='superadmin';
+              $fonction_back='pasts_events_list';
 
-            require_once('views/superadmin/subscription_list.php');
+              require_once('views/superadmin/subscription_list.php');
+            }
+            else
+              UsersController::deconnexion();
          }    
          else
             require_once('views/login.php');
       }
      public function create_center()  // il s'agit de la vue de création d'un centre
      {
-       if( isset($_SESSION['id_statut']))
+       if( isset($_SESSION['id_statut']) )
        {
           $donnees=Tutorat::Get_all_type_tutorat();  // on charge l'interface de création de tutorat
 
@@ -552,14 +626,19 @@ class SuperadminController
 
      public function validated_hours() // liste des tuteurs et du cumul de leurs heures sur la période
      {
-      if(isset($_SESSION['id_statut']))// on vérifie que seul un utilisateur connecté peut accéder à ces pages
+      if(isset($_SESSION['id_statut']) )// on vérifie que seul un utilisateur connecté peut accéder à ces pages
       { 
-        $donnees= Users::Get_unpaidHours_tuteurs(); // liste des tuteurs qui ont des heures impayees 
-        
-        $controller_report='superadmin'; 
-        $fonction_back='interface_hours';
+        if( $_SESSION['id_statut'] == 1)
+        {
+          $donnees= Users::Get_unpaidHours_tuteurs(); // liste des tuteurs qui ont des heures impayees 
+          
+          $controller_report='superadmin'; 
+          $fonction_back='interface_hours';
 
-        require_once('views/superadmin/validated_history.php');
+          require_once('views/superadmin/validated_history.php');
+        }
+        else
+          UsersController::deconnexion();
       }
       else
         require_once('views/login.php');
@@ -567,28 +646,38 @@ class SuperadminController
 
      public function validatedHours_history()  // détails sur les  evenements validés en fonction des tuteurs
      {
-      if(isset($_SESSION['id_statut']))// on vérifie que seul un utilisateur connecté peut accéder à ces pages
+      if(isset($_SESSION['id_statut']) )// on vérifie que seul un utilisateur connecté peut accéder à ces pages
       { 
-        $donnees= Evenements::Get_validated_events($_POST['id_u']); // liste des tuteurs qui ont déja été payé au moins une fois
+        if( $_SESSION['id_statut'] == 1)
+        {
+          $donnees= Evenements::Get_validated_events($_POST['id_u']); // liste des tuteurs qui ont déja été payé au moins une fois
 
-        $controller_report='superadmin'; 
-        $fonction_back='validated_hours';
+          $controller_report='superadmin'; 
+          $fonction_back='validated_hours';
 
-        require_once('views/superadmin/hours_history.php');
+          require_once('views/superadmin/hours_history.php');
+        }
+        else
+          UsersController::deconnexion();
       }
       else 
         require_once('views/login.php');
      }
      public function paidHours_history()  // détails sur les evenements validés et payés en fonction des tuteurs
      {
-      if(isset($_SESSION['id_statut']))// on vérifie que seul un utilisateur connecté peut accéder à ces pages
+      if(isset($_SESSION['id_statut']) )// on vérifie que seul un utilisateur connecté peut accéder à ces pages
       { 
-        $donnees= Evenements::Get_paid_events($_POST['id_u']); // liste des tuteurs qui ont déja été payé au moins une fois
+        if( $_SESSION['id_statut'] == 1)
+        {
+          $donnees= Evenements::Get_paid_events($_POST['id_u']); // liste des tuteurs qui ont déja été payé au moins une fois
 
-        $controller_report='superadmin'; 
-        $fonction_back='paid_hours';
+          $controller_report='superadmin'; 
+          $fonction_back='paid_hours';
 
-        require_once('views/superadmin/hours_history.php');
+          require_once('views/superadmin/hours_history.php');
+        }
+        else
+          UsersController::deconnexion();
       }
       else 
         require_once('views/login.php');
@@ -598,12 +687,17 @@ class SuperadminController
      {
       if(isset($_SESSION['id_statut']))// on vérifie que seul un utilisateur connecté peut accéder à ces pages
       { 
-        $donnees= Users::Get_paidHours_tuteurs(); // liste des tuteurs et de leurs heures deja payées
+        if( $_SESSION['id_statut'] == 1)
+        {
+          $donnees= Users::Get_paidHours_tuteurs(); // liste des tuteurs et de leurs heures deja payées
 
-        $controller_report='superadmin'; 
-        $fonction_back='interface_hours';
+          $controller_report='superadmin'; 
+          $fonction_back='interface_hours';
 
-        require_once('views/superadmin/paid_history.php');
+          require_once('views/superadmin/paid_history.php');
+        }
+        else
+          UsersController::deconnexion();
       }
       else 
         require_once('views/login.php');

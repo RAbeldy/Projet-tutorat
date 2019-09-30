@@ -1,9 +1,18 @@
 <?php
   require_once('connexion.php');
-
+  if (isset($_GET['controller']) && isset($_GET['action']))
+  {
+      $controller = $_GET['controller'];
+      $action     = $_GET['action'];
+  }
+  else
+  {
+        $controller = 'page';
+        $action     = 'home';
+      }
   session_start();
-  if(!isset($_SESSION['id_user']))
-  $_SESSION['id_statut'] = null;
+  if(!isset($_SESSION['connecté']))
+  $_SESSION['connecté'] = 'non connecté';
 
 ?>
 
@@ -34,102 +43,97 @@
     <link rel="stylesheet" href="assets/fonts/fontawesome-all.min.css?h=0692f36eb27607e4837760bbbf813d92">
     <link rel="stylesheet" href="assets/css/menu.css">
     <link rel="stylesheet" href="assets/css/tuteur.css">
-    <link rel="stylesheet" href="assets/css/evenement.css">
     <!-- upadte account -->
     <link rel="stylesheet" href="assets/css/Profile-Edit-Form.css?h=0d932fa81301936f118cc8607c135e19">
     <!-- login-->
     <link rel="stylesheet" href="assets/css/Login-Form.css?h=20d7842de129d800e792499681f0b672">
+    <link rel="stylesheet" href="http://demo.themefisher.com/constra/css/owl.carousel.min.css">
 
-    
+
 </head>
 
 <body id="page-top">
     <?php
-      if(is_null($_SESSION['id_statut']))
-        { echo "non connecté";
-          echo $_SESSION['id_statut'];
+      if($_SESSION['connecté'] == 'non connecté')
+        {
+            echo $_SESSION['connecté'];
         }
        else
         {
-          echo "connecté";
+          echo $_SESSION['connecté'];
           echo $_SESSION['id_statut'];
          }
 
-      if (isset($_GET['controller']) && isset($_GET['action'])) {
-        $controller = $_GET['controller'];
-        $action     = $_GET['action'];
-      } else {
-        $controller = 'page';
-        $action     = 'home';
-      }
-    ?>
-    <nav class="navbar navbar-expand-md">
-		<div class="container-fluid">
-			<a href="index.php" class="navbar-brand"> <img src="assets/img/logo1.png" style="width: 175px;"/> </a>
-			<button data-toggle="collapse" data-target="#navcol-1" class="navbar-toggler">
-				<span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span>
-			</button>
-			<div class="collapse navbar-collapse" id="navcol-1">
-				<ul class="nav navbar-nav mr-auto">
-					<!-- CONTROL  sur la navbar horizontale -->
-					<?php
-					if(isset($_SESSION['statut']) && ($_SESSION['statut']== 'TUTEUR')) // id_statut d'un  tuteur
-					 {
-					  ?>
-					<li class="nav-item"><a href="?controller=tuteurs&action=interface_tuteur" class="nav-link">Mon tutorat </a>
-					</li>
-					 <li class="nav-item"><a href="?controller=tuteurs&action=selection_tutores" class="nav-link">Mes Tutorés </a>
-					</li>
-					 <li class="nav-item"><a href="#" class="nav-link">Le tutorat: ce que je dois savoir </a>
-					</li>
-					<?php
-					}
-					elseif(isset($_SESSION['statut']) && preg_match('#^TUTORE#', $_SESSION['statut']) == 1)
-					{ 
-					?>
-						<li class="nav-item"><a href="?controller=tutores&action=interface_tutore" class="nav-link">Mon tutorat </a>
-						</li>
-						 <li class="nav-item"><a href="?controller=tutores&action=selection_tuteurs" class="nav-link">Mon Tuteur </a>
-						</li>
-						 <li class="nav-item"><a href="#" class="nav-link">Le tutorat: ce que je dois savoir </a>
-						</li>
-					<?php
-					}
-					elseif(isset($_SESSION['statut']) && ($_SESSION['statut'] == 'SUPER_ADMIN'))
-					{ 
-					?>
-						<li class="nav-item"><a href="#" class="nav-link">Les tutorats que je dirige </a>
-						</li>
-						
-					<?php
-					}
-					elseif(isset($_SESSION['statut']))
-					{ 
-					?>
-						<li class="nav-item"><a href="#" class="nav-link">Les tutorats que je dirige </a>
-						</li>
-						
-					<?php
-					}
-					else
-					{
-						?>
-						 <li class="nav-item"><a href="#" class="nav-link">Accueil </a>
-						</li>
-						<li class="nav-item"><a href="#" class="nav-link">Equipe </a>
-						</li>
-						<li class="nav-item"><a href="?controller=page&action=contact" class="nav-link">Contact </a>
-						</li>
 
-						<?php
-					}
-					?>
+    ?>
+    <nav class="navbar navbar-light navbar-expand-md navigation-clean-button">
+    <div class="container-fluid">
+        <a href="index.php" class="navbar-brand"> <img src="assets/img/logo1.png" style="width: 175px;"/> </a>
+        <button data-toggle="collapse" data-target="#navcol-1" class="navbar-toggler">
+            <span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse"
+            id="navcol-1">
+            <ul class="nav navbar-nav mr-auto">
+                <!-- CONTROL  sur la navbar horizontale -->
+                <?php
+                if(isset($_SESSION['statut']) && ($_SESSION['statut']== 'TUTEUR')) // id_statut d'un  tuteur
+                 {
+                  ?>
+                <li class="nav-item"><a href="?controller=tuteurs&action=interface_tuteur" class="nav-link">Mon tutorat </a>
+                </li>
+                 <li class="nav-item"><a href="?controller=tuteurs&action=selection_tutores" class="nav-link">Mes Tutorés </a>
+                </li>
+                 <li class="nav-item"><a href="#" class="nav-link">Le tutorat: ce que je dois savoir </a>
+                </li>
+                <?php
+                }
+                elseif(isset($_SESSION['statut']) && preg_match('#^TUTORE#', $_SESSION['statut']) == 1)
+                {
+                ?>
+                    <li class="nav-item"><a href="?controller=tutores&action=interface_tutore" class="nav-link">Mon tutorat </a>
+                    </li>
+                     <li class="nav-item"><a href="?controller=tutores&action=selection_tuteurs" class="nav-link">Mon Tuteur </a>
+                    </li>
+                     <li class="nav-item"><a href="#" class="nav-link">Le tutorat: ce que je dois savoir </a>
+                    </li>
+                <?php
+                }
+                elseif(isset($_SESSION['statut']) && ($_SESSION['statut'] == 'SUPER_ADMIN'))
+                {
+                ?>
+                    <li class="nav-item"><a href="#" class="nav-link">Les tutorats que je dirige </a>
+                    </li>
+
+                <?php
+                }
+                elseif(isset($_SESSION['statut']))
+                {
+                ?>
+                    <li class="nav-item"><a href="#" class="nav-link">Les tutorats que je dirige </a>
+                    </li>
+
+                <?php
+                }
+                else
+                {
+                    ?>
+                     <li class="nav-item"><a href="index.php" class="nav-link">Accueil </a>
+                    </li>
+                    <li class="nav-item"><a href="#" class="nav-link">Equipe </a>
+                    </li>
+                    <li class="nav-item"><a href="?controller=page&action=contact" class="nav-link">Contact </a>
+                    </li>
+
+                    <?php
+                }
+                ?>
 				</ul>
 				<div class="dropdown">
 					<button class="btn dropdown-toggle" data-toggle="dropdown" aria-expanded="false" type="button"> <i class="fa fa-user-circle" style="font-size: 40px;"></i> </button>
 					<div class="dropdown-menu" role="menu">
 						<?php
-						if(is_null($_SESSION['id_statut']))
+						if($_SESSION['connecté'] == 'non connecté')
 						{
 						?>
 						<a class="dropdown-item forgot" href="?controller=users&action=login" role="presentation">Connexion</a>
@@ -139,7 +143,7 @@
 						{
 						?>
 						<a class="dropdown-item forgot" href="?controller=users&action=profil" role="presentation">Profil</a>
-						<a class="dropdown-item forgot" href="?controller=users&action=deconnexion" role="presentation">Deconnexion</a>
+						<a class="dropdown-item forgot" href="?controller=users&action=deconnexion" role="presentation">Déconnexion</a>
 						<?php
 						}
 						?>
@@ -158,7 +162,7 @@
 			<nav id="lateralSideBar" class="navbar navbar-dark align-items-start sidebar sidebar-dark accordion bg-gradient-primary p-0">
 				<div class="container-fluid d-flex flex-column p-0">
 					<!-- CONTROL sur la navbar verticale -->
-					<?php 
+					<?php
 					 if( isset($_SESSION['statut'])&& ($_SESSION['statut']== 'TUTEUR') )
 					 {
 						?>
@@ -169,13 +173,9 @@
                         <hr class="sidebar-divider my-0">
                         <ul class="nav navbar-nav text-light" id="accordionSidebar">
                             <li class="nav-item" role="presentation">
-                                <a class="nav-link" href="?controller=tuteurs&action=interface_tuteur">
+                                <a class="nav-link active" href="?controller=tuteurs&action=interface_tuteur">
                                     <i class="fab fa-phoenix-squadron"></i>
-                                    <span>évènements</span>
-                                </a>
-                                <a class="nav-link" href="?controller=users&action=update_account">
-                                    <i class="fab fa-phoenix-squadron"></i>
-                                    <span>Mon Compte</span>
+                                    <span>Evénement</span>
                                 </a>
                                 <a class="nav-link" href="?controller=tuteurs&action=notifications">
                                     <i class="fab fa-phoenix-squadron"></i>
@@ -207,10 +207,6 @@
                                     <i class="fab fa-phoenix-squadron"></i>
                                     <span>Evénement</span>
                                 </a>
-                                <a class="nav-link" href="?controller=users&action=update_account">
-                                    <i class="fab fa-phoenix-squadron"></i>
-                                    <span>Mon Compte</span>
-                                </a>
                                 <a class="nav-link" href="?controller=tutores&action=notifications">
                                     <i class="fab fa-phoenix-squadron"></i>
                                     <span>Notifications</span>
@@ -233,7 +229,7 @@
                     <hr class="sidebar-divider my-0">
                     <ul class="nav navbar-nav text-light" id="accordionSidebar">
                         <li class="nav-item" role="presentation">
-                            <a class="nav-link" href="?controller=admin&action=interface_admin">
+                            <a class="nav-link active" href="?controller=admin&action=interface_admin">
                                 <i class="fab fa-phoenix-squadron"></i>
                                 <span>évènements</span>
                             </a>
@@ -355,7 +351,7 @@
                                 <i class="fab fa-phoenix-squadron"></i>
                                 <span>Questions / Support</span>
                             </a>
-                            
+
                         </li>
                     </ul>
 				<?php
@@ -390,7 +386,7 @@
                                 <i class="fab fa-phoenix-squadron"></i>
                                 <span>Questions / Support</span>
                             </a>
-                            
+
                         </li>
                     </ul>
 				<?php
@@ -422,7 +418,7 @@
                                 <i class="fab fa-phoenix-squadron"></i>
                                 <span>Questions / Support</span>
                             </a>
-                            
+
                         </li>
                     </ul>
 				<?php
@@ -461,7 +457,7 @@
                                     <i class="fab fa-phoenix-squadron"></i>
                                     <span>Questions / Support</span>
                             </a>
-                            
+
                         </li>
                     </ul>
 				<?php
@@ -478,15 +474,27 @@
                         <li class="nav-item" role="presentation">
                             <a class="nav-link active" href="?controller=admin&action=interface_admin">
                                 <i class="fab fa-phoenix-squadron"></i>
-                                <span>COMPTES</span>
+                                <span>Comptes en attente</span>
+                            </a>
+                            <a class="nav-link" href="?controller=superadmin&action=interface_tutorat">
+                                <i class="fab fa-phoenix-squadron"></i>
+                                <span>Tutorat</span>
+                            </a>
+                            <a class="nav-link" href="?controller=admin&action=interface_tutore_bourse">
+                                <i class="fab fa-phoenix-squadron"></i>
+                                <span>Boursiers</span>
+                            </a>
+                            <a class="nav-link" href="?controller=admin&action=interface_account_valid">
+                                <i class="fab fa-phoenix-squadron"></i>
+                                <span>Mes Utilisateurs</span>
                             </a>
                             <a class="nav-link" href="?controller=admin&action=interface_hours">
                                 <i class="fab fa-phoenix-squadron"></i>
                                 <span>Mes Heures</span>
                             </a>
                             <a class="nav-link" href="?controller=admin&action=contact">
-                                    <i class="fab fa-phoenix-squadron"></i>
-                                    <span>Questions / Support</span>
+                                <i class="fab fa-phoenix-squadron"></i>
+                                <span>Questions / Support</span>
                             </a>
                         </li>
                     </ul>
@@ -505,17 +513,19 @@
             </nav>
             <!-- FIN de CONTROL sur la navbar verticale -->
 			<div id="content">
-				<div class="row">
-					<div class="col-xs-12 col-md-3">
-						<button type="button" id="sidebarCollapse" class="btn ">
-							<span></span>
-							<span></span>
-							<span></span>
-						</button>
-					</div>
-					<?php
-						require_once('arbre_navigation.php');
-					?>
+				<div class="container-fluid">
+                    <div class="row">
+                        <div class="col-xs-12 col-md-3">
+                            <button type="button" id="sidebarCollapse" class="btn ">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </button>
+                        </div>
+                        <?php
+                        require_once('arbre_navigation.php');
+                        ?>
+                    </div>
 				</div>
 				<?php
 				require_once('routes.php');
@@ -548,9 +558,9 @@
 			});
 		});
 	</script>
-    
 
-    
+
+
 </body>
 
 </html>

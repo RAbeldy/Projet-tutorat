@@ -86,10 +86,7 @@ input {
 #globalContent {
   flex: 1;
 }
-#content
-{
-  width: 100%;
-}
+
 .footer-basic {
   background-color: black;
   color: white;
@@ -98,7 +95,7 @@ input {
 #wrapper {
     display: flex;
     align-items: stretch;
-    perspective: 1500px; 
+    perspective: 1500px;
 }
 
 #lateralSideBar {
@@ -161,6 +158,16 @@ input {
 #lateralSideBar .nav-link * {
 	font-size: 13px;
     font-weight: 900;
+    display: inline-block;
+}
+
+ul#accordionSidebar {
+    width: 100%;
+}
+
+#accordionSidebar .nav-link {
+    width: 100%;
+    text-align: left;
 }
 
 div#content {
@@ -182,7 +189,7 @@ div#content {
     background-size: cover;
     background-position: center;
     color: white;
-    box-shadow: 0 0 0 400px rgba(0,0,255,0.3) inset;
+    box-shadow: 0 0 0 400px rgba(0, 0, 0, 0.6) inset;
 }
 
 .cardImage {
@@ -219,6 +226,10 @@ div#content {
     margin: auto;
     font-size: 20px;
     padding: 20px 0px;
+}
+
+p#callToAction a {
+    font-size: 20px;
 }
 
 .space{
@@ -297,10 +308,6 @@ div#content {
 	color: black;
 }
 
-.pres_text {
-    margin-top: 32px;
-}
-
 .dropdown .dropdown-toggle:after{
     margin-left: .5em;
     vertical-align: 0.35em;
@@ -327,6 +334,7 @@ div#content {
 .navig_flech, .navig_flech a {
     color: #fab900;
 	font-weight: 700;
+    font-size: 20px;
 }
 
 .navig_flech a:hover {
@@ -467,8 +475,119 @@ div#content {
 	border: 2px solid #55c6c6!important;
 	font-weight: 900!important;
 }
-/*FIN PROFIL */
 
+.tutorat-yncrea{
+    padding: 90px 0px;
+}
+
+.desc-tutorat{
+    padding: 90px 0px;
+}
+
+.desc-tutorat p, .tutorat-yncrea p{
+    text-align: justify;
+}
+
+.type-tutorat{
+    color: black;
+    text-transform: uppercase;
+    font-size: 45px;
+}
+
+.small-slider {
+    background-image: url(../img/0.jpg);
+    background-size: cover;
+    background-position: center;
+    min-height: 330px;
+    width: 100%;
+}
+
+.small-slider div.slider-nav {
+    background: rgba(0, 0, 0, 0.5);
+    position: absolute;
+    top: 50%;
+    width: 36px;
+    height: 72px;
+    line-height: 60px;
+    font-size: 35px;
+    text-align: center;
+    margin: 0;
+    border-radius: 0;
+    -webkit-transform: translateY(-50%);
+    transform: translateY(-50%);
+    padding: 8px 10px;
+}
+
+#slider-next {
+    right: 12px;
+}
+
+#slider-text {
+    color: wheat;
+    text-align: center;
+    padding-top: 141px;
+}
+
+#slider-title {
+    background: rgba(0, 0, 0, 0.55);
+    padding: 5px 20px;
+    top: 50%;
+    width: 50%;
+    margin: auto;
+}
+/*FIN PROFIL */
+/*      Evenement        */
+.text-primary {
+    text-align: center;
+    color: #29292a!important;
+    font-size: 30px;
+}
+
+.debut{
+    margin-top: 50px;
+    margin-bottom: 65px;
+}
+
+.card-body-title{
+    text-align: center;
+    padding-bottom: 20px;
+    font-size: .9rem;
+}
+
+.btn {
+    background-color: #fab900;
+    color: white;
+}
+
+.btn:hover {
+    background-color: white;
+    color: #fab900;
+    font-weight: 700;
+    border:2px solid #fab900;
+}
+
+.rechercher {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.dataTable {
+    white-space: nowrap;
+}
+
+.text-nowrap .row input {
+    background-color: white;
+    border-width: 2px;
+    border-style: inset;
+    border-color: initial;
+}
+
+@media (max-width:768px) {
+    .dataTable, .btn {
+        font-size: 16px;
+    }
+}
+/*      Fin Evenement   */
 
 @media (min-width:768px) {
     .navigation-clean-button {
@@ -493,7 +612,7 @@ div#content {
         opacity: 1;
         margin: 5px auto;
     }
-	
+
     #sidebarCollapse.active span {
         margin: 0 auto;
     }
@@ -511,17 +630,83 @@ div#content {
 @media (max-width:425px) {
     #middleJumboParagraph {
 		font-size: 11px;
+        width: 90%;
 	}
 	#h1bienvenue {
 		font-size: 25px;
+        padding: 10px 0px;
 	}
+    p#callToAction a {
+        font-size: 11px;
+    }
 	.sidebar .nav-item .nav-link span, .sidebar .nav-item .nav-link i  {
 		font-size: 7px;
 	}
 	.card-text {
 		font-size: 15px;
 	}
+    .dropdown-menu.show {
+        width: 100%;
+    }
+    a.nav-link {
+        padding-top: 0px;
+    }
+    .dropdown-menu.show .dropdown-item {
+        font-size: 20px;
+        text-align: center;
+    }
+    #sidebarCollapse {
+        width: 50px;
+        height: 50px;
+        margin-left: 0px;
+    }
+
+    .tutorat-yncrea, .desc-tutorat {
+        padding: 40px 0px;
+    }
+
+    .pres_title, .type-tutorat {
+        font-size: 22px;
+    }
+
+    .pres_button {
+        width: 120px;
+        height: 35px;
+        padding: 9px 10px;
+        font-size: 11px;
+    }
+
+    .desc-tutorat p, .tutorat-yncrea p {
+        font-size: 13px;
+    }
+    .small-slider {
+        min-height: 150px;
+    }
+    .small-slider div.slider-nav {
+        width: 30px;
+        height: 40px;
+        font-size: 25px;
+        padding: 2px 6px;
+        line-height: 40px;
+    }
+    #slider-text {
+        padding-top: 58px;
+    }
+    #slider-title {
+        font-size: 23px;
+    }
+    .footer-basic .copyright {
+        font-size: 18px;
+    }
+    .block {
+        padding: 0px;
+        padding-bottom: 45px;
+    }
+    .text-primary {
+        font-size: 23px!important;
+    }
+    .debut {
+        margin-top: 0px;
+        margin-bottom: 0px;
+    }
 }
-
-
-

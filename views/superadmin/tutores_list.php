@@ -2,7 +2,7 @@
 
     <div id="globalContent">
         <div id="wrapper">
-            
+
             <div class="d-flex flex-column" id="content-wrapper">
                 <div id="content">
                     <div class="block">
@@ -20,19 +20,19 @@
                                             <div class="card-body">
                                                 <div class="row">
                                                     <div class="col-12 card-body-title">
-                                                        <span>entrez vos critères de recherche :</span>
+                                                        <span>Entrez vos critères de recherche :</span>
                                                     </div>
-                                                    
-                                                    <div class="col-md-4 offset-1">
-                                                        <div class="row text-center">
-                                                            <label style="flex: auto;">NOM de l'étudiant</label>
-                                                            <label style="flex: auto;">Etat de l'étudiant</label>
-                                                        </div>
+                                                    <div class="col-12">
                                                         <div class="row">
-                                                            <input type="search1" class="form-control form-control-sm" aria-controls="dataTable" placeholder="Rechercher"/>
-                                                            <input type="search2" class="form-control form-control-sm" aria-controls="dataTable" placeholder="Rechercher"/>
+                                                            <div class="col-xs-12 col-md-6">
+                                                                <label style="flex: auto;">Nom de l'étudiant</label>
+                                                                <input type="search" class="form-control form-control-sm" aria-controls="dataTable" placeholder="Rechercher"/>
+                                                            </div>
+                                                            <div class="col-xs-12 col-md-6">
+                                                                <label style="flex: auto;">Etat de l'étudiant</label>
+                                                                <input type="search" class="form-control form-control-sm" aria-controls="dataTable" placeholder="Rechercher"/>
+                                                            </div>
                                                         </div>
-                                                        
                                                     </div>
                                                     <div class="col-12 text-center rechercher">
                                                         <button class="btn" type="button">RECHERCHER</button>
@@ -50,25 +50,25 @@
                                                                 <th>Adresse</th>
                                                                 <th>Code_postal</th>
                                                                 <th>Etat</th>
-                                                             
-                                                               
 
-                                                               
+
+
+
                                                             </tr>
                                                         </thead>
                                                         <tbody>
 
                                                             <?php
-                                                            
-                                                             foreach ($donnees as $elt) 
+
+                                                             foreach ($donnees as $elt)
                                                             {
                                                              ?>
 
-                                                              
-                                                                
+
+
                                                               <tr >
 
- 
+
                                                                   <td> <label><?=$elt['user']->getNom()?></label></td>
                                                                   <td><label><?=$elt['user']->getPrenom()?></label></td>
                                                                   <td><label><?=$elt['user']->getEmail()?></label></td>
@@ -77,9 +77,9 @@
                                                                   <td><label ><?=$elt['user']->getAdress()?></label></td>
                                                                   <td><label ><?=$elt['user']->getCode_postal()?></label></td>
                                                                   <td><label ><?=$elt['etat']?></label></td>
-                                                                     
+
                                                                 </tr>
-                                                             
+
                                                             <?php
                                                              }
                                                              ?>
@@ -100,14 +100,3 @@
             </div>
         </div>
     </div>
-
-
-
-
-
-
-
-
-
-
-    

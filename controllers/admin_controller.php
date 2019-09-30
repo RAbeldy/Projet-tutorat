@@ -30,6 +30,9 @@ class AdminController
                     case 'PERSONNALISE':
                       require_once('views/admin/personnalise/interface_admin.php');
                     break;
+                    case 'GESTIONNAIRE_COMPTE':
+                      require_once('views/admin/gestion/interface_gestionnaire.php');
+                    break;
                     default:
                       require_once('views/admin/interface_admin.php'); // interface_admin
                     break;
@@ -743,15 +746,15 @@ public static function export()
 }
     
  public static function contact()
-        {
-            if(isset($_SESSION['id_statut']))// on vérifie que seul un utilisateur connecté peut accéder à ces pages
-                { 
-                    $data= Users::Get_all_contact_admin($_SESSION['id_user']);
-                    require_once('views/admin/contacter.php');
-                }
-            else
-                require_once('views/login.php');
-        }
+ {
+  if(isset($_SESSION['id_statut']))// on vérifie que seul un utilisateur connecté peut accéder à ces pages
+  { 
+      $data= Users::Get_all_contact_admin($_SESSION['id_user']);
+      require_once('views/admin/contacter.php');
+  }
+  else
+      require_once('views/login.php');
+  }
   public function message() // à completer lors de la création de la table de suivi des admin
       {
         if(isset($_SESSION['id_statut']))// on vérifie que seul un utilisateur connecté peut accéder à ces pages
@@ -778,7 +781,264 @@ public static function export()
         }
         else
                 require_once('views/login.php');
-      }   
+      }
+
+      // gestion de compte 
+
+
+
+   
+  public function  wait_compte()
+  {
+    if(isset($_SESSION['id_statut']))//verifie la connexion 
+    {
+      if(isset($_POST['tuteur']) || isset($_POST['annulertuteur']))
+      {
+        $donnees=Admin::WaitCompte(13);
+        $controller_report='admin';
+        $fonction_back='interface_admin'; 
+        require_once('views/admin/gestion/user_list.php');
+      }
+      
+      elseif(isset($_POST['tutore'])  || isset($_POST['annulertutore']))
+      {
+        $donnees=Admin::WaitCompte(16);
+        $controller_report='admin';
+        $fonction_back='interface_admin'; 
+
+        require_once('views/admin/gestion/user_list.php');
+      }
+    }
+    else
+       require_once('views/login.php');
+  }
+
+  public function my_account()
+  {
+    if(isset($_SESSION['id_statut']))//verifie la connexion 
+    {
+      if(isset($_POST['id_user']) && isset($_POST['statut']))
+      {
+        if($_POST['statut']==13)
+        {
+          $donnees=Admin::TuteurCompte($_POST['id_user']);
+          $controller_report='admin';
+          $fonction_back='wait_compte'; 
+
+          require_once('views/admin/gestion/valide_account_tuteur.php');
+        }
+        elseif($_POST['statut']==16)
+        {
+          $donnees=Admin::TutoreCompte($_POST['id_user']);
+          $controller_report='admin';
+          $fonction_back='wait_compte'; 
+
+          require_once('views/admin/gestion/valide_account_tutore.php');
+        }
+      }
+      else
+         require_once('views/login.php');
+      
+    }
+    else
+      require_once('views/login.php');
+    
+  }
+  
+  public function valider_account()
+  {
+    if(isset($_SESSION['id_statut']))//verifie la connexion 
+    {
+      if(isset($_POST['validertuteur']))
+      {
+        Admin::ValiderCompte($_POST['id_user']);
+        $donnees=Admin::WaitCompte(13);
+        
+        require_once('views/admin/gestion/user_list.php');
+        
+      }
+      elseif(isset($_POST['validertutore']))
+      {
+        Admin::ValiderCompte($_POST['id_user']);
+        
+        $donnees=Admin::WaitCompte(16);
+        
+        require_once('views/admin/gestion/user_list.php');
+      }
+      
+      elseif(isset($_POST['annulertuteur']))
+      {
+        $donnees=Admin::TuteurCompte($_POST['id_user']);
+        $controller_report='admin';
+        $fonction_back='wait_compte'; 
+        require_once('views/admin/gestion/valide_account_tuteur.php');
+      }
+      else
+      {
+        $donnees=Admin::TutoreCompte($_POST['id_user']);
+        $controller_report='admin';
+        $fonction_back='wait_compte'; 
+        require_once('views/admin/gestion/valide_account_tutore.php');
+      }
+      
+    }
+    else
+      require_once('views/login.php');
+  }
+  
+  public function interface_tutore_bourse()
+  {
+    if(isset($_SESSION['id_statut']))//verifie la connexion 
+    {
+      require_once('views/admin/gestion/tutore_bourse.php');
+    }
+    else
+       require_once('views/login.php');
+  }
+  
+  public function tutore_bourse()
+  {
+    if(isset($_SESSION['id_statut']))//verifie la connexion 
+    {
+      if(isset($_POST['sans']))
+      {
+        $donnees=Admin::WihtOutBourse();
+        $controller_report='admin';
+        $fonction_back='interface_tutore_bourse';
+        
+        require_once('views/admin/gestion/bourse.php');
+      }
+      elseif(isset($_POST['avec']))
+      {
+        $donnees=Admin::WithBourse();
+        $controller_report='admin';
+        $fonction_back='interface_tutore_bourse';
+
+        require_once('views/admin/gestion/bourse.php');
+      }
+      else
+       require_once('views/login.php');
+    }
+    else
+       require_once('views/login.php');
+  }
+  
+   public function bourse_account()
+  {
+    if(isset($_SESSION['id_user']))//verifie la connexion 
+    {
+      $donnees=Admin::TutoreCompte($_POST['id_user']); 
+      $controller_report='admin';
+      $fonction_back='interface_tutore_bourse';
+      
+      require_once('views/admin/gestion/bourse_account.php');
+    }
+    else
+       require_once('views/login.php');
+  }
+  
+  
+  public function valider_bourse()
+  {
+    if(isset($_SESSION['id_statut']))//verifie la connexion 
+    {
+      if(isset($_POST['validerbourse']))
+      {
+        Admin::ValiderBourse($_POST['id_user']);
+        
+        $donnees=Admin::WihtOutBourse();
+        
+        require_once('views/admin/gestion/bourse.php');
+        
+      }
+      elseif(isset($_POST['annulerbourse']))
+      {
+        $donnees=Admin::WihtOutBourse();
+        
+        require_once('views/admin/gestion/bourse.php');
+      }
+    }
+    else
+      require_once('views/login.php');
+  }
+  
+  
+   public function interface_account_valid()
+   {
+      if(isset($_SESSION['id_statut']))//verifie la connexion 
+      {
+        require_once('views/admin/gestion/user_choice.php');  
+      }
+      else
+        require_once('views/login.php');
+   }
+   
+   
+   public function account_valid()
+   {
+     if(isset($_SESSION['id_statut']))//verifie la connexion 
+     {
+        if(isset($_POST['tuteur']) )
+        {
+          $donnees=Admin::Compte(13);
+          $controller_report='admin';
+          $fonction_back='interface_account_valid';
+
+          require_once('views/admin/gestion/account_valid.php');
+        }
+        elseif(isset($_POST['tutore']) )
+        {
+          $donnees=Admin::Compte(16);
+          $controller_report='admin';
+          $fonction_back='interface_account_valid';
+
+          require_once('views/admin/gestion/account_valid.php');
+        }
+     }
+     else
+       require_once('views/login.php');
+   }
+  
+   public function annul_account()
+   {
+     if(isset($_POST['desactiver']))
+     { 
+      Admin::AnnulCompte($_POST['id_user']);
+        
+      if(isset($_POST['statut']) && $_POST['statut']==13)
+        {
+          $donnees=Admin::Compte(13);
+            
+          require_once('views/admin/gestion/account_valid.php');
+        }
+          
+        elseif(isset($_POST['statut']) && $_POST['statut']==16)
+        {
+          $donnees=Admin::Compte(16);
+            
+          require_once('views/admin/gestion/account_valid.php');
+        }
+    }
+    elseif(isset($_POST['activer']))
+    {
+      Admin::ValiderCompte($_POST['id_user']);
+      
+      if(isset($_POST['statut']) && $_POST['statut']==13)
+        {
+          $donnees=Admin::Compte(13);
+          require_once('views/admin/gestion/account_valid.php');
+        }
+          
+        elseif(isset($_POST['statut']) && $_POST['statut']==16)
+        {
+          $donnees=Admin::Compte(16);
+            
+          require_once('views/admin/gestion/account_valid.php');
+        }
+    }
+    else
+       require_once('views/login.php');
+   }   
 
 
 }
