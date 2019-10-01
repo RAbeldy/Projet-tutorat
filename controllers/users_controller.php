@@ -37,7 +37,7 @@ public function connexion()
 public function redirection() // redirection vers interface en fonction du statut
 {
   if(isset($_SESSION['id_statut']))// on vérifie que seul un utilisateur connecté peut accéder à ces pages
-    { 
+  {
         switch ($_SESSION['id_statut']) 
 	    {
 	       case 13:
@@ -46,8 +46,8 @@ public function redirection() // redirection vers interface en fonction du statu
 	        case 16:
 	        	require_once('views/tutores/interface_tutore.php'); // interface tutore
 	        break;
-	        case 6:
-	        	require_once('views/admin/interface_gestionnaire.php'); // interface_gestionnaire
+	        case 21:
+	        	require_once('views/admin/gestion/interface_gestionnaire.php'); // interface_gestionnaire
 	        break;
 	        case 1:
 	        	require_once('views/superadmin/interface_superadmin.php'); // interface superadmin
@@ -56,9 +56,10 @@ public function redirection() // redirection vers interface en fonction du statu
 	        	require_once('views/admin/interface_admin.php'); // interface_admin
 	        break;
 	    }
-    }
-  else
-    require_once('views/Login.php');
+	}
+	else
+		require_once('views/Login.php');
+  
   
 }
 public function resetPassword()
@@ -225,7 +226,7 @@ public function set_picture_path($target_file)
           else
             require_once('views/Login.php');
      }
-public function deconnexion()
+public static function deconnexion()
 {
 	$user= new Users();
 	$user->Deconnexion();

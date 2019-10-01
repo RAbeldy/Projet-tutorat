@@ -30,19 +30,19 @@
 		//Dans ce cas, les champs ont été remplis
 
 		//tutoré
-		$login_mail = $_POST['email'];
-		$pwd = $_POST['password'];
-		$pwd2 = $_POST['confirmer_password'];
-		$nom = $_POST['nom'];
-		$prenom = $_POST['prenom'];
-		$date_naiss = $_POST['date_naiss'];
-		$ecole = $_POST['ecole'];
-		$adress = $_POST['adresse'];
-		$com_adress = $_POST['complement_adresse'];
-		$ville = $_POST['ville'];
-		$code_postal = $_POST['code_postal'];
-		$phone = $_POST['phone']; 
-		$id_typeTutorat= $_POST['id_typeTutorat'];
+		$login_mail = htmlspecialchars($_POST['email']);
+		$pwd = htmlspecialchars($_POST['password']);
+		$pwd2 = htmlspecialchars($_POST['confirmer_password']);
+		$nom = htmlspecialchars($_POST['nom']);
+		$prenom = htmlspecialchars($_POST['prenom']);
+		$date_naiss = htmlspecialchars($_POST['date_naiss']);
+		$ecole = htmlspecialchars($_POST['ecole']);
+		$adress = htmlspecialchars($_POST['adresse']);
+		$com_adress = htmlspecialchars($_POST['complement_adresse']);
+		$ville = htmlspecialchars($_POST['ville']);
+		$code_postal = htmlspecialchars($_POST['code_postal']);
+		$phone = htmlspecialchars($_POST['phone']); 
+		$id_typeTutorat= htmlspecialchars($_POST['id_typeTutorat']);
 
 		if(is_null($_POST['nationalite']) && is_null($_POST['niveau']) )
 		{
@@ -51,8 +51,8 @@
         }
         else
         {
-           $niveau = $_POST['niveau'];
-		   $nationa = $_POST['nationalite'];
+           $niveau = htmlspecialchars($_POST['niveau']);
+		   $nationa = htmlspecialchars($_POST['nationalite']);
         }
 		// tuteur
 

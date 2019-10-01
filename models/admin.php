@@ -423,6 +423,170 @@ class Admin
 
 
             }
+
+    //gestion compte
+    
+    public static function WaitCompte($statut)
+    {
+        $db = Db::getInstance();
+        $list=[];
+        $req= $db->prepare("SELECT DISTINCT u.id_user,u.nom,u.prenom, at.id_statut as statut FROM user as u,avoir_statut as at, statut_compte as sc WHERE u.id_user= at.id_user AND at.id_statut=? AND at.id_statut_compte= 2 ORDER BY nom ASC");
+        $req->execute(array($statut));
+        
+      foreach ($req->fetchAll() as $data)
+      {
+        $users= new Users();
+        $users->setId_user($data['id_user']);
+        $users->setNom($data['nom']);
+        $users->setPrenom($data['prenom']);
+        
+
+        $list []= array('user'=>$users, 'statut'=>$data['statut']);
+      }
+      return $list ;
+    }
+    
+    
+    
+    public static function TuteurCompte($id_tuteur)
+    {
+        $db = Db::getInstance();
+        $list=[];
+        $req= $db->prepare("SELECT DISTINCT u.id_user,u.nom,u.prenom,u.date_naissance,u.email,u.phone,u.niveau, u.ecole,a.ville,a.adress, a.complement_Adress ,a.code_postal FROM user as u, adresse as a, avoir_statut as at WHERE u.id_user= at.id_user AND u.id_adresse= a.id_adresse AND u.id_user=?");
+        $req->execute(array($id_tuteur));
+        
+      foreach ($req->fetchAll() as $data)
+      {
+        $users= new Users();
+        $users->setId_user($data['id_user']);
+        $users->setNom($data['nom']);
+        $users->setPrenom($data['prenom']);
+        $users->setDate_naissance($data['date_naissance']);
+        $users->setEmail($data['email']);
+        $users->setPhone($data['phone']);
+        $users->setAdress($data['adress']);
+        $users->setCom_adress($data['complement_Adress']);
+        $users->setVille($data['ville']);
+        $users->setCode_postal($data['code_postal']);
+        $users->setNiveau($data['niveau']);
+        $users->setEcole($data['ecole']);
+
+      }
+      return $users ;
+    }
+    
+    
+    public static function TutoreCompte($id_tutore)
+    {
+        
+        $db = Db::getInstance();
+        $list=[];
+        $req= $db->prepare("SELECT DISTINCT u.id_user,u.nom,u.prenom,u.date_naissance,u.email,u.phone,u.niveau, u.ecole,a.ville,a.adress, a.complement_Adress ,a.code_postal, t.bourse as bourse, t.nationalite as nationalite FROM user as u, adresse as a, avoir_statut as at, tutores as t WHERE u.id_user= at.id_user AND u.id_adresse= a.id_adresse AND t.id_tutores=u.id_user AND u.id_user=?");
+        $req->execute(array($id_tutore));
+        
+      foreach ($req->fetchAll() as $data)
+      {
+        $users= new Users();
+        $users->setId_user($data['id_user']);
+        $users->setNom($data['nom']);
+        $users->setPrenom($data['prenom']);
+        $users->setDate_naissance($data['date_naissance']);
+        $users->setEmail($data['email']);
+        $users->setPhone($data['phone']);
+        $users->setAdress($data['adress']);
+        $users->setCom_adress($data['complement_Adress']);
+        $users->setVille($data['ville']);
+        $users->setCode_postal($data['code_postal']);
+        $users->setNiveau($data['niveau']);
+        $users->setEcole($data['ecole']);
+        
+        $list []= array('user'=>$users, 'bourse'=>$data['bourse'], 'nationalite'=>$data['nationalite']);
+      }
+      return $list ;
+    }
+    
+    public static function ValiderCompte($id_user)
+    {
+        $db = Db::getInstance();
+        $req= $db->prepare("UPDATE avoir_statut as at SET at.id_statut_compte=1 WHERE at.id_user=?");
+        $req->execute(array($id_user));
+    }
+    
+    public static function WihtOutBourse()
+    {
+        $db = Db::getInstance();
+        $list=[];
+        $req= $db->query("SELECT DISTINCT u.id_user,u.nom,u.prenom,u.ecole FROM user as u, tutores as t WHERE u.id_user= t.id_tutores AND t.bourse IS NULL ORDER BY nom ASC");
+        
+      foreach ($req->fetchAll() as $data)
+      {
+        $users= new Users();
+        $users->setId_user($data['id_user']);
+        $users->setNom($data['nom']);
+        $users->setPrenom($data['prenom']);
+        $users->setEcole($data['ecole']);
+
+
+        $list []= array('user'=>$users);
+      }
+      return $list ;
+    }
+    
+    public static function WithBourse()
+    {
+        $db = Db::getInstance();
+        $list=[];
+        $req= $db->query("SELECT DISTINCT u.id_user,u.nom,u.prenom,u.ecole FROM user as u, tutores as t WHERE u.id_user= t.id_tutores AND t.bourse IS NOT NULL ORDER BY nom ASC");
+        
+        
+      foreach ($req->fetchAll() as $data)
+      {
+        $users= new Users();
+        $users->setId_user($data['id_user']);
+        $users->setNom($data['nom']);
+        $users->setPrenom($data['prenom']);
+        $users->setEcole($data['ecole']);
+
+        $list []= array('user'=>$users);
+      }
+      return $list ;
+    }
+    
+    
+    public static function ValiderBourse($id_user)
+    {
+        $db = Db::getInstance();
+        $req= $db->prepare("UPDATE tutores as t SET t.bourse='OUI' WHERE t.id_tutores=?");
+        $req->execute(array($id_user));
+    }
+    
+    public static function Compte($id_statut)
+    {
+        $db = Db::getInstance();
+        $list=[];
+        $req= $db->prepare("SELECT DISTINCT u.id_user,u.nom,u.prenom, at.id_statut as statut, sc.libelle as libelle, sc.id_statut_compte as id_libelle FROM user as u,avoir_statut as at, statut_compte as sc WHERE u.id_user= at.id_user AND sc.id_statut_compte= at.id_statut_compte AND at.id_statut=? AND u.id_user NOT IN (SELECT u.id_user FROM user as u , suivi_administrateurs as sa WHERE u.id_user=sa.id_user) ORDER BY nom ASC");
+        $req->execute(array($id_statut));
+        
+      foreach ($req->fetchAll() as $data)
+      {
+        $users= new Users();
+        $users->setId_user($data['id_user']);
+        $users->setNom($data['nom']);
+        $users->setPrenom($data['prenom']);
+        
+
+        $list []= array('user'=>$users, 'statut'=>$data['statut'], 'libelle'=>$data['libelle'], 'id_libelle'=>$data['id_libelle']);
+      }
+      return $list ;
+    }
+    
+    
+    public static function AnnulCompte($id_user)
+    {
+        $db = Db::getInstance();
+        $req= $db->prepare("UPDATE avoir_statut as at SET at.id_statut_compte=2 WHERE at.id_user=?");
+        $req->execute(array($id_user));
+    }
     
     
 }
