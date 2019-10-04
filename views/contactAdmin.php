@@ -1,7 +1,7 @@
 
 
 
-    <h1 style="color: #1f2a36;" class="text-center">ADMINISTRATEURS DES DIFFERENTS TUTORATS</h1>
+    <h1 id="h1Contact" class="text-center">ADMINISTRATEURS DES DIFFERENTS TUTORATS</h1>
     <section style="margin:10px">
 		<div class="row">
 			<a class="col-xs-12 col-md-4 offset-1" href="mailto:rabeldy-god.nkounkou-kiminou@hei.yncrea.fr">
@@ -104,4 +104,3 @@
 			</a>
 		</div>
     </section>
-    

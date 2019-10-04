@@ -2,7 +2,7 @@
 
     <div id="globalContent">
         <div id="wrapper">
-            
+
             <div class="d-flex flex-column" id="content-wrapper">
                 <div id="content">
                     <div class="block">
@@ -22,12 +22,14 @@
                                                     <div class="col-12 card-body-title">
                                                         <span>RECHERCHER PAR :</span>
                                                     </div>
-                                                    
-                                                    <div class="col-md-4 offset-1">
+
+                                                    <div class="col-md-4 offset-4">
                                                         <div class="row text-center">
                                                             <label style="flex: auto;">TUTORAT</label>
                                                         </div>
-                                                        
+                                                        <div class="row">
+                                                            <input type="search" class="form-control form-control-sm" aria-controls="dataTable" placeholder="Rechercher"/>
+                                                        </div>
                                                     </div>
                                                     <div class="col-12 text-center rechercher">
                                                         <button class="btn" type="button">RECHERCHER</button>
@@ -35,39 +37,31 @@
                                                 </div>
                                                 <div class="table-responsive table mt-2" role="grid" aria-describedby="dataTable_info">
                                                     <table class="table dataTable my-0" id="dataTable">
-
-                                                            <input type="search" class=" form-control-sm" aria-controls="dataTable" placeholder="Rechercher"/>
-                                                        
                                                         <thead>
                                                             <tr>
                                                                 <th>Nom</th>
-                                                                <th>Prenom</th>
+                                                                <th>Prénom</th>
                                                                 <th>Email</th>
-                                                                <th>Phone</th>
+                                                                <th>Téléphone</th>
                                                                 <th>Ville</th>
                                                                 <th>Adresse</th>
-                                                                <th>Code_postal</th>
-                                                                
+                                                                <th>Code postal</th>
                                                                 <th> Consulter</th>
-                                                               
-                                                                
-
-                                                               
                                                             </tr>
                                                         </thead>
                                                         <tbody>
 
                                                             <?php
-                                                            
-                                                             foreach ($donnees as $elt) 
+
+                                                             foreach ($donnees as $elt)
                                                             {
                                                              ?>
 
                                                               <form method="post" action="?controller=superadmin&action=working_account">
-                                                                
+
                                                               <tr >
 
- 
+
                                                                   <td> <label><?=$elt['user']->getNom()?></label></td>
                                                                   <td><label><?=$elt['user']->getPrenom()?></label></td>
                                                                   <td><label><?=$elt['user']->getEmail()?></label></td>
@@ -75,20 +69,20 @@
                                                                   <td><label ><?=$elt['user']->getVille()?></label></td>
                                                                   <td><label ><?=$elt['user']->getAdress()?></label></td>
                                                                   <td><label ><?=$elt['user']->getCode_postal()?></label></td>
-                                                                  
-                                                                  <td><button class="btn" type="submit"name="consulter" >consulter</button>
+
+                                                                  <td><button class="btn" type="submit"name="consulter" >Consulter</button>
                                                                       </td>
-                                                                  
-                                                                   
-                                                                   
+
+
+
                                                                   <input type="hidden" name="id_u" value="<?=$elt['user']->getId_user()?>" >
                                                                 </tr>
-                                                                 
-                                                        
-                                                      
+
+
+
                                                              </form>
                                                             <?php
-                                                             
+
                                                              }
                                                              ?>
                                                         </tbody>
@@ -108,14 +102,3 @@
             </div>
         </div>
     </div>
-
-
-
-
-
-
-
-
-
-
-    

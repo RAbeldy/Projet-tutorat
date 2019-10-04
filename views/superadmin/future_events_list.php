@@ -18,7 +18,7 @@
                                     <div class="row">
                                         <div class="card debut">
                                             <div class="card-header py-3">
-                                                <p class="text-primary m-0 font-weight-bold">Les evenements à venir</p>
+                                                <p class="text-primary m-0 font-weight-bold">Les évènements à venir</p>
                                                 <?php include('retour.php') ?>
                                             </div>
                                             <div class="card-body">
@@ -48,8 +48,8 @@
                                                             </div>
                                                         </div>
                                                         <div class="col-md-4 offset-1">
-                                                            <label style="flex: auto;">Rechercher par nom de tutorat</label>
-                                                            <input type="search" name="string" class="form-control-sm rechercher" aria-controls="dataTable" placeholder="Nom du tutorat"/>
+                                                            <label class="row" style="flex: auto;">Tutorat</label>
+                                                            <input type="search" name="string" class="row form-control-sm rechercher" aria-controls="dataTable" placeholder="Nom du tutorat"/>
                                                         </div>
                                                     </div>
                                                     <div class="col-12 text-center rechercher">
@@ -67,9 +67,9 @@
                                                                 <th>Tuteurs demandés</th>
                                                                 <th>Places restantes(tuteurs)</th>
                                                                 <th>Horaires</th>
-                                                                <th>Modifier</th>
-                                                                <th>Supprimer</th>
-                                                                <th>Consulter</th>
+                                                                <th>Suppression</th>
+                                                                <th>Consultation</th>
+                                                                <th>Impression</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>

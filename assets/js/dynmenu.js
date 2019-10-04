@@ -12,8 +12,9 @@ $(document).ready(
 			(arr[1] == "=events") ||
 			(arr[1] == "=future_events_list") ||
 			(arr[1] == "=modify_event") ||
+			(arr[1] == "=set_event") ||
 			(arr[1] == "=pasts_events_list")){
-				actualPage = "Evenement";
+				actualPage = "évènements";
 			}
 			else if((arr[1] == "=interface_tuteur") ||
 			(arr[1] == "=tuteurs_list") ||
@@ -100,6 +101,9 @@ $(document).ready(
 			if((arr[1] == "=create_center") ||
 			(arr[1] == "=subscription_list")){
 				actualPage = "évènements";
+			}else if((arr[1] == "=create_type_center") ||
+			(arr[1] == "=account_affectation")){
+				actualPage = "Tutorats";
 			}
 		}else if(arr[0] == "=tuteurs"){
 			if((arr[1] == "=interface_tuteur") ||

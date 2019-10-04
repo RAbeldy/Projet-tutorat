@@ -1,6 +1,6 @@
 <div id="globalContent">
         <div id="wrapper">
-            
+
             <div class="d-flex flex-column" id="content-wrapper">
                 <div id="content">
                     <div class="block">
@@ -25,45 +25,45 @@
                                                                 <strong>Type de tutorat</strong><br>
                                                             </label>
                                                              <select class="form-control" name="id_typeTutorat">
-                                                                  <?php 
+                                                                  <?php
                                                                        foreach($donnees as $data)
                                                                        {
                                                                         if(!preg_match('#TUTORAT#', $data[0]))
                                                                         {
                                                                          ?>
-                                                                        
+
 
                                                                         <option value="<?=$data[1];?>"required> <?= $data[0] ;?>
-                                                                            
+
                                                                         </option>
-                                                                        
+
                                                                          <?php
                                                                        }
                                                                    }
                                                                        ?>
                                                             </select>
 
-                                                           
-                                                            
+
+
                                                         </div>
                                                         <div class="form-group col-xs-12 col-md-6">
                                                             <label for="lieu">
-                                                                <strong>nom du centre (lycée, collège...)</strong><br> 
+                                                                <strong>Nom du centre (lycée, collège...)</strong><br>
                                                             </label>
                                                              <input type="text" class="form-control" name="libelle">
-                                                            
+
                                                         </div>
                                                         <div class="form-group col-xs-12 col-md-6">
                                                             <label for="tutore">
-                                                                <strong>nombre de Tutorés</strong><br>
+                                                                <strong>Nombre de tutorés</strong><br>
                                                             </label>
                                                             <input type="number" class="form-control" name="nb_tutores">
-                                                            
-                                                             
+
+
                                                         </div>
                                                         <div class="form-group col-xs-12 col-md-6">
                                                             <label for="tutore">
-                                                                <strong>nombre de Tuteurs</strong><br>
+                                                                <strong>Nombre de tuteurs</strong><br>
                                                             </label>
                                                             <input type="number" class="form-control" name="nb_tuteurs">
                                                         </div>
@@ -72,8 +72,8 @@
                                                                 <strong>Adresse</strong><br>
                                                             </label>
                                                             <input type="text" class="form-control" name="adresse">
-                                                            
-                                                             
+
+
                                                         </div>
                                                         <div class="form-group col-xs-12 col-md-6">
                                                             <label for="tutore">
@@ -81,7 +81,7 @@
                                                             </label>
                                                             <input type="number" class="form-control" name="code_postal">
                                                         </div>
-                                                        
+
                                                     </div>
                                                     <div class="form-group text-center col-12">
                                                         <button class="btn" type="submit">CREER</button>
@@ -98,7 +98,3 @@
             </div>
         </div>
     </div>
-
-  
-
-         

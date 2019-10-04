@@ -890,6 +890,8 @@ public static function export()
   {
     if(isset($_SESSION['id_statut']))//verifie la connexion 
     {
+      $controller_report='admin';
+      $fonction_back='interface_gestionnaire'; 
       require_once('views/admin/gestion/tutore_bourse.php');
     }
     else

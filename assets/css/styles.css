@@ -18,6 +18,7 @@
 
 body {
 	font-family: 'Playfair Display', serif;
+    color: #4b4b4b;
 }
 
 h1, h2, h3, h4, h5 {
@@ -31,6 +32,11 @@ h1, h2, h3, h4, h5 {
 .btn.btn-light.action-button
 {
   background: url("imageszozor/fond_jaune.png");
+}
+
+a:hover {
+    color: #fab900;
+    text-decoration: underline;
 }
 
 .nav-link {
@@ -47,12 +53,6 @@ h1, h2, h3, h4, h5 {
 
 #navcol-1 {
   text-align: center;
-}
-
-@media (min-width: 768px) {
-  #navcol-1 {
-    padding-left: 125px;
-  }
 }
 
 @media (max-width: 576px) {
@@ -173,6 +173,7 @@ ul#accordionSidebar {
 div#content {
     width: 100%;
 	background: #ECF0F1;
+    overflow-y: hidden;
 }
 
 .block {
@@ -181,7 +182,7 @@ div#content {
     justify-content: center;
     width: 100%;
     height: 100%;
-	padding: 50px;
+	padding: 50px 0px;
 }
 
 .jumbotron {
@@ -190,6 +191,7 @@ div#content {
     background-position: center;
     color: white;
     box-shadow: 0 0 0 400px rgba(0, 0, 0, 0.6) inset;
+    border-radius: unset;
 }
 
 .cardImage {
@@ -225,11 +227,15 @@ div#content {
     width: 68%;
     margin: auto;
     font-size: 20px;
-    padding: 20px 0px;
+    padding: 40px 0px;
 }
 
 p#callToAction a {
     font-size: 20px;
+}
+
+p#callToAction {
+    padding: 30px 0px;
 }
 
 .space{
@@ -304,7 +310,7 @@ p#callToAction a {
 
 .pres_title
 {
-	font-size: 80px;
+	font-size: 65px;
 	color: black;
 }
 
@@ -486,6 +492,8 @@ p#callToAction a {
 
 .desc-tutorat p, .tutorat-yncrea p{
     text-align: justify;
+    color: #4b4b4b;
+    font-size: 17px;
 }
 
 .type-tutorat{
@@ -505,7 +513,7 @@ p#callToAction a {
 .small-slider div.slider-nav {
     background: rgba(0, 0, 0, 0.5);
     position: absolute;
-    top: 50%;
+    top: 40%;
     width: 36px;
     height: 72px;
     line-height: 60px;
@@ -582,12 +590,10 @@ p#callToAction a {
     border-color: initial;
 }
 
-@media (max-width:768px) {
-    .dataTable, .btn {
-        font-size: 16px;
-    }
-}
 /*      Fin Evenement   */
+#h1Contact{
+    color: #4b4b4b;
+}
 
 @media (min-width:768px) {
     .navigation-clean-button {
@@ -596,7 +602,10 @@ p#callToAction a {
     }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1023px) {
+    div#content-wrapper.hide, #navigation_tree.hide {
+        display: none!important;
+    }
     #lateralSideBar {
         margin-left: -250px;
         transform: rotateY(100deg);
@@ -625,12 +634,79 @@ p#callToAction a {
     #sidebarCollapse.active span:last-of-type {
         transform: rotate(-45deg) translate(1px, -1px);
     }
+    .pres_button {
+        margin: auto;
+    }
+    .pres_title, .type-tutorat {
+        text-align: center;
+    }
+
+    .tutorat-yncrea, .desc-tutorat {
+        padding: 40px 0px;
+    }
+    .desc-tutorat {
+        padding-bottom: 90px;
+    }
+    .small-slider div.slider-nav {
+        top: 50%;
+    }
 }
 
-@media (max-width:425px) {
+@media (max-width: 767px) {
+    .dataTable, .btn {
+        font-size: 16px;
+    }
+    .jumbotron {
+        padding: 2rem 2rem;
+    }
+    #h1bienvenue {
+        font-size: 35px;
+        padding: 15px 0px;
+    }
     #middleJumboParagraph {
-		font-size: 11px;
+        font-size: 18px;
+        padding: 20px 0px;
         width: 90%;
+    }
+    p#callToAction {
+        padding: 10px;
+    }
+    p#callToAction a {
+        font-size: 16px;
+    }
+    .pres_title, .type-tutorat {
+        font-size: 40px;
+    }
+    .desc-tutorat p, .tutorat-yncrea p {
+        font-size: 16px;
+    }
+    .pres_button {
+        width: 175px;
+        height: 50px;
+        padding: 10px 10px;
+        font-size: 16px;
+        margin: auto;
+    }
+    .small-slider {
+        min-height: 230px;
+    }
+    #slider-text {
+        padding-top: 93px;
+    }
+    #slider-title {
+        font-size: 30px;
+    }
+
+    .block {
+        padding: 50px 0px;
+    }
+}
+
+@media (max-width: 424px) {
+    #middleJumboParagraph {
+		font-size: 14px;
+        width: 90%;
+        margin: auto;
 	}
 	#h1bienvenue {
 		font-size: 25px;
@@ -638,6 +714,9 @@ p#callToAction a {
 	}
     p#callToAction a {
         font-size: 11px;
+    }
+    p#callToAction {
+        padding: 0px;
     }
 	.sidebar .nav-item .nav-link span, .sidebar .nav-item .nav-link i  {
 		font-size: 7px;
@@ -661,8 +740,8 @@ p#callToAction a {
         margin-left: 0px;
     }
 
-    .tutorat-yncrea, .desc-tutorat {
-        padding: 40px 0px;
+    .navig_flech, .navig_flech a {
+        font-size: 18px;
     }
 
     .pres_title, .type-tutorat {
@@ -677,7 +756,7 @@ p#callToAction a {
     }
 
     .desc-tutorat p, .tutorat-yncrea p {
-        font-size: 13px;
+        font-size: 14px;
     }
     .small-slider {
         min-height: 150px;
@@ -688,6 +767,7 @@ p#callToAction a {
         font-size: 25px;
         padding: 2px 6px;
         line-height: 40px;
+        top: 50%;
     }
     #slider-text {
         padding-top: 58px;
@@ -698,15 +778,14 @@ p#callToAction a {
     .footer-basic .copyright {
         font-size: 18px;
     }
-    .block {
-        padding: 0px;
-        padding-bottom: 45px;
-    }
     .text-primary {
         font-size: 23px!important;
     }
     .debut {
         margin-top: 0px;
         margin-bottom: 0px;
+    }
+    #h1Contact{
+        font-size: 25px;
     }
 }

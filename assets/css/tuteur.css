@@ -19,7 +19,7 @@
     font-weight: 700;
 }
 
-@media(max-width: 920px){
+@media(max-width: 767px){
     .card-title {
         font-size: 15px;
     }

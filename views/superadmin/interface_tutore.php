@@ -1,5 +1,5 @@
  <div class="d-flex flex-column" id="content-wrapper">
-  
+
                 <div id="content">
                     <div class="block">
                         <div class="container">
@@ -21,14 +21,14 @@
                                         <div class="col-xs-12 col-md-6 card-container">
                                             <div class="card historique">
                                                 <div class="card-body">
-                                                    <h4 class="card-title">Les tutorés</h4>
+                                                    <h4 class="card-title">Liste par tutorat</h4>
                                                     <a href="?controller=superadmin&action=tutores_belonging_list">
-                                                        <button class="btn" type="button">Selon l'appartenance</button>
+                                                        <button class="btn" type="button">Je consulte</button>
                                                     </a>
                                                 </div>
                                             </div>
                                         </div>
-                                                                                                                       
+
                                     </div>
                                 </div>
                             </div>

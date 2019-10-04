@@ -43,12 +43,12 @@
                                                         <thead>
                                                             <tr>
                                                                 <th>Nom</th>
-                                                                <th>Prenom</th>
+                                                                <th>Prénom</th>
                                                                 <th>Email</th>
                                                                 <th>Phone</th>
                                                                 <th>Ville</th>
                                                                 <th>Adresse</th>
-                                                                <th>Code_postal</th>
+                                                                <th>Code postal</th>
                                                                 <th>Etat</th>
 
 

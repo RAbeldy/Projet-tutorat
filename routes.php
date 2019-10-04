@@ -51,13 +51,16 @@
   {
     if (in_array($action, $controllers[$controller])) 
     {
+      
       call($controller, $action);
+      $_GET['controller']= randomKey();
+      $_GET['action']= randomKey();
     }
      else 
     {
       session_destroy();
       
-      $message= 'action  introuvable';
+      $message= 'action introuvable';
       $error_msg = "La page que vous cherchez n'existe pas !";
       require_once('views/system/error.php');
     }
@@ -71,7 +74,17 @@
       require_once('views/system/error.php');
   }
 
-  
+  function randomKey() 
+   {
+      $alphabet = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
+      $key = array(); //remember to declare $pass as an array
+      $alphaLength = strlen($alphabet) - 1; //put the length -1 in cache
+      for ($i = 0; $i < 8; $i++) {
+          $n = rand(0, $alphaLength);
+          $key[] = $alphabet[$n];
+      }
+      return implode($key); //turn the array into a string thanks to implode function
+  }
   
   
 
