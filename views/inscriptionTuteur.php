@@ -94,7 +94,7 @@ function validateForm() {
         alert("Un ou plusieurs champ(s) non rempli(s)"); 
         return false; 
         }                                       
-        return true; 
+         
     } 
 </script>
 

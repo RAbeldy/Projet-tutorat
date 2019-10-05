@@ -18,6 +18,13 @@
                                                 <?php include('retour.php') ?>
                                             </div>
                                             <div class="card-body">
+                                                <div class=" rechercher">
+                                                      <td>
+                                                          <a href="?controller=superadmin&action=export"><button class="btn" > Exporter
+                                                          </button>
+                                                        </a>
+                                                      </td>
+                                                  </div>
                                                 <div class="row">
                                                     
                                                     <div class="col-md-7 text-nowrap">

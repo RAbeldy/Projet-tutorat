@@ -6,7 +6,7 @@ require_once('models/tuteurs.php');
 require_once('models/users.php');
 require_once('models/admin.php');
 require_once('models/tutorat.php');
-
+include_once ("PHP_XLSXWriter-master/xlsxwriter.class.php");
 
 
 
@@ -738,12 +738,47 @@ class AdminController
           require_once('views/login.php');
     }
 
-public static function export()
-{
-  $donnees = Evenements::Future_events_list($_SESSION['id_user']);
-  
-  require_once('controllers/PHPExcel-1.8/exportTutorat/exportData-xlsx.php');
-}
+public  function export()
+  {
+    if (isset($_SESSION['id_user'])) {
+        $donnees = Users::Get_unpaidHours_tuteurs();
+       
+
+        set_include_path( get_include_path().PATH_SEPARATOR."..");
+        ini_set('display_errors', 0);
+        ini_set('log_errors', 1);
+        error_reporting(E_ALL & ~E_NOTICE);
+
+        $today = date("Y-m-d");
+        $filename = "Export".$today.".xlsx";
+        header('Content-disposition: attachment; filename="'.XLSXWriter::sanitize_filename($filename).'"');
+        header("Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+        header('Content-Transfer-Encoding: binary');
+        header('Cache-Control: must-revalidate');
+        header('Pragma: public');
+
+      $header = array('Nom du tutorat'=>'string','Date'=>'string','Lieu du déroulement'=>'string','Nombre de tutorés'=>'string','Nombre de tuteurs'=>'string','Nombre de places'=>'string','Nombre heures'=>'string',
+      );
+
+        $data1 = [];
+        foreach($donnees as $data)
+          { 
+            $data1 [] = array($data['tutorat'],$data['evenement']->getDate_evenement(),$data['evenement']->getLieu(),$data['evenement']->getNb_places_tutores(),$data['evenement']->getNb_tuteurs(),$data['evenement']->getNb_places(),$data['planning_event']);
+          }
+        $writer = new XLSXWriter();
+        $writer->writeSheetHeader('Sheet1', $header);
+        foreach($data1 as $row){
+          $writer->writeSheetRow('Sheet1', $row);
+        }
+        $writer->writeToFile($filename);
+      //include_once('PHP_XLSXWriter-master/examples/ex00-simple.php');
+      $this->future_events_list();
+    }
+    else{
+        echo "échec d'exportation de données";
+    }
+  }
+    
     
  public static function contact()
  {

@@ -124,7 +124,7 @@ class EvenementsController
             $event->setDuree( $_POST['duree']);
             $event->setNb_tuteurs($_POST['nb_tuteurs']);
             $event->setNb_tutores($_POST['nb_tutores']);
-
+            
             $data= Tutorat::Get_idAdmin_tutorat($_POST['id_t']); // on récupère l'id de l'admin qui gère ce tutorat
             
             if( $event->Admin_set_event($data[0]->getId_user(),$_POST['id_t']) == 0) // on a récupéré l'identifiant de celui avec qui il aura un tutorat personnalisé ou alors l'identifiant du lieu

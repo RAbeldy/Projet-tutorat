@@ -14,8 +14,7 @@ var check = function() {
     document.getElementById('message').style.color = 'red';
     document.getElementById('message').innerHTML = 'not matching';
   }
-}<!-- Js function for control -->
-<script type="text/javascript">
+}
 
     
  function checkEmailt() {
@@ -101,7 +100,7 @@ function validateForm() {
         alert("Un ou plusieurs champ(s) non rempli(s)"); 
         return false; 
         }                                       
-        return true; 
+        
     } 
 
 </script>
