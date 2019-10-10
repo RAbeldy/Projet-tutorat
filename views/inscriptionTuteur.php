@@ -98,57 +98,71 @@ function validateForm() {
     } 
 </script>
 
+    <script type="text/javascript"> 
+function checkform() {
+        var f = document.forms["formm"].elements;
+        var cansubmit = true;
+
+        for (var i = 0; i < f.length; i++) {
+            if ("value" in f[i] && f[i].value.length == 0)
+                cansubmit = false;
+        }
+
+        document.getElementById('submitutton').disabled = !cansubmit;
+    }
+    window.onload = checkform; //give access to submit after filled up the form.
+    </script> 
+
         <!-- TUTEUR -->
 <div class="login-dark">        
-    <form method="post" onsubmit='javascript:validateForm();' action="createAccount.php">
+    <form method="post" name="formm"  onsubmit='javascript:validateForm();' action="createAccount.php">
      <div class="form-group" id="Yes" name="text1" style="display:block;">
                 <div class="illustration">
                   <i class="icon ion-person-add"></i>
                 </div>
 
                 <div class="form-group">
-                    <input class="form-control" type="text" name="nom" id="a" placeholder="Nom" >
+                    <input class="form-control" type="text" name="nom" id="a" placeholder="Nom" onKeyup='javascript:checkform();'>
                 </div>
                 <div class="form-group">
-                    <input class="form-control" type="text" name="prenom" id="b" placeholder="Prénom" >
+                    <input class="form-control" type="text" name="prenom" id="b" placeholder="Prénom" onKeyup='javascript:checkform();'>
                 </div>
                 
                 <div class="form-group">
-                    <input class="form-control" type="number" minlength="10" id="c" maxlength="14" name="phone" id="b" placeholder="tel"
-                        >
+                    <input class="form-control" type="number" minlength="10" id="c" maxlength="14" name="phone" id="b" placeholder="tel" onKeyup='javascript:checkform();'>
                 </div>
                 <div class="form-group">
-                    <input class="form-control" type="date" name="date_naiss" id="d" placeholder="Date de naissance" >
+                    <input class="form-control" type="date" name="date_naiss" id="d" placeholder="Date de naissance" onKeyup='javascript:checkform();'>
                 </div>
                 <div class="form-group">
-                    <input class="form-control" type="email" name="email" id="numero1" placeholder="Email" >
+                    <input class="form-control" type="email" name="email" id="numero1" placeholder="Email" onKeyup='javascript:checkform();'>
                 </div>
                 <div class="form-group">
                     <input class="form-control" type="password" name="password" id="passworde" placeholder="Mot de passe"       
-                    onkeyup='javascript:checke();' >
+                    onkeyup='javascript:checke();' onKeyup='javascript:checkform();'>
                 </div>
                 <div class="form-group">
-                    <input class="form-control" type="password" name="confirmer_password" id="confirme_password" placeholder="Confirmer mot de passe" onkeyup='javascript:checke();'  >
+                    <input class="form-control" type="password" name="confirmer_password" id="confirme_password" placeholder="Confirmer mot de passe" onkeyup='javascript:checke();' onKeyup='javascript:checkform();' >
                  <span id='mess'></span>
                 </div>
                 <div class="form-group">
-                    <input class="form-control" type="text" name="ecole" id="e" placeholder="École" >
+                    <input class="form-control" type="text" name="ecole" id="e" placeholder="École" onKeyup='javascript:checkform();' >
                 </div>
                 
                 <div class="form-group">
-                    <input class="form-control" type="text" name="adresse" id="f" placeholder="Adresse" >
+                    <input class="form-control" type="text" name="adresse" id="f" placeholder="Adresse" onKeyup='javascript:checkform();'>
                 </div>
                 <div class="form-group">
-                    <input class="form-control" type="text" name="complement_adresse" id="g" placeholder="Complément Adresse" >               
+                    <input class="form-control" type="text" name="complement_adresse" id="g" placeholder="Complément Adresse" onKeyup='javascript:checkform();'>               
                 </div>
                 <div class="form-group">
-                    <input class="form-control" type="text" name="ville" id="h" placeholder="Ville" >
+                    <input class="form-control" type="text" name="ville" id="h" placeholder="Ville" onKeyup='javascript:checkform();' >
                 </div>    
                 <div class="form-group">
-                    <input class="form-control" type="number" name="code_postal" id="i" placeholder="code postal" >
+                    <input class="form-control" type="number" name="code_postal" id="i" placeholder="code postal" onKeyup='javascript:checkform();'>
                 </div>
                 <div class="form-group">
-                    <button class="btn btn-primary btn-block" type="submit" 
+                    <button class="btn btn-primary btn-block" type="submit" id="submitutton" value="submit" 
                     onclick='javascript:checkEmail();javascript:validateForm();'>sign up</button>
                 </div>
       </div>
