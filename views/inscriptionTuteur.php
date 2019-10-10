@@ -116,6 +116,7 @@ function checkform() {
         <!-- TUTEUR -->
 <div class="login-dark">        
     <form method="post" name="formm"  onsubmit='javascript:validateForm();' action="createAccount.php">
+        <fieldset>
      <div class="form-group" id="Yes" name="text1" style="display:block;">
                 <div class="illustration">
                   <i class="icon ion-person-add"></i>
@@ -166,5 +167,6 @@ function checkform() {
                     onclick='javascript:checkEmail();javascript:validateForm();'>sign up</button>
                 </div>
       </div>
+</fieldset>
     </form> 
 </div>
