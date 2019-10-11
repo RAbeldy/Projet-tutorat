@@ -22,11 +22,8 @@
                                                 <?php include('retour.php') ?>
                                             </div>
                                             <div class="card-body">
-                                                <div class=" rechercher">
-                                                <!--    <td><a href="controllers/PHPEXCEL-1.8/Examples/01simple-download-xlsx.php"><button class="btn"  name="" > Imprimer</button></a></td>-->
-                                                    <td><a href="controllers/PHPEXCEL-1.8/exportTutorat/exportData-xlsx.php"><button class="btn"  name="" > Imprimer</button></a></td>
-                                                </div>
-                                                <form method="post" action="?controller=admin&action=pasts_events_list">
+                                               
+                                                <form method="post" action="?controller=superadmin&action=search&indice=2">
                                                     <div class="row">
                                                         <div class="col-md-7 text-nowrap">
                                                             <div class="row text-center">

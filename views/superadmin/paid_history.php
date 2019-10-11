@@ -18,6 +18,7 @@
                                                 <?php include('retour.php') ?>
                                             </div>
                                             <div class="card-body">
+                                                <form method="post" action="?controller=superadmin&action=search&indice=11">
                                                 <div class="row">
                                                     
                                                     <div class="col-md-7 text-nowrap">
@@ -27,11 +28,11 @@
                                                         <div class="row">
                                                             <div class="col-xs-12 col-md-6">
                                                                 <label class="col-2">De</label>
-                                                                <input class="col-8 offset-2" type="datetime-local"/>
+                                                                <input name="date1"class="col-8 offset-2" type="datetime-local"/>
                                                             </div>
                                                             <div class="col-xs-12 col-md-6">
                                                                 <label class="col-2">à</label>
-                                                                <input class="col-8 offset-2" type="datetime-local"/>
+                                                                <input name="date2"class="col-8 offset-2" type="datetime-local"/>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -40,13 +41,14 @@
                                                             <label style="flex: auto;">TUTORAT</label>
                                                         </div>
                                                         <div class="row">
-                                                            <input type="search" class="form-control form-control-sm" aria-controls="dataTable" placeholder="Rechercher"/>
+                                                            <input type="search" name="string" class="form-control form-control-sm" aria-controls="dataTable" placeholder="Rechercher"/>
                                                         </div>
                                                     </div>
                                                     <div class="col-12 text-center rechercher">
-                                                        <button class="btn" type="button">RECHERCHER</button>
+                                                        <button class="btn" type="submit">RECHERCHER</button>
                                                     </div>
                                                 </div>
+                                            </form>
                                                 <div class="table-responsive table mt-2" role="grid" aria-describedby="dataTable_info">
                                                     <table class="table dataTable my-0" id="dataTable">
                                                         <thead>

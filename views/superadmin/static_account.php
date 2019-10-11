@@ -18,6 +18,7 @@
                                                 <?php include('retour.php') ?>
                                             </div>
                                             <div class="card-body">
+                                                <form method="post" action="?controller=superadmin&action=search&indice=9">
                                                 <div class="row">
                                                     <div class="col-12 card-body-title">
                                                         <span>RECHERCHER PAR :</span>
@@ -34,9 +35,10 @@
                                                         </div>
                                                     </div>
                                                     <div class="col-12 text-center rechercher">
-                                                        <button class="btn" type="button">RECHERCHER</button>
+                                                        <button class="btn" type="submit">RECHERCHER</button>
                                                     </div>
                                                 </div>
+                                            </form>
                                                 <div class="table-responsive table mt-2" role="grid" aria-describedby="dataTable_info">
                                                     <table class="table dataTable my-0" id="dataTable">
                                                         <thead>

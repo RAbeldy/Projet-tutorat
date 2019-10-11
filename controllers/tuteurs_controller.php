@@ -19,11 +19,12 @@ class TuteursController
     {   
         if(isset($_SESSION['id_statut']))// on vérifie que seul un utilisateur connecté peut accéder à ces pages
           {
+            $id= htmlspecialchars($_GET['id']);
             $tuteurs = new Tuteurs();
-            if(isset($_GET['id']))
+            if($id!="")
             {
-              $donnees = $tuteurs->Get_specific_working_list($_SESSION['id_user'],$_GET['id']); // liste des tuteurs avec qui je travaille dans un tutorat donné autre que le tutorat personnalisé
-              $id= $_GET['id']; // il s'agit de l'id du tutorat pour lequel le tuteur veut créer un évènement
+              $donnees = $tuteurs->Get_specific_working_list($_SESSION['id_user'],$id); // liste des tuteurs avec qui je travaille dans un tutorat donné autre que le tutorat personnalisé
+              $id= htmlspecialchars($_GET['id']); // il s'agit de l'id du tutorat pour lequel le tuteur veut créer un évènement
             }
             else // il s'agit d'un tutorat personnalisé simple
             {
@@ -108,9 +109,16 @@ class TuteursController
         
         if(isset($_SESSION['id_statut']))// on vérifie que seul un utilisateur connecté peut accéder à ces pages
         {   
-             $tuteurs= new Tuteurs();
-             $tuteurs->Link_with_tutores($_SESSION['id_user'],$_POST['id_u']);
-            require_once('views/tuteurs/notifications_tuteurs.php');
+             $id_u= htmlspecialchars($_POST['id_u']);
+             
+             if($id_u!="")
+             {
+                 $tuteurs= new Tuteurs();
+                 $tuteurs->Link_with_tutores($_SESSION['id_user'],$id_u);
+                 require_once('views/tuteurs/notifications_tuteurs.php');
+             }
+             else 
+                 require_once('views/login.php');
              
         }
         else
@@ -121,18 +129,23 @@ class TuteursController
         
         if(isset($_SESSION['id_statut']))// on vérifie que seul un utilisateur connecté peut accéder à ces pages
         {  
-
-            $tuteurs= new Tuteurs();
-            if($tuteurs->Accept_link($_SESSION['id_user'],$_POST['id_u']) == 0)
-                require_once('views/tuteurs/notifications_tuteurs.php');
-            else
-             {
-                $message = 'Cette liaison est impossible, vous avez atteint votre quota maximum de liaison';
-                $controller_report='tuteurs';
-                $fonction_back='notifications';
-                require_once('views/system/error.php');
-             }
-             
+            $id_u= htmlspecialchars($_POST['id_u']);
+            
+            if($id_u!="")
+            {
+                $tuteurs= new Tuteurs();
+                if($tuteurs->Accept_link($_SESSION['id_user'],$id_u) == 0)
+                    require_once('views/tuteurs/notifications_tuteurs.php');
+                else
+                 {
+                    $message = 'Cette liaison est impossible, vous avez atteint votre quota maximum de liaison';
+                    $controller_report='tuteurs';
+                    $fonction_back='notifications';
+                    require_once('views/system/error.php');
+                 }
+            }
+        else
+            require_once('views/login.php'); 
         }
         else
             require_once('views/login.php'); 
@@ -142,11 +155,14 @@ class TuteursController
     {
         
         if(isset($_SESSION['id_statut']))// on vérifie que seul un utilisateur connecté peut accéder à ces pages
-        {    
+        {   
+            $id_u= htmlspecialchars($_POST['id_u']);
+           if($id_u!="")
+           {
             $tuteurs= new Tuteurs();
-             $tuteurs->Delete_link($_POST['id_u']);
+             $tuteurs->Delete_link($id_u);
             require_once('views/tuteurs/notifications_tuteurs.php');
-             
+           }
         }
         else
             require_once('views/login.php'); 
@@ -190,9 +206,13 @@ class TuteursController
     {
         if(isset($_SESSION['id_statut']))// on vérifie que seul un utilisateur connecté peut accéder à ces pages
         {    
+             $id_u= htmlspecialchars($_POST['id_u']);
+             if($id_u!="")
+             {
              $tuteurs= new Tuteurs();
-             $donnees=$tuteurs->Cancel_wish($_SESSION['id_user'],$_POST['id_u']);
+             $donnees=$tuteurs->Cancel_wish($_SESSION['id_user'],$id_u);
              require_once('views/tuteurs/interface_selection_tutores_tuteurs.php');
+             }
         }
         else
             require_once('views/login.php'); 
@@ -212,15 +232,22 @@ class TuteursController
     {
         if(isset($_SESSION['id_statut']))// on vérifie que seul un utilisateur connecté peut accéder à ces pages
         { 
+            $ville= htmlspecialchars($_POST['ville']);
+            $adresse= htmlspecialchars($_POST['adresse']);
+            $complement_adresse= htmlspecialchars($_POST['complement_adresse']);
+            $code_postal= htmlspecialchars($_POST['code_postal']);
+            $password= htmlspecialchars($_POST['password']);
+                
             $tuteurs = new Users();
-            $tuteurs->setVille($_POST['ville']);
-            $tuteurs->setAdress($_POST['adresse']);
-            $tuteurs->setCom_adress($_POST['complement_adresse']);
-            $tuteurs->setCode_postal($_POST['code_postal']);
-            $tuteurs->setPassword($_POST['password']);
-
+            $tuteurs->setVille($ville);
+            $tuteurs->setAdress($adresse);
+            $tuteurs->setCom_adress($complement_adresse);
+            $tuteurs->setCode_postal($code_postal);
+            $tuteurs->setPassword($password);
+          
             $tuteurs->Modify_info($_SESSION['id_user']);    // on update les infos du user
             require_once('views/tuteurs/interface_tuteur.php');
+        
         }
         else
             require_once('views/login.php');
@@ -280,16 +307,21 @@ class TuteursController
     public function accept_proposal() // il accepte une proposition recue pour un tutorat spécifique
     {
         if(isset($_SESSION['id_statut']))// on vérifie que seul un utilisateur connecté peut accéder à ces pages
-        {   
+        {  
+            $id_t= htmlspecialchars($_POST['id_t']);
+            
+            if($id_t!="")
+            {
             if( isset($_POST['accepter']))
             {
-                Tuteurs::Accept_proposal($_SESSION['id_user'],$_POST['id_t']);
+                Tuteurs::Accept_proposal($_SESSION['id_user'],$id_t);
                 TuteursController::Show_proposal();
             }
             elseif( isset($_POST['refuser']))
             {
-                Tuteurs::Refuse_proposal($_SESSION['id_user'],$_POST['id_t']);
+                Tuteurs::Refuse_proposal($_SESSION['id_user'],$id_t);
                 TuteursController::Show_proposal();
+            }
             }
          }
         else

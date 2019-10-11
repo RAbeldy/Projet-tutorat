@@ -18,6 +18,7 @@
                                                 <?php include('retour.php') ?>
                                             </div>
                                             <div class="card-body">
+                                                <form method="post" action="?controller=superadmin&action=search&indice=3">
                                                 <div class="row">
                                                     <div class="col-12 card-body-title">
                                                         <span>Entrez vos critères de recherche :</span>
@@ -26,18 +27,19 @@
                                                         <div class="row">
                                                             <div class="col-xs-12 col-md-6">
                                                                 <label style="flex: auto;">Nom de l'étudiant</label>
-                                                                <input type="search" class="form-control form-control-sm" aria-controls="dataTable" placeholder="Rechercher"/>
+                                                                <input type="search" name="name"class="form-control form-control-sm" aria-controls="dataTable" placeholder="Rechercher"/>
                                                             </div>
                                                             <div class="col-xs-12 col-md-6">
                                                                 <label style="flex: auto;">Etat de l'étudiant</label>
-                                                                <input type="search" class="form-control form-control-sm" aria-controls="dataTable" placeholder="Rechercher"/>
+                                                                <input type="search" name="etat"class="form-control form-control-sm" aria-controls="dataTable" placeholder="Rechercher"/>
                                                             </div>
                                                         </div>
                                                     </div>
                                                     <div class="col-12 text-center rechercher">
-                                                        <button class="btn" type="button">RECHERCHER</button>
+                                                        <button class="btn" type="submit">RECHERCHER</button>
                                                     </div>
                                                 </div>
+                                            </form>
                                                 <div class="table-responsive table mt-2" role="grid" aria-describedby="dataTable_info">
                                                     <table class="table dataTable my-0" id="dataTable">
                                                         <thead>

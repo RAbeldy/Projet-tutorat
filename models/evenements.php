@@ -679,6 +679,14 @@ class Evenements
         return $list;
 
     }
+    public static function payUnpaidHours() // on met à jour la liste des evenements impayés (lors de l'export du fichier excel)
+    {
+        $db=Db::getInstance();
+        $date= 
+        $req= $db->prepare("UPDATE validation_heure SET payer= 'OUI' WHERE payer='NON'");
+        $req->execute(array());
+    
+    }
     public  function Get_nb_inscrits($id_evenement) // le nombre de tuteurs deja. inscrits à l'évènement
     {
         $db = Db::getInstance(); 
@@ -717,7 +725,57 @@ class Evenements
       $req= $db->prepare("UPDATE evenement SET nb_places_tutores =?  WHERE id_evenement= ? ");
       $req->execute(array($nb_places,$id_evenement));
     }
-
+    
+    public static function Find_occurrences_name($tab,$name,$etat) // recherche par nom et/ou état
+    {
+      $data= [];
+      $result= [];
+      //var_dump($tab);
+      if($name=="" && $etat== "") // tri par rapport à l'état
+      {
+        return $tab;
+      }
+      else 
+      {
+        if($name =="")
+        {
+            foreach ($tab as $elt)
+          {
+           if(preg_match('#'.$etat.'#i', $elt['etat']))
+            $data[]= $elt;
+          } 
+          //var_dump($data);
+          return $data ;
+        }
+        else if($etat=="")
+        {
+              foreach ($tab as $elt)
+              {
+               if(preg_match('#'.$name.'#i', $elt['user']->getNom()))
+                $data[]= $elt;
+              } 
+              //var_dump($data);
+              return $data ;
+        } 
+        else // recherche par rapport aux deux 
+        {
+           
+                echo($name);
+               foreach ($tab as $elt) // première recherche par rapport au tutorat 
+               {
+                    if(preg_match('#'.$name.'#i', $elt['user']->getNom()))
+                    $data[]= $elt;
+                } 
+               foreach ($data as $elt) // deuxième recherche par rapport à la date
+               {
+                    if(preg_match('#'.$etat.'#i', $elt['etat']))
+                    $result[]= $elt;
+                }
+                 var_dump($result);
+                return $result ; // on retourne le résultat final   
+    }
+}
+}
     public static function Find_occurrences($tab,$string)
     {
       $data= [];
@@ -737,7 +795,7 @@ class Evenements
 
       if($date1== "" && $date2== "") // recherche unique par rapport au tutorat
       {
-          echo 'recherhce par string';
+          //echo 'recherhce par string';
           foreach ($tab as $elt)
           {
             if(preg_match('#'.$string.'#i', $elt['tutorat']))
@@ -749,7 +807,7 @@ class Evenements
       {
         if($string == "")
         {
-          echo 'recherhce par date';
+          //echo 'recherhce par date';
             foreach ($tab as $elt)
             {
               if(($elt['evenement']->getDate_evenement() >= $date1) && ($elt['evenement']->getDate_evenement() <= $date2))
@@ -759,7 +817,7 @@ class Evenements
         }
         else
         {
-          echo 'recherche par les 2';
+          //echo 'recherche par les 2';
           foreach ($tab as $elt) // première recherche par rapport au tutorat 
           {
             if(preg_match('#'.$string.'#i', $elt['tutorat']))

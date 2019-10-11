@@ -14,6 +14,8 @@
   if(!isset($_SESSION['connecté']))
   $_SESSION['connecté'] = 'non connecté';
 
+echo $_SESSION['connecté'];
+
 ?>
 
 <!DOCTYPE html>

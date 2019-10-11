@@ -1,12 +1,5 @@
 <?php
-/*
-	setcookie('adresse',$_POST['adresse'], time() + 365*24*3600, null, null, false, true); // On écrit un cookie
-	setcookie('ville',$_POST['ville'], time() + 365*24*3600, null, null, false, true); // On écrit un cookie
-	setcookie('complement_adresse',$_POST['complement_adresse'], time() + 365*24*3600, null, null, false, true); // On écrit un cookie
-	setcookie('code_postal',$_POST['code_postal'], time() + 365*24*3600, null, null, false, true); // On écrit un cookie
-	setcookie('password',$_POST['password'], time() + 365*24*3600, null, null, false, true); // On écrit un cookie
-*/
-
+    session_start();
 	include('connexion.php');
 	require ('PHPMailer/PHPMailerAutoload.php');
 	require ('connectToMail.php');
@@ -26,7 +19,7 @@
 	}
     
     
-	if (isset($_POST['email']) && isset($_POST['password']) && isset($_POST['confirmer_password']) && isset($_POST['nom']) && isset($_POST['prenom'])&& isset($_POST['date_naiss']) && isset($_POST['ecole'])  && isset($_POST['adresse']) && isset($_POST['complement_adresse']) && isset($_POST['ville']) && isset($_POST['code_postal'])&& isset($_POST['phone'])) {
+	if ($_POST['email']!="" && $_POST['password']!="" && $_POST['confirmer_password']!="" && $_POST['nom']!="" && $_POST['prenom']!="" && $_POST['date_naiss']!="" && $_POST['ecole']!=""  && $_POST['adresse']!="" && $_POST['complement_adresse']!="" && $_POST['ville']!="" && $_POST['code_postal']!="" && $_POST['phone']!="") {
 		//Dans ce cas, les champs ont été remplis
 
 		//tutoré
@@ -152,15 +145,15 @@
 			else 
 			{
 				//login déjà utilisé pour un compte valide
-				$_SESSION['alert']= "<strong>Failed_login</strong>";
+				$_SESSION['alert']= "<strong>cette adresse e-mail ne vous appartient pas</strong>";
 				header('location:index.php?controller=users&action=login');
-				//On le redirige vers la page d'accueil
+				//On le redirige vers la page de login
 			}
 		}
 		else {
 			//pwd et confirmation différente
 			//login déjà utilisé pour un compte valide
-			$_SESSION['alert']= "<strong>Failed_password</strong>";
+			$_SESSION['alert']= "<strong>Mot de passe incorrect</strong>";
 			header('location:index.php?controller=users&action=login');
 		     }
 	}

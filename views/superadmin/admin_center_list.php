@@ -18,23 +18,7 @@
                                                 <?php include('retour.php') ?>
                                             </div>
                                             <div class="card-body">
-                                                <div class="row">
-                                                    <div class="col-12 card-body-title">
-                                                        <span>RECHERCHER PAR :</span>
-                                                    </div>
-
-                                                    <div class="col-md-4 offset-4">
-                                                        <div class="row text-center">
-                                                            <label style="flex: auto;">TUTORAT</label>
-                                                        </div>
-                                                        <div class="row">
-                                                            <input type="search" class="form-control form-control-sm" aria-controls="dataTable" placeholder="Rechercher"/>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-12 text-center rechercher">
-                                                        <button class="btn" type="button">RECHERCHER</button>
-                                                    </div>
-                                                </div>
+                                                
                                                 <div class="table-responsive table mt-2" role="grid" aria-describedby="dataTable_info">
                                                     <table class="table dataTable my-0" id="dataTable">
                                                         <thead>

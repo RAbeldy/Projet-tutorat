@@ -2,7 +2,7 @@
 
     <div id="globalContent">
         <div id="wrapper">
-            
+
             <div class="d-flex flex-column" id="content-wrapper">
                 <div id="content">
                     <div class="block">
@@ -14,79 +14,61 @@
                                     <div class="row">
                                         <div class="card debut">
                                             <div class="card-header py-3">
-                                                <p class="text-primary m-0 font-weight-bold">Cumul des heures impayées</p>
+                                                <p class="text-primary m-0 font-weight-bold">Ils travaillent dans ces tutorats</p>
                                                 <?php include('retour.php') ?>
                                             </div>
                                             <div class="card-body">
-                                                <div class=" rechercher">
-                                                      <td>
-                                                          <a href="?controller=superadmin&action=export"><button class="btn" > Exporter
-                                                          </button>
-                                                        </a>
-                                                      </td>
-                                                  </div>
-                                                  <form method="post" action="?controller=superadmin&action=search&indice=10">
-                                                   <div class="row">
-                                                    
-                                                    <div class="col-md-7 text-nowrap">
-                                                        <div class="row text-center">
-                                                            <label style="flex: auto;">Période</label>
-                                                        </div>
-                                                        <div class="row">
-                                                            <div class="col-xs-12 col-md-6">
-                                                                <label class="col-2">De</label>
-                                                                <input name="date1" class="col-8 offset-2" type="datetime-local"/>
-                                                            </div>
-                                                            <div class="col-xs-12 col-md-6">
-                                                                <label class="col-2">à</label>
-                                                                <input name="date2" class="col-8 offset-2" type="datetime-local"/>
-                                                            </div>
-                                                        </div>
+                                                <form method="post" action="?controller=superadmin&action=search&indice=6">
+                                                <div class="row">
+                                                    <div class="col-12 card-body-title">
+                                                        <span> Entrez vos critères de recherche :</span>
                                                     </div>
-                                                    <div class="col-md-4 offset-1">
-                                                        <div class="row text-center">
-                                                            <label style="flex: auto;">NOM</label>
-                                                        </div>
+                                                    <div class="col-12">
                                                         <div class="row">
-                                                            <input type="search" name="string"class="form-control form-control-sm" aria-controls="dataTable" placeholder="Rechercher"/>
+                                                            <div class="col-xs-12 col-md-6">
+                                                                <label style="flex: auto;">Nom de l'étudiant</label>
+                                                                <input type="search" name="name"class="form-control form-control-sm" aria-controls="dataTable" placeholder="Rechercher"/>
+                                                            </div>
+                                                            <div class="col-xs-12 col-md-6">
+                                                                <label style="flex: auto;">Etat de l'étudiant</label>
+                                                                <input type="search" name="etat" class="form-control form-control-sm" aria-controls="dataTable" placeholder="Rechercher"/>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                     <div class="col-12 text-center rechercher">
                                                         <button class="btn" type="submit">RECHERCHER</button>
                                                     </div>
                                                 </div>
-
-                                              </form>
+                                            </form>
                                                 <div class="table-responsive table mt-2" role="grid" aria-describedby="dataTable_info">
                                                     <table class="table dataTable my-0" id="dataTable">
                                                         <thead>
                                                             <tr>
+                                                                <th>Type_tutorat</th>
+                                                                <th>Tutorat</th>
                                                                 <th>Nom</th>
-                                                                <th>Prenom</th>
+                                                                <th>Prénom</th>
                                                                 <th>Email</th>
-                                                                <th>Phone</th>
+                                                                <th>Téléphone</th>
                                                                 <th>Ville</th>
                                                                 <th>Adresse</th>
-                                                                <th>Code_postal</th>
-                                                                <th>Nombre d'heures à ce jour</th>
-                                                                <th>Action</th>
+                                                                <th>Code postal</th>
+                                                                <th>Etat</th>
 
-                                                               
+
+
                                                             </tr>
                                                         </thead>
                                                         <tbody>
 
                                                             <?php
-                                                            
-                                                             foreach ($donnees as $elt) 
+
+                                                             foreach ($donnees as $elt)
                                                             {
                                                              ?>
-
-                                                              <form method="post" action="?controller=superadmin&action=validatedHours_history">
-                                                                
                                                               <tr >
-
- 
+                                                                  <td> <label><?=$elt['type_tutorat']?></label></td>
+                                                                  <td> <label><?=$elt['tutorat']?></label></td>
                                                                   <td> <label><?=$elt['user']->getNom()?></label></td>
                                                                   <td><label><?=$elt['user']->getPrenom()?></label></td>
                                                                   <td><label><?=$elt['user']->getEmail()?></label></td>
@@ -94,14 +76,10 @@
                                                                   <td><label ><?=$elt['user']->getVille()?></label></td>
                                                                   <td><label ><?=$elt['user']->getAdress()?></label></td>
                                                                   <td><label ><?=$elt['user']->getCode_postal()?></label></td>
-                                                                  <td><label ><?=$elt['heure']?></label></td>
+                                                                  <td><label ><?=$elt['etat']?></label></td>
 
-                                                                  <td><button class="btn" name="consulter"> Consulter</button></td>
                                                                 </tr>
-                                                                 <input type="hidden" name="id_u" value="<?=$elt['user']->getId_user()?>" >
-                                                        
-                                                      
-                                                             </form>
+
                                                             <?php
                                                              }
                                                              ?>
@@ -122,14 +100,3 @@
             </div>
         </div>
     </div>
-
-
-
-
-
-
-
-
-
-
-    

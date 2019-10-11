@@ -13,16 +13,24 @@ class TutoratController
      {
        if( isset($_SESSION['id_statut']))
        {
+           
+          $libelle= htmlspecialchars($_POST['libelle']);
+          $code_postal= htmlspecialchars($_POST['code_postal']);
+          $adresse= htmlspecialchars($_POST['adresse']);
+          $nb_tuteurs= htmlspecialchars($_POST['nb_tuteurs']);
+          $nb_tutores= htmlspecialchars($_POST['nb_tutores']);
+          $id_typeTutorat= htmlspecialchars($_POST['id_typeTutorat']);
 
-       	  // une instance de la classe tuteur
+          // une instance de la classe tuteur
+    
             $tutorat = new Tutorat();
-            $tutorat->setLibelle($_POST['libelle']);
-            $tutorat->setCode_postal($_POST['code_postal']);
-            $tutorat->setAdresse($_POST['adresse']);
-            $tutorat->setNb_tuteurs($_POST['nb_tuteurs']);
-            $tutorat->setNb_tutores($_POST['nb_tutores']);
-            $tutorat->setId_typeTutorat($_POST['id_typeTutorat']);
-          
+            $tutorat->setLibelle($libelle);
+            $tutorat->setCode_postal($code_postal);
+            $tutorat->setAdresse($adresse);
+            $tutorat->setNb_tuteurs($nb_tuteurs);
+            $tutorat->setNb_tutores($nb_tutores);
+            $tutorat->setId_typeTutorat($id_typeTutorat);
+      
 
           if($tutorat->Create_center() == 0)
             {
@@ -75,13 +83,21 @@ class TutoratController
   {
     if( isset($_SESSION['id_statut']))
     {
-       Tutorat::Delete_tutorat($_POST['id_t']);
+     $id_t= htmlspecialchars($_POST['id_t']);
+     
+     if($id_t!="")
+     {
+       Tutorat::Delete_tutorat($id_t);
 
        $controller_report='superadmin';
        $fonction_back='interface_tutorat';
        
        $donnees= Tutorat::Get_all_tutorat();  // on recharge les données
        require_once('views/superadmin/tutorat_center_list.php');
+     }
+    else
+      require_once('views/login.php');
+     
     }
     else
       require_once('views/login.php');
@@ -90,7 +106,11 @@ class TutoratController
   {
     if( isset($_SESSION['id_statut']))
     {
-       Tutorat::Delete_typeTutorat($_POST['id_type']);
+    $id_type= htmlspecialchars($_POST['id_type']);
+    
+    if($id_type!="")
+    {
+       Tutorat::Delete_typeTutorat($id_type);
 
        $controller_report='superadmin';
        $fonction_back='interface_tutorat';
@@ -100,13 +120,19 @@ class TutoratController
     }
     else
       require_once('views/login.php');
+    }
+    else
+      require_once('views/login.php');
   }
   
   public function remove_tutorat()
   {
     if( isset($_SESSION['id_statut']))
     {
-       if(Tutorat::Remove_tutorat($_POST['id_t'],$_POST['id_admin']) == 0)
+    $id_t= htmlspecialchars($_POST['id_t']);
+    $id_admin= htmlspecialchars($_POST['id_admin']);
+    
+       if(Tutorat::Remove_tutorat($id_t,$id_admin) == 0)
          {
        $controller_report='superadmin';
        $fonction_back='interface_tutorat';
@@ -130,14 +156,18 @@ class TutoratController
   {
     if( isset($_SESSION['id_statut']))
     {
-      
-       Tutorat::Add_tutorat($_POST['id_t'],$_POST['id_admin']);
+    $id_t= htmlspecialchars($_POST['id_t']);
+    $id_admin= htmlspecialchars($_POST['id_admin']);
+     if($id_t!="" && id_admin!="")
+     {
+       Tutorat::Add_tutorat($id_t,$id_admin);
 
        $controller_report='superadmin';
        $fonction_back='interface_tutorat';
        
        
        require_once('views/superadmin/interface_tutorat.php');
+     }
     }
     else
       require_once('views/login.php');
@@ -147,13 +177,18 @@ class TutoratController
   {
     if( isset($_SESSION['id_statut']))
     {
-       Tutorat::Account_affectation($_POST['id_admin'],$_POST['id_u']);
+    
+    $id_t= htmlspecialchars($_POST['id_u']);
+    $id_admin= htmlspecialchars($_POST['id_admin']);
+    if($id_t!="" && id_admin!="")
+     {
+       Tutorat::Account_affectation($id_t,$id_admin);
 
        $controller_report='superadmin';
        $fonction_back='interface_tutorat';
-       
-       
+      
        require_once('views/superadmin/interface_tutorat.php');
+     }
     }
     else
       require_once('views/login.php');

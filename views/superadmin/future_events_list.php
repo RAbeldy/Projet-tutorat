@@ -22,11 +22,10 @@
                                                 <?php include('retour.php') ?>
                                             </div>
                                             <div class="card-body">
-                                                <div class=" rechercher">
-                                                <!--    <td><a href="controllers/PHPEXCEL-1.8/Examples/01simple-download-xlsx.php"><button class="btn"  name="" > Imprimer</button></a></td>-->
-                                                    <td><a href="controllers/PHPEXCEL-1.8/exportTutorat/exportData-xlsx.php"><button class="btn"  name="" > Imprimer</button></a></td>
-                                                </div>
-                                                <form method="post" action="?controller=admin&action=future_events_list">
+                                                
+                                                
+                                                
+                                                <form method="post" action="?controller=superadmin&action=search&indice=1">
                                                     <div class="row">
                                                         <div class="col-md-7 text-nowrap">
                                                             <div class="row text-center">
@@ -56,6 +55,7 @@
                                                         <button class="btn" name="search" type="submit">RECHERCHER</button>
                                                     </div>
                                                 </form>
+
                                                 <div class="table-responsive table mt-2" role="grid" aria-describedby="dataTable_info">
                                                     <table class="table dataTable my-0" id="dataTable">
                                                         <thead>

@@ -6,7 +6,7 @@ require_once('models/admin.php');
 require_once('models/superadmin.php');
 require_once('models/tutorat.php');
 require_once('controllers/users_controller.php');
-include_once ("PHP_XLSXWriter-master/xlsxwriter.class.php");
+
 
 
 /* Définition du controller */
@@ -124,7 +124,7 @@ class SuperadminController
          {
           if( $_SESSION['id_statut'] == 1)
           {
-             $donnees= Admin::Get_all_tuteurs($_SESSION['id_user']);
+             $donnees= Admin::Get_all_tuteurs();
 
              $controller_report='superadmin'; 
              $fonction_back='interface_tuteur';
@@ -144,7 +144,7 @@ class SuperadminController
          {
           if( $_SESSION['id_statut'] == 1)
           {
-             $donnees= Admin::Get_all_tutores($_SESSION['id_user']);
+             $donnees= Admin::Get_all_tutores();
 
              $controller_report='superadmin'; 
              $fonction_back='interface_tutore';
@@ -168,7 +168,7 @@ class SuperadminController
              $controller_report='superadmin'; 
              $fonction_back='interface_tuteur';
 
-             require_once('views/superadmin/belonging_list.php');
+             require_once('views/superadmin/tuteurs_belonging_list.php');
            }
            else
               UsersController::deconnexion();
@@ -187,7 +187,7 @@ class SuperadminController
              $controller_report='superadmin'; 
              $fonction_back='interface_tutore';
 
-             require_once('views/superadmin/belonging_list.php');
+             require_once('views/superadmin/tutores_belonging_list.php');
            }
            else
               UsersController::deconnexion();
@@ -257,7 +257,7 @@ class SuperadminController
          {
           if( $_SESSION['id_statut'] == 1)
             {
-               $type= $_GET['type'];
+               $type= htmlspecialchars($_GET['type']);
 
                $controller_report='superadmin'; 
                $fonction_back='interface_set_event';
@@ -299,11 +299,15 @@ class SuperadminController
      public function modify_event()
        {
         if( isset($_SESSION['id_statut']) && $_SESSION['id_statut'] == 1)
-          {    
+          {   
+             $id_e= htmlspecialchars($_POST['id_e']);
+                          
+      
+           
              if( isset($_POST['modifier']))
              {
              $donnees= Tutorat::Get_tutorat($_SESSION['id_user']); // on récupère la liste des tutorats qu'il administre
-             $tab= Evenements::Get_informations_on_events($_POST['id_e']);
+             $tab= Evenements::Get_informations_on_events($id_e);
               
              $controller_report='superadmin';
              $fonction_back='events';
@@ -312,9 +316,9 @@ class SuperadminController
             }
             elseif( isset($_POST['consulter']))  // on va plutot consulter la liste des tuteurs inscrits pour cet évènement
             {
-              $donnees = Evenements::Subscription_list($_POST['id_e']); // on récupère la liste des participants
+              $donnees = Evenements::Subscription_list($id_e); // on récupère la liste des participants
 
-              $data= Evenements::Get_informations_on_events($_POST['id_e']);  // on récupère la date, le. lieu etc sur l'évenement
+              $data= Evenements::Get_informations_on_events($id_e);  // on récupère la date, le. lieu etc sur l'évenement
 
               $controller_report='superadmin';
               $fonction_back='future_events_list';
@@ -323,10 +327,10 @@ class SuperadminController
             }
             elseif( isset($_POST['supprimer']))  // on va plutot supprimer cet évènement
             {
-               Evenements::Delete_event($_SESSION['id_user'],$_POST['id_e']); // on supprime
- 
+               Evenements::Delete_event($_SESSION['id_user'],$id_e); // on supprime
+       
                SuperadminController::future_events_list();
-          
+            
             }
             elseif( isset($_POST['imprimer']))  // on va plutot supprimer cet évènement
             {
@@ -335,10 +339,11 @@ class SuperadminController
                
 
                AdminController::export(); 
- 
+       
                //AdminController::future_events_list();
-          
+            
             }
+       
           }
             else
                 require_once('views/login.php');
@@ -347,37 +352,48 @@ class SuperadminController
         {
           if( isset($_SESSION['id_statut']) )
            {
+             $id_u= htmlspecialchars($_POST['id_u']);
+             $id_e_c= htmlspecialchars($_POST['id_e_c']);
+         
+            
+                 
                if( isset($_POST['consulter']))
                {
-                 $data= Users::Get_info($_POST['id_u']); // on récupère les info du user en question
+                 $data= Users::Get_info($id_u); // on récupère les info du user en question
 
-                 $donnees = Evenements::Get_past_events($_POST['id_u']); // on récupère les évènements que le tuteur a effectué 
+                 $donnees = Evenements::Get_past_events($id_u); // on récupère les évènements que le tuteur a effectué 
 
-                  $controller_report='superadmin';
-                  $fonction_back='events';
+                 $controller_report='superadmin';
+                 $fonction_back='events';
 
-                
+              
                  require_once('views/superadmin/show_informations.php');
-              }
+                }
+          
               elseif(isset($_POST['rompre']))
               {
-                $event= new Evenements();
-                $event->Cancel_participation($_POST['id_u'],$_POST['id_e_c']);
-                if( $_POST['statut'] == 'TUTEUR')
-                $event->updateNombrePlaces($_POST['id_e_c'],1);
-                else
-                  Evenements::Update_nbplacesTutores($_POST['id_e_c'],-1); // on met à jour le nombre de tutorés inscrits
+          
+                  $event= new Evenements();
+                  $event->Cancel_participation($id_u,$id_e_c);
+                  if( $_POST['statut'] == 'TUTEUR')
+                  $event->updateNombrePlaces($id_e_c,1);
+                  else
+                    Evenements::Update_nbplacesTutores($id_e_c,-1); // on met à jour le nombre de tutorés inscrits
 
-                $donnees = Evenements::Subscription_list($_POST['id_e_c']); // on récupère la liste des participants
+                  $donnees = Evenements::Subscription_list($d_e_c); // on récupère la liste des participants
 
-                $data= Evenements::Get_informations_on_events($_POST['id_e_c']);  // on récupère la date, le. lieu etc sur l'évenement
+                  $data= Evenements::Get_informations_on_events($id_e_c);  // on récupère la date, le. lieu etc sur l'évenement
 
-                $controller_report='superadmin';
-                $fonction_back='future_events_list';
+                  $controller_report='superadmin';
+                  $fonction_back='future_events_list';
 
-                require_once('views/superadmin/subscription_list.php');
- 
+                  require_once('views/superadmin/subscription_list.php');
+            
+   
               }
+             
+             else 
+                  require_once('views/login.php');
            }
            else
               require_once('views/login.php');
@@ -386,10 +402,12 @@ class SuperadminController
       {
          if( isset($_SESSION['id_statut']) )
          {
-          if( $_SESSION['id_statut'] == 1)
+       $id_e= htmlspecialchars($_POST['id_e']);
+       
+          if( $_SESSION['id_statut'] == 1 )
             {
-              $donnees = Evenements::Subscription_list($_POST['id_e']); // on récupère la liste des participants
-              $data= Evenements::Get_informations_on_events($_POST['id_e']);  // on récupère la date, le. lieu etc sur l'évenement
+              $donnees = Evenements::Subscription_list($id_e); // on récupère la liste des participants
+              $data= Evenements::Get_informations_on_events($id_e);  // on récupère la date, le. lieu etc sur l'évenement
               $controller_report='superadmin';
               $fonction_back='future_events_list';
 
@@ -405,10 +423,12 @@ class SuperadminController
       {
          if( isset($_SESSION['id_statut']) )
          {
-            if( $_SESSION['id_statut'] == 1)
+       $id_e= htmlspecialchars($_POST['id_e']);
+       
+            if( $_SESSION['id_statut'] == 1 )
             {
-              $donnees = Evenements::Subscription_list($_POST['id_e']); // on récupère la liste des participants
-              $data= Evenements::Get_informations_on_events($_POST['id_e']);  // on récupère la date, le. lieu etc sur l'évenement
+              $donnees = Evenements::Subscription_list($id_e); // on récupère la liste des participants
+              $data= Evenements::Get_informations_on_events($id_e);  // on récupère la date, le. lieu etc sur l'évenement
               $controller_report='superadmin';
               $fonction_back='pasts_events_list';
 
@@ -494,12 +514,12 @@ class SuperadminController
      {
        if( isset($_SESSION['id_statut']))
          {
-           $type= $_GET['type'];
+           $type= htmlspecialchars($_GET['type']);
 
            $controller_report='superadmin'; 
            $fonction_back='interface_account_creation';
 
-           switch ($type) {
+         switch ($type) {
              case 'VAUBAN':
                $donnees= Tutorat::Get_specific_tutorat_list(8); // on récupère la liste des tutorats associés à ce type de tutorat
                require_once('views/superadmin/create_account.php'); 
@@ -568,16 +588,17 @@ class SuperadminController
      public static function working_account()
      {
        if( isset($_SESSION['id_statut']))
-         { 
-             $donnees= Tutorat::Get_working_account($_POST['id_u']);
-             $data= Users::Get_admin($_POST['id_u']); // on récupère les informations de ce compte admin
+       { 
+       $id_u= htmlspecialchars($_POST['id_u']);
+       
+         $donnees= Tutorat::Get_working_account($_POST['id_u']);
+         $data= Users::Get_admin($_POST['id_u']); // on récupère les informations de ce compte admin
 
-             $controller_report='superadmin'; 
-             $fonction_back='interface_tutorat';
+         $controller_report='superadmin'; 
+         $fonction_back='interface_tutorat';
 
-             require_once('views/superadmin/working_account.php');
-           
-         }
+         require_once('views/superadmin/working_account.php');
+       }
          else
            require_once('views/login.php');
      }
@@ -585,40 +606,46 @@ class SuperadminController
      {
        if( isset($_SESSION['id_statut']))
          {
+             $id_admin= htmlspecialchars($_POST['id_admin']);
+             $id_type= htmlspecialchars($_POST['id_type']);
              
+        
              if(isset($_POST['retirer']))
              {
-              Tutorat::Delete_affectation($_POST['id_admin']);
+              Tutorat::Delete_affectation($id_admin);
 
               require_once('views/superadmin/interface_tutorat.php');
              }
              else if(isset($_POST['supprimer']))
              {
-              Tutorat::Delete_static_account($_POST['id_admin']);
+              Tutorat::Delete_static_account($id_admin);
 
               require_once('views/superadmin/interface_tutorat.php');
              }
              else
              {
-               $donnees= Tutorat::Get_tutorat($_POST['id_admin']); // on récupère la liste des tutorats associiés à ce compte statique admin
-               $data= Users::Get_admin($_POST['id_admin']); // on récupère les informations de ce compte admin
-               $res= Tutorat::Get_available_tutorat($_POST['id_type']); // on récupère la liste des tutorats qui ne sont pas encore affectés
+               $donnees= Tutorat::Get_tutorat($id_admin); // on récupère la liste des tutorats associiés à ce compte statique admin
+               $data= Users::Get_admin($id_admin); // on récupère les informations de ce compte admin
+               $res= Tutorat::Get_available_tutorat($id_type); // on récupère la liste des tutorats qui ne sont pas encore affectés
 
                $controller_report='superadmin'; 
                $fonction_back='static_account';
 
                require_once('views/superadmin/associated_tutorat.php');
              }
+      
           }
          else
            require_once('views/login.php');
      }
+
      public function update_password() // interface pour mettre à jour le mot de passe d'un compte statique admin
      {
        if(isset($_SESSION['id_statut']))// on vérifie que seul un utilisateur connecté peut accéder à ces pages
-       { 
-          Users::update_password($_POST['id_admin']);
-          SuperadminController::static_account();
+       {  
+          $id_admin= htmlspecialchars($_POST['id_admin']);
+          Users::update_password($id_admin);
+          SuperadminController::static_account();   
        }
        else
         require_once('views/login.php');
@@ -648,9 +675,11 @@ class SuperadminController
      {
       if(isset($_SESSION['id_statut']) )// on vérifie que seul un utilisateur connecté peut accéder à ces pages
       { 
-        if( $_SESSION['id_statut'] == 1)
+          $id_u= htmlspecialchars($_POST['id_u']);
+    
+        if( $_SESSION['id_statut'] == 1 )
         {
-          $donnees= Evenements::Get_validated_events($_POST['id_u']); // liste des tuteurs qui ont déja été payé au moins une fois
+          $donnees= Evenements::Get_validated_events($id_u); // liste des tuteurs qui ont déja été payé au moins une fois
 
           $controller_report='superadmin'; 
           $fonction_back='validated_hours';
@@ -663,13 +692,15 @@ class SuperadminController
       else 
         require_once('views/login.php');
      }
+
      public function paidHours_history()  // détails sur les evenements validés et payés en fonction des tuteurs
      {
       if(isset($_SESSION['id_statut']) )// on vérifie que seul un utilisateur connecté peut accéder à ces pages
       { 
-        if( $_SESSION['id_statut'] == 1)
+        $id_u= htmlspecialchars($_POST['id_u']);
+        if( $_SESSION['id_statut'] == 1 )
         {
-          $donnees= Evenements::Get_paid_events($_POST['id_u']); // liste des tuteurs qui ont déja été payé au moins une fois
+          $donnees= Evenements::Get_paid_events($id_u); // liste des tuteurs qui ont déja été payé au moins une fois
 
           $controller_report='superadmin'; 
           $fonction_back='paid_hours';
@@ -702,12 +733,23 @@ class SuperadminController
       else 
         require_once('views/login.php');
      }
+     public function search()
+      {
+        if (isset($_SESSION['id_user'])) 
+        {
+          require_once('views/superadminSearch.php');
+        }
+        else
+          require_once('views/login.php');
+
+      }
 
 public  function export() // fonction d'exportation fichier excel
   {
     if (isset($_SESSION['id_user'])) {
         $donnees = Users::Get_unpaidHours_tuteurs();
        
+       Evenements::payUnpaidHours(); // on passe la liste des évènements impayés à payer
 
         set_include_path( get_include_path().PATH_SEPARATOR."..");
         ini_set('display_errors', 0);
