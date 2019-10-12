@@ -6,6 +6,7 @@ var checke = function() {
     document.getElementById('confirme_password').value) {
     document.getElementById('mess').style.color = 'green';
     document.getElementById('mess').innerHTML = 'matching';
+
   } else {
     document.getElementById('mess').style.color = 'red';
     document.getElementById('mess').innerHTML = 'not matching';
@@ -13,14 +14,22 @@ var checke = function() {
 }
 
 function checkEmail() {
+			var cansubmit = true;
             var email = document.getElementById('numero1');
             var  re =/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))+@[A-Z0-9.-]+\.yncrea.fr/igm;
             if (!re.test(email.value)) {
-            alert('Entrer une adresse email valide');
-            email.focus();
-            return false;
+            cansubmit = false;
+            document.getElementById('numero1').style.color = 'red';
+            
          }
-}
+         else{
+         	document.getElementById('numero1').style.color = 'green';
+         }
+
+        document.getElementById('submitutton').disabled = !cansubmit;
+    }
+    window.onload = checkEmail;
+
 
 function validateForm() { 
         if (document.getElementById("numero1").value == "") 
@@ -136,7 +145,7 @@ function checkform() {
                     <input class="form-control" type="date" name="date_naiss" id="d" placeholder="Date de naissance" onKeyup='javascript:checkform();'>
                 </div>
                 <div class="form-group">
-                    <input class="form-control" type="email" name="email" id="numero1" placeholder="Email" onKeyup='javascript:checkform();'>
+                    <input class="form-control" type="email" name="email" id="numero1" placeholder="Email" onKeyup='javascript:checkform();javascript:checkEmail();' onkeyup='javascript:checke();'>
                 </div>
                 <div class="form-group">
                     <input class="form-control" type="password" name="password" id="passworde" placeholder="Mot de passe"       
