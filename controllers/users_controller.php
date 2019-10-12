@@ -18,9 +18,11 @@ public function connexion()
 {
 	//intance e la classe modele
         $user= new Users();
-        if(isset($_POST['email']) && isset($_POST['password']))
+		$email= htmlspecialchars($_POST['email']);
+		$password= htmlspecialchars($_POST['password']);
+        if($email!="" && $password!="")
         {
-	        if($user->Connexion($_POST['email'],$_POST['password'])== 1)
+	        if($user->Connexion($email,$password)== 1)
 	        	$this->redirection();	// on appelle la fonction de redirection
 	        else
 	           require_once('views/Login.php');
@@ -112,17 +114,27 @@ public function modify_account()
             if(isset($_SESSION['id_statut']))   // on vérifie que seul un utilisateur connecté peut accéder à ces pages
             { 
                 $user = new Users();
-
-                $user->setVille($_POST['ville']);
-                $user->setAdress($_POST['adresse']);
-                $user->setCom_adress($_POST['complement_adresse']);
-                $user->setCode_postal($_POST['code_postal']);
-                $user->setPassword($_POST['password']);
-                if( isset($_POST['nom']) && isset($_POST['prenom']))
+				
+				$ville= htmlspecialchars($_POST['ville']);
+				$adresse=  htmlspecialchars($_POST['adresse']);
+				$complement_adresse=  htmlspecialchars($_POST['complement_adresse']);
+				$code_postal=  htmlspecialchars($_POST['code_postal']);
+				$password=  htmlspecialchars($_POST['password']);
+				$nom=  htmlspecialchars($_POST['nom']);
+				$prenom=  htmlspecialchars($_POST['prenom']);
+				
+				if($ville!= "" && $adresse!="" && $complement_adresse!="" && $code_postal!="" && $password!="" && $nom!="" &&$prenom!="")
                 {
-                	$user->setNom($_POST['nom']);
-                	$user->setPrenom($_POST['prenom']);
-                }
+	                $user->setVille($ville);
+	                $user->setAdress($adresse);
+	                $user->setCom_adress($complement_adresse);
+	                $user->setCode_postal($code_postal);
+	                $user->setPassword($password);
+	              
+	                $user->setNom($nom);
+	                $user->setPrenom($prenom);
+	            }
+                
                 
                 $user->Modify_info($_SESSION['id_user']);    // on update les infos du user
                 if(!empty($_FILES["fileToUpload"]["name"]))
@@ -208,20 +220,23 @@ public function set_picture_path($target_file)
      {
        if( isset($_SESSION['id_statut']))
        {
-            var_dump($_POST['id_t']);
-          if( Users::create_account($_POST['id_t']) == 0)
-          {
-           
-           require_once('views/superadmin/interface_tutorat.php');
-          }
-          else
-          {
-          	$message = ' Un administrateur est déja en charge de ce tutorat, pour affecter sa gestion à une autre personne, il est primordial de rompre le contrat avec l\'administrateur actuel. Rendez-vous donc dans la page "les centres de tutorat" si tel est votre souhait ';
-            $controller_report='superadmin';
-            $fonction_back='interface_account_creation';
+            //var_dump($_POST['id_t']);
+			$id_t=  htmlspecialchars($_POST['id_t']);
+			
+			  if( Users::create_account($id_t) == 0)
+			  {
+			   
+			   require_once('views/superadmin/interface_tutorat.php');
+			  }
+			  else
+			  {
+				$message = ' Un administrateur est déja en charge de ce tutorat, pour affecter sa gestion à une autre personne, il est primordial de rompre le contrat avec l\'administrateur actuel. Rendez-vous donc dans la page "les centres de tutorat" si tel est votre souhait ';
+				$controller_report='superadmin';
+				$fonction_back='interface_account_creation';
 
-            require_once('views/system/error.php');
-          } 
+				require_once('views/system/error.php');
+			  } 
+			
        }
           else
             require_once('views/Login.php');

@@ -819,7 +819,11 @@ public  function export() // fonction d'exportation fichier excel
                 $sujet = "[Yncrea tutorat] Message plateforme Yncrea tutorat de: ".$nom." ".$prenom." ";
                 // on envoie un email de confirmation
                 include('send_mail.php');
-                SuperadminController::contact();
+                
+                $controller_report='superadmin';
+                $fonction_back='contact';
+          
+                require_once('views/mail_send_ok.php');
         }
         else
                 require_once('views/login.php');

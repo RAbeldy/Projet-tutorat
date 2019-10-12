@@ -284,7 +284,10 @@ class TuteursController
                 // on envoie un email de confirmation
                 include('send_mail.php');
 
-                TuteursController::contact();
+                $controller_report='tuteurs';
+                $fonction_back='contact';
+          
+                require_once('views/mail_send_ok.php');
             }
             else
                 require_once('views/login.php');

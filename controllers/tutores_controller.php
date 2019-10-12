@@ -66,10 +66,13 @@ class TutoresController
         {
             
             if(isset($_SESSION['id_statut']))// on vérifie que seul un utilisateur connecté peut accéder à ces pages
-            {   
+            {    
+              $id_u=  htmlspecialchars($_POST['id_u']);
+      
                  $tuteurs= new Tutores();
-                 $tuteurs->Link_with_tuteurs($_SESSION['id_user'],$_POST['id_u']);
-                require_once('views/tutores/notifications_tutores.php');   
+                 $tuteurs->Link_with_tuteurs($_SESSION['id_user'],$id_u);
+                require_once('views/tutores/notifications_tutores.php');
+        
             }
             else
                 require_once('views/login.php'); 
@@ -80,7 +83,9 @@ class TutoresController
             if(isset($_SESSION['id_statut']))// on vérifie que seul un utilisateur connecté peut accéder à ces pages
             {    
                 $tutores= new Tutores();
-                if($tutores->Accept_link($_SESSION['id_user'],$_POST['id_u']) == 0  )
+                $id_u=  htmlspecialchars($_POST['id_u']);
+        
+                if($tutores->Accept_link($_SESSION['id_user'],$id_u) == 0  )
                     require_once('views/tutores/notifications_tutores.php');  
                 else
                 {
@@ -88,7 +93,8 @@ class TutoresController
                     $controller_report='tutores';
                     $fonction_back='notifications';
                     require_once('views/system/error.php');
-                } 
+                }
+      
             }
             else
                 require_once('views/login.php'); 
@@ -145,25 +151,28 @@ class TutoresController
         {
             if(isset($_SESSION['id_statut']))// on vérifie que seul un utilisateur connecté peut accéder à ces pages
             {    
-                 $tuteurs= new Tutores();
-                 $donnees=$tuteurs->Cancel_wish($_SESSION['id_user'],$_POST['id_u']);
-                 require_once('views/tutores/interface_selection_tuteurs_tutores.php');
+              $id_u=  htmlspecialchars($_POST['id_u']);
+              $tuteurs= new Tutores();
+
+              $donnees=$tuteurs->Cancel_wish($_SESSION['id_user'],$_POST['id_u']);
+              require_once('views/tutores/interface_selection_tuteurs_tutores.php');
+    
             }
             else
-                require_once('views/login.php'); 
+                require_once('views/Login.php'); 
         }
      public function validate_hours() // tutoré valide les heures de son tuteur 
      {
            if(isset($_SESSION['id_statut']))// on vérifie que seul un utilisateur connecté peut accéder à ces pages
               { 
-                
+                    $duree= htmlspecialchars($_POST['duree']);
                     $tutores = new Tutores();
-                    $tutores->Validate_hours($_POST['id_e'],$_POST['duree']); 
-                    require_once('views/tutores/interface_tutore.php');
-               
+                    
+                      $tutores->Validate_hours($_POST['id_e'],$duree); 
+                      require_once('views/tutores/interface_tutore.php');
               }
             else
-                require_once('views/login.php');
+                require_once('views/Login.php');
      }
 
 
@@ -176,7 +185,7 @@ class TutoresController
                     require_once('views/tutores/contacter.php');
                 }
             else
-                require_once('views/login.php');
+                require_once('views/Login.php');
         }
       public function message() // à completer lors de la création de la table de suivi des admin
       {
@@ -200,10 +209,14 @@ class TutoresController
                 $sujet = "[Yncrea tutorat] Message plateforme Yncrea tutorat de: ".$nom." ".$prenom." ";
                 // on envoie un email de confirmation
                 include('send_mail.php');
-                TutoresController::contact();
+
+                $controller_report='tutores';
+                $fonction_back='contact';
+          
+                require_once('views/mail_send_ok.php');
             }
             else
-                require_once('views/login.php');
+                require_once('views/Login.php');
       }
 
 

@@ -145,22 +145,22 @@
 			else 
 			{
 				//login déjà utilisé pour un compte valide
-				$_SESSION['alert']= "<strong>cette adresse e-mail ne vous appartient pas</strong>";
-				header('location:index.php?controller=users&action=login');
+				$_SESSION['alert']= "&nbsp <strong>cette adresse e-mail ne vous appartient pas</strong>";
+				header('location:index.php?controller=users&action=choixStatut');
 				//On le redirige vers la page de login
 			}
 		}
 		else {
 			//pwd et confirmation différente
 			//login déjà utilisé pour un compte valide
-			$_SESSION['alert']= "<strong>Mot de passe incorrect</strong>";
-			header('location:index.php?controller=users&action=login');
+			$_SESSION['alert']= "&nbsp &nbsp &nbsp &nbsp<strong>  Mots de passe différents</strong>";
+			header('location:index.php?controller=users&action=choixStatut');
 		     }
 	}
 	else{
 		//Champs non remplis
 		//login déjà utilisé pour un compte valide
-		$_SESSION['alert']= "<strong>Champs non remplis</strong>";
+		$_SESSION['alert']= "&nbsp <strong>Champs non remplis</strong>";
 		header('location:index.php?controller=users&action=choixStatut');
 	}
 ?>
