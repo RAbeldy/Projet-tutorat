@@ -307,20 +307,30 @@ class Tutorat
       }
       return $list ;
     }
-    public static function Delete_static_account($id_admin) // on supprime un compte statique
+    public static function Delete_static_account($id_type,$id_admin) // on supprime un compte statique
     {
       $db = Db::getInstance();
-      Tutorat::Delete_affectation($id_admin); // on destitue le tuteur qui gérait le compte et tout le nécessaire
+      
 
-      $req= $db->prepare("DELETE FROM suivi_administrateurs WHERE id_admin= ? ");
-      $req->execute(array($id_admin));
+       $req= $db->prepare("SELECT COUNT(id_admin) as nb FROM administrer WHERE id_typeTutorat = ?");
+       $req->execute(array($id_type));
 
-      $req= $db->prepare("DELETE FROM administrer WHERE id_admin= ? ");
-      $req->execute(array($id_admin));
+        if($req-> fetch()['nb'] != 1)
+        {
+           Tutorat::Delete_affectation($id_admin); // on destitue le tuteur qui gérait le compte et tout le nécessaire
 
-      $req= $db->prepare("DELETE FROM user  WHERE id_user= ?");
-      $req->execute(array($id_admin));
+          $req= $db->prepare("DELETE FROM suivi_administrateurs WHERE id_admin= ? ");
+          $req->execute(array($id_admin));
 
+          $req= $db->prepare("DELETE FROM administrer WHERE id_admin= ? ");
+          $req->execute(array($id_admin));
+
+          $req= $db->prepare("DELETE FROM user  WHERE id_user= ?");
+          $req->execute(array($id_admin));
+          return 1;
+        }
+        else
+          return 0;
     }
 
     public static function Get_specific_static_account($id_admin) // on récupère la liste des comptes statiques présents dans la table administrer
@@ -389,8 +399,8 @@ class Tutorat
     public static function Get_idAdmin_tutorat($id_tutorat) // récupère l'id d'un admin de tutorat(compte statique)
     {
       $db = Db::getInstance();
-        $list=[];
-        $req = $db->prepare("SELECT DISTINCT u.id_user,u.nom,u.prenom,u.date_naissance,u.ecole,u.niveau,u.email,u.phone,a.ville ,a.adress ,a.code_postal FROM user as u,adresse as a,administrer as ad WHERE u.id_adresse = a.id_adresse AND ad.id_tutorat= ? AND u.id_user= ad.id_admin  ORDER BY nom ASC ");
+        $list= null;
+        $req = $db->prepare("SELECT DISTINCT u.id_user,u.nom,u.prenom,u.date_naissance,u.ecole,u.niveau,u.email,u.phone FROM user as u,administrer as ad WHERE  ad.id_tutorat= ? AND u.id_user= ad.id_admin  ORDER BY nom ASC ");
         $req->execute(array($id_tutorat));
 
         foreach ($req->fetchAll() as $data)
@@ -404,13 +414,12 @@ class Tutorat
         $users->setNiveau($data['niveau']);
         $users->setEmail($data['email']);
         $users->setPhone($data['phone']);
-        $users->setAdress($data['adress']);
-        $users->setVille($data['ville']);
-        $users->setCode_postal($data['code_postal']);
+        
 
-        $list []= array($users);
+        $list= $users;
       }
-      return $list[0] ;
+      
+      return $list ;
     }
     
     

@@ -11,7 +11,7 @@
                                         <div class="col-xs-12 col-md-6 card-container">
                                             <div class="card avenir">
                                                 <div class="card-body">
-                                                    <h4 class="card-title">Décompte des heures pour la période </h4>
+                                                    <h4 class="card-title">Décompte des heures à payer pour la période </h4>
                                                     <a href="?controller=superadmin&action=validated_hours">
                                                         <button class="btn" type="button">Je consulte</button>
                                                     </a>

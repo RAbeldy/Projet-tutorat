@@ -231,6 +231,7 @@ class SuperadminController
          else
            require_once('views/login.php');
      }
+
      public function pasts_events_list()
      {
       if( isset($_SESSION['id_statut']) )
@@ -332,22 +333,13 @@ class SuperadminController
                SuperadminController::future_events_list();
             
             }
-            elseif( isset($_POST['imprimer']))  // on va plutot supprimer cet évènement
-            {
-               $header= array('tutorat','date','adresse','nombre de places','duree');
-               $path="http://localhost:8888/tests/steve/PDF/future_events_list.txt";
-               
-
-               AdminController::export(); 
-       
-               //AdminController::future_events_list();
             
-            }
        
           }
             else
                 require_once('views/login.php');
        }
+
        public static function show_informations()
         {
           if( isset($_SESSION['id_statut']) )
@@ -398,6 +390,7 @@ class SuperadminController
            else
               require_once('views/login.php');
         }
+
      public static function future_subscription_list()
       {
          if( isset($_SESSION['id_statut']) )
@@ -419,6 +412,7 @@ class SuperadminController
          else
             require_once('views/login.php');
       }
+
      public static function pasts_subscription_list()
       {
          if( isset($_SESSION['id_statut']) )
@@ -440,6 +434,7 @@ class SuperadminController
          else
             require_once('views/login.php');
       }
+
      public function create_center()  // il s'agit de la vue de création d'un centre
      {
        if( isset($_SESSION['id_statut']) )
@@ -454,6 +449,7 @@ class SuperadminController
         else
           require_once('views/login.php');
      }
+
      public function create_type_center()  // il s'agit de la vue de création d'un centre
      {
        if( isset($_SESSION['id_statut']))
@@ -467,6 +463,7 @@ class SuperadminController
         else
           require_once('views/login.php');
      }
+
      public function tutorat_center_list() // liste des tous les tutorats 
      {
        if( isset($_SESSION['id_statut']))
@@ -481,6 +478,7 @@ class SuperadminController
        else
           require_once('views/login.php');
      }
+
      public function typeTutorat_center_list() // liste des tous les tutorats 
      {
        if( isset($_SESSION['id_statut']))
@@ -495,6 +493,7 @@ class SuperadminController
        else
           require_once('views/login.php');
      }
+
      public function admin_tutorat_list() // liste des administrateurs de tutorat
      {
        if(isset($_SESSION['id_statut']))
@@ -602,6 +601,7 @@ class SuperadminController
          else
            require_once('views/login.php');
      }
+
      public function show_associated_tutorat()
      {
        if( isset($_SESSION['id_statut']))
@@ -618,9 +618,17 @@ class SuperadminController
              }
              else if(isset($_POST['supprimer']))
              {
-              Tutorat::Delete_static_account($id_admin);
 
-              require_once('views/superadmin/interface_tutorat.php');
+                if(Tutorat::Delete_static_account($id_type,$id_admin) == 1)
+                  require_once('views/superadmin/interface_tutorat.php');
+                else
+                {
+                  $controller_report='superadmin'; 
+                  $fonction_back='static_account';
+
+                  $message= 'tentative de suppression du compte associé à ce type de tutorat: opération impossible';
+                  require_once('views/system/error.php');
+                }
              }
              else
              {
@@ -668,7 +676,7 @@ class SuperadminController
           UsersController::deconnexion();
       }
       else
-        require_once('views/login.php');
+        require_once('views/Login.php');
      }
 
      public function validatedHours_history()  // détails sur les  evenements validés en fonction des tuteurs
@@ -690,7 +698,7 @@ class SuperadminController
           UsersController::deconnexion();
       }
       else 
-        require_once('views/login.php');
+        require_once('views/Login.php');
      }
 
      public function paidHours_history()  // détails sur les evenements validés et payés en fonction des tuteurs
@@ -819,7 +827,7 @@ public  function export() // fonction d'exportation fichier excel
                 $sujet = "[Yncrea tutorat] Message plateforme Yncrea tutorat de: ".$nom." ".$prenom." ";
                 // on envoie un email de confirmation
                 include('send_mail.php');
-                
+
                 $controller_report='superadmin';
                 $fonction_back='contact';
           

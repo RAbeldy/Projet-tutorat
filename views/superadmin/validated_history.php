@@ -35,11 +35,11 @@
                                                         <div class="row">
                                                             <div class="col-xs-12 col-md-6">
                                                                 <label class="col-2">De</label>
-                                                                <input name="date1" class="col-8 offset-2" type="datetime-local"/>
+                                                                <input name="date1" class="col-8 offset-2" type="date"/>
                                                             </div>
                                                             <div class="col-xs-12 col-md-6">
                                                                 <label class="col-2">à</label>
-                                                                <input name="date2" class="col-8 offset-2" type="datetime-local"/>
+                                                                <input name="date2" class="col-8 offset-2" type="date"/>
                                                             </div>
                                                         </div>
                                                     </div>

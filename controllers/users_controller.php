@@ -221,7 +221,7 @@ public function set_picture_path($target_file)
        if( isset($_SESSION['id_statut']))
        {
             //var_dump($_POST['id_t']);
-			$id_t=  htmlspecialchars($_POST['id_t']);
+			$id_t= htmlspecialchars($_POST['id_t']);
 			
 			  if( Users::create_account($id_t) == 0)
 			  {

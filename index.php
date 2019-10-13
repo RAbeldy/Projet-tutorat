@@ -501,20 +501,7 @@ echo $_SESSION['connecté'];
             </nav>
             <!-- FIN de CONTROL sur la navbar verticale -->
             <div id="content">
-                <div class="container-fluid">
-                    <div class="row">
-                        <div class="col-2">
-                            <button type="button" id="sidebarCollapse" class="btn ">
-                                <span></span>
-                                <span></span>
-                                <span></span>
-                            </button>
-                        </div>
-                        <?php
-                        require_once('arbre_navigation.php');
-                        ?>
-                    </div>
-                </div>
+                
                 <?php
                 require_once('routes.php');
                 ?>
@@ -532,6 +519,7 @@ echo $_SESSION['connecté'];
             <p class="copyright">Tutorat YNCREA © 2019</p>
         </footer>
     </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="assets/js/jquery.min.js?h=1dd785e1de9a32e236b624ae268bb803"></script>
     <script src="assets/bootstrap/js/bootstrap.min.js?h=63715b63ee49d5fe4844c2ecae071373"></script>
     <script src="assets/js/Navbarbuttonsignupsignin-modal-form.js?h=9ce049da3c28fd2ded69977163ac47a3"></script>

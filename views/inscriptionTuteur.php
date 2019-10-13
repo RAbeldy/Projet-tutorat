@@ -14,7 +14,7 @@ var checke = function() {
 }
 
 function checkEmail() {
-			var cansubmit = true;
+            var cansubmit = true;
             var email = document.getElementById('numero1');
             var  re =/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))+@[A-Z0-9.-]+\.yncrea.fr/igm;
             if (!re.test(email.value)) {
@@ -23,10 +23,10 @@ function checkEmail() {
             
          }
          else{
-         	document.getElementById('numero1').style.color = 'green';
+            document.getElementById('numero1').style.color = 'green';
          }
 
-        document.getElementById('submitutton').disabled = !cansubmit;
+        document.getElementById('submitbutton').disabled = !cansubmit;
     }
     window.onload = checkEmail;
 
@@ -117,11 +117,32 @@ function checkform() {
                 cansubmit = false;
         }
 
-        document.getElementById('submitutton').disabled = !cansubmit;
+        document.getElementById('submitbutton').disabled = !cansubmit;
     }
     window.onload = checkform; //give access to submit after filled up the form.
+    
     </script> 
+<script>
+    $(document).ready(function()
+    {
+        var $phone = $('.phone'),
+            $submit = $('#submitbutton');
+             
+              
+        $submit.onclick(function(e)
+        {
 
+            if($phone.val().length < 10 )
+            { // si la chaîne de caractères est inférieure à 5
+                 e.preventDefault(); // on annule la fonction par défaut du bouton d'envoi
+                $phone.css({
+                    borderColor : 'red',
+                });
+                
+            }
+        });
+    });
+</script>
         <!-- TUTEUR -->
 <div class="login-dark">        
     <form method="post" name="formm"  onsubmit='javascript:validateForm();' action="createAccount.php">
@@ -139,7 +160,7 @@ function checkform() {
                 </div>
                 
                 <div class="form-group">
-                    <input class="form-control" type="number" minlength="10" id="c" maxlength="14" name="phone" id="b" placeholder="tel" onKeyup='javascript:checkform();'>
+                    <input class="form-control" class="phone" type="number" minlength="10" id="c" maxlength="14" name="phone" id="b" placeholder="tel" onKeyup='javascript:checkform();'>
                 </div>
                 <div class="form-group">
                     <input class="form-control" type="date" name="date_naiss" id="d" placeholder="Date de naissance" onKeyup='javascript:checkform();'>
@@ -172,7 +193,7 @@ function checkform() {
                     <input class="form-control" type="number" name="code_postal" id="i" placeholder="code postal" onKeyup='javascript:checkform();'>
                 </div>
                 <div class="form-group">
-                    <button class="btn btn-primary btn-block" type="submit" id="submitutton" value="submit" 
+                    <button class="btn btn-primary btn-block" type="submit" id="submitbutton" value="submit" 
                     onclick='javascript:checkEmail();javascript:validateForm();'>sign up</button>
                 </div>
       </div>

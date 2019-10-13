@@ -35,9 +35,9 @@
 		$ville = htmlspecialchars($_POST['ville']);
 		$code_postal = htmlspecialchars($_POST['code_postal']);
 		$phone = htmlspecialchars($_POST['phone']); 
-		$id_typeTutorat= htmlspecialchars($_POST['id_typeTutorat']);
+		
 
-		if(is_null($_POST['nationalite']) && is_null($_POST['niveau']) )
+		if($_POST['nationalite']=="" && $_POST['niveau']=="" )
 		{
 	        $nationa = null;
 	        $niveau = null;
@@ -94,8 +94,8 @@
 				         $req = $bd->prepare("INSERT INTO avoir_statut (id_user,id_statut_compte,id_statut,id_etat) VALUES ((SELECT id_user FROM user  WHERE email =?),(SELECT id_statut_compte FROM statut_compte  WHERE libelle = 'ATTENTE_VALIDATION'),(SELECT id_statut FROM statut WHERE libelle = 'TUTEUR' ),(SELECT id_etat FROM etat as e WHERE e.libelle = 'LIBRE')) ");
 				         $req->execute(array($login_mail));
 
-                        
-						header('location:index.php?controller=users&action=connexion');
+                        $_SESSION['alert']='inscription réussie,vous recevrez un e-mail de confirmation dans un instant';
+						header('location:index.php?controller=users&action=login');
 
 						// on insère. l'id_classe  dans la table user
 		                //$req= $bd->prepare("INSERT INTO user(id_classe) VALUES(SELECT id_classe from classe WHERE ecole=? AND niveau= 'NULL' )");
@@ -109,8 +109,8 @@
 			                $addtutoré->execute(array($login_mail, $nationa));
 
 			                // on insère dans la table se_destine 
-			                $addtutoré = $bd->prepare("INSERT INTO se_destine(id_user,id_tutorat,id_typeTutorat,liaison) VALUES((SELECT id_user FROM user  WHERE email = ?),?,(SELECT id_typeTutorat FROM administrer WHERE id_tutorat= ? AND id_admin= ".$_SESSION['id_user']."),'OUI')");
-			                $addtutoré->execute(array($id_typeTutorat,$id_typeTutorat));
+			                $addtutoré = $bd->prepare("INSERT INTO se_destine(id_user,id_tutorat,id_typeTutorat,liaison) VALUES((SELECT id_user FROM user  WHERE email = ?),?,(SELECT id_typeTutorat FROM administrer WHERE id_admin= ? AND id_admin= ".$_SESSION['id_user']."),'OUI')");
+			                $addtutoré->execute(array($login_mail,2,$_SESSION['id_user']));
 			               
 
 						}
@@ -136,9 +136,9 @@
                         //$req->execute(array($niveau,$ecole;));
 
                          if( isset($_SESSION['id_statut']) && $_SESSION['id_statut'] == 11)
-				         	require_once('index.php?controller=users&action=redirection');
+				         	header('location: index.php?controller=users&action=redirection');
 				         else
-				         	require_once('index.php?controller=users&action=connexion');
+				         	header('location: index.php?controller=users&action=login');
 					}
 
 			}

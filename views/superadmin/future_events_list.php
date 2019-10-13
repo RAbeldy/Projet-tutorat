@@ -35,13 +35,13 @@
                                                                 <div class="col-xs-12 col-md-6">
                                                                     <div class="row">
                                                                         <label class="col-2">De</label>
-                                                                        <input  name="date1" class="col-10 form-control" type="datetime-local"/>
+                                                                        <input  name="date1" class="col-10 form-control" type="date"/>
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-xs-12 col-md-6">
                                                                     <div class="row">
                                                                         <label class="col-2">à</label>
-                                                                        <input  name="date2" class="col-10 form-control" type="datetime-local"/>
+                                                                        <input  name="date2" class="col-10 form-control" type="date"/>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -69,7 +69,7 @@
                                                                 <th>Horaires</th>
                                                                 <th>Suppression</th>
                                                                 <th>Consultation</th>
-                                                                <th>Impression</th>
+                                                                
                                                             </tr>
                                                         </thead>
                                                         <tbody>
@@ -99,7 +99,7 @@
                                                                   </td>
                                                                   <td><button class="btn" type="submit" name="consulter" >Consulter</button>
                                                                   </td>
-                                                                  <td><button class="btn" type="submit" name="imprimer" >Imprimer</button>
+                                                                  
                                                                   </td>
 
 

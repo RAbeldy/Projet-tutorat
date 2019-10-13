@@ -34,12 +34,25 @@ class TutoratController
 
           if($tutorat->Create_center() == 0)
             {
-              $donnees= Tutorat::tutorat_center_list($_SESSION['id_statut']);
+              if(preg_match('#ADMIN#',$_SESSION['statut']))
+              {
+                  $donnees= Tutorat::tutorat_center_list($_SESSION['id_statut']);
 
-              $controller_report='admin';
-              $fonction_back='interface_tutorat';
+                  $controller_report='admin';
+                  $fonction_back='interface_tutorat';
 
-              require_once('views/admin/tutorat_center_list.php');
+                  require_once('views/admin/tutorat_center_list.php');
+                }
+                else
+                {
+                  $donnees= Tutorat::Get_all_tutorat();  // on charge l'interface de création de tutorat
+
+                  $controller_report='superadmin';
+                  $fonction_back='interface_tutorat';
+
+                  require_once('views/superadmin/tutorat_center_list.php');
+                }
+
             }
           else
           {
@@ -158,7 +171,7 @@ class TutoratController
     {
     $id_t= htmlspecialchars($_POST['id_t']);
     $id_admin= htmlspecialchars($_POST['id_admin']);
-     if($id_t!="" && id_admin!="")
+     if($id_t!="" && $id_admin!="")
      {
        Tutorat::Add_tutorat($id_t,$id_admin);
 

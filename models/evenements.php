@@ -628,8 +628,8 @@ class Evenements
         }
         else // c'est un tuteur ou un administrateur
         {
-          $req= $db->prepare("DELETE FROM evenement WHERE id_evenement= ? AND id_user=? ");
-          $req->execute(array($id_evenement,$id_user));
+          $req= $db->prepare("DELETE FROM evenement WHERE id_evenement= ? ");
+          $req->execute(array($id_evenement));
         }
         $req= $db->query("DELETE FROM participer_evenement WHERE id_evenement= ".$id_evenement." "); // dans ce cas on supprime en meme tant le tuteur et le tutoré s'il s'était inscrit à cet évènement
     }
@@ -782,7 +782,7 @@ class Evenements
       //var_dump($tab);
       foreach ($tab as $elt)
       {
-       if(preg_match('#'.$string.'#i', $elt['tutorat']))
+       if(preg_match('#'.$string.'#i', $elt['tutorat']->getLibelle()))
         $data[]= $elt;
       } 
       return $data ;

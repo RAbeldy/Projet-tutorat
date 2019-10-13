@@ -35,7 +35,7 @@
                                                         </div>
                                                     </div>
                                                     <div class="col-12 text-center rechercher">
-                                                        <button class="btn" type="button">RECHERCHER</button>
+                                                        <button class="btn" type="submit">RECHERCHER</button>
                                                     </div>
                                                 </div>
                                             </form>
