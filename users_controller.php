@@ -11,57 +11,96 @@ public function choixStatut()
 }
 // page d'authentification
 public function login()  
-{
-	  require_once('views/Login.php');
-}
+	{
+		echo "hfchv,vhvvvbjhluk;hkjghjdgw";
+	  require_once('login.php');
+	}
 public function connexion()
 {
 	//intance e la classe modele
         $user= new Users();
-		$email= htmlspecialchars($_POST['email']);
-		$password= htmlspecialchars($_POST['password']);
-        if($email!="" && $password!="")
+        if(isset($_POST['email']) && isset($_POST['password']))
         {
-	        if($user->Connexion($email,$password)== 1)
-	        	$this->redirection();	// on appelle la fonction de redirection
+            
+	        if($user->Connexion($_POST['email'],$_POST['password'])== 1)
+	        { 
+	        	if($_SESSION['id_statut'] == 13) // tuteur
+	        	{
+	        		require_once('views/tuteurs/interface_tuteur.php');
+	        	}
+	        	elseif($_SESSION['id_statut'] == 16)// tutoré
+	        	{
+	        		require_once('views/tutores/interface_tutore.php');
+	        	}
+	        	elseif($_SESSION['id_statut'] == 17) // ADMIN_IMMERSION
+	        	{
+	        		require_once('views/admin/immersion/interface_admin.php');
+	        	}
+	        	elseif($_SESSION['id_statut'] == 6) // GESTIONNAIRE_COMPTE
+	        	{
+	        		require_once('views/admin/interface_gestionnaire.php');
+	        	}
+	        	elseif($_SESSION['id_statut'] == 11) // ADMIN_MEF
+	        	{
+	        		require_once('views/admin/mef/interface_admin_mef.php');
+	        	}
+	        	elseif($_SESSION['id_statut'] == 15) // admin_vauban
+	        	{
+	        		require_once('views/admin/interface_admin.php');
+	        	}
+	        	elseif($_SESSION['id_statut'] == 18) // admin_lycees_colleges
+	        	{
+	        		require_once('views/admin/interface_admin.php');
+	        	}
+	        	elseif($_SESSION['id_statut'] == 20) // admin_apsco
+	        	{
+	        		require_once('views/admin/interface_admin.php');
+	        	}
+	        	elseif($_SESSION['id_statut'] == 8) // ADMIN_TUTORAT_PERSONNALISE
+	        	{
+	        		require_once('views/admin/personnalise/interface_admin.php');
+	        	}
+	        	elseif($_SESSION['id_statut'] == 1) // superadmin
+	        	{
+	        		require_once('views/superadmin/interface_superadmin.php');
+	        	} 
+	        	else
+	        	{
+	        		$message= 'interface pas encore crée';
+	        		$controller_report='evenements';
+                    $fonction_back='Display_future_events';
+                    require_once('views/system/error.php');
+	        	}
+	        }
 	        else
-	           require_once('views/Login.php');
+	        {
+	 
+	           require_once('views/login.php');
+	        }
    		}
 	    else
-	    { 
-	    	if(isset($_SESSION['connecté']))
-	    		$this->redirection();	// on appelle la fonction de redirection
-	    	else
-	    		require_once('views/Login.php');
+	    {
+	    	require_once('views/login.php');
 	    }
 }
 
 public function redirection() // redirection vers interface en fonction du statut
 {
   if(isset($_SESSION['id_statut']))// on vérifie que seul un utilisateur connecté peut accéder à ces pages
-  {
-        switch ($_SESSION['id_statut']) 
-	    {
-	       case 13:
-	         	require_once('views/tuteurs/interface_tuteur.php'); // interface tuteur
-	        break;
-	        case 16:
-	        	require_once('views/tutores/interface_tutore.php'); // interface tutore
-	        break;
-	        case 21:
-	        	require_once('views/admin/gestion/interface_gestionnaire.php'); // interface_gestionnaire
-	        break;
-	        case 1:
-	        	require_once('views/superadmin/interface_superadmin.php'); // interface superadmin
-	        break;
-	        default:
-	        	require_once('views/admin/interface_admin.php'); // interface_admin
-	        break;
-	    }
-	}
-	else
-		require_once('views/Login.php');
-  
+    { 
+        if( $_SESSION['id_statut'] == 11)
+        	require_once('views/admin/mef/interface_admin_mef.php');
+        elseif($_SESSION['id_statut'] == 14)
+        	require_once('views/admin/interface_admin.php'); // à compléter
+        elseif($_SESSION['id_statut'] == 13)
+        	require_once('views/admin/interface_tuteur.php');
+        elseif($_SESSION['id_statut'] == 16)
+        	require_once('views/admin/mef/interface_tutore.php');
+        else
+        	require_once('views/admin/mef/interface_admin.php');
+    }
+  else
+    require_once('views/login.php');
   
 }
 public function resetPassword()
@@ -92,7 +131,7 @@ public function profil()
             require_once('views/mon_profil.php');
         }
      else
-       require_once('views/Login.php');
+       require_once('views/login.php');
 }
 public static function update_account()
         {
@@ -105,7 +144,7 @@ public static function update_account()
             		require_once('views/update_account.php');
             }
             else
-                require_once('views/Login.php');
+                require_once('views/login.php');
         }
 
 
@@ -114,27 +153,17 @@ public function modify_account()
             if(isset($_SESSION['id_statut']))   // on vérifie que seul un utilisateur connecté peut accéder à ces pages
             { 
                 $user = new Users();
-				
-				$ville= htmlspecialchars($_POST['ville']);
-				$adresse=  htmlspecialchars($_POST['adresse']);
-				$complement_adresse=  htmlspecialchars($_POST['complement_adresse']);
-				$code_postal=  htmlspecialchars($_POST['code_postal']);
-				$password=  htmlspecialchars($_POST['password']);
-				$nom=  htmlspecialchars($_POST['nom']);
-				$prenom=  htmlspecialchars($_POST['prenom']);
-				
-				if($ville!= "" && $adresse!="" && $complement_adresse!="" && $code_postal!="" && $password!="" && $nom!="" &&$prenom!="")
+
+                $user->setVille($_POST['ville']);
+                $user->setAdress($_POST['adresse']);
+                $user->setCom_adress($_POST['complement_adresse']);
+                $user->setCode_postal($_POST['code_postal']);
+                $user->setPassword($_POST['password']);
+                if( isset($_POST['nom']) && isset($_POST['prenom']))
                 {
-	                $user->setVille($ville);
-	                $user->setAdress($adresse);
-	                $user->setCom_adress($complement_adresse);
-	                $user->setCode_postal($code_postal);
-	                $user->setPassword($password);
-	              
-	                $user->setNom($nom);
-	                $user->setPrenom($prenom);
-	            }
-                
+                	$user->setNom($_POST['nom']);
+                	$user->setPrenom($_POST['prenom']);
+                }
                 
                 $user->Modify_info($_SESSION['id_user']);    // on update les infos du user
                 if(!empty($_FILES["fileToUpload"]["name"]))
@@ -144,7 +173,7 @@ public function modify_account()
                 UsersController::update_account(); // on recharge pour la mise à jour
             }
             else
-                require_once('views/Login.php');
+                require_once('views/login.php');
     }
 
 public function upload_file()
@@ -220,32 +249,29 @@ public function set_picture_path($target_file)
      {
        if( isset($_SESSION['id_statut']))
        {
-            //var_dump($_POST['id_t']);
-			$id_t= htmlspecialchars($_POST['id_t']);
-			
-			  if( Users::create_account($id_t) == 0)
-			  {
-			   
-			   require_once('views/superadmin/interface_tutorat.php');
-			  }
-			  else
-			  {
-				$message = ' Un administrateur est déja en charge de ce tutorat, pour affecter sa gestion à une autre personne, il est primordial de rompre le contrat avec l\'administrateur actuel. Rendez-vous donc dans la page "les centres de tutorat" si tel est votre souhait ';
-				$controller_report='superadmin';
-				$fonction_back='interface_account_creation';
+            var_dump($_POST['id_t']);
+          if( Users::create_account($_POST['id_t']) == 0)
+          {
+           
+           require_once('views/superadmin/interface_tutorat.php');
+          }
+          else
+          {
+          	$message = ' Un administrateur est déja en charge de ce tutorat, pour affecter sa gestion à une autre personne, il est primordial de rompre le contrat avec l\'administrateur actuel. Rendez-vous donc dans la page "les centres de tutorat" si tel est votre souhait ';
+            $controller_report='superadmin';
+            $fonction_back='interface_account_creation';
 
-				require_once('views/system/error.php');
-			  } 
-			
+            require_once('views/system/error.php');
+          } 
        }
           else
-            require_once('views/Login.php');
+            require_once('views/login.php');
      }
-public static function deconnexion()
+public function deconnexion()
 {
 	$user= new Users();
 	$user->Deconnexion();
-    require_once('views/Login.php');
+    require_once('views/login.php');
 }	
 
 }

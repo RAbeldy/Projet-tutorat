@@ -3,20 +3,23 @@
   background: #ECF0F1;
   background-size: cover;
   position: relative;
+
 }
 
 .login-dark form {
   max-width: 500px;
   width: 100%;
-  height: 90%;
+  height: 75%;
   padding: 60px;
+  padding-top: 300px;
   border-radius: 4px;
   transform: translate(-50%, -50%);
   position: absolute;
-  background-color: #2e2e2e;
-  top: 50%;
+  overflow: scroll;
+  background-color: #c6cbd2;
+  top: 45%;
   left: 50%;
-  color: #fff;
+  color: #3a3b45;
   box-shadow: 3px 3px 4px rgba(0,0,0,0.2);
 }
 
@@ -24,7 +27,7 @@
   text-align: center;
   padding: 15px 0 20px;
   font-size: 100px;
-  color: #2980ef;
+  color: #56c6c6;
 }
 
 .login-dark form .form-control {
@@ -38,7 +41,7 @@
 }
 
 .login-dark form .btn-primary {
-  background: #214a80;
+  background: #56c6c6;
   border: none;
   border-radius: 4px;
   padding: 11px;
@@ -49,7 +52,7 @@
 }
 
 .login-dark form .btn-primary:hover, .login-dark form .btn-primary:active {
-  background: #214a80;
+  background: #fff; 
   outline: none;
 }
 
@@ -70,4 +73,3 @@
 .login-dark form .btn-primary:active {
   transform: translateY(1px);
 }
-

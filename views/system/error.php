@@ -18,10 +18,10 @@ if (isset($controller_report) && isset($fonction_back))
     <div class="row justify-content-center">
         <div class="col-md-6 kitInfo d-flex">
             <div class="formulaire text-center">
-                <h2 class="text-center">Oups! Une erreur s'est produite!</h2>
+                <h2 class="text-center"><?= $message ?></h2>
                 <i class="fa fa-exclamation-triangle fa-5x"></i><br/><br/>
                 <p><?php if (isset($error_msg)) {echo $error_msg;}?></p>
-                <a href="<?php echo $backUrl;?>"class="form-group"><button name="error_Back" class="btn btn-primary" type="button">Retour page précédente</button></a>
+                <a href="<?php echo $backUrl;?>"class="form-group"><button name="error_Back" class="btn " type="button">Retour page précédente</button></a>
             </div>
         </div>
     </div>
