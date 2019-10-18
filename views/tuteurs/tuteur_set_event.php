@@ -110,8 +110,13 @@
              var dd = String(today.getDate()).padStart(2, '0');// Day config 
              today = yyyy + '-' + mm + '-' + dd;
              day = dd + '/' + mm + '/' + yyyy; 
-             if (document.getElementById('event').value < today) {
-                alert(" Entrer une date ultérieure à celle d'aujourd'hui: " +day);
+             if (document.getElementById('event').value < today) { //mm > 12 || jj > 31 || 
+                alert(" Entrer un bon format de date ou ultérieure à celle d'aujourd'hui: " +day);
+                return -1;
+
+                    }
+            if (mm > 12 || jj > 31) { //mm > 12 || jj > 31 || 
+                alert(" Entrer un bon format de date ou ultérieure à celle d'aujourd'hui: " +day);
                 return -1;
 
                     }
