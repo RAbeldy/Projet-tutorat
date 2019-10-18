@@ -330,6 +330,15 @@ class TuteursController
         else
              require_once('views/login.php');
     }
+    public function savoir_tuteurs() // page à savoir 
+    {
+        if(isset($_SESSION['id_statut']))// on vérifie que seul un utilisateur connecté peut accéder à ces pages
+        { 
+            require_once('views/tuteurs/savoir_tuteurs.php'); 
+        }
+        else
+            require_once('views/Login.php');
+    }
 
 }
 ?>

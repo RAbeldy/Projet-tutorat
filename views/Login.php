@@ -1,6 +1,6 @@
     <div class="login-clean">
         
-        <form method="post" action="?controller=users&action=connexion">
+        <form method="post" action="index.php?controller=users&action=connexion">
             <h2 class="sr-only">Login Form</h2>
             <div class="illustration"><i class="icon ion-ios-navigate"></i></div>
             <?php  include('views/alert_view.php'); ?>

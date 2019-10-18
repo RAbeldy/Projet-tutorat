@@ -757,7 +757,7 @@ public  function export() // fonction d'exportation fichier excel
     if (isset($_SESSION['id_user'])) {
         $donnees = Users::Get_unpaidHours_tuteurs();
        
-       Evenements::payUnpaidHours(); // on passe la liste des évènements impayés à payer
+      // Evenements::payUnpaidHours(); // on passe la liste des évènements impayés à payer
 
         set_include_path( get_include_path().PATH_SEPARATOR."..");
         ini_set('display_errors', 0);
@@ -787,6 +787,8 @@ public  function export() // fonction d'exportation fichier excel
           $writer->writeSheetRow('Sheet1', $row);
         }
         $writer->writeToFile($filename);
+
+        //$writer->writeToStdOut();
       //include_once('PHP_XLSXWriter-master/examples/ex00-simple.php');
       $this->validated_hours();
     }

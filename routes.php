@@ -36,9 +36,9 @@
                        'users' => ['login','inscription','save_user','connexion','deconnexion','resetPassword','forgotPassword', 'choixStatut','update_account','modify_account','profil','create_account','redirection'],
                        'page'=>['home','contact'],
 
-                       'tuteurs'=>['interface_tuteur','tuteur_set_event','events_creation','selection_tutores','tutores_list','notifications','waiting_list','link','accept_link','delete_link','working_list','wish_list','cancel_wish','contact','message','show_proposal','accept_proposal'],
+                       'tuteurs'=>['interface_tuteur','tuteur_set_event','events_creation','selection_tutores','tutores_list','notifications','waiting_list','link','accept_link','delete_link','working_list','wish_list','cancel_wish','contact','message','show_proposal','accept_proposal','savoir_tuteurs'], 
 
-                       'tutores'=>['interface_tutore','selection_tuteurs','tuteurs_list','notifications','waiting_list','link','accept_link','working_list','wish_list','cancel_wish','validate_hours','contact','message'],
+                       'tutores'=>['interface_tutore','selection_tuteurs','tuteurs_list','notifications','waiting_list','link','accept_link','working_list','wish_list','cancel_wish','validate_hours','contact','message','savoir_tutores'],
 
                        'admin'=>['interface_admin','interface_admin_tuteur','admin_set_event','tuteurs_list','tutores_list','interface_tutores_mef','sign_up','choose_tuteur','interface_tutorat','create_center','tutorat_center_list','validate_hours','declare_hours','declared_hours','interface_hours','show_informations','link','events','pasts_events_list','future_events_list','modify_event','interface_selection','Sfuture_events_list','selected_tuteurs','Schoose_tuteur','show_all_proposal','cancel_proposal','end_contract','export','state_tuteurs','state_tutores','contact','message','wait_compte','my_account','valider_account','interface_tutore_bourse','tutore_bourse','bourse_account','valider_bourse','interface_account_valid','account_valid','annul_account'],
                        

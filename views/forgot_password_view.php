@@ -5,6 +5,7 @@
         <form method="post" action="reset_password_link_sentbymail.php">
             <h2 class="sr-only">Login Form</h2>
             <div class="illustration"><i class="icon ion-ios-navigate"></i></div>
+            <?php  include('views/alert_view.php'); ?>
             <div class="form-group">
                 <input class="form-control" type="email" name="reset_email" placeholder="Email" required="">
             </div>

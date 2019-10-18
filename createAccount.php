@@ -1,10 +1,12 @@
-<?php
+	<?php
     session_start();
 	include('connexion.php');
 	require ('PHPMailer/PHPMailerAutoload.php');
 	require ('connectToMail.php');
 
 	$bd = Db::getInstance();
+    
+    $error= 0;
 
 	//Déclaration d'une clé de sécurité'
 	function randomKey() {
@@ -57,20 +59,8 @@
 			//On regarde si le mail n'est pas déjà utilisé pour un compte valide!
 			if ($request->rowCount() == 0 /*aucun compte avec ce login*/) 
 			{  
-				//On créer un nouveau compte (nouvelle ligne dans bd)
-				// on insère son adresse
-				$req = $bd->prepare("INSERT INTO adresse (ville,adress,complement_adress,code_postal) VALUES(?,?,?,?)");
-				$code_postal= intval($code_postal);
-                $req->execute(array($ville,$adress,$com_adress,$code_postal));
 
-                // puis son nom et prénom dans la table user
-				$addCompte = $bd->prepare('INSERT INTO user (nom, prenom, date_naissance,ecole,niveau, email, password,phone,id_adresse) VALUES (?,?,?,?,?,?,?,?,(SELECT id_adresse FROM adresse WHERE ville= ? AND adress = ? AND complement_Adress = ? AND code_postal = ?))');
-				//$date_naiss= DATE_FORMAT($date_naiss, "%M %d %Y");
-				$addCompte->execute(array($nom, $prenom,$date_naiss, $ecole,$niveau, $login_mail, $pwd, $phone, $ville, $adress, $com_adress, $code_postal));   // rajouter une exception à ce niveau
-                
-                
-               
-                
+
 		                //Déclaration du message au format texte et au format html (selon ce que les webmails supportent)
 				$message_txt = 'Bonjour,\nVous avez entamé la procédure de création de votre compte et nous vous en remercions .\n Actuellement le statut de votre compte est en attente de validation. Nous vous enverrons un mail dès qu\'il sera validé. Le délai de traitement est de quelques jours. \n\n Cordialement, Mr/Mme "'.$nom.'" "'.$prenom.'"\n
 
@@ -81,65 +71,91 @@
                 // on envoie un email de confirmation
                 include('send_mail.php');
 
-                if(is_null($niveau) && is_null($nationa)) // c'est un tuteur dans ce cas 
-   					 {
-   					 	// on insère son école
-   					 	$req = $bd->prepare("INSERT INTO classe (ecole) VALUES(?)");
-                		$req->execute(array($ecole));
-                // on insère dans la table tuteur
-		                $req = $bd->prepare("INSERT INTO tuteurs (id_tuteurs,nb_linksmef,nb_max_mef,nb_linksperso,nb_max_perso) VALUES((SELECT id_user FROM user  WHERE email =?),0,3,0,2)");
-		                $req->execute(array($login_mail));
+                if($error == 0)
+                {
+						//On créer un nouveau compte (nouvelle ligne dans bd)
+						// on insère son adresse
+						$req = $bd->prepare("INSERT INTO adresse (ville,adress,complement_adress,code_postal) VALUES(?,?,?,?)");
+						$code_postal= intval($code_postal);
+		                $req->execute(array($ville,$adress,$com_adress,$code_postal));
 
-                // initialise le statut_compte du nouveau user dans avoir_statut
-				         $req = $bd->prepare("INSERT INTO avoir_statut (id_user,id_statut_compte,id_statut,id_etat) VALUES ((SELECT id_user FROM user  WHERE email =?),(SELECT id_statut_compte FROM statut_compte  WHERE libelle = 'ATTENTE_VALIDATION'),(SELECT id_statut FROM statut WHERE libelle = 'TUTEUR' ),(SELECT id_etat FROM etat as e WHERE e.libelle = 'LIBRE')) ");
-				         $req->execute(array($login_mail));
-
-                        $_SESSION['alert']='inscription réussie,vous recevrez un e-mail de confirmation dans un instant';
-						header('location:index.php?controller=users&action=login');
-
-						// on insère. l'id_classe  dans la table user
-		                //$req= $bd->prepare("INSERT INTO user(id_classe) VALUES(SELECT id_classe from classe WHERE ecole=? AND niveau= 'NULL' )");
-		                //$re->execute(array($ecole,$niveau));
-					}
-				else
-					{   
-						if(isset($_SESSION['id_statut']) && $_SESSION['id_statut'] == 11 ) // c'est l'admin MEF qui fait l'inscription
-						{
-							$addtutoré = $bd->prepare("INSERT INTO tutores(id_tutores,nationalite) VALUES((SELECT id_user FROM user  WHERE email = ?),?)");
-			                $addtutoré->execute(array($login_mail, $nationa));
-
-			                // on insère dans la table se_destine 
-			                $addtutoré = $bd->prepare("INSERT INTO se_destine(id_user,id_tutorat,id_typeTutorat,liaison) VALUES((SELECT id_user FROM user  WHERE email = ?),?,(SELECT id_typeTutorat FROM administrer WHERE id_admin= ? AND id_admin= ".$_SESSION['id_user']."),'OUI')");
-			                $addtutoré->execute(array($login_mail,2,$_SESSION['id_user']));
-			               
-
-						}
-						else // c'est un étudiant normal qui fait l'inscription 
-						{
-							$addtutoré = $bd->prepare("INSERT INTO tutores(id_tutores,nationalite) VALUES((SELECT id_user FROM user  WHERE email = ?),?)");
-			                $addtutoré->execute(array($login_mail, $nationa));
-						}
-		                	
+		                // puis son nom et prénom dans la table user
+						$addCompte = $bd->prepare('INSERT INTO user (nom, prenom, date_naissance,ecole,niveau, email, password,phone,id_adresse) VALUES (?,?,?,?,?,?,?,?,(SELECT id_adresse FROM adresse WHERE ville= ? AND adress = ? AND complement_Adress = ? AND code_postal = ?))');
+						//$date_naiss= DATE_FORMAT($date_naiss, "%M %d %Y");
+						$addCompte->execute(array($nom, $prenom,$date_naiss, $ecole,$niveau, $login_mail, $pwd, $phone, $ville, $adress, $com_adress, $code_postal));   // rajouter une exception à ce niveau
+		                
+		                
+		               
 		                
 
-		                // on insère son niveau
-		                //$req = $bd->prepare("INSERT INTO classe (niveau,ecole) VALUES(?,?)");
-               			//$req->execute(array($niveau,$ecole));
-               
-                // initialise le statut_compte du nouveau user dans avoir_statut
-                   
-				         $req = $bd->prepare("INSERT INTO avoir_statut (id_user,id_statut_compte,id_statut,id_etat) VALUES ((SELECT id_user FROM user  WHERE email =?),(SELECT id_statut_compte FROM statut_compte  WHERE libelle = 'ATTENTE_VALIDATION' ),(SELECT id_statut FROM statut WHERE libelle = 'TUTORE' ),(SELECT id_etat FROM etat as e WHERE e.libelle = 'LIBRE')) ");
-				         $req->execute(array($login_mail));
+		                if(is_null($niveau) && is_null($nationa)) // c'est un tuteur dans ce cas 
+		   				{
+		   					 	// on insère son école
+		   					 	$req = $bd->prepare("INSERT INTO classe (ecole) VALUES(?)");
+		                		$req->execute(array($ecole));
+		                // on insère dans la table tuteur
+				                $req = $bd->prepare("INSERT INTO tuteurs (id_tuteurs,nb_linksmef,nb_max_mef,nb_linksperso,nb_max_perso) VALUES((SELECT id_user FROM user  WHERE email =?),0,3,0,2)");
+				                $req->execute(array($login_mail));
 
-				         // on insère. l'id_classe  dans la table user
-                        //$req= $bd->prepare("INSERT INTO user(id_classe) VALUES(SELECT id_classe from classe WHERE niveau= ? AND ecole= ? )");
-                        //$req->execute(array($niveau,$ecole;));
+		                // initialise le statut_compte du nouveau user dans avoir_statut
+						         $req = $bd->prepare("INSERT INTO avoir_statut (id_user,id_statut_compte,id_statut,id_etat) VALUES ((SELECT id_user FROM user  WHERE email =?),(SELECT id_statut_compte FROM statut_compte  WHERE libelle = 'ATTENTE_VALIDATION'),(SELECT id_statut FROM statut WHERE libelle = 'TUTEUR' ),(SELECT id_etat FROM etat as e WHERE e.libelle = 'LIBRE')) ");
+						         $req->execute(array($login_mail));
 
-                         if( isset($_SESSION['id_statut']) && $_SESSION['id_statut'] == 11)
-				         	header('location: index.php?controller=users&action=redirection');
-				         else
-				         	header('location: index.php?controller=users&action=login');
-					}
+		                        $_SESSION['alert']='inscription réussie,vous recevrez un e-mail de confirmation dans un instant';
+								header('location:index.php?controller=users&action=login');
+
+								// on insère. l'id_classe  dans la table user
+				                //$req= $bd->prepare("INSERT INTO user(id_classe) VALUES(SELECT id_classe from classe WHERE ecole=? AND niveau= 'NULL' )");
+				                //$re->execute(array($ecole,$niveau));
+							}
+						else
+						{   
+								if(isset($_SESSION['id_statut']) && $_SESSION['id_statut'] == 11 ) // c'est l'admin MEF qui fait l'inscription
+								{
+									$addtutoré = $bd->prepare("INSERT INTO tutores(id_tutores,nationalite) VALUES((SELECT id_user FROM user  WHERE email = ?),?)");
+					                $addtutoré->execute(array($login_mail, $nationa));
+
+					                // on insère dans la table se_destine 
+					                $addtutoré = $bd->prepare("INSERT INTO se_destine(id_user,id_tutorat,id_typeTutorat,liaison) VALUES((SELECT id_user FROM user  WHERE email = ?),?,(SELECT id_typeTutorat FROM administrer WHERE id_admin= ? AND id_admin= ".$_SESSION['id_user']."),'OUI')");
+					                $addtutoré->execute(array($login_mail,2,$_SESSION['id_user']));
+					               
+
+								}
+								else // c'est un étudiant normal qui fait l'inscription 
+								{
+									$addtutoré = $bd->prepare("INSERT INTO tutores(id_tutores,nationalite) VALUES((SELECT id_user FROM user  WHERE email = ?),?)");
+					                $addtutoré->execute(array($login_mail, $nationa));
+								}
+				                	
+				                
+
+				                // on insère son niveau
+				                //$req = $bd->prepare("INSERT INTO classe (niveau,ecole) VALUES(?,?)");
+		               			//$req->execute(array($niveau,$ecole));
+		               
+		                // initialise le statut_compte du nouveau user dans avoir_statut
+		                   
+						         $req = $bd->prepare("INSERT INTO avoir_statut (id_user,id_statut_compte,id_statut,id_etat) VALUES ((SELECT id_user FROM user  WHERE email =?),(SELECT id_statut_compte FROM statut_compte  WHERE libelle = 'ATTENTE_VALIDATION' ),(SELECT id_statut FROM statut WHERE libelle = 'TUTORE' ),(SELECT id_etat FROM etat as e WHERE e.libelle = 'LIBRE')) ");
+						         $req->execute(array($login_mail));
+
+						         // on insère. l'id_classe  dans la table user
+		                        //$req= $bd->prepare("INSERT INTO user(id_classe) VALUES(SELECT id_classe from classe WHERE niveau= ? AND ecole= ? )");
+		                        //$req->execute(array($niveau,$ecole;));
+
+		                         if( isset($_SESSION['id_statut']) && $_SESSION['id_statut'] == 11)
+						         	header('location: index.php?controller=users&action=redirection');
+						         else
+						         	header('location: index.php?controller=users&action=login');
+						}
+				}
+				else
+				{
+					echo $error;
+					//adresse  mail invalide envoi de mail echoué
+				$_SESSION['alert']= "&nbsp <strong>cette adresse e-mail est incorrecte, remplissez à nouveau le formulaire</strong>";
+				header('location:index.php?controller=users&action=choixStatut');
+				//On le redirige vers la page de login
+				}
 
 			}
 			else 

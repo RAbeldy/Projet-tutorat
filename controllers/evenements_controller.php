@@ -127,16 +127,27 @@ class EvenementsController
             
             $data= Tutorat::Get_idAdmin_tutorat($_POST['id_t']); // on récupère l'id de l'admin qui gère ce tutorat
             
-            if( $event->Admin_set_event($data->getId_user(),$_POST['id_t']) == 0) // on a récupéré l'identifiant de celui avec qui il aura un tutorat personnalisé ou alors l'identifiant du lieu
-            {    
-                require_once('views/superadmin/events.php');
-            } 
+            if(!is_null($data)) // le tutorat n'est pas affilié à un compte
+            {
+              if( $event->Admin_set_event($data->getId_user(),$_POST['id_t']) == 0) // on a récupéré l'identifiant de celui avec qui il aura un tutorat personnalisé ou alors l'identifiant du lieu
+              {    
+                  require_once('views/superadmin/events.php');
+              } 
+              else
+              {
+                  $message = 'Vous avez déja un évènement prévu à cette date et à cette heure, rendez vous dans la rubrique "je me suis inscrit à " pour le supprimer, puis dans "créer évènement", créer en un nouveau si vous le souhaitez';
+                  $controller_report='admin';
+                  $fonction_back='admin_set_event';
+                  require_once('views/system/error.php');
+              }
+            }
             else
             {
-                $message = 'Vous avez déja un évènement prévu à cette date et à cette heure, rendez vous dans la rubrique "je me suis inscrit à " pour le supprimer, puis dans "créer évènement", créer en un nouveau si vous le souhaitez';
-                $controller_report='admin';
-                $fonction_back='admin_set_event';
-                require_once('views/system/error.php');
+              $message = 'Vous avez tenté de créer un évènement pour un tutorat dont la gestion n\'est pas encore affiliée:
+              rendez-vous donc dans la rubrique <strong> tutorats =>les comptes admin </strong> et faites affecter et tout ira pour le mieux après';
+                  $controller_report='admin';
+                  $fonction_back='admin_set_event';
+                  require_once('views/system/error.php');
             }
             
     }
@@ -162,7 +173,8 @@ class EvenementsController
                      
     }
     public function display_pasts_events() // afficher les evenements passés auxquels il a participé
-    {
+    {echo "l'identifiant du statut est ".$_SESSION['id_statut'];
+          echo "fgfhfhfghgngf";
         
         if( isset($_SESSION['id_statut']))
         {  
@@ -180,8 +192,6 @@ class EvenementsController
           else
           {
 
-             
-              
               $donnees = Evenements::Get_past_events($_SESSION['id_user']);
 
               $controller_report='tuteurs';

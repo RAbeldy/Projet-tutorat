@@ -68,7 +68,7 @@
                                                                 <th>Ville</th>
                                                                 <th>Adresse</th>
                                                                 <th>Code_postal</th>
-                                                                <th>Nombre d'heures à ce jour</th>
+                                                                <th>Nombre d'heures à payer</th>
                                                                 <th>Action</th>
 
                                                                

@@ -11,9 +11,9 @@ public function choixStatut()
 }
 // page d'authentification
 public function login()  
-	{
+{
 	  require_once('views/Login.php');
-	}
+}
 public function connexion()
 {
 	//intance e la classe modele

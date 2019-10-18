@@ -19,7 +19,7 @@ var check = function() {
             <div class="illustration">
                 <i class="icon ion-person-add"></i>
             </div>
-           
+           <?php  include('views/alert_view.php'); ?>
           
             <div class="form-group">
                 <input class="form-control" type="text" name="reset_email" placeholder="Email" required>

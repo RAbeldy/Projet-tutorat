@@ -12,7 +12,7 @@ try {
     $mail->SMTPAuth = true;                               // Enable SMTP authentication
     $mail->Username = $mailAccount;                       // SMTP username
     $mail->Password = $mail_password;                     // SMTP password
-    $mail->SMTPSecure = 'tls';                            // Enable TLS encryption, `ssl` also accepted
+    $mail->SMTPSecure = 'ssl';                            // Enable TLS encryption, `ssl` also accepted
     $mail->Port = $mail_port;
     $mail->SMTPOptions = array(
         'ssl' => array(
@@ -52,5 +52,6 @@ try {
 
 } catch (Exception $e) {
     //echo 'Message could not be sent. Mailer Error: ' ,$mail->ErrorInfo;
+    $error= 1;
 }
 ?>

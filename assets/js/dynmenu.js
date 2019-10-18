@@ -120,6 +120,13 @@ $(document).ready(
 			}else if((arr[1] == "=show_proposal")){
 				actualPage = "Propositions";
 			}
+		}else if(arr[0] == "=tutores"){
+			if((arr[1] == "=interface_tutore")){
+				actualPage = "évènements";
+			}else if((arr[1] == "=notifications") ||
+			(arr[1] == "=waiting_list")){
+				actualPage = "Notifications";
+			}
 		}else if(arr[0] == "=users"){
 			if((arr[1] == "=update_account") ||
 			(arr[1] == "=events_creation") ||

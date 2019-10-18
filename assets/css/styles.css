@@ -330,7 +330,8 @@ p#callToAction {
 }
 
 .dropdown-item:hover {
-    background-color: #fab900!important;
+    background-color: white!important;
+    color: #56c6c6!important;
 }
 
 .dropdown-toggle.btn:focus {
@@ -475,11 +476,21 @@ p#callToAction {
 	text-transform: uppercase;
 }
 
-.btn-login:hover{
+.btn-login:hover, .btn-login:active{
     color: #55c6c6;
 	background-color: white;
 	border: 2px solid #55c6c6!important;
 	font-weight: 900!important;
+}
+
+.login-clean form .btn-primary:active {
+    color: #55c6c6!important;
+	background-color: white!important;
+	border: 2px solid #55c6c6!important;
+}
+
+.super-yncrea{
+    padding-top: 0px!important;
 }
 
 .tutorat-yncrea{
@@ -490,7 +501,7 @@ p#callToAction {
     padding: 90px 0px;
 }
 
-.desc-tutorat p, .tutorat-yncrea p{
+.desc_paragraph, .pres_paragraph{
     text-align: justify;
     color: #4b4b4b;
     font-size: 17px;
@@ -513,7 +524,7 @@ p#callToAction {
 .small-slider div.slider-nav {
     background: rgba(0, 0, 0, 0.5);
     position: absolute;
-    top: 40%;
+    top: 37%;
     width: 36px;
     height: 72px;
     line-height: 60px;
@@ -534,6 +545,10 @@ p#callToAction {
     color: wheat;
     text-align: center;
     padding-top: 141px;
+}
+
+.slider-nav i.fa {
+    color: wheat;
 }
 
 #slider-title {
@@ -599,6 +614,9 @@ p#callToAction {
     .navigation-clean-button {
         padding-top: 1rem;
         padding-bottom: 1rem;
+    }
+    .dropdown-menu.show{
+        min-width: 135px;
     }
 }
 
@@ -677,7 +695,7 @@ p#callToAction {
     .pres_title, .type-tutorat {
         font-size: 40px;
     }
-    .desc-tutorat p, .tutorat-yncrea p {
+    .desc_paragraph, .pres_paragraph{
         font-size: 16px;
     }
     .pres_button {
@@ -755,7 +773,7 @@ p#callToAction {
         font-size: 11px;
     }
 
-    .desc-tutorat p, .tutorat-yncrea p {
+    .desc_paragraph, .pres_paragraph {
         font-size: 14px;
     }
     .small-slider {

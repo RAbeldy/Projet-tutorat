@@ -14,8 +14,6 @@
   if(!isset($_SESSION['connecté']))
   $_SESSION['connecté'] = 'non connecté';
 
-echo $_SESSION['connecté'];
-
 ?>
 
 <!DOCTYPE html>
@@ -72,7 +70,7 @@ echo $_SESSION['connecté'];
                 </li>
                  <li class="nav-item"><a href="?controller=tuteurs&action=selection_tutores" class="nav-link">Mes Tutorés </a>
                 </li>
-                 <li class="nav-item"><a href="#" class="nav-link">Le tutorat: ce que je dois savoir </a>
+                 <li class="nav-item"><a href="?controller=tuteurs&action=savoir_tuteurs" class="nav-link">Le tutorat: ce que je dois savoir </a>
                 </li>
                 <?php
                 }
@@ -83,24 +81,17 @@ echo $_SESSION['connecté'];
                     </li>
                      <li class="nav-item"><a href="?controller=tutores&action=selection_tuteurs" class="nav-link">Mon Tuteur </a>
                     </li>
-                     <li class="nav-item"><a href="#" class="nav-link">Le tutorat: ce que je dois savoir </a>
-                    </li>
+                     <li class="nav-item"><a href="?controller=tutores&action=savoir_tutores" class="nav-link">Le tutorat: ce que je dois savoir </a>
                 <?php
                 }
                 elseif(isset($_SESSION['statut']) && ($_SESSION['statut'] == 'SUPER_ADMIN'))
                 {
                 ?>
-                    <li class="nav-item"><a href="#" class="nav-link">Les tutorats que je dirige </a>
-                    </li>
-
                 <?php
                 }
                 elseif(isset($_SESSION['statut']))
                 {
                 ?>
-                    <li class="nav-item"><a href="#" class="nav-link">Les tutorats que je dirige </a>
-                    </li>
-
                 <?php
                 }
                 else
@@ -108,7 +99,7 @@ echo $_SESSION['connecté'];
                     ?>
                      <li class="nav-item"><a href="index.php" class="nav-link">Accueil </a>
                     </li>
-                    <li class="nav-item"><a href="#" class="nav-link">Equipe </a>
+                    <li class="nav-item"><a href="#" class="nav-link">Actualités </a>
                     </li>
                     <li class="nav-item"><a href="?controller=page&action=contact" class="nav-link">Contact </a>
                     </li>
@@ -161,9 +152,9 @@ echo $_SESSION['connecté'];
                         <hr class="sidebar-divider my-0">
                         <ul class="nav navbar-nav text-light" id="accordionSidebar">
                             <li class="nav-item" role="presentation">
-                                <a class="nav-link active" href="?controller=tuteurs&action=interface_tuteur">
+                                <a class="nav-link" href="?controller=tuteurs&action=interface_tuteur">
                                     <i class="fab fa-phoenix-squadron"></i>
-                                    <span>Evénement</span>
+                                    <span>évènements</span>
                                 </a>
                                 <a class="nav-link" href="?controller=tuteurs&action=notifications">
                                     <i class="fab fa-phoenix-squadron"></i>
@@ -191,9 +182,9 @@ echo $_SESSION['connecté'];
                         <hr class="sidebar-divider my-0">
                         <ul class="nav navbar-nav text-light" id="accordionSidebar">
                             <li class="nav-item" role="presentation">
-                                <a class="nav-link active" href="?controller=tutores&action=interface_tutore">
+                                <a class="nav-link" href="?controller=tutores&action=interface_tutore">
                                     <i class="fab fa-phoenix-squadron"></i>
-                                    <span>Evénement</span>
+                                    <span>évènements</span>
                                 </a>
                                 <a class="nav-link" href="?controller=tutores&action=notifications">
                                     <i class="fab fa-phoenix-squadron"></i>
@@ -217,7 +208,7 @@ echo $_SESSION['connecté'];
                     <hr class="sidebar-divider my-0">
                     <ul class="nav navbar-nav text-light" id="accordionSidebar">
                         <li class="nav-item" role="presentation">
-                            <a class="nav-link active" href="?controller=admin&action=interface_admin">
+                            <a class="nav-link" href="?controller=admin&action=interface_admin">
                                 <i class="fab fa-phoenix-squadron"></i>
                                 <span>évènements</span>
                             </a>
@@ -251,7 +242,7 @@ echo $_SESSION['connecté'];
                     <hr class="sidebar-divider my-0">
                     <ul class="nav navbar-nav text-light" id="accordionSidebar">
                         <li class="nav-item" role="presentation">
-                            <a class="nav-link active" href="?controller=admin&action=interface_admin">
+                            <a class="nav-link" href="?controller=admin&action=interface_admin">
                                 <i class="fab fa-phoenix-squadron"></i>
                                 <span>évènements</span>
                             </a>
@@ -285,7 +276,7 @@ echo $_SESSION['connecté'];
                     <hr class="sidebar-divider my-0">
                     <ul class="nav navbar-nav text-light" id="accordionSidebar">
                         <li class="nav-item" role="presentation">
-                            <a class="nav-link active" href="?controller=admin&action=interface_admin">
+                            <a class="nav-link" href="?controller=admin&action=interface_admin">
                                 <i class="fab fa-phoenix-squadron"></i>
                                 <span>évènements</span>
                             </a>
@@ -319,9 +310,9 @@ echo $_SESSION['connecté'];
                     <hr class="sidebar-divider my-0">
                     <ul class="nav navbar-nav text-light" id="accordionSidebar">
                         <li class="nav-item" role="presentation">
-                            <a class="nav-link active" href="?controller=admin&action=interface_admin">
+                            <a class="nav-link" href="?controller=admin&action=interface_admin">
                                 <i class="fab fa-phoenix-squadron"></i>
-                                <span> évènements </span>
+                                <span>évènements</span>
                             </a>
                             <a class="nav-link" href="?controller=admin&action=interface_tutorat">
                                 <i class="fab fa-phoenix-squadron"></i>
@@ -354,7 +345,7 @@ echo $_SESSION['connecté'];
                     <hr class="sidebar-divider my-0">
                     <ul class="nav navbar-nav text-light" id="accordionSidebar">
                         <li class="nav-item" role="presentation">
-                            <a class="nav-link active" href="?controller=admin&action=interface_admin">
+                            <a class="nav-link" href="?controller=admin&action=interface_admin">
                                 <i class="fab fa-phoenix-squadron"></i>
                                 <span>évènements</span>
                             </a>
@@ -390,7 +381,7 @@ echo $_SESSION['connecté'];
                     <hr class="sidebar-divider my-0">
                     <ul class="nav navbar-nav text-light" id="accordionSidebar">
                         <li class="nav-item" role="presentation">
-                            <a class="nav-link active" href="?controller=admin&action=interface_admin">
+                            <a class="nav-link" href="?controller=admin&action=interface_admin">
                                 <i class="fab fa-phoenix-squadron"></i>
                                 <span>évènements</span>
                             </a>
@@ -460,7 +451,7 @@ echo $_SESSION['connecté'];
                     <hr class="sidebar-divider my-0">
                     <ul class="nav navbar-nav text-light" id="accordionSidebar">
                         <li class="nav-item" role="presentation">
-                            <a class="nav-link active" href="?controller=admin&action=interface_admin">
+                            <a class="nav-link" href="?controller=admin&action=interface_admin">
                                 <i class="fab fa-phoenix-squadron"></i>
                                 <span>Comptes en attente</span>
                             </a>
@@ -501,7 +492,20 @@ echo $_SESSION['connecté'];
             </nav>
             <!-- FIN de CONTROL sur la navbar verticale -->
             <div id="content">
-                
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-2">
+                            <button type="button" id="sidebarCollapse" class="btn ">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </button>
+                        </div>
+                        <?php
+                        require_once('arbre_navigation.php');
+                        ?>
+                    </div>
+                </div>
                 <?php
                 require_once('routes.php');
                 ?>
@@ -510,16 +514,18 @@ echo $_SESSION['connecté'];
     </div>
     <div class="footer-basic">
         <footer>
-            <div class="social"><a href="#"><i class="icon ion-social-instagram"></i></a><a href="#"><i class="icon ion-social-snapchat"></i></a><a href="#"><i class="icon ion-social-twitter"></i></a><a href="#"><i class="icon ion-social-facebook"></i></a></div>
+            <div class="social">
+                <a href="#"><i class="icon ion-social-facebook"></i></a>
+            </div>
             <ul class="list-inline">
-                <li class="list-inline-item"><a href="#">Accueil</a></li>
-                <li class="list-inline-item"><a href="#">Equipe</a></li>
-                <li class="list-inline-item"><a href="#">Contact</a></li>
+                <li class="list-inline-item"><a href="index.php">Accueil</a></li>
+                <li class="list-inline-item"><a href="#">Actualités</a></li>
+                <li class="list-inline-item"><a href="?controller=page&action=contact">Contact</a></li>
             </ul>
             <p class="copyright">Tutorat YNCREA © 2019</p>
         </footer>
     </div>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="assets/js/jquery.min.js?h=1dd785e1de9a32e236b624ae268bb803"></script>
     <script src="assets/bootstrap/js/bootstrap.min.js?h=63715b63ee49d5fe4844c2ecae071373"></script>
     <script src="assets/js/Navbarbuttonsignupsignin-modal-form.js?h=9ce049da3c28fd2ded69977163ac47a3"></script>

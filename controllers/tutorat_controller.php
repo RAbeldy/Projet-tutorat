@@ -34,7 +34,7 @@ class TutoratController
 
           if($tutorat->Create_center() == 0)
             {
-              if(preg_match('#ADMIN#',$_SESSION['statut']))
+              if(preg_match('#^ADMIN#',$_SESSION['statut']))
               {
                   $donnees= Tutorat::tutorat_center_list($_SESSION['id_statut']);
 

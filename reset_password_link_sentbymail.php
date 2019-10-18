@@ -1,4 +1,5 @@
 <?php 
+session_start();
 header('Access-Control-Allow-Origin: *');
 //Connection à la base de donnée
 include('connexion.php');
@@ -22,15 +23,15 @@ if (isset($_POST['reset_email'])) {
 		$message_txt = 'Bonjour,\nVous souhaitez réinitialiser votre mot de passe .\n Pour ce faire veuillez cliquez sur le lien juste en bas"\n
 
 		<a href="http://localhost:8888/tests/steve/views/reset_password_view.php"> reset password</a> Ce message  est généré automatiquement, veuillez ne pas répondre.';
-		$message_html ='<html><head></head><body><p>Bonjour, </p><p> Mot de passe oublié.</p><p>Pour ce faire veuillez cliquez sur le lien juste en bas.Ce message est généré automatiquement.veuillez <b>ne pas répondre</b>,please  <b>do not answer</b></p>.<p><a href="http://localhost:8888/tests/steve/?controller=users&action=resetPassword"> reset password</a></p></body></html>';
+		$message_html ='<html><head></head><body><p>Bonjour, </p><p> Vous souhaitez réinitialiser votre mot de passe?.</p><p>Pour ce faire veuillez cliquez sur le lien juste en bas.Ce message est généré automatiquement.veuillez <b>ne pas répondre</b>,please  <b>do not answer</b></p>.<p><a href="http://tutorat-yncrea.fr/index.php?controller=users&action=resetPassword"> reset password</a></p></body></html>';
 		//Sujet
 		$sujet = "[Yncrea tutorat]  Mot de passe oublié";
 		//envoie du mail
 		include('send_mail.php');
         
-	
+
 	    //$resultat="1";
-	   $_SESSION['alert']= "vous allez recevoir un e-mail dans quelques minutes </br>, vous n\'aurez alors qu\'à suivre la procédure" ;
+	   $_SESSION['alert']= "vous allez recevoir un e-mail dans quelques minutes </br>, vous n'aurez alors qu'à suivre la procédure" ;
 	    header('location:index.php?controller=users&action=forgotPassword');
 	}
 	else {
