@@ -164,8 +164,10 @@ class Tuteurs
     {
         $db = Db::getInstance();
         $list=[];
-        $req = $db->prepare(" SELECT  u.id_user,u.nom,u.prenom,u.date_naissance,u.email,u.phone,a.ville ,a.adress ,a.code_postal  FROM user as u,adresse as a,matchs as m WHERE   u.id_adresse = a.id_adresse AND u.id_user= m.id_tutores AND m.id_tuteurs =  ? ORDER BY nom ASC");
-        $req->execute(array($id_user));
+        $req = $db->prepare(" SELECT  u.id_user,u.nom,u.prenom,u.date_naissance,u.email,u.phone,a.ville ,a.adress ,a.code_postal 
+         FROM user as u,adresse as a,matchs as m WHERE   u.id_adresse = a.id_adresse AND u.id_user= m.id_tutores AND 
+         m.id_tuteurs =  ? AND u.id_user NOT IN( SELECT id_user FROM se_destine) ORDER BY nom ASC");
+        $req->execute(array($id_user)); 
 
         
       foreach ($req->fetchAll() as $data)
@@ -189,7 +191,9 @@ class Tuteurs
     {
        $db = Db::getInstance();
         $list=[];
-        $req = $db->prepare(" SELECT  u.id_user,u.nom,u.prenom,u.date_naissance,u.email,u.phone,a.ville ,a.adress ,a.code_postal  FROM user as u,adresse as a,matchs as m,se_destine as se WHERE   u.id_adresse = a.id_adresse AND u.id_user= m.id_tutores   AND m.id_tuteurs =  ? AND se.id_user= u.id_user AND se.id_tutorat= ? ORDER BY nom ASC");
+        $req = $db->prepare(" SELECT  u.id_user,u.nom,u.prenom,u.date_naissance,u.email,u.phone,a.ville ,a.adress ,a.code_postal 
+         FROM user as u,adresse as a,matchs as m,se_destine as se WHERE   u.id_adresse = a.id_adresse AND u.id_user= m.id_tutores 
+           AND m.id_tuteurs =  ? AND se.id_user= u.id_user AND se.id_tutorat= ? ORDER BY nom ASC");
         $req->execute(array($id_tuteur,$id_tutorat));
 
         
@@ -214,7 +218,10 @@ class Tuteurs
     {
         $db = Db::getInstance();
         $list=[];
-        $req= $db->query("SELECT  u.id_user,u.nom,u.prenom,u.date_naissance,u.email,u.phone,a.ville ,a.adress ,a.code_postal  FROM user as u, statut as s,adresse as a, avoir_statut as at, etat as e WHERE at.id_statut = s.id_statut AND at.id_user = u.id_user AND  u.id_adresse = a.id_adresse AND e.id_etat = at.id_etat AND e.libelle = 'LIBRE' AND s.libelle= 'TUTORE' OR s.libelle= 'TUTORE_PRREL' OR s.libelle= 'TUTORE_NONPRREL' AND u.id_user NOT IN (SELECT id_tutores as id_user FROM matchs) AND u.id_user NOT IN (SELECT id_tutores as id_user FROM en_attente) ORDER BY nom ASC");
+        $req= $db->query("SELECT  u.id_user,u.nom,u.prenom,u.date_naissance,u.email,u.phone,a.ville ,a.adress ,a.code_postal 
+         FROM user as u, statut as s,adresse as a, avoir_statut as at, etat as e WHERE at.id_statut = s.id_statut AND at.id_user = u.id_user 
+         AND  u.id_adresse = a.id_adresse AND e.id_etat = at.id_etat AND e.libelle = 'LIBRE' AND s.libelle= 'TUTORE' OR s.libelle= 'TUTORE_PRREL' 
+         OR s.libelle= 'TUTORE_NONPRREL' AND u.id_user NOT IN (SELECT id_tutores as id_user FROM matchs) AND u.id_user NOT IN (SELECT id_tutores as id_user FROM en_attente) ORDER BY nom ASC");
         
       foreach ($req->fetchAll() as $data)
       {

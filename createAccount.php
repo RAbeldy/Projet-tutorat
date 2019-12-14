@@ -56,6 +56,7 @@
 			$request = $bd->prepare('SELECT u.email from user as u WHERE u.email = ?');
 			$request->execute(array($login_mail));
 
+			
 			//On regarde si le mail n'est pas déjà utilisé pour un compte valide!
 			if ($request->rowCount() == 0 /*aucun compte avec ce login*/) 
 			{  
@@ -73,23 +74,22 @@
 
                 if($error == 0)
                 {
-						//On créer un nouveau compte (nouvelle ligne dans bd)
-						// on insère son adresse
-						$req = $bd->prepare("INSERT INTO adresse (ville,adress,complement_adress,code_postal) VALUES(?,?,?,?)");
-						$code_postal= intval($code_postal);
-		                $req->execute(array($ville,$adress,$com_adress,$code_postal));
-
-		                // puis son nom et prénom dans la table user
-						$addCompte = $bd->prepare('INSERT INTO user (nom, prenom, date_naissance,ecole,niveau, email, password,phone,id_adresse) VALUES (?,?,?,?,?,?,?,?,(SELECT id_adresse FROM adresse WHERE ville= ? AND adress = ? AND complement_Adress = ? AND code_postal = ?))');
-						//$date_naiss= DATE_FORMAT($date_naiss, "%M %d %Y");
-						$addCompte->execute(array($nom, $prenom,$date_naiss, $ecole,$niveau, $login_mail, $pwd, $phone, $ville, $adress, $com_adress, $code_postal));   // rajouter une exception à ce niveau
-		                
-		                
-		               
-		                
 
 		                if(is_null($niveau) && is_null($nationa)) // c'est un tuteur dans ce cas 
 		   				{
+							if( preg_match('#^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))+@[A-Z0-9.-]+\.yncrea.fr#',$login_mail))
+							{
+							   //On créer un nouveau compte (nouvelle ligne dans bd)
+								// on insère son adresse
+								$req = $bd->prepare("INSERT INTO adresse (ville,adress,complement_adress,code_postal) VALUES(?,?,?,?)");
+								$code_postal= intval($code_postal);
+								$req->execute(array($ville,$adress,$com_adress,$code_postal));
+
+								// puis son nom et prénom dans la table user
+								$addCompte = $bd->prepare('INSERT INTO user (nom, prenom, date_naissance,ecole,niveau, email, password,phone,id_adresse) VALUES (?,?,?,?,?,?,?,?,(SELECT id_adresse FROM adresse WHERE ville= ? AND adress = ? AND complement_Adress = ? AND code_postal = ?))');
+								//$date_naiss= DATE_FORMAT($date_naiss, "%M %d %Y");
+								$addCompte->execute(array($nom, $prenom,$date_naiss, $ecole,$niveau, $login_mail, $pwd, $phone, $ville, $adress, $com_adress, $code_postal));   // rajouter une exception à ce niveau
+								
 		   					 	// on insère son école
 		   					 	$req = $bd->prepare("INSERT INTO classe (ecole) VALUES(?)");
 		                		$req->execute(array($ecole));
@@ -108,10 +108,28 @@
 				                //$req= $bd->prepare("INSERT INTO user(id_classe) VALUES(SELECT id_classe from classe WHERE ecole=? AND niveau= 'NULL' )");
 				                //$re->execute(array($ecole,$niveau));
 							}
+							else{
+								//login déjà utilisé pour un compte valide
+								$_SESSION['alert']= "&nbsp <strong>une inscription en tant que tuteur requiert une adresse mail YNCREA </strong>";
+								header('location:index.php?controller=users&action=choixStatut');
+								//On le redirige vers la page de login
+							}
+						}
 						else
 						{   
 								if(isset($_SESSION['id_statut']) && $_SESSION['id_statut'] == 11 ) // c'est l'admin MEF qui fait l'inscription
 								{
+									//On créer un nouveau compte (nouvelle ligne dans bd)
+									// on insère son adresse
+									$req = $bd->prepare("INSERT INTO adresse (ville,adress,complement_adress,code_postal) VALUES(?,?,?,?)");
+									$code_postal= intval($code_postal);
+									$req->execute(array($ville,$adress,$com_adress,$code_postal));
+
+									// puis son nom et prénom dans la table user
+									$addCompte = $bd->prepare('INSERT INTO user (nom, prenom, date_naissance,ecole,niveau, email, password,phone,id_adresse) VALUES (?,?,?,?,?,?,?,?,(SELECT id_adresse FROM adresse WHERE ville= ? AND adress = ? AND complement_Adress = ? AND code_postal = ?))');
+									//$date_naiss= DATE_FORMAT($date_naiss, "%M %d %Y");
+									$addCompte->execute(array($nom, $prenom,$date_naiss, $ecole,$niveau, $login_mail, $pwd, $phone, $ville, $adress, $com_adress, $code_postal));   // rajouter une exception à ce niveau
+									
 									$addtutoré = $bd->prepare("INSERT INTO tutores(id_tutores,nationalite) VALUES((SELECT id_user FROM user  WHERE email = ?),?)");
 					                $addtutoré->execute(array($login_mail, $nationa));
 
@@ -123,6 +141,17 @@
 								}
 								else // c'est un étudiant normal qui fait l'inscription 
 								{
+									//On créer un nouveau compte (nouvelle ligne dans bd)
+									// on insère son adresse
+									$req = $bd->prepare("INSERT INTO adresse (ville,adress,complement_adress,code_postal) VALUES(?,?,?,?)");
+									$code_postal= intval($code_postal);
+									$req->execute(array($ville,$adress,$com_adress,$code_postal));
+
+									// puis son nom et prénom dans la table user
+									$addCompte = $bd->prepare('INSERT INTO user (nom, prenom, date_naissance,ecole,niveau, email, password,phone,id_adresse) VALUES (?,?,?,?,?,?,?,?,(SELECT id_adresse FROM adresse WHERE ville= ? AND adress = ? AND complement_Adress = ? AND code_postal = ?))');
+									//$date_naiss= DATE_FORMAT($date_naiss, "%M %d %Y");
+									$addCompte->execute(array($nom, $prenom,$date_naiss, $ecole,$niveau, $login_mail, $pwd, $phone, $ville, $adress, $com_adress, $code_postal));   // rajouter une exception à ce niveau
+									
 									$addtutoré = $bd->prepare("INSERT INTO tutores(id_tutores,nationalite) VALUES((SELECT id_user FROM user  WHERE email = ?),?)");
 					                $addtutoré->execute(array($login_mail, $nationa));
 								}
@@ -161,10 +190,14 @@
 			else 
 			{
 				//login déjà utilisé pour un compte valide
-				$_SESSION['alert']= "&nbsp <strong>cette adresse e-mail ne vous appartient pas</strong>";
+				$_SESSION['alert']= "&nbsp <strong>Cette adresse e-mail ne vous appartient pas.
+				il se pourrait que vous ou un autre utilisateur se soit deja incrit en utilisant cette adresse mail.
+				S'il s'agit de vous, alors rendez-vous dans la rubrique mot de passe oublié.
+				si tel n'est pas le cas utilisez une autre adresse email \"valide\" cela va de soi</strong>";
 				header('location:index.php?controller=users&action=choixStatut');
 				//On le redirige vers la page de login
 			}
+		
 		}
 		else {
 			//pwd et confirmation différente

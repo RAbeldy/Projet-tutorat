@@ -1,7 +1,7 @@
 
         <!-- TUTEUR -->
 <div class="login-clean">
-    <form method="post" action="createAccount.php" >
+    <form method="post" action="createAccount.php" class="envoi">
      <div class="form-group" id="Yes" name="text1" >
                 <div class="illustration">
                   <i class="icon ion-person-add"></i>
@@ -25,10 +25,10 @@
                     <input class="form-control complete" type="email" name="email" id="numero1" placeholder="Email" >
                 </div>
                 <div class="form-group">
-                    <input class="form-control complete" type="password" name="password" id="passworde" placeholder="Mot de passe">
+                    <input class="form-control complete" type="password" name="password" id="password" placeholder="Mot de passe">
                 </div>
                 <div class="form-group">
-                    <input class="form-control complete" type="password" name="confirmer_password" id="confirme_password" placeholder="Confirmer mot de passe" >
+                    <input class="form-control complete" type="password" name="confirmer_password" id="cpassword" placeholder="Confirmer mot de passe" >
                  <span id='mess'></span>
                 </div>
                 <div class="form-group">
@@ -58,13 +58,15 @@
     //Control password
     $(document).ready(function(){
 
-        var complete= document.querySelectorAll('.complete');
+        
+        var complete= document.querySelectorAll(".complete");
+        var pwd= document.getElementById('password');
+        var cpwd= document.getElementById('cpassword');
         var bool= true;
-        $envoi = $('#submit');
+      
 
         var checke = function() {
-          if (document.getElementById('passworde').value ==
-            document.getElementById('confirme_password').value) {
+          if (pwd.value ==  cpwd.value) {
             document.getElementById('mess').style.color = 'green';
             document.getElementById('mess').innerHTML = 'matching';
           } else {
@@ -77,28 +79,49 @@
                     var email = document.getElementById('numero1');
                     var  re =/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))+@[A-Z0-9.-]+\.yncrea.fr/igm;
                     if (!re.test(email.value)) {
-                    alert('Entrer une adresse email valide');
-                    email.focus();
-                    return false;
-                 }
+                        alert('vous devez saisir une adresse mail yncrea valide');
+                        email.focus();
+                        return false;
+                    }
+                     else 
+                        return true;
         }
 
-        function completeFields(complete) {
-                for(let i=0; i< complete.length;i++)
+        function completeFields(complete){
+            for(let i=0 ; i< complete.length; i++)
+            {
+                if(complete[i].value == "")
                 {
-                    if(complete[i].val()=="")
-                        return false
+                    complete[i].style.borderColor= "red";
+                    complete[i].style.color= "red";
+                    //complete[i].placeholder= "veuillez remplir ce champ";
+                    bool= false;
                 }
-                return true;
+    
             }
-
-        $envoi.click((e)=>{
+                if(bool)
+                    return true;
+                else    
+                {
+                    bool= true;
+                    return false;
+                }
+            }
+            
+            $('#cpassword').keyup(e =>{
+                checke();
+            })
+        
+            $('.envoi').submit((e)=>{
             if(!completeFields(complete))
             {
-                bool= false;
+                alert("des champs sont incomplets");
                 e.preventDefault(); // on annule la fonction par défaut du bouton d'envoi
             }
-            e.preventDefault();
+            if(!checkEmail())
+            {
+                e.preventDefault(); // on annule la fonction par défaut du bouton d'envoi 
+            }
         })
 })
 </script>
