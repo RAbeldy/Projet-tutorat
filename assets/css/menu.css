@@ -1,0 +1,39 @@
+.bg-gradient-primary {
+  background-color: #0e0d0d;
+  background-image: linear-gradient(180deg,#29292a 10%,#29292a);
+  background-size: cover;
+}
+
+.navbar-dark .navbar-brand, .navbar-dark .navbar-brand:focus, .navbar-dark .navbar-brand:hover {
+  color: #b1ab8a;
+}
+
+.sidebar-dark .nav-item .nav-link.active, .sidebar-dark .nav-item .nav-link.active i, .sidebar-dark .nav-item .nav-link:active, .sidebar-dark .nav-item .nav-link:active i, .sidebar-dark .nav-item .nav-link:focus, .sidebar-dark .nav-item .nav-link:focus i, .sidebar-dark .nav-item .nav-link:hover, .sidebar-dark .nav-item .nav-link:hover i {
+  color: #ffee99;
+}
+
+.sidebar-dark #sidebarToggle:hover {
+  background-color: #f9f6b8;
+}
+
+.topbar.navbar-light .navbar-nav .nav-item .nav-link:active {
+  color: #1225a2;
+}
+
+.highlight-blue {
+  color: #b8b49d;
+  background-color: #133363;
+  padding: 1px 0;
+}
+
+a.nav-link span{
+    color: hsla(0,0%,100%,.3);
+}
+
+a.nav-link span:hover{
+    color: #ffee99;
+}
+
+a.nav-link.active, a.nav-link.active span{
+    color: #ffee99;
+}
