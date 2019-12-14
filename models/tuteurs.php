@@ -2,8 +2,6 @@
 require_once('connexion.php');
 
 
-
-
 class Tuteurs
 {
 	private $nb_max_mef;

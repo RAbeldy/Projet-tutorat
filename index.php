@@ -24,6 +24,14 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <style>
+            .setup{
+                color: black;
+                text-align: center;
+                background: orange;
+            }
+    
+    </style>
     <title>TUTORAT</title>
     <link rel="icon" href="assets/img/logo-icon.png">
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css?h=f20836d04db9c2e94df06e239fab9fd8">
@@ -48,13 +56,14 @@
     <!-- login-->
     <link rel="stylesheet" href="assets/css/Login-Form.css?h=20d7842de129d800e792499681f0b672">
     <link rel="stylesheet" href="http://demo.themefisher.com/constra/css/owl.carousel.min.css">
-
+    
 
 </head>
 
 <body id="page-top">
     <nav class="navbar navbar-light navbar-expand-md navigation-clean-button">
     <div class="container-fluid">
+   
         <a href="index.php" class="navbar-brand"> <img src="assets/img/logo1.png" style="width: 175px;"/> </a>
         <button data-toggle="collapse" data-target="#navcol-1" class="navbar-toggler">
             <span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span>
@@ -506,6 +515,9 @@
                         ?>
                     </div>
                 </div>
+                <div id="message_avertissement_javascript" >
+                <?php require_once('alert_javascript_not_enable.php'); ?>
+                </div>
                 <?php
                 require_once('routes.php');
                 ?>
@@ -534,6 +546,9 @@
     <script type="text/javascript">
         $(document).ready(function () {
 
+            alert_javascript = document.getElementById('message_avertissement_javascript');
+       
+            
             var refresh= document.getElementsByClassName('refresh')[0];
             var doc= document;
             if (window.XMLHttpRequest)
@@ -569,8 +584,10 @@
                     document.getElementsByClassName('refresh')[0].addEventListener('click',ajax);
             //document.getElementsByClassName('refresh')[0].onclick=  aj();
             
-           
-                   
+           //javascript inactif 
+           window.onload = function(){
+            alert_javascript.parentNode.removeChild(alert_javascript);
+            }       
                     
                
        

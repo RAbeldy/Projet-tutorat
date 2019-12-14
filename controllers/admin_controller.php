@@ -39,7 +39,7 @@ class AdminController
                 }  
             }
             else
-                require_once('views/login.php');
+                UsersController::deconnexion();
        }
       
        public function events()
@@ -51,7 +51,7 @@ class AdminController
                 require_once('views/admin/events.php');
             }
           else
-                require_once('views/login.php');
+                UsersController::deconnexion();
        }
        public function admin_set_event()
        {
@@ -65,7 +65,7 @@ class AdminController
               require_once('views/admin/admin_set_event.php');
           }
             else
-                require_once('views/login.php');
+                UsersController::deconnexion();
        }
 
        public function modify_event()
@@ -120,7 +120,7 @@ class AdminController
          }
        
             else
-                require_once('views/login.php');
+                UsersController::deconnexion();
        
           }
             
@@ -169,7 +169,7 @@ class AdminController
           }
 
           else
-            require_once('views/Login.php');
+            UsersController::deconnexion();
       }
 
     public static function pasts_events_list()
@@ -214,7 +214,7 @@ class AdminController
              }
         }
         else
-          require_once('views/Login.php');
+          UsersController::deconnexion();
     }
      
      
@@ -245,7 +245,7 @@ class AdminController
             }
         }
         else
-            require_once('views/Login.php');  
+            UsersController::deconnexion();  
     }
 
     public static function tutores_list()  // liste des tutprézs qui font partie de son tutorat( type de tutorat )
@@ -286,7 +286,7 @@ class AdminController
          
     }
     else
-            require_once('views/login.php'); 
+            UsersController::deconnexion(); 
 }
    
    public function interface_tutores_mef()
@@ -300,7 +300,7 @@ class AdminController
             require_once('views/admin/mef/interface_tutores_mef.php');
         }
         else
-            require_once('views/login.php');
+            UsersController::deconnexion();
     }
 
     public function choose_tuteur() // l'admin sélectionne ses tuteurs
@@ -347,7 +347,7 @@ class AdminController
              
         }
         else
-            require_once('views/login.php'); 
+            UsersController::deconnexion(); 
     }
 
      public function interface_tutorat()  
@@ -360,7 +360,7 @@ class AdminController
                 require_once('views/admin/mef/interface_tutorat.php');
          }
           else
-                require_once('views/login.php');
+                UsersController::deconnexion();
      }
 
      public function sign_up()  // inscription d'un tutoré par un admin
@@ -375,7 +375,7 @@ class AdminController
                 require_once('views/admin/signup_by_admin.php');
          }
           else
-                require_once('views/login.php');
+                UsersController::deconnexion();
      }
 
      public function create_center()  // il s'agit de la vue de création d'un centre
@@ -390,7 +390,7 @@ class AdminController
           require_once('views/admin/create_tutorat_center.php');
        }
           else
-                require_once('views/login.php');
+                UsersController::deconnexion();
      }
 
      public function tutorat_center_list() // liste des tutorats que je dirige
@@ -405,7 +405,7 @@ class AdminController
           require_once('views/admin/tutorat_center_list.php');
        }
        else
-          require_once('views/login.php');
+          UsersController::deconnexion();
      }
 
 
@@ -456,7 +456,7 @@ class AdminController
             }
        }
        else
-          require_once('views/login.php');
+          UsersController::deconnexion();
     }
 
     public  function validate_hours()  // on valide les heures concernant un évènement
@@ -474,7 +474,7 @@ class AdminController
      
        }
        else
-          require_once('views/login.php');
+          UsersController::deconnexion();
     }
     
     public static function declared_hours()  // on affiche les heures déclarées par un admin
@@ -489,7 +489,7 @@ class AdminController
            require_once('views/admin/declared_hours.php');
        }
        else
-          require_once('views/login.php');
+          UsersController::deconnexion();
     }
     
     public static function declare_hours()  // on affiche le formulaire de déclaration des heures pour un admin
@@ -503,7 +503,7 @@ class AdminController
            require_once('views/admin/declare_hours.php');
        }
        else
-          require_once('views/login.php');
+          UsersController::deconnexion();
     }
     public static function interface_hours()  // interface de déclaration(consultation) des heures pour un admin
     {
@@ -515,7 +515,7 @@ class AdminController
            require_once('views/admin/interface_hours.php');
        }
        else
-          require_once('views/login.php');
+          UsersController::deconnexion();
     }
 
     public function link()
@@ -578,7 +578,7 @@ class AdminController
         }
        }
        else
-          require_once('views/login.php');
+          UsersController::deconnexion();
      }
 
     
@@ -602,7 +602,7 @@ class AdminController
          }
        }
        else
-          require_once('views/login.php');
+          UsersController::deconnexion();
     }
     
     public static function selected_tuteurs() // la liste de ceux qui ont été sélectionné et qui ont accepté
@@ -617,7 +617,7 @@ class AdminController
           require_once('views/admin/selected_tuteurs.php');
         }
         else
-          require_once('views/login.php');
+          UsersController::deconnexion();
     }
 
     public static function Sfuture_events_list() // liste des évènements passés( pour pouvoir faire la sélection de tuteurs d'ou le préfixe S)
@@ -633,7 +633,7 @@ class AdminController
           require_once('views/admin/Sfuture_events_list.php');
         }
         else
-          require_once('views/login.php');
+          UsersController::deconnexion();
     }
     
     public function Schoose_tuteur() // l'admin sélectionne ses tuteurs( d'ou le préfixe S)
@@ -682,7 +682,7 @@ class AdminController
              
         }
         else
-            require_once('views/login.php'); 
+            UsersController::deconnexion(); 
     }
     
     public static function show_all_proposal()
@@ -698,7 +698,7 @@ class AdminController
           require_once('views/admin/sent_proposal.php');
        }
        else
-          require_once('views/login.php');
+          UsersController::deconnexion();
     }
 
     public function cancel_proposal() // on annule une proposition faite à un tuteur concernant un tutorat particulier
@@ -716,7 +716,7 @@ class AdminController
      
        }
        else
-          require_once('views/login.php');
+          UsersController::deconnexion();
     }
 
     public function end_contract()// l'admin met fin au contrat qui le lie à un tuteur(supprimer de la iste de sélection automatique ) pour un tutorat donné 
@@ -739,7 +739,7 @@ class AdminController
 
        }
        else
-          require_once('views/login.php');
+          UsersController::deconnexion();
     }
 
 public  function export()
@@ -792,7 +792,7 @@ public  function export()
       require_once('views/admin/contacter.php');
   }
   else
-      require_once('views/login.php');
+      UsersController::deconnexion();
   }
 
   public function message() // à completer lors de la création de la table de suivi des admin
@@ -824,7 +824,7 @@ public  function export()
                 require_once('views/mail_send_ok.php');  
         }
         else
-                require_once('views/login.php');
+                UsersController::deconnexion();
       }
 
       // gestion de compte 
@@ -860,7 +860,7 @@ public  function export()
       }
     }
     else
-       require_once('views/login.php');
+       UsersController::deconnexion();
   }
 
   public function my_account()
@@ -888,11 +888,11 @@ public  function export()
         }
       }
       else
-         require_once('views/login.php');
+         UsersController::deconnexion();
       
     }
     else
-      require_once('views/login.php');
+      UsersController::deconnexion();
     
   }
   
@@ -946,7 +946,7 @@ public  function export()
       
     }
     else
-      require_once('views/Login.php');
+      UsersController::deconnexion();
   }
   
   public function interface_tutore_bourse()
@@ -956,7 +956,7 @@ public  function export()
       require_once('views/admin/gestion/tutore_bourse.php');
     }
     else
-       require_once('views/Login.php');
+       UsersController::deconnexion();
   }
   
   public function tutore_bourse()
@@ -980,10 +980,10 @@ public  function export()
         require_once('views/admin/gestion/bourse.php');
       }
       else
-       require_once('views/Login.php');
+       UsersController::deconnexion();
     }
     else
-       require_once('views/Login.php');
+       UsersController::deconnexion();
   }
   
    public function bourse_account()
@@ -1000,7 +1000,7 @@ public  function export()
       require_once('views/admin/gestion/bourse_account.php');
     }
     else
-       require_once('views/Login.php');
+       UsersController::deconnexion();
   }
   
   
@@ -1020,7 +1020,7 @@ public  function export()
             require_once('views/admin/gestion/bourse.php');
           }
           else
-          require_once('views/login.php');
+          UsersController::deconnexion();
             
   }
   elseif(isset($_POST['annulerbourse']))
@@ -1029,7 +1029,7 @@ public  function export()
       require_once('views/admin/gestion/bourse.php');
   }
   else
-    require_once('views/Login.php');
+    UsersController::deconnexion();
   }
   
   
@@ -1040,7 +1040,7 @@ public  function export()
         require_once('views/admin/gestion/user_choice.php');  
       }
       else
-        require_once('views/Login.php');
+        UsersController::deconnexion();
    }
    
    
@@ -1066,7 +1066,7 @@ public  function export()
         }
      }
      else
-       require_once('views/login.php');
+       UsersController::deconnexion();
    }
   
    public function annul_account()
@@ -1108,7 +1108,7 @@ public  function export()
           }
       } 
       else
-         require_once('views/login.php');
+         UsersController::deconnexion();
     }
      
 
