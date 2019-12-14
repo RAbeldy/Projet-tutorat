@@ -109,11 +109,17 @@ class Tutorat
         $req = $db->prepare("SELECT t.libelle as libelle,t.id_tutorat as id_tutorat FROM tutorat as t WHERE t.id_typeTutorat= ? ");
         $req->execute(array($id_typeTutorat));
 
-      foreach ($req->fetchAll() as $data)
-      {
-       $list []= array($data['libelle'],$data['id_tutorat']);
-      }
-      return $list ;
+        if($req->rowCount() != 0)
+        {
+          foreach ($req->fetchAll() as $data)
+          {
+           $list []= array($data['libelle'],$data['id_tutorat']);
+          }
+          return $list ;
+        }
+        else 
+          return 0;
+      
     }
     
     public static function Get_working_tutorat($id_tuteur)  // liste des tutorats pour lesquels un tuteur travaille( ceux pour lesquels il a été choisi)

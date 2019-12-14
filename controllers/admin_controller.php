@@ -30,7 +30,7 @@ class AdminController
                     case 'PERSONNALISE':
                       require_once('views/admin/personnalise/interface_admin.php');
                     break;
-                    case 'GESTIONNAIRE_COMPTE':
+                    case 'ADMIN_GESTION':
                       require_once('views/admin/gestion/interface_gestionnaire.php');
                     break;
                     default:
@@ -77,7 +77,7 @@ class AdminController
             
            if( isset($_POST['modifier']))
            {
-             $donnees= Tutorat::Get_tutorat($_SESSION['id_user']); // on récupère la liste des tutorats qu'il administre
+             //$donnees= Tutorat::Get_tutorat($_SESSION['id_user']); // on récupère la liste des tutorats qu'il administre
              $tab= Evenements::Get_informations_on_events($id_e);
               
              $controller_report='admin';
@@ -160,16 +160,12 @@ class AdminController
                 require_once('views/admin/personnalise/future_events_list.php');
               }
               else
+              {
                   $donnees = Evenements::Future_events_list($_SESSION['id_user']);
-            
-            
-              $controller_report='admin';
-              $fonction_back='events';
-             
-            
-
-            
-            require_once('views/admin/future_events_list.php');
+                  $controller_report='admin';
+                 $fonction_back='events';
+                require_once('views/admin/future_events_list.php');
+              }
           }
 
           else
@@ -180,7 +176,7 @@ class AdminController
     {
         if( isset($_SESSION['id_statut']))
         {
-          if(preg_match('#IMMERSSION#', $_SESSION['statut'])) 
+          if(preg_match('#IMMERSION#', $_SESSION['statut'])) 
             {
                 $donnees = Evenements::Pasts_events_list($_SESSION['id_user']);
                 
@@ -832,6 +828,15 @@ public  function export()
       }
 
       // gestion de compte 
+
+
+
+
+
+
+
+
+
    
   public function  wait_compte()
   {

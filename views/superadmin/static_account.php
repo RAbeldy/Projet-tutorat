@@ -28,10 +28,10 @@
                                                     </div>
                                                     <div class="col-md-4 offset-1">
                                                         <div class="row text-center">
-                                                            <label style="flex: auto;">TUTORAT</label>
+                                                            <label style="flex: auto;">TYPE DE TUTORAT</label>
                                                         </div>
                                                         <div class="row">
-                                                            <input type="search" class="form-control form-control-sm" aria-controls="dataTable" placeholder="Rechercher"/>
+                                                            <input type="search" name="type" class="form-control form-control-sm" aria-controls="dataTable" placeholder="Rechercher"/>
                                                         </div>
                                                     </div>
                                                     <div class="col-12 text-center rechercher">

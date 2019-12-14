@@ -29,7 +29,7 @@ switch ($indice) {
 
 	case '3': // liste des tuteurs
 				$tab = Admin::Get_all_tuteurs();
-                $donnees= Evenements::Find_occurrences_name($tab,$_POST['name'],$_POST['etat']);
+                $donnees= Evenements::Find_occurrences_name_etat($tab,$_POST['name'],$_POST['etat']);
 
                 $controller_report='superadmin'; 
              	$fonction_back='interface_tuteur';
@@ -39,7 +39,7 @@ switch ($indice) {
 
 	case '4': // liste des tutorés
 				$tab = Admin::Get_all_tutores();
-                $donnees= Evenements::Find_occurrences_name($tab,$_POST['name'],$_POST['etat']);
+                $donnees= Evenements::Find_occurrences_name_etat($tab,$_POST['name'],$_POST['etat']);
 
                 $controller_report='superadmin'; 
              	$fonction_back='interface_tutore';
@@ -59,7 +59,7 @@ switch ($indice) {
 
 	case '6': // liste des tutorés qui appartiennent à un tutorat 
 				$tab = Superadmin::All_selected_tutores();               
-                $donnees= Evenements::Find_occurrences_name($tab,$_POST['name'],$_POST['etat']);
+                $donnees= Evenements::Find_occurrences_name_etat($tab,$_POST['name'],$_POST['etat']);
 
                 $controller_report='superadmin'; 
              	$fonction_back='interface_tutore';
@@ -69,7 +69,7 @@ switch ($indice) {
 
 	case '7': // liste des centres de tutorat
 				$tab = Tutorat::Get_all_tutorat();
-                $donnees= Evenements::Find_occurrences($tab,$_POST['tutorat']);
+                $donnees= Evenements::Find_occurrences_tutorat($tab,$_POST['tutorat']);
 
                 $controller_report='superadmin';
           		$fonction_back='interface_tutorat';
@@ -79,7 +79,7 @@ switch ($indice) {
 	case '8': // liste des tuteurs pour affectation de gestion de compte admin
 				$tab = Admin::Get_all_tuteurs();
            		$data= Tutorat::Get_available_account();
- 				$donnees= Evenements::Find_occurrences_name($tab,$_POST['name'],$_POST['etat']);
+ 				$donnees= Evenements::Find_occurrences_name_etat($tab,$_POST['name'],$_POST['etat']);
 
            		$controller_report='superadmin'; 
            		$fonction_back='interface_tutorat';
@@ -89,7 +89,7 @@ switch ($indice) {
 	case '9':   // liste des comptes admin statiques
 				$tab = Tutorat::Get_static_account();
            		
- 				$donnees= Evenements::Find_occurrences($tab,$_POST['tutorat']);
+ 				$donnees= Evenements::Find_occurrences_type_tutorat($tab,$_POST['type']);
 
            		$controller_report='superadmin'; 
            		$fonction_back='interface_tutorat';
@@ -98,7 +98,7 @@ switch ($indice) {
 		break;
 	case '10': // cumul des heures impayées
 				$tab = Users::Get_unpaidHours_tuteurs(); // liste des tuteurs qui ont des heures impayees
-                $donnees= Evenements::Find_occurrences_date($tab,$_POST['string'],$_POST['date1'],$_POST['date2']);
+                $donnees= Evenements::Find_occurrences_name($tab,$_POST['name']);
 
                 $controller_report='superadmin'; 
           		$fonction_back='interface_hours';
@@ -109,7 +109,7 @@ switch ($indice) {
 	case '11': // cumul des heures payées 
 
 				$tab = Users::Get_paidHours_tuteurs(); // liste des tuteurs et de leurs heures deja payées
-                $donnees= Evenements::Find_occurrences_date($tab,$_POST['string'],$_POST['date1'],$_POST['date2']);
+                $donnees= Evenements::Find_occurrences_name($tab,$_POST['name']);
 
                 $controller_report ='superadmin'; 
           		$fonction_back ='interface_hours';

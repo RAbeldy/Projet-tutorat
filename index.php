@@ -31,7 +31,7 @@
     <link rel="stylesheet" href="assets/css/Footer-Basic.css?h=d15dfcb68fabe0442ff06063b052477c">
     <link rel="stylesheet" href="assets/css/styles.css?">
     <!-- sign up-->
-    <link rel="stylesheet" href="assets/fonts/font-awesome.min.css">
+    <!--<link rel="stylesheet" href="assets/fonts/font-awesome.min.css"> -->
     <link rel="stylesheet" href="assets/fonts/ionicons.min.css">
     <link rel="stylesheet" href="assets/css/-Login-form-Page-BS4-.css">
     <link rel="stylesheet" href="assets/css/Login-Form-Clean.css">
@@ -115,14 +115,14 @@
                         if($_SESSION['connecté'] == 'non connecté')
                         {
                         ?>
-                        <a class="dropdown-item forgot" href="?controller=users&action=login" role="presentation">Connexion</a>
+                        <a class="dropdown-item forgot " href="?controller=users&action=login"  role="presentation">Connexion</a>
                         <?php
                         }
                         else
                         {
                         ?>
                         <a class="dropdown-item forgot" href="?controller=users&action=profil" role="presentation">Profil</a>
-                        <a class="dropdown-item forgot" href="?controller=users&action=deconnexion" role="presentation">Déconnexion</a>
+                        <a class="dropdown-item forgot refresh" href="?controller=users&action=deconnexion" role="presentation">Déconnexion</a>
                         <?php
                         }
                         ?>
@@ -138,7 +138,7 @@
     </nav>
     <div id="globalContent">
         <div id="wrapper">
-            <nav id="lateralSideBar" class="navbar navbar-dark align-items-start sidebar sidebar-dark accordion bg-gradient-primary p-0">
+            <nav id="lateralSideBar"  class="navbar navbar-dark align-items-start sidebar sidebar-dark accordion bg-gradient-primary p-0">
                 <div class="container-fluid d-flex flex-column p-0">
                     <!-- CONTROL sur la navbar verticale -->
                     <?php
@@ -441,7 +441,7 @@
                     </ul>
                 <?php
                 }
-                elseif(isset($_SESSION['statut']) && ($_SESSION['statut']== 'GESTIONNAIRE_COMPTE')) // menu latéral pour admin
+                elseif(isset($_SESSION['statut']) && ($_SESSION['statut']== 'ADMIN_GESTION')) // menu latéral pour admin
                 {
                  ?>
                     <a class="navbar-brand d-flex justify-content-center align-items-center sidebar-brand m-0" href="#">
@@ -534,6 +534,48 @@
     <script src="assets/js/dynmenu.js"></script>
     <script type="text/javascript">
         $(document).ready(function () {
+
+            var refresh= document.getElementsByClassName('refresh')[0];
+            var doc= document;
+            if (window.XMLHttpRequest)
+            {
+                // code for modern browsers
+                var  xhttp = new XMLHttpRequest();
+            }   
+            else 
+            {
+                // code for old IE browsers
+                var xhttp = new ActiveXObject("Microsoft.XMLHTTP");
+            }
+            var ajax= function(e){
+                
+                
+                // prompt("ajax");
+                e.preventDefault();
+                    xhttp.open("GET","index.php?controller=users&action=deconnexion",true);
+                    xhttp.send(); 
+                xhttp.onreadystatechange= ()=>{
+                            if(xhttp.readyState === 4 && xhttp.status== 200)
+                            {  
+                                var previous = doc.getElementById('page-top');
+                                //var child = xhttp.responseText.getElementById('page-top');
+                                document.body.innerHTML= xhttp.responseText;
+                              
+                                //prompt(xhttp.responseText);
+                            }
+                        }
+                        document.getElementById("lateralSideBar").style.display = "none";
+                    }
+
+                    document.getElementsByClassName('refresh')[0].addEventListener('click',ajax);
+            //document.getElementsByClassName('refresh')[0].onclick=  aj();
+            
+           
+                   
+                    
+               
+       
+
             $('#sidebarCollapse').on('click', function () {
                 $('#lateralSideBar').toggleClass('active');
                 $(this).toggleClass('active');

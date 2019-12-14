@@ -20,31 +20,13 @@
                                             <div class="card-body">
                                                 <form method="post" action="?controller=evenements&action=modify_event" onsubmit="javascript:test_date();javascript:message();">
                                                     <div class="row">
-                                                        <div class="form-group col-xs-12 col-md-6">
+                                                        <div class="form-group col-xs-12 col-md-12">
                                                             <label for="date">
                                                                 <strong>Date</strong><br>
                                                             </label>
                                                             <input  id = "event" class="form-control" type="datetime-local" name="date_creation" value="<?= $tab[0]->getDate_evenement();?>" onchange = 'javascript:test_date();' required/>
                                                         </div>
-                                                        <div class="form-group col-xs-12 col-md-6">
-                                                            <label for="lieu">
-                                                                <strong>intitulé du tutorat</strong><br> 
-                                                            </label>
-                                                            <select class="form-control" name="id_t">
-                                                            <?php
-                                                                foreach($donnees as $data)
-                                                                       {
-                                                                         ?>
-                                                                <option value="<?= $data[1]; ?>" > <?= $data[0] ;?>
-                                                                    
-                                                                </option>
-                                                            <?php
-                                                            }
-                                                            ?>
-
-                                                            </select>
-                                                            
-                                                        </div>
+                                                        
                                                         <div class="form-group col-xs-12 col-md-6">
                                                             <label for="tutore">
                                                                 <strong>nombre de Tutorés</strong><br>

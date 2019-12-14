@@ -21,27 +21,13 @@
                                                 <form method="post" action="?controller=superadmin&action=search&indice=11">
                                                 <div class="row">
                                                     
-                                                    <div class="col-md-7 text-nowrap">
-                                                        <div class="row text-center">
-                                                            <label style="flex: auto;">Période</label>
-                                                        </div>
-                                                        <div class="row">
-                                                            <div class="col-xs-12 col-md-6">
-                                                                <label class="col-2">De</label>
-                                                                <input name="date1"class="col-8 offset-2" type="datetime-local"/>
-                                                            </div>
-                                                            <div class="col-xs-12 col-md-6">
-                                                                <label class="col-2">à</label>
-                                                                <input name="date2"class="col-8 offset-2" type="datetime-local"/>
-                                                            </div>
-                                                        </div>
-                                                    </div>
+                                                    
                                                     <div class="col-md-4 offset-1">
                                                         <div class="row text-center">
-                                                            <label style="flex: auto;">TUTORAT</label>
+                                                            <label style="flex: auto;">NOM</label>
                                                         </div>
                                                         <div class="row">
-                                                            <input type="search" name="string" class="form-control form-control-sm" aria-controls="dataTable" placeholder="Rechercher"/>
+                                                            <input type="search" name="name" class="form-control form-control-sm" aria-controls="dataTable" placeholder="Rechercher"/>
                                                         </div>
                                                     </div>
                                                     <div class="col-12 text-center rechercher">
@@ -79,7 +65,7 @@
                                                               <tr >
 
  
-                                                                  <td> <label><?=$elt['user']->getNom()?></label></td>
+                                                                  <td><label><?=$elt['user']->getNom()?></label></td>
                                                                   <td><label><?=$elt['user']->getPrenom()?></label></td>
                                                                   <td><label><?=$elt['user']->getEmail()?></label></td>
                                                                   <td><label ><?=$elt['user']->getPhone()?></label></td>

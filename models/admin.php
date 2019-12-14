@@ -507,7 +507,25 @@ class Admin
     
     public static function ValiderCompte($id_user)
     {
+        require 'connectToMail.php';
+        require 'PHPMailer/PHPMailerAutoload.php';
+
         $db = Db::getInstance();
+
+        $data= Users::Get_info($id_user); 
+
+       
+           //Déclaration du message au format texte et au format html (selon ce que les webmails supportent)
+        $message_txt = 'Bonjour Mr/Mme '.$data->getPrenom().' '.$data->getNom().',\nNous avons le plaisir de vous annoncer que votre compte a été validé.Vous pouvez dès à présent vous connecter.Pour toute question subsidiaire , veuillez contacter l\'administrateur\n .\nCe message est généré automatiquement, veuillez ne pas répondre.';
+        $message_html ='<html><head></head><body><p>Bonjour Mr/Mme '.$data->getPrenom().' '.$data->getNom().', </p><p>Nous vous annoncons avec infortune que votre compte a été désactivé.Vous pouvez dès à présent vous connecter. Pour question subsidiaire  veuillez contacter l\'administrateur.</p><p>Ce message est généré <b>automatiquement</b>, veuillez <b>ne pas répondre</b>.</p></body></html>';
+                //Sujet
+        $sujet = "[Yncrea tutorat] Compte validé  ";
+                //envoie du mail
+         
+        $login_mail= $data->getEmail();
+        include('send_mail.php');
+         
+    
         $req= $db->prepare("UPDATE avoir_statut as at SET at.id_statut_compte=1 WHERE at.id_user=?");
         $req->execute(array($id_user));
     }
@@ -583,7 +601,26 @@ class Admin
     
     public static function AnnulCompte($id_user)
     {
+        require 'connectToMail.php';
+        require 'PHPMailer/PHPMailerAutoload.php';
+
         $db = Db::getInstance();
+
+        $data= Users::Get_info($id_user); 
+
+       
+           //Déclaration du message au format texte et au format html (selon ce que les webmails supportent)
+        $message_txt = 'Bonjour Mr/Mme '.$data->getPrenom().' '.$data->getNom().',\nNous vous annoncons avec infortune que votre compte a été désactivé.Pour toute procédure de recours veuillez contacter l\'administrateur\n .\nCe message est généré automatiquement, veuillez ne pas répondre.';
+        $message_html ='<html><head></head><body><p>Bonjour Mr/Mme '.$data->getPrenom().' '.$data->getNom().', </p><p>Nous vous annoncons avec infortune que votre compte a été désactivé. Pour toute procédure de recours veuillez contacter l\'administrateur.</p><p>Ce message est généré <b>automatiquement</b>, veuillez <b>ne pas répondre</b>.</p></body></html>';
+                //Sujet
+        $sujet = "[Yncrea tutorat] Compte désactivé  ";
+                //envoie du mail
+         
+        $login_mail= $data->getEmail();
+        include('send_mail.php');
+         
+
+      
         $req= $db->prepare("UPDATE avoir_statut as at SET at.id_statut_compte=2 WHERE at.id_user=?");
         $req->execute(array($id_user));
     }

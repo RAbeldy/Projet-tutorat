@@ -245,12 +245,12 @@ class Evenements
         return 1; 
     }
     }
-    public function Modify_event($id_evenement,$id_tutorat)
+    public function Modify_event($id_evenement)
     {
       $db = Db::getInstance();
 
-      $req= $db->prepare("UPDATE evenement SET date_evenement=?, lieu=(SELECT adresse FROM tutorat WHERE id_tutorat = ?),nb_tutores=?,nb_tuteurs=?,nb_places=?,id_tutorat= ? WHERE id_evenement= ?");
-      $req->execute(array($this->getDate_evenement(),$id_tutorat,$this->getNb_tutores(),$this->getNb_tuteurs(),$this->getNb_tuteurs(),$id_tutorat,$id_evenement));
+      $req= $db->prepare("UPDATE evenement SET date_evenement=?,nb_tutores=?,nb_tuteurs=?,nb_places=? WHERE id_evenement= ?");
+      $req->execute(array($this->getDate_evenement(),$this->getNb_tutores(),$this->getNb_tuteurs(),$this->getNb_tuteurs(),$id_evenement));
     }
 
     public function Declare_hours($id_admin,$id_tutorat)
@@ -435,7 +435,7 @@ class Evenements
     {
        $db = Db::getInstance();
         $list=[];
-        $req = $db->prepare(' SELECT t.libelle as libelle,e.id_evenement,e.date_evenement,e.lieu,e.nb_places_tutores,e.nb_tuteurs,e.nb_places,p.duree as duree FROM evenement as e INNER JOIN tutorat as t ON e.id_tutorat= t.id_tutorat INNER JOIN planning_event as p ON e.id_planning = p.id_planning  WHERE  e.id_user = ? AND e.date_evenement > NOW()  ORDER BY  e.date_evenement DESC');
+        $req = $db->prepare('SELECT t.libelle as libelle,e.id_evenement,e.date_evenement,e.lieu,e.nb_places_tutores,e.nb_tuteurs,e.nb_places,p.duree as duree, tt.libelle as libelle_type FROM evenement as e,tutorat as t,planning_event as p, administrer as ad , type_tutorat as tt WHERE e.id_tutorat= t.id_tutorat AND e.id_planning = p.id_planning AND t.id_typeTutorat= tt.id_typeTutorat AND t.id_tutorat= ad.id_tutorat AND t.id_typeTutorat= ad.id_typeTutorat AND ad.id_admin= ? AND e.date_evenement < NOW() ORDER BY e.date_evenement DESC');
         $req->execute(array($id_admin));
 
         foreach($req->fetchAll() as $data)
@@ -448,7 +448,7 @@ class Evenements
           $event->setNb_places($data['nb_places']);
           $event->setNb_places_tutores($data['nb_places_tutores']);
          
-          $list []= array('evenement' => $event,'tutorat' => $data['libelle'],'planning_event' => $data['duree']);
+          $list []= array('evenement' => $event,'tutorat' => $data['libelle'],'type_tutorat'=> $data['libelle_type'],'planning_event' => $data['duree']);
         }
         return $list;
 
@@ -726,7 +726,28 @@ class Evenements
       $req->execute(array($nb_places,$id_evenement));
     }
     
-    public static function Find_occurrences_name($tab,$name,$etat) // recherche par nom et/ou état
+    public static function Find_occurrences_name($tab,$name)
+    {
+      $data= [];
+      $result= []; 
+
+      if($name=="" ) // tri par rapport à l'état
+      {
+        return $tab;
+      }
+      else 
+      {
+            foreach ($tab as $elt)
+          {
+           if(preg_match('#'.$name.'#i', $elt['user']->getNom()))
+            $data[]= $elt;
+          } 
+          //var_dump($data);
+          return $data ;
+      }
+    
+    }
+    public static function Find_occurrences_name_etat($tab,$name,$etat) // recherche par nom et/ou état
     {
       $data= [];
       $result= [];
@@ -760,7 +781,7 @@ class Evenements
         else // recherche par rapport aux deux 
         {
            
-                echo($name);
+                //echo($name);
                foreach ($tab as $elt) // première recherche par rapport au tutorat 
                {
                     if(preg_match('#'.$name.'#i', $elt['user']->getNom()))
@@ -771,12 +792,12 @@ class Evenements
                     if(preg_match('#'.$etat.'#i', $elt['etat']))
                     $result[]= $elt;
                 }
-                 var_dump($result);
+                 //var_dump($result);
                 return $result ; // on retourne le résultat final   
     }
 }
 }
-    public static function Find_occurrences($tab,$string)
+    public static function Find_occurrences_tutorat($tab,$string)
     {
       $data= [];
       //var_dump($tab);
@@ -788,6 +809,17 @@ class Evenements
       return $data ;
     }
 
+    public static function Find_occurrences_type_tutorat($tab,$string)
+    {
+      $data= [];
+      //var_dump($tab);
+      foreach ($tab as $elt)
+      {
+       if(preg_match('#'.$string.'#i', $elt['type_tutorat']))
+        $data[]= $elt;
+      } 
+      return $data ;
+    }
     public static function Find_occurrences_date($tab,$string,$date1,$date2)
     {
       $data= [];

@@ -19,12 +19,13 @@ class TuteursController
     {   
         if(isset($_SESSION['id_statut']))// on vérifie que seul un utilisateur connecté peut accéder à ces pages
           {
-            $id= htmlspecialchars($_GET['id']);
+            
             $tuteurs = new Tuteurs();
-            if($id!="")
+            
+            if(isset($_POST['id']))
             {
+              $id= htmlspecialchars($_POST['id']); // il s'agit de l'id du tutorat pour lequel le tuteur veut créer un évènement
               $donnees = $tuteurs->Get_specific_working_list($_SESSION['id_user'],$id); // liste des tuteurs avec qui je travaille dans un tutorat donné autre que le tutorat personnalisé
-              $id= htmlspecialchars($_GET['id']); // il s'agit de l'id du tutorat pour lequel le tuteur veut créer un évènement
             }
             else // il s'agit d'un tutorat personnalisé simple
             {

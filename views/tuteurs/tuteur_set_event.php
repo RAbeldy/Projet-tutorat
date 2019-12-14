@@ -18,13 +18,13 @@
                                                 </p>
                                             </div>
                                             <div class="card-body">
-                                                <form method="post" action="?controller=evenements&action=tuteur_set_event&id=<?=$id;?>" onsubmit="javascript:test_date();javascript:id();javascript:message();">
+                                                <form method="post" class="envoi"action="?controller=evenements&action=tuteur_set_event&id=<?=$id;?>" >
                                                     <div class="row">
                                                         <div class="form-group col-xs-12 col-md-6">
                                                             <label for="date">
                                                                 <strong>Date</strong><br>
                                                             </label>
-                                                            <input  id = "event" class="form-control" type="datetime-local" name="date_creation"  onchange = 'javascript:test_date();' required/>
+                                                            <input  id = "event" class="form-control" type="datetime-local" name="date_creation"   required/>
                                                         </div>
                                                         <div class="form-group col-xs-12 col-md-6">
                                                             <label for="lieu">
@@ -54,7 +54,7 @@
                                                             <label for="tutore">
                                                                 <strong>Tutoré 2</strong><br>
                                                             </label>
-                                                            <select class="form-control" onchange="javascript:id();" name="id_2" id="id_2">
+                                                            <select class="form-control"  name="id_2" id="id_2">
                                                                 <option value=""> Aucun </option>
                                                             <?php
                                                                 foreach ($donnees as $elt) 
@@ -101,29 +101,46 @@
         </div>
     </div>
 
-    <script type="text/javascript">
-         function test_date()
-          {
-            var today = new Date();
-           var mm = String(today.getMonth() + 1).padStart(2, '0'); //first month January takes 0. 
-            var yyyy = today.getFullYear(); // year takes all e.g: 2019 => 2019
-             var dd = String(today.getDate()).padStart(2, '0');// Day config 
-             today = yyyy + '-' + mm + '-' + dd;
-             day = dd + '/' + mm + '/' + yyyy; 
-             if (document.getElementById('event').value < today) {
-                alert(" Entrer une date ultérieure à celle d'aujourd'hui: " +day);
-                return -1;
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script type="text/javascript">
+$(document).ready( function () {
+    var $id1= $('#id_1'),
+       $id2= $('#id_2'),
+       parentNode= document.getElementsByClassName('.card-header py-3'),
+       $envoi= $('.envoi');
+    
+       function test_date()
+    {
+        var today = new Date();
+        var mm = String(today.getMonth() + 1).padStart(2, '0'); //first month January takes 0. 
+        var yyyy = today.getFullYear(); // year takes all e.g: 2019 => 2019
+        var dd = String(today.getDate()).padStart(2, '0');// Day config 
+        today = yyyy + '-' + mm + '-' + dd;
+        day = dd + '/' + mm + '/' + yyyy; 
+        if (document.getElementById('event').value < today) {
+            //alert("false");
+            return false;
+        }
+        else{
+            //alert("true");
+            return true;
+        }
+    }
 
-                    }
-                } 
-            function id()
-            {
-                var id1= document.getElementById('id_1').value;
-                var id2= document.getElementById('id_2').value;
-                if( document.getElementById('id_1').value == document.getElementById('id_2').value)
-                {
-                    alert(" Vous avez sélectionné deux fois le meme tutoré: ");
-                    return -1;
-                }
-            }        
-          </script>
+    $('.envoi').submit(function( event ) {
+        if($id1.val()== $id2.val())
+        {
+            event.preventDefault();
+            alert("vous avez sélectionné deux fois le meme tutoré");
+            //$parentNode.append("vous avez sélectionné deux fois le meme tutoré");
+        }
+        if(!test_date())
+        {
+            event.preventDefault();
+            alert("sélectionnez une date supérieur à la date actuelle")
+        }
+});
+     
+      
+})  
+</script>

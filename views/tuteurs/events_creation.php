@@ -29,9 +29,10 @@
                                             <div class="card historique">
                                                 <div class="card-body">
                                                     <h4 class="card-title"> <?= $elt[0]; ?></h4>
-                                                    <a href="?controller=tuteurs&action=tuteur_set_event&id=<?=$elt[1];?>">
-                                                        <button class="btn" type="button">Créer un<br/>évènement</button>
-                                                    </a>
+                                                    <form method="post" action="?controller=tuteurs&action=tuteur_set_event" >
+                                                        <button class="btn" type="submit">Créer un<br/>évènement</button>
+                                                    <input name="id" value=<?=$elt[1]?> type= "hidden">
+                                                    </form>
                                                 </div>
                                             </div>
                                         </div>

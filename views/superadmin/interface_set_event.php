@@ -20,7 +20,7 @@
                                             <div class="card avenir">
                                                 <div class="card-body">
                                                     <h4 class="card-title"><?=$elt[0] ?></h4>
-                                                    <a href="?controller=superadmin&action=set_event&type=<?=$elt[0] ?>">
+                                                    <a href="?controller=superadmin&action=set_event&id=<?=$elt[1] ?>">
                                                         <button class="btn" type="button">Je crée</button>
                                                     </a>
                                                 </div>
