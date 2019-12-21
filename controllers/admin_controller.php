@@ -6,7 +6,7 @@ require_once('models/tuteurs.php');
 require_once('models/users.php');
 require_once('models/admin.php');
 require_once('models/tutorat.php');
-
+require_once('controllers/users_controller.php');
 
 
 
@@ -308,12 +308,13 @@ class AdminController
       if(isset($_SESSION['id_statut']))// on vérifie que seul un utilisateur connecté peut accéder à ces pages
         {
       
-      $id_u_c= htmlspecialchars($_POST['id_u_c']);
-      $tutorat= htmlspecialchars($_POST['tutorat']);
-      $id_u_d= htmlspecialchars($_POST['id_u_d']);
       
-           if($id_u_c!="")
+      $tutorat= htmlspecialchars($_POST['tutorat']);
+
+      
+           if($_POST['id_u_c'] !="")
                  {
+                  $id_u_c= htmlspecialchars($_POST['id_u_c']);
                     //echo "gfgfdghdfhxvvdvdfdfdkfhmdfhdmkfdhfdkmlfhdvn;vdkmbnvdfhdvfbnifldhfdklfdhfikhdg".$_POST['id_e_c'];
                       
                       Admin::Send_proposal($id_u_c,$tutorat);
@@ -326,8 +327,9 @@ class AdminController
 
                       AdminController::tuteurs_list(); // on charge la vue adéquates
                  }
-           elseif($id_u_d!="")
+           elseif($_POST['id_u_d']!="")
                  {
+                  $id_u_d= htmlspecialchars($_POST['id_u_d']);
                     //echo "gfgfdghdfhxvvdvdfdfdkfhmdfhdmkfdhfdkmlfhdvn;vdkmbnvdfhdvfbnifldhfdklfdhfikhdg".$_POST['id_e_d'];
                       
                       Admin::Cancel_proposal($id_u_d,$tutorat);
@@ -872,6 +874,7 @@ public  function export()
       {
         if($_POST['statut']==13)
         {
+          $id_user= htmlspecialchars($_POST['id_user']);
           $donnees=Admin::TuteurCompte($id_user);
           $controller_report='admin';
           $fonction_back='wait_compte'; 
@@ -880,6 +883,7 @@ public  function export()
         }
         elseif($_POST['statut']==16)
         {
+          $id_user= htmlspecialchars($_POST['id_user']);
           $donnees=Admin::TutoreCompte($id_user);
           $controller_report='admin';
           $fonction_back='wait_compte'; 

@@ -369,7 +369,10 @@ class Evenements
     {
       $db = Db::getInstance();
         $list=[];
-        $req = $db->prepare(' SELECT t.libelle as libelle,e.id_evenement,e.date_evenement,e.lieu,e.nb_places_tutores,e.nb_tuteurs,e.nb_places,p.duree as duree FROM evenement as e,tutorat as t,planning_event as p, administrer as ad ,participer_evenement as pe,tuteurs as tu WHERE e.id_tutorat= t.id_tutorat AND e.id_planning = p.id_planning AND e.id_evenement= pe.id_evenement AND e.id_user= pe.id_user AND pe.id_user= tu.id_tuteurs AND t.id_tutorat= ad.id_tutorat AND t.id_typeTutorat= ad.id_typeTutorat AND ad.id_admin= ? AND e.date_evenement > NOW()  ORDER BY  e.date_evenement DESC');
+        $req = $db->prepare(' SELECT t.libelle as libelle,e.id_evenement,e.date_evenement,e.lieu,e.nb_places_tutores,e.nb_tuteurs,e.nb_places,p.duree as duree 
+        FROM evenement as e,tutorat as t,planning_event as p, administrer as ad ,participer_evenement as pe,tuteurs as tu WHERE e.id_tutorat= t.id_tutorat 
+        AND e.id_planning = p.id_planning AND e.id_evenement= pe.id_evenement AND e.id_user= pe.id_user AND pe.id_user= tu.id_tuteurs AND t.id_tutorat= ad.id_tutorat 
+        AND t.id_typeTutorat= ad.id_typeTutorat AND ad.id_admin= ? AND e.date_evenement > NOW()  ORDER BY  e.date_evenement DESC');
         $req->execute(array($id_admin));
 
         foreach($req->fetchAll() as $data)
@@ -391,7 +394,10 @@ class Evenements
     {
       $db = Db::getInstance();
         $list=[];
-        $req = $db->prepare(' SELECT t.libelle as libelle,e.id_evenement,e.date_evenement,e.lieu,e.nb_places_tutores,e.nb_tuteurs,e.nb_places,p.duree as duree FROM evenement as e,tutorat as t,planning_event as p, administrer as ad ,participer_evenement as pe,tuteurs as tu WHERE e.id_tutorat= t.id_tutorat AND e.id_planning = p.id_planning AND e.id_evenement= pe.id_evenement AND e.id_user= pe.id_user AND pe.id_user= tu.id_tuteurs AND t.id_tutorat= ad.id_tutorat AND t.id_typeTutorat= ad.id_typeTutorat AND ad.id_admin= ? AND e.date_evenement < NOW()  ORDER BY  e.date_evenement DESC');
+        $req = $db->prepare(' SELECT t.libelle as libelle,e.id_evenement,e.date_evenement,e.lieu,e.nb_places_tutores,e.nb_tuteurs,e.nb_places,p.duree as duree 
+        FROM evenement as e,tutorat as t,planning_event as p, administrer as ad ,participer_evenement as pe,tuteurs as tu WHERE e.id_tutorat= t.id_tutorat 
+        AND e.id_planning = p.id_planning AND e.id_evenement= pe.id_evenement AND e.id_user= pe.id_user AND pe.id_user= tu.id_tuteurs AND t.id_tutorat= ad.id_tutorat 
+        AND t.id_typeTutorat= ad.id_typeTutorat AND ad.id_admin= ? AND e.date_evenement < NOW()  ORDER BY  e.date_evenement DESC');
         $req->execute(array($id_admin));
 
         foreach($req->fetchAll() as $data)
@@ -435,7 +441,9 @@ class Evenements
     {
        $db = Db::getInstance();
         $list=[];
-        $req = $db->prepare('SELECT t.libelle as libelle,e.id_evenement,e.date_evenement,e.lieu,e.nb_places_tutores,e.nb_tuteurs,e.nb_places,p.duree as duree, tt.libelle as libelle_type FROM evenement as e,tutorat as t,planning_event as p, administrer as ad , type_tutorat as tt WHERE e.id_tutorat= t.id_tutorat AND e.id_planning = p.id_planning AND t.id_typeTutorat= tt.id_typeTutorat AND t.id_tutorat= ad.id_tutorat AND t.id_typeTutorat= ad.id_typeTutorat AND ad.id_admin= ? AND e.date_evenement < NOW() ORDER BY e.date_evenement DESC');
+        $req = $db->prepare('SELECT t.libelle as libelle,e.id_evenement,e.date_evenement,e.lieu,e.nb_places_tutores,e.nb_tuteurs,e.nb_places,p.duree as duree, tt.libelle as libelle_type 
+        FROM evenement as e,tutorat as t,planning_event as p, administrer as ad , type_tutorat as tt WHERE e.id_tutorat= t.id_tutorat AND e.id_planning = p.id_planning
+         AND t.id_typeTutorat= tt.id_typeTutorat AND t.id_tutorat= ad.id_tutorat AND t.id_typeTutorat= ad.id_typeTutorat AND ad.id_admin= ? AND e.date_evenement < NOW() ORDER BY e.date_evenement DESC');
         $req->execute(array($id_admin));
 
         foreach($req->fetchAll() as $data)
@@ -481,7 +489,9 @@ class Evenements
     {
        $db = Db::getInstance();
         $list=[];
-        $req = $db->query(' SELECT tt.libelle as libelle_type ,t.libelle as libelle,e.id_evenement,e.date_evenement,e.lieu,e.nb_places_tutores,e.nb_tuteurs,e.nb_places,p.duree as duree FROM evenement as e,participer_evenement as pe,tutorat as t,planning_event as p,type_tutorat as tt WHERE e.id_evenement= pe.id_evenement AND e.id_tutorat= t.id_tutorat AND e.id_planning = p.id_planning AND t.id_typeTutorat= tt.id_typeTutorat AND e.date_evenement < NOW()  ORDER BY  e.date_evenement DESC');
+        $req = $db->query(' SELECT tt.libelle as libelle_type ,t.libelle as libelle,e.id_evenement,e.date_evenement,e.lieu,e.nb_places_tutores,e.nb_tuteurs,e.nb_places,p.duree as duree 
+        FROM evenement as e,participer_evenement as pe,tutorat as t,planning_event as p,type_tutorat as tt WHERE e.id_evenement= pe.id_evenement AND e.id_tutorat= t.id_tutorat 
+        AND e.id_planning = p.id_planning AND t.id_typeTutorat= tt.id_typeTutorat AND e.date_evenement < NOW()  ORDER BY  e.date_evenement DESC');
         
 
         foreach($req->fetchAll() as $data)

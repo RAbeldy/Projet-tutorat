@@ -241,7 +241,6 @@ require_once('connexion.php');
     public function Deconnexion()
     {
       session_destroy();
-
     }
 
 

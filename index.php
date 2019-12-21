@@ -9,11 +9,11 @@
   {
         $controller = 'page';
         $action     = 'home';
-      }
+  }
   session_start();
   if(!isset($_SESSION['connecté']))
-  $_SESSION['connecté'] = 'non connecté';
-
+        $_SESSION['connecté'] = 'non connecté';
+ 
 ?>
 
 <!DOCTYPE html>
@@ -29,6 +29,9 @@
                 color: black;
                 text-align: center;
                 background: orange;
+            }
+            .disappear{
+                display: none;
             }
     
     </style>
@@ -145,9 +148,10 @@
             </div>
         </div>
     </nav>
+  
     <div id="globalContent">
         <div id="wrapper">
-            <nav id="lateralSideBar"  class="navbar navbar-dark align-items-start sidebar sidebar-dark accordion bg-gradient-primary p-0">
+            <nav id="lateralSideBar"  class="navbar navbar-dark align-items-start sidebar sidebar-dark accordion bg-gradient-primary p-0 ">
                 <div class="container-fluid d-flex flex-column p-0">
                     <!-- CONTROL sur la navbar verticale -->
                     <?php
@@ -516,7 +520,7 @@
                     </div>
                 </div>
                 <div id="message_avertissement_javascript" >
-                <?php require_once('alert_javascript_not_enable.php'); ?>
+                <?php //require_once('alert_javascript_not_enable.php'); ?>
                 </div>
                 <?php
                 require_once('routes.php');
@@ -524,6 +528,7 @@
             </div>
         </div>
     </div>
+
     <div class="footer-basic">
         <footer>
             <div class="social">
@@ -546,8 +551,10 @@
     <script type="text/javascript">
         $(document).ready(function () {
 
-            alert_javascript = document.getElementById('message_avertissement_javascript');
-       
+            
+             //si javascript actif  => alors on désactive le message d'alerte
+             alert_javascript = document.getElementById('message_avertissement_javascript');
+             alert_javascript.parentNode.removeChild(alert_javascript);
             
             var refresh= document.getElementsByClassName('refresh')[0];
             var doc= document;
@@ -583,14 +590,6 @@
 
                     document.getElementsByClassName('refresh')[0].addEventListener('click',ajax);
             //document.getElementsByClassName('refresh')[0].onclick=  aj();
-            
-           //javascript inactif 
-           window.onload = function(){
-            alert_javascript.parentNode.removeChild(alert_javascript);
-            }       
-                    
-               
-       
 
             $('#sidebarCollapse').on('click', function () {
                 $('#lateralSideBar').toggleClass('active');

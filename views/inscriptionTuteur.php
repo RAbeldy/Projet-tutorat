@@ -86,7 +86,6 @@
                      else 
                         return true;
         }
-
         function completeFields(complete){
             for(let i=0 ; i< complete.length; i++)
             {

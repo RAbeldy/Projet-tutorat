@@ -3,7 +3,7 @@ require_once('models/users.php');
 require_once('models/tuteurs.php');
 require_once('models/tutores.php');
 require_once('models/evenements.php');
-
+require_once('controllers/users_controller.php');
 /* Définition du controller */
 class TutoresController
 {
@@ -178,8 +178,8 @@ class TutoresController
 
 
      
-     public static function contact()
-        {
+    public static function contact()
+    {
             if(isset($_SESSION['id_statut']) && $_SESSION['id_statut']== 16)// on vérifie que seul un utilisateur connecté peut accéder à ces pages
                 { 
                     $data= Users::Get_contact_admin($_SESSION['id_user']);
@@ -187,7 +187,7 @@ class TutoresController
                 }
             else
                 UsersController::deconnexion();
-        }
+    }
       public function message() // à completer lors de la création de la table de suivi des admin
       {
             if(isset($_SESSION['id_statut']) && $_SESSION['id_statut']== 16)// on vérifie que seul un utilisateur connecté peut accéder à ces pages
@@ -219,9 +219,9 @@ class TutoresController
             else
                 UsersController::deconnexion();
       }
-      public function savoir_tutores() // page à savoir
+    public function savoir_tutores() // page à savoir
     {
-        if(isset($_SESSION['id_statut']) && $_SESSION['id_statut']== 16)// on vérifie que seul un utilisateur connecté peut accéder à ces pages
+        if(isset($_SESSION['id_statut'])  &&  $_SESSION['id_statut']== 16)// on vérifie que seul un utilisateur connecté peut accéder à ces pages
         { 
             require_once('views/tutores/savoir_tutores.php'); 
         }

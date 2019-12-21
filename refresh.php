@@ -1,5 +1,5 @@
 <?php
-	if($_GET['controller'] == 'users' && $_GET['action']== 'connexion')
+	/* if($_GET['controller'] == 'users' && $_GET['action']== 'connexion')
 		{ ?>
 			<form method="post" action="index.php?controller=users&action=connexion">
 				<input type="hidden" name="email" value="<?=$_POST['email']?>">
@@ -10,6 +10,6 @@
 	}
 
 
-if($_GET['controller'] == 'users' && $_GET['action']== 'deconnexion')
+if($_GET['controller'] == 'users' && $_GET['action']== 'deconnexion') */
 	header('location:index.php?controller=users&action=deconnexion');
 ?>

@@ -70,8 +70,7 @@
                                                             <?php foreach($donnees as $data)
                                                             {
                                                              ?>   
-                                                             <form method="post" action="?controller=evenements&action=cancel_participation
-                                                              ">
+                                                             <form method="post" action="?controller=evenements&action=cancel_participation">
                                                             <tr>
                                                                 <td><label><?=$data['type_tutorat']?></label></td>
                                                                 <td><label><?=$data['tutorat']?></label></td>

@@ -4,6 +4,7 @@ require_once('models/evenements.php');
 require_once('models/users.php');
 require_once('models/tuteurs.php');
 require_once('models/tutorat.php');
+require_once('controllers/users_controller.php');
 /* Définition du controller */
 class TuteursController
 {

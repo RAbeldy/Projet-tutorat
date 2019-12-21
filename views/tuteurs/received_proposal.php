@@ -76,9 +76,9 @@
                                                                   <td> <label><?=$elt['libelle'];?></label></td>
                                                                   <td><label><?=$elt['adresse'];?></label></td>
                                                                   <td><label><?=$elt['code_postal'];?></label></td> 
-                                                                  <td><button class="btn" type="submit"name="accepter" >Accepter</button>
+                                                                  <td><button class="btn accept" type="submit"name="accepter" >Accepter</button>
                                                                   </td>
-                                                                  <td><button class="btn" type="submit"name="refuser" >Refuser</button>
+                                                                  <td><button class="btn refuse" type="submit"name="refuser" >Refuser</button>
                                                                   </td>
                                                                   <input type="hidden" name="id_t" value="<?=$elt['tutorat'];?>"/>                                                                 
                                                               </tr>
@@ -106,11 +106,28 @@
     </div>
 
 <script type="text/javascript">
-        function alert()
-        {
-            confirm('etes vous sur de vouloir vous inscrir?');
-        }
 
+        var acceptBtn= document.getElementsByClassName('accept')[0];
+        var refuseBtn= document.getElementsByClassName('refuse')[0];
+
+        var accept= function(e)
+        {
+            var res= confirm('etes vous sur de vouloir accepter cette proposition?');
+            if(res== false)
+                e.preventDefault();
+        }
+        var refuse= function(e)
+        {
+            var res= confirm('etes vous sur de vouloir rejeter cette proposition?');
+            if(res== false)
+                e.preventDefault();
+        }
+        
+        acceptBtn.addEventListener('click',accept);
+        refuseBtn.addEventListener('click',refuse);
+        
+
+        
         
     </script>
 
