@@ -298,11 +298,11 @@ class SuperadminController
            
              if( isset($_POST['modifier']))
              {
-             $donnees= Tutorat::Get_tutorat($_SESSION['id_user']); // on récupère la liste des tutorats qu'il administre
-             $tab= Evenements::Get_informations_on_events($id_e);
-              
-             $controller_report='superadmin';
-             $fonction_back='events';
+              $donnees= Tutorat::Get_tutorat($_SESSION['id_user']); // on récupère la liste des tutorats qu'il administre
+              $tab= Evenements::Get_informations_on_events($id_e);
+                
+              $controller_report='superadmin';
+              $fonction_back='events';
 
               require_once('views/admin/modify_event.php');
             }
@@ -313,7 +313,7 @@ class SuperadminController
               $data= Evenements::Get_informations_on_events($id_e);  // on récupère la date, le. lieu etc sur l'évenement
 
               $controller_report='superadmin';
-              $fonction_back='future_events_list';
+              $fonction_back='events';
                
               require_once('views/superadmin/subscription_list.php');
             }

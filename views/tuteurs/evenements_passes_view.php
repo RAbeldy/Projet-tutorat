@@ -62,8 +62,7 @@
                                                         </thead>
                                                         <tbody>
                                                             <?php
-                                                            if(!is_null($donnees))
-                                                            {
+                                                           
                                                              foreach ($donnees as $elt) 
                                                             {
                                                              ?>
@@ -84,7 +83,7 @@
 
                                                                   <td><label ><strong ><span style="color: red;" ><?=$elt['participer_evenement']?></span></strong></label></td>
                                                                   
-                                                                  <td><button class="btn" type="submit" name="réclamer" title="il est conseillé de patienter au moins une semaine pour que l'évènement soit validé. Dès lors, vous pouvez faire une réclamation en toute légitimité" onclick="alert();">Pas encore validé</button>
+                                                                  <td><button class="btn" type="submit" name="réclamer" title="il est conseillé de patienter au moins une semaine pour que l'évènement soit validé. Dès lors, vous pouvez faire une réclamation en toute légitimité" >Pas encore validé</button>
                                                                   </td>
                                                                   <?php
                                                                   }
@@ -107,7 +106,7 @@
                                                              </form>
                                                             <?php
                                                              }
-                                                             }
+                                                             
                                                              ?>
                                                         </tbody>
                                                         <tfoot>

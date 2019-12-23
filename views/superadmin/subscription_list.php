@@ -64,13 +64,18 @@
                                                                 <th>Ecole</th>
                                                                 <th>Niveau</th>
                                                                 <th>Consulter</th>
+                                                                <?php if( date("Y-m-d H:i:s") < $data[0]->getDate_evenement()   ) 
+                                                                  {
+                                                                  ?>
                                                                 <th>Annuler sa participation</th>
-
+                                                                    <?php 
+                                                                  }
+                                                                  ?>        
                                                             </tr>
                                                             
                                                         </thead>
                                                         <tbody>
-
+                                                        
                                                             <?php
                                                              foreach ($donnees as $elt)
                                                             {
@@ -87,8 +92,15 @@
                                                                   <td><label ><?=$elt['user']->getEcole();?></label></td> <!-- ecole -->
                                                                     
                                                                   <td><button class="btn" type="submit" name="consulter" >Consulter</button></td>
-                                                                  <td><button class="btn" type="submit" name="annuler" >Annuler</button></td>
+                                                                  <?php 
                                                                   
+                                                                  if( date("Y-m-d H:i:s")  <  $data[0]->getDate_evenement() ) 
+                                                                  {
+                                                                  ?>
+                                                                  <td><button class="btn" type="submit" name="annuler" >Annuler</button></td>
+                                                                  <?php
+                                                                    }
+                                                                    ?>
                                                                   <input type="hidden" name="id_u" value="<?=$elt['user']->getId_user();?>" >
                                                                   <input type="hidden" name="id_e_c" value="<?=$data[0]->getId_evenement();?>" >
                                                                   <input type="hidden" name="statut" value="<?=$elt['statut'];?>" >

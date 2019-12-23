@@ -199,9 +199,8 @@ class EvenementsController
           if( preg_match('#^TUTORE#', $_SESSION['statut']) ) // une regex sur le statut du user pour savoir qui est connecté
           {   
                
-              
               $donnees = Evenements::Get_past_events($_SESSION['id_user']);
-
+              
               $controller_report='tutores';
               $fonction_back='interface_tutore';
 
@@ -211,7 +210,7 @@ class EvenementsController
           {
 
               $donnees = Evenements::Get_past_events($_SESSION['id_user']);
-
+          
               $controller_report='tuteurs';
               $fonction_back='interface_tuteur';
               

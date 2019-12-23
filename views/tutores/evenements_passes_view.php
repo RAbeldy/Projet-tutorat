@@ -86,14 +86,14 @@
                                                                   if( $elt['participer_evenement'] == 'NON' )
                                                                   {
                                                                     ?>
-                                                                  <td><button class="btn" onclick="openModal();" id="btnPopup"> Valider</button>
+                                                                  <td><button class="btn"  id="popup"> Valider</button>
                                                                   </td>
                                                                   <div id= "overlay" class="overlay"> 
                                                                          <div id="popup" class="popup">
                                                                             <h2> Confirmer </h2>
                                                                             <p>
-                                                                                <button class="btn" onclick="openModal();" id="close" name="annuler" >annuler</button>
-                                                                            <button class="btn" onsubmit="openModal();" id="submit" type="submit" name="valider">valider</button>
+                                                                                <button class="btn cancel"  id="close" name="annuler" >annuler</button>
+                                                                            <button class="btn valid"  id="submit" type="submit" name="valider">valider</button>
                                                                             </p>
                                                                          </div>
                                                                   </div>
@@ -135,22 +135,34 @@
 <script type="text/javascript">
 
 
-var btnPopup = document.getElementById('btnPopup');
-var close =    document.getElementById('close');
-var submit =   document.getElementById('submit');
+var popup = document.getElementById('popup');
 
+var validBtn= document.getElementsByClassName('valid')[0];
+var cancelBtn= document.getElementsByClassName('cancel')[0];
+var overlay = document.getElementById("overlay");
 
-        function openModal() 
+     
+        
+        var accept= function(e)
         {
-            var overlay = document.getElementById("overlay");
-            if (overlay.style.display == 'block') 
-            {
-                overlay.style.display = 'none' ;
-            } 
-            else 
-            {
-                overlay.style.display = 'block';
+            var res= confirm('etes vous sur de vouloir accepter cette proposition?');
+            if(res== false){
+                overlay.style.display= "none";
             }
         }
+        var cancel= function(e)
+        {
+            var res= confirm('etes vous sur de vouloir rejeter cette proposition?');
+            if(res== false){
+                e.preventDefault();
+                overlay.style.display= "none";
+            }
+        }
+
+        popup.addEventListener('click',(e)=>{
+            acceptBtn.addEventListener('click',accept);
+        refuseBtn.addEventListener('click',cancel);
+        })
+        
     </script>
     
