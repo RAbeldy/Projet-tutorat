@@ -23,7 +23,8 @@
                 <input class="form-control complete" type="text" name="nationalite" id="d" placeholder="Nationalité" >
             </div>
             <div class="form-group">
-                <input class="form-control complete" type="text" name="phone" id="e" placeholder="Téléphone" >
+                <input class="form-control complete" type="text" minlength="9" id="tel" maxlength="10" name="phone" id="e" placeholder="Téléphone" >
+                <span id='telmessage'></span>
             </div>
             <div class="form-group">
                 <input class="form-control complete"  type="email" name="email" id="numero2" placeholder="Email" >
@@ -69,6 +70,7 @@
         var complete= document.querySelectorAll(".complete");
         var pwd= document.getElementById('password');
         var cpwd= document.getElementById('cpassword');
+        var tel= document.getElementById('tel');
         var bool= true;
 
 //Control password
@@ -82,7 +84,18 @@ var checke = function() {
           }
         }
 
-
+        function checkLength() {
+            
+            if(tel.value.length < 9 || tel.value.length > 10){
+                tel.style.color= 'red';
+                document.getElementById('telmessage').innerHTML= 'pas assez de digit';
+            }
+            else {
+                tel.style.color= 'green';
+                document.getElementById('telmessage').innerHTML= 'correct';
+            }
+                
+        }
 
 function checkEmail() {
                     var email = document.getElementById('numero2');
@@ -119,6 +132,9 @@ function completeFields(complete){
 $('#cpassword').keyup(e =>{
                 checke();
             })
+$('#tel').keyup(e =>{
+                checkLength();
+            })
         
 $('.envoi').submit((e)=>{
             if(!completeFields(complete))
@@ -129,6 +145,12 @@ $('.envoi').submit((e)=>{
             if(!checkEmail())
             {
                 e.preventDefault(); // on annule la fonction par défaut du bouton d'envoi 
+            }
+            if(tel.value.length < 9 || tel.value.length > 10)
+            {
+                alert("numéro de telephone incorrect");
+                tel.style.borderColor="red";
+                e.preventDefault();
             }
         })
 

@@ -215,7 +215,8 @@ class Admin
     {
         require 'connectToMail.php';
         require 'PHPMailer/PHPMailerAutoload.php';
-
+        $mailAccount = 'contact_admin@tutorat-yncrea.fr';
+        
         //Déclaration du message au format texte et au format html (selon ce que les webmails supportent)
         $message_txt = 'Bonjour Mr/Mme '.$prenom.' '.$nom.',\nVous avez été sélectionné pour participer aux évènements qui se déroulent à '.$tutorat.' du tutorat de la '.$type_tutorat.' .\n Veuillez donc vous connecter sur votre espace pour accepter ou non cette offre.\nCe message est généré automatiquement, veuillez ne pas répondre.';
         $message_html ='<html><head></head><body><p>Bonjour Mr/Mme '.$prenom.' '.$nom.', </p><p>Vous avez été sélectionné pour participer aux évènements qui se déroulent à <b>'.$tutorat.'</b> du tutorat de la <b>'.$type_tutorat.'</b>.</p><p>Veuillez donc vous connecter sur votre espace pour accepter ou non cette offre.</b></p><p>Ce message est généré <b>automatiquement</b>, veuillez <b>ne pas répondre</b>.</p></body></html>';
@@ -325,7 +326,10 @@ class Admin
            $nb2 = $data['nb_max_mef'];
         }
         $nb1= ($nb1 - 1);
-        
+
+        $req= $db->prepare("UPDATE en_attente SET date_fin= ?, statut_liaison= 'INACTIF' WHERE id_tutores= ? AND statut_liaison ='ACTIF'");
+        $req->execute(array(date("Y-m-d H:i:s"),$id_tutore));
+
         $req= $db->prepare("UPDATE tuteurs SET nb_linksmef= ? WHERE id_tuteurs= ? ");
         $req->execute(array($nb1,$id_tuteur));
 
@@ -423,6 +427,10 @@ class Admin
 
 
             }
+
+
+
+
 
     //gestion compte
     

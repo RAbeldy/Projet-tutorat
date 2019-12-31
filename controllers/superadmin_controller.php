@@ -795,6 +795,7 @@ public  function export() // fonction d'exportation fichier excel
 
                 require ('PHPMailer/PHPMailerAutoload.php');
                 require ('connectToMail.php');
+                $mailAccount = 'superadmin@tutorat-yncrea.fr';
 
                 $contacter= true;
                 $nom= $_SESSION['nom']; 

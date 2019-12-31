@@ -89,7 +89,7 @@
 								$addCompte = $bd->prepare('INSERT INTO user (nom, prenom, date_naissance,ecole,niveau, email, password,phone,id_adresse) VALUES (?,?,?,?,?,?,?,?,(SELECT id_adresse FROM adresse WHERE ville= ? AND adress = ? AND complement_Adress = ? AND code_postal = ?))');
 								//$date_naiss= DATE_FORMAT($date_naiss, "%M %d %Y");
 								$addCompte->execute(array($nom, $prenom,$date_naiss, $ecole,$niveau, $login_mail, $pwd, $phone, $ville, $adress, $com_adress, $code_postal));   // rajouter une exception à ce niveau
-								
+								//password_hash($pwd,PASSWORD_DEFAULT)
 		   					 	// on insère son école
 		   					 	$req = $bd->prepare("INSERT INTO classe (ecole) VALUES(?)");
 		                		$req->execute(array($ecole));

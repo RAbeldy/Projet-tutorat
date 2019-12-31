@@ -195,7 +195,8 @@ class TutoresController
 
                 require ('PHPMailer/PHPMailerAutoload.php');
                 require ('connectToMail.php');
-
+                $mailAccount = 'contact_tutores@tutorat-yncrea.fr';
+                
                 $contacter= true;
                 $nom= $_SESSION['nom']; 
                 $prenom= $_SESSION['prenom'];

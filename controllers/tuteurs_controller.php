@@ -161,7 +161,7 @@ class TuteursController
             $id_u= htmlspecialchars($_POST['id_u']);
            if($id_u!="")
            {
-            $tuteurs= new Tuteurs();
+             $tuteurs= new Tuteurs();
              $tuteurs->Delete_link($id_u);
             require_once('views/tuteurs/notifications_tuteurs.php');
            }
@@ -211,9 +211,9 @@ class TuteursController
              $id_u= htmlspecialchars($_POST['id_u']);
              if($id_u!="")
              {
-             $tuteurs= new Tuteurs();
-             $donnees=$tuteurs->Cancel_wish($_SESSION['id_user'],$id_u);
-             require_once('views/tuteurs/interface_selection_tutores_tuteurs.php');
+                $tuteurs= new Tuteurs();
+                $donnees=$tuteurs->Cancel_wish($_SESSION['id_user'],$id_u);
+                require_once('views/tuteurs/interface_selection_tutores_tuteurs.php');
              }
         }
         else
@@ -270,6 +270,7 @@ class TuteursController
             {    
                 require ('PHPMailer/PHPMailerAutoload.php');
                 require ('connectToMail.php');
+                $mailAccount = 'contact_tuteurs@tutorat-yncrea.fr';
 
                 $contacter= true;
                 $nom= $_SESSION['nom']; 
@@ -317,16 +318,16 @@ class TuteursController
             
             if($id_t!="")
             {
-            if( isset($_POST['accepter']))
-            {
-                Tuteurs::Accept_proposal($_SESSION['id_user'],$id_t);
-                TuteursController::Show_proposal();
-            }
-            elseif( isset($_POST['refuser']))
-            {
-                Tuteurs::Refuse_proposal($_SESSION['id_user'],$id_t);
-                TuteursController::Show_proposal();
-            }
+                if( isset($_POST['accepter']))
+                {
+                    Tuteurs::Accept_proposal($_SESSION['id_user'],$id_t);
+                    TuteursController::Show_proposal();
+                }
+                elseif( isset($_POST['refuser']))
+                {
+                    Tuteurs::Refuse_proposal($_SESSION['id_user'],$id_t);
+                    TuteursController::Show_proposal();
+                }
             }
          }
         else

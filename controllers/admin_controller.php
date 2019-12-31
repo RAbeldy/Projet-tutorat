@@ -322,7 +322,7 @@ class AdminController
 
                       $controller_report='admin';
                       $fonction_back='interface_admin';
-  
+                      
                       Admin::Send_selection_mail($donnees[0]->getPrenom(),$donnees[0]->getNom(),$donnees[0]->getEmail(),$donnees[1],$donnees[2]) ;// on envoi le mail de confirmation de sélection
 
                       AdminController::tuteurs_list(); // on charge la vue adéquates
@@ -804,6 +804,7 @@ public  function export()
 
                 require ('PHPMailer/PHPMailerAutoload.php');
                 require ('connectToMail.php');
+                $mailAccount = 'contact_admin@tutorat-yncrea.fr';
 
                 $contacter= true;
                 $nom= $_SESSION['nom']; 
