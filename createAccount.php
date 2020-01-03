@@ -77,22 +77,34 @@
 
 		                if(is_null($niveau) && is_null($nationa)) // c'est un tuteur dans ce cas 
 		   				{
-							if( preg_match('#^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))+@[A-Z0-9.-]+\.yncrea.fr#',$login_mail))
-							{
+							/* if( preg_match('#^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))+@[A-Z0-9.-]+\.yncrea.fr#',$login_mail))
+							{ */
 							   //On créer un nouveau compte (nouvelle ligne dans bd)
-								// on insère son adresse
-								$req = $bd->prepare("INSERT INTO adresse (ville,adress,complement_adress,code_postal) VALUES(?,?,?,?)");
-								$code_postal= intval($code_postal);
-								$req->execute(array($ville,$adress,$com_adress,$code_postal));
+							   $req= $bd->prepare("SELECT id_adresse from adresse WHERE adress= ? and complement_Adress= ?"); // on va juste vérifier que l'adrese qu'il rentre est unique... si oui on insère dans la bd sinn on irar chercher celle qui est deja présente dans la base de donnée
+							   $req->execute(array($adress,$com_adress));
 
-								// puis son nom et prénom dans la table user
+							   if($req->rowCount() == 0)	// si on a rien trouvé
+							   {
+									// on insère son adresse
+									$req = $bd->prepare("INSERT INTO adresse (ville,adress,complement_adress,code_postal) VALUES(?,?,?,?)");
+									$code_postal= intval($code_postal);
+									$req->execute(array($ville,$adress,$com_adress,$code_postal));
+
+									// puis son nom et prénom dans la table user
 								$addCompte = $bd->prepare('INSERT INTO user (nom, prenom, date_naissance,ecole,niveau, email, password,phone,id_adresse) VALUES (?,?,?,?,?,?,?,?,(SELECT id_adresse FROM adresse WHERE ville= ? AND adress = ? AND complement_Adress = ? AND code_postal = ?))');
 								//$date_naiss= DATE_FORMAT($date_naiss, "%M %d %Y");
-								$addCompte->execute(array($nom, $prenom,$date_naiss, $ecole,$niveau, $login_mail, $pwd, $phone, $ville, $adress, $com_adress, $code_postal));   // rajouter une exception à ce niveau
+								$addCompte->execute(array($nom, $prenom,$date_naiss, $ecole,$niveau, $login_mail,$pwd, $phone, $ville, $adress, $com_adress, $code_postal));   // rajouter une exception à ce niveau
+							   }
+							   else{	// si une adresse pareille existe deja en base
+								// puis son nom et prénom dans la table user
+								$addCompte = $bd->prepare('INSERT INTO user (nom, prenom, date_naissance,ecole,niveau, email, password,phone,id_adresse) VALUES (?,?,?,?,?,?,?,?,?)');
+								//$date_naiss= DATE_FORMAT($date_naiss, "%M %d %Y");
+								$addCompte->execute(array($nom, $prenom,$date_naiss, $ecole,$niveau, $login_mail,$pwd, $phone,$req->fetch()['id_adresse'] ));   // rajouter une exception à ce niveau
 								//password_hash($pwd,PASSWORD_DEFAULT)
+							   }
 		   					 	// on insère son école
-		   					 	$req = $bd->prepare("INSERT INTO classe (ecole) VALUES(?)");
-		                		$req->execute(array($ecole));
+		   					 	/* $req = $bd->prepare("INSERT INTO classe (ecole) VALUES(?)");
+		                		$req->execute(array($ecole)); */
 		                // on insère dans la table tuteur
 				                $req = $bd->prepare("INSERT INTO tuteurs (id_tuteurs,nb_linksmef,nb_max_mef,nb_linksperso,nb_max_perso) VALUES((SELECT id_user FROM user  WHERE email =?),0,3,0,2)");
 				                $req->execute(array($login_mail));
@@ -107,13 +119,13 @@
 								// on insère. l'id_classe  dans la table user
 				                //$req= $bd->prepare("INSERT INTO user(id_classe) VALUES(SELECT id_classe from classe WHERE ecole=? AND niveau= 'NULL' )");
 				                //$re->execute(array($ecole,$niveau));
-							}
+							/* }
 							else{
 								//login déjà utilisé pour un compte valide
 								$_SESSION['alert']= "&nbsp <strong>une inscription en tant que tuteur requiert une adresse mail YNCREA </strong>";
 								header('location:index.php?controller=users&action=choixStatut');
 								//On le redirige vers la page de login
-							}
+							} */
 						}
 						else
 						{   

@@ -58,7 +58,7 @@
     <link rel="stylesheet" href="assets/css/Profile-Edit-Form.css?h=0d932fa81301936f118cc8607c135e19">
     <!-- login-->
     <link rel="stylesheet" href="assets/css/Login-Form.css?h=20d7842de129d800e792499681f0b672">
-    <link rel="stylesheet" href="http://demo.themefisher.com/constra/css/owl.carousel.min.css">
+    <!--<link rel="stylesheet" href="http://demo.themefisher.com/constra/css/owl.carousel.min.css"> -->
     
 
 </head>

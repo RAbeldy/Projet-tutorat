@@ -28,7 +28,7 @@
 														<p>
 													<span style="color: black; font-style: oblique;">	Nom:  </span> <?= $data->getNom();?> <?= $data->getPrenom();?></br>
 													<span style="color: black; font-style: oblique; ">	Email: </span> &nbsp;&nbsp; <?=$data->getEmail();?></br>
-
+													
 													<span  style="color: black; font-style: oblique;">	Ville: </span> &nbsp;&nbsp;<?=$data->getVille();?></br>
 													<span  style="color: black; font-style: oblique;">	Adresse: </span>&nbsp;&nbsp; <?=$data->getAdress();?></br>
 													<span  style="color: black; font-style: oblique;">	Code psotal: </span>&nbsp;&nbsp; <?=$data->getCode_postal();?></br>
