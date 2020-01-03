@@ -9,12 +9,12 @@ class UsersController
 
 public function choixStatut()
 {
-	require_once('views/choix_statut_signup.php');
+	set_route('views/choix_statut_signup.php');
 }
 // page d'authentification
-public function login()  
+public function login()
 {
-	  require_once('views/Login.php');
+	  set_route('views/Login.php');
 }
 public function connexion()
 {
@@ -27,14 +27,14 @@ public function connexion()
 	        if($user->Connexion($email,$password)== 1)
 	        	$this->redirection();	// on appelle la fonction de redirection
 	        else
-	           require_once('views/Login.php');
+	           set_route('views/Login.php');
    		}
 	    else
-	    { 
+	    {
 	    	if(isset($_SESSION['connecté']))
 	    		$this->redirection();	// on appelle la fonction de redirection
 	    	else
-	    		require_once('views/Login.php');
+	    		set_route('views/Login.php');
 	    }
 }
 
@@ -42,82 +42,83 @@ public function redirection() // redirection vers interface en fonction du statu
 {
   if(isset($_SESSION['id_statut']))// on vérifie que seul un utilisateur connecté peut accéder à ces pages
   {
-        switch ($_SESSION['id_statut']) 
+        switch ($_SESSION['id_statut'])
 	    {
 	       case 13:
-	         	require_once('views/tuteurs/interface_tuteur.php'); // interface tuteur
+		   		header('Location: ?controller=tuteurs&action=interface_tuteur'); // interface tuteur
 	        break;
 	        case 16:
-	        	require_once('views/tutores/interface_tutore.php'); // interface tutore
+	        	header('Location: ?controller=tutores&action=interface_tutore'); // interface tutore
 	        break;
 	        case 21:
-	        	require_once('views/admin/gestion/interface_gestionnaire.php'); // interface_gestionnaire
+	        	header('Location: ?controller=admin&action=interface_admin'); // interface_gestionnaire
+	        	//set_route('views/admin/gestion/interface_gestionnaire.php');
 	        break;
 	        case 1:
-	        	require_once('views/superadmin/interface_superadmin.php'); // interface superadmin
+	        	header('Location: ?controller=superadmin&action=interface_superadmin'); // interface superadmin
 	        break;
 	        default:
-	        	require_once('views/admin/interface_admin.php'); // interface_admin
+	        	header('Location: ?controller=admin&action=interface_admin'); // interface_admin
 	        break;
 	    }
 	}
 	else
-		require_once('views/Login.php');
-  
-  
+		set_route('views/Login.php');
+
+
 }
 
 public function resetPassword()
 {
-	require_once('views/reset_password_view.php');
+	set_route('views/reset_password_view.php');
 }
 
 public function forgotPassword()
 {
-	require_once('views/forgot_password_view.php');
+	set_route('views/forgot_password_view.php');
 }
 
 public function inscription()
 	{
 		if (isset($_POST['Tuteur'])) {
-			require_once('views/inscriptionTuteur.php');	
+			set_route('views/inscriptionTuteur.php');
 		}
 		if (isset($_POST['Tutore'])) {
-			require_once('views/inscriptionTutore.php');
+			set_route('views/inscriptionTutore.php');
 		}
 	}
 
 public function profil()
 {
 	if(isset($_SESSION['id_statut']))// on vérifie que seul un utilisateur connecté peut accéder à ces pages
-        { 
+        {
             $data = Users::Get_info($_SESSION['id_user']);    // on récupère les info des user
-            require_once('views/mon_profil.php');
+            set_route('views/mon_profil.php');
         }
      else
-       require_once('views/Login.php');
+       set_route('views/Login.php');
 }
 public static function update_account()
         {
             if(isset($_SESSION['id_statut']))// on vérifie que seul un utilisateur connecté peut accéder à ces pages
-            { 
-                $donnees = Users::Get_info($_SESSION['id_user']);    // on récupère les info des user
+            {
+                set_donnees(Users::Get_info($_SESSION['id_user']));    // on récupère les info des user
                 if($_SESSION['id_statut'] == 1)
-                	require_once('views/superadmin/update_account.php');
+                	set_route('views/superadmin/update_account.php');
             	else
-            		require_once('views/update_account.php');
+            		set_route('views/update_account.php');
             }
             else
-                require_once('views/Login.php');
+                set_route('views/Login.php');
         }
 
 
 public function modify_account()
     {
             if(isset($_SESSION['id_statut']))   // on vérifie que seul un utilisateur connecté peut accéder à ces pages
-            { 
+            {
                 $user = new Users();
-				
+
 				$ville= htmlspecialchars($_POST['ville']);
 				$adresse=  htmlspecialchars($_POST['adresse']);
 				$complement_adresse=  htmlspecialchars($_POST['complement_adresse']);
@@ -125,7 +126,7 @@ public function modify_account()
 				$password=  htmlspecialchars($_POST['password']);
 				$nom=  htmlspecialchars($_POST['nom']);
 				$prenom=  htmlspecialchars($_POST['prenom']);
-				
+
 				if($ville!= "" && $adresse!="" && $complement_adresse!="" && $code_postal!="" && $password!="" && $nom!="" &&$prenom!="")
                 {
 	                $user->setVille($ville);
@@ -133,12 +134,12 @@ public function modify_account()
 	                $user->setCom_adress($complement_adresse);
 	                $user->setCode_postal($code_postal);
 	                $user->setPassword($password);
-	              
+
 	                $user->setNom($nom);
 	                $user->setPrenom($prenom);
 	            }
-                
-                
+
+
                 $user->Modify_info($_SESSION['id_user']);    // on update les infos du user
                 if(!empty($_FILES["fileToUpload"]["name"]))
                 $this->upload_file();  // on va uploader la photo
@@ -147,7 +148,7 @@ public function modify_account()
                 UsersController::update_account(); // on recharge pour la mise à jour
             }
             else
-                require_once('views/Login.php');
+                set_route('views/Login.php');
     }
 
 public function upload_file()
@@ -157,20 +158,20 @@ public function upload_file()
 		$uploadOk = 1;
 		$imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
 		// Check if image file is a actual image or fake image
-		if(isset($_POST["sauvegarder"])) 
+		if(isset($_POST["sauvegarder"]))
 		{
 		    $check = getimagesize($_FILES["fileToUpload"]["tmp_name"]);
-		    if($check !== false) 
+		    if($check !== false)
 		    {
 		        echo "File is an image - " . $check["mime"] . ".";
 		        $uploadOk = 1;
-		    } 
-		    else 
+		    }
+		    else
 		    {
 		        echo "File is not an image.";
 		        $uploadOk = 0;
 		    }
-		
+
 		// Check if file already exists
 			if (file_exists($target_file))
 			{
@@ -178,7 +179,7 @@ public function upload_file()
 			    $uploadOk = 0;
 			}
 			// Check file size
-			if ($_FILES["fileToUpload"]["size"] > 5000000) 
+			if ($_FILES["fileToUpload"]["size"] > 5000000)
 			{
 			    echo "Sorry, your file is too large.";
 			    $uploadOk = 0;
@@ -191,21 +192,21 @@ public function upload_file()
 			    $uploadOk = 0;
 			}
 			// Check if $uploadOk is set to 0 by an error
-			if ($uploadOk == 0) 
+			if ($uploadOk == 0)
 			{
 			    echo "Sorry, your file was not uploaded.";
 			// if everything is ok, try to upload file
-			} 
-			else 
+			}
+			else
 			{
 			    if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
 			        echo "The file ". basename( $_FILES["fileToUpload"]["name"]). " has been uploaded.";
-			    } 
-			    else 
+			    }
+			    else
 			    {
 			        echo "Sorry, there was an error uploading your file.";
 			    }
-			    
+
             }
 
 
@@ -225,24 +226,24 @@ public function set_picture_path($target_file)
        {
             //var_dump($_POST['id_t']);
 			$id_t= htmlspecialchars($_POST['id_t']);
-			
+
 			  if( Users::create_account($id_t) == 0)
 			  {
-			   
-			   require_once('views/superadmin/interface_tutorat.php');
+
+			   set_route('views/superadmin/interface_tutorat.php');
 			  }
 			  else
 			  {
 				$message = ' Un administrateur est déja en charge de ce tutorat, pour affecter sa gestion à une autre personne, il est primordial de rompre le contrat avec l\'administrateur actuel. Rendez-vous donc dans la page "les centres de tutorat" si tel est votre souhait ';
-				$controller_report='superadmin';
-				$fonction_back='interface_account_creation';
+				set_controller_report('superadmin');
+				set_fonction_back('interface_account_creation');
 
-				require_once('views/system/error.php');
-			  } 
-			
+				set_route('views/system/error.php');
+			  }
+
        }
           else
-            require_once('views/Login.php');
+            set_route('views/Login.php');
      }
 public static function deconnexion()
 {
@@ -250,18 +251,18 @@ public static function deconnexion()
     // on effectue un traitement spécifique pour l'ajax
 
 		echo "je fais de l'ajax";
-	
-			//require_once('index.php?controller=page?action=home');
-		
-	} 
+
+			//set_route('index.php?controller=page?action=home');
+
+	}
 	else{
 		//echo "je fais de l'ajax";
 	$user= new Users();
 	$user->Deconnexion();
-	
-	require_once('views/Login.php');
+
+	set_route('views/Login.php');
 	}
-}	
+}
 
 }
 

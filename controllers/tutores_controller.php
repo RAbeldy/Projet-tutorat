@@ -1,196 +1,195 @@
 <?php
-require_once('models/users.php');
-require_once('models/tuteurs.php');
-require_once('models/tutores.php');
-require_once('models/evenements.php');
-require_once('controllers/users_controller.php');
+set_route('models/users.php');
+set_route('models/tuteurs.php');
+set_route('models/tutores.php');
+set_route('models/evenements.php');
+
 /* Définition du controller */
 class TutoresController
 {
 
      public function interface_tutore()
        {
-            if( isset($_SESSION['id_statut']) && $_SESSION['id_statut']== 16 && $_SESSION['id_statut']== 16)
-                require_once('views/tutores/interface_tutore.php');
+            if( isset($_SESSION['id_statut']))
+                set_route('views/tutores/interface_tutore.php');
             else
-                UsersController::deconnexion();
+                set_route('views/login.php');
        }
      public function selection_tuteurs()
         {
-            
-            if(isset($_SESSION['id_statut']) && $_SESSION['id_statut']== 16)// on vérifie que seul un utilisateur connecté peut accéder à ces pages
-                require_once('views/tutores/interface_selection_tuteurs_tutores.php'); // on charge la vue adéquate
+            if(isset($_SESSION['id_statut']))// on vérifie que seul un utilisateur connecté peut accéder à ces pages
+                set_route('views/tutores/interface_selection_tuteurs_tutores.php'); // on charge la vue adéquate
             else
-                UsersController::deconnexion();
+                set_route('views/login.php');
         }
      public function tuteurs_list()
         {
             
-            if(isset($_SESSION['id_statut']) && $_SESSION['id_statut']== 16)// on vérifie que seul un utilisateur connecté peut accéder à ces pages
+            if(isset($_SESSION['id_statut']))// on vérifie que seul un utilisateur connecté peut accéder à ces pages
             {
                 $tuteurs= new Tutores();
-                $donnees= $tuteurs->Get_free_tuteurs();
+                set_donnees($tuteurs->Get_free_tuteurs());
 
-                $controller_report='tutores';
-                $fonction_back='selection_tuteurs';
+                set_controller_report('tutores');
+                set_fonction_back('selection_tuteurs');
 
-                require_once('views/tutores/tuteurs_list.php');
+                set_route('views/tutores/tuteurs_list.php');
             }
             else
-                UsersController::deconnexion();  
+                set_route('views/login.php');  
         }
      public function notifications()
         {
-            if( isset($_SESSION['id_statut']) && $_SESSION['id_statut']== 16)
-                require_once('views/tutores/notifications_tutores.php');
+            if( isset($_SESSION['id_statut']))
+                set_route('views/tutores/notifications_tutores.php');
             else
-                UsersController::deconnexion();
+                set_route('views/login.php');
         }
      public function waiting_list()  // on récuprère la lsite des 
         {
             
-            if(isset($_SESSION['id_statut']) && $_SESSION['id_statut']== 16)// on vérifie que seul un utilisateur connecté peut accéder à ces pages
+            if(isset($_SESSION['id_statut']))// on vérifie que seul un utilisateur connecté peut accéder à ces pages
             {   
                 $tuteurs= new Tutores();
-                $donnees= $tuteurs->Get_waiting_list($_SESSION['id_user']);
+                set_donnees($tuteurs->Get_waiting_list($_SESSION['id_user']));
 
-                $controller_report='tutores';
-                $fonction_back='notifications';
+                set_controller_report('tutores');
+                set_fonction_back('notifications');
 
-                require_once('views/tutores/waiting_list.php');
+                set_route('views/tutores/waiting_list.php');
             }
             else
-                UsersController::deconnexion(); 
+                set_route('views/login.php'); 
 
         }
      public function link() // action de se lier à un tuteur ou un tutoré
         {
             
-            if(isset($_SESSION['id_statut']) && $_SESSION['id_statut']== 16)// on vérifie que seul un utilisateur connecté peut accéder à ces pages
+            if(isset($_SESSION['id_statut']))// on vérifie que seul un utilisateur connecté peut accéder à ces pages
             {    
               $id_u=  htmlspecialchars($_POST['id_u']);
       
                  $tuteurs= new Tutores();
                  $tuteurs->Link_with_tuteurs($_SESSION['id_user'],$id_u);
-                require_once('views/tutores/notifications_tutores.php');
+                set_route('views/tutores/notifications_tutores.php');
         
             }
             else
-                UsersController::deconnexion(); 
+                set_route('views/login.php'); 
         }
      public function accept_link()
         {
             
-            if(isset($_SESSION['id_statut']) && $_SESSION['id_statut']== 16)// on vérifie que seul un utilisateur connecté peut accéder à ces pages
+            if(isset($_SESSION['id_statut']))// on vérifie que seul un utilisateur connecté peut accéder à ces pages
             {    
                 $tutores= new Tutores();
                 $id_u=  htmlspecialchars($_POST['id_u']);
         
                 if($tutores->Accept_link($_SESSION['id_user'],$id_u) == 0  )
-                    require_once('views/tutores/notifications_tutores.php');  
+                    set_route('views/tutores/notifications_tutores.php');  
                 else
                 {
                     $message = 'Cette liaison est impossible, ce tuteur a atteint son quota maximum de liaison';
-                    $controller_report='tutores';
-                    $fonction_back='notifications';
-                    require_once('views/system/error.php');
+                    set_controller_report('tutores');
+                    set_fonction_back('notifications');
+                    set_route('views/system/error.php');
                 }
       
             }
             else
-                UsersController::deconnexion(); 
+                set_route('views/login.php'); 
         }
         
         /*
         public function delete_link()
         {
             
-            if(isset($_SESSION['id_statut']) && $_SESSION['id_statut']== 16)// on vérifie que seul un utilisateur connecté peut accéder à ces pages
+            if(isset($_SESSION['id_statut']))// on vérifie que seul un utilisateur connecté peut accéder à ces pages
             {    
                 $tuteurs= new Tutores();
                  $tuteurs->Delete_link($_POST['id_u']);
-                require_once('views/tutores/notifications_tuteurs.php');
+                set_route('views/tutores/notifications_tuteurs.php');
                  
             }
             else
-                UsersController::deconnexion(); 
+                set_route('views/login.php'); 
         }
         */
      public function working_list()
         {
             
-            if(isset($_SESSION['id_statut']) && $_SESSION['id_statut']== 16)// on vérifie que seul un utilisateur connecté peut accéder à ces pages
+            if(isset($_SESSION['id_statut']))// on vérifie que seul un utilisateur connecté peut accéder à ces pages
             {    
                  
-                 $donnees=Tutores::Get_working_list($_SESSION['id_user']);
+                 set_donnees(Tutores::Get_working_list($_SESSION['id_user']));
 
-                 $controller_report='tutores';
-                 $fonction_back='selection_tuteurs';
+                 set_controller_report('tutores');
+                 set_fonction_back('selection_tuteurs');
             
-                require_once('views/tutores/working_list.php');
+                set_route('views/tutores/working_list.php');
             }
             else
-                UsersController::deconnexion(); 
+                set_route('views/login.php'); 
         }
 
      public function wish_list()
         {
-            if(isset($_SESSION['id_statut']) && $_SESSION['id_statut']== 16)// on vérifie que seul un utilisateur connecté peut accéder à ces pages
+            if(isset($_SESSION['id_statut']))// on vérifie que seul un utilisateur connecté peut accéder à ces pages
             {    
                  $tuteurs= new Tutores();
-                 $donnees=$tuteurs->Get_wish_list($_SESSION['id_user']);
+                 set_donnees($tuteurs->Get_wish_list($_SESSION['id_user']));
 
-                 $controller_report='tutores';
-                 $fonction_back='notifications';
+                 set_controller_report('tutores');
+                 set_fonction_back('notifications');
 
-                 require_once('views/tutores/wish_list.php');  
+                 set_route('views/tutores/wish_list.php');  
             }
             else
-                UsersController::deconnexion(); 
+                set_route('views/login.php'); 
         }
      public function cancel_wish()
         {
-            if(isset($_SESSION['id_statut']) && $_SESSION['id_statut']== 16)// on vérifie que seul un utilisateur connecté peut accéder à ces pages
+            if(isset($_SESSION['id_statut']))// on vérifie que seul un utilisateur connecté peut accéder à ces pages
             {    
               $id_u=  htmlspecialchars($_POST['id_u']);
               $tuteurs= new Tutores();
 
-              $donnees=$tuteurs->Cancel_wish($_SESSION['id_user'],$_POST['id_u']);
-              require_once('views/tutores/interface_selection_tuteurs_tutores.php');
+              set_donnees($tuteurs->Cancel_wish($_SESSION['id_user'],$_POST['id_u']));
+              set_route('views/tutores/interface_selection_tuteurs_tutores.php');
     
             }
             else
-                UsersController::deconnexion(); 
+                set_route('views/Login.php'); 
         }
      public function validate_hours() // tutoré valide les heures de son tuteur 
      {
-           if(isset($_SESSION['id_statut']) && $_SESSION['id_statut']== 16)// on vérifie que seul un utilisateur connecté peut accéder à ces pages
+           if(isset($_SESSION['id_statut']))// on vérifie que seul un utilisateur connecté peut accéder à ces pages
               { 
                     $duree= htmlspecialchars($_POST['duree']);
                     $tutores = new Tutores();
                     
                       $tutores->Validate_hours($_POST['id_e'],$duree); 
-                      require_once('views/tutores/interface_tutore.php');
+                      set_route('views/tutores/interface_tutore.php');
               }
             else
-                UsersController::deconnexion();
+                set_route('views/Login.php');
      }
 
 
      
-    public static function contact()
-    {
-            if(isset($_SESSION['id_statut']) && $_SESSION['id_statut']== 16)// on vérifie que seul un utilisateur connecté peut accéder à ces pages
+     public static function contact()
+        {
+            if(isset($_SESSION['id_statut']))// on vérifie que seul un utilisateur connecté peut accéder à ces pages
                 { 
                     $data= Users::Get_contact_admin($_SESSION['id_user']);
-                    require_once('views/tutores/contacter.php');
+                    set_route('views/tutores/contacter.php');
                 }
             else
-                UsersController::deconnexion();
-    }
+                set_route('views/Login.php');
+        }
       public function message() // à completer lors de la création de la table de suivi des admin
       {
-            if(isset($_SESSION['id_statut']) && $_SESSION['id_statut']== 16)// on vérifie que seul un utilisateur connecté peut accéder à ces pages
+            if(isset($_SESSION['id_statut']))// on vérifie que seul un utilisateur connecté peut accéder à ces pages
             {    
 
                 require ('PHPMailer/PHPMailerAutoload.php');
@@ -212,22 +211,22 @@ class TutoresController
                 // on envoie un email de confirmation
                 include('send_mail.php');
 
-                $controller_report='tutores';
-                $fonction_back='contact';
+                set_controller_report('tutores');
+                set_fonction_back('contact');
           
-                require_once('views/mail_send_ok.php');
+                set_route('views/mail_send_ok.php');
             }
             else
-                UsersController::deconnexion();
+                set_route('views/Login.php');
       }
-    public function savoir_tutores() // page à savoir
+      public function savoir_tutores() // page à savoir
     {
-        if(isset($_SESSION['id_statut'])  &&  $_SESSION['id_statut']== 16)// on vérifie que seul un utilisateur connecté peut accéder à ces pages
+        if(isset($_SESSION['id_statut']))// on vérifie que seul un utilisateur connecté peut accéder à ces pages
         { 
-            require_once('views/tutores/savoir_tutores.php'); 
+            set_route('views/tutores/savoir_tutores.php'); 
         }
         else
-            UsersController::deconnexion();
+            set_route('views/Login.php');
     }
 
 

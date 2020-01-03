@@ -6,12 +6,12 @@ class PageController
 	// page d'authentification
 	public function home()  
 	{
-	   require_once('views/page_pres.php');
+	   set_route('views/page_pres.php');
 	}
     
     public function contact()
     {
-    	require_once('views/contactAdmin.php');
+    	set_route('views/contactAdmin.php');
     }
 }
-?>
+?>	

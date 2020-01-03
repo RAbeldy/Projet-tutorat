@@ -36,35 +36,35 @@ class TutoratController
             {
               if(preg_match('#^ADMIN#',$_SESSION['statut']))
               {
-                  $donnees= Tutorat::tutorat_center_list($_SESSION['id_statut']);
+                  set_donnees(Tutorat::tutorat_center_list($_SESSION['id_statut']));
 
-                  $controller_report='admin';
-                  $fonction_back='interface_tutorat';
+                  set_controller_report('admin');
+                  set_fonction_back('interface_tutorat');
 
-                  require_once('views/admin/tutorat_center_list.php');
+                  set_route('views/admin/tutorat_center_list.php');
                 }
                 else
                 {
-                  $donnees= Tutorat::Get_all_tutorat();  // on charge l'interface de création de tutorat
+                  set_donnees(Tutorat::Get_all_tutorat());  // on charge l'interface de création de tutorat
 
-                  $controller_report='superadmin';
-                  $fonction_back='interface_tutorat';
+                  set_controller_report('superadmin');
+                  set_fonction_back('interface_tutorat');
 
-                  require_once('views/superadmin/tutorat_center_list.php');
+                  set_route('views/superadmin/tutorat_center_list.php');
                 }
 
             }
           else
           {
             $message = ' Un tutorat avec ce libellé a déja été crée pour ce type de tutorat, pour vous en rassurez rendez-vous à la page "les centres de tutorat" ';
-            $controller_report='superadmin';
-            $fonction_back='create_center';
+            set_controller_report('superadmin');
+            set_fonction_back('create_center');
 
-            require_once('views/system/error.php');
+            set_route('views/system/error.php');
           }
        }
           else
-                require_once('views/login.php');
+                set_route('views/login.php');
      }
 
   public function create_type_center() // ils 'agit de l'action de créer à ne pas confondre dans le controller admin
@@ -74,22 +74,22 @@ class TutoratController
             
           if(Tutorat::Create_type_center($_POST['type_tutorat'])== 0)
           {
-            $controller_report='admin';
-            $fonction_back='interface_tutorat';
+            set_controller_report('admin');
+            set_fonction_back('interface_tutorat');
 
-            require_once('views/superadmin/interface_tutorat.php');
+            set_route('views/superadmin/interface_tutorat.php');
           }
           else
           {
             $message = ' Un type de tutorat avec ce libellé a déja été crée , pour vous en rassurez rendez-vous à la page "les types de tutorat" ';
-            $controller_report='superadmin';
-            $fonction_back='create_type_center';
+            set_controller_report('superadmin');
+            set_fonction_back('create_type_center');
 
-            require_once('views/system/error.php');
+            set_route('views/system/error.php');
           }
        }
           else
-                require_once('views/login.php');
+                set_route('views/login.php');
      }
 
   public function delete_tutorat()
@@ -102,18 +102,18 @@ class TutoratController
      {
        Tutorat::Delete_tutorat($id_t);
 
-       $controller_report='superadmin';
-       $fonction_back='interface_tutorat';
+       set_controller_report('superadmin');
+       set_fonction_back('interface_tutorat');
        
-       $donnees= Tutorat::Get_all_tutorat();  // on recharge les données
-       require_once('views/superadmin/tutorat_center_list.php');
+       set_donnees(Tutorat::Get_all_tutorat());  // on recharge les données
+       set_route('views/superadmin/tutorat_center_list.php');
      }
     else
-      require_once('views/login.php');
+      set_route('views/login.php');
      
     }
     else
-      require_once('views/login.php');
+      set_route('views/login.php');
   }
   public function delete_typeTutorat()
   {
@@ -125,17 +125,17 @@ class TutoratController
     {
        Tutorat::Delete_typeTutorat($id_type);
 
-       $controller_report='superadmin';
-       $fonction_back='interface_tutorat';
+       set_controller_report('superadmin');
+       set_fonction_back('interface_tutorat');
        
-       $donnees= Tutorat::Get_all_type_tutorat(); // on recharge les données
-       require_once('views/superadmin/typeTutorat_center_list.php');
+       set_donnees(Tutorat::Get_all_type_tutorat()); // on recharge les données
+       set_route('views/superadmin/typeTutorat_center_list.php');
     }
     else
-      require_once('views/login.php');
+      set_route('views/login.php');
     }
     else
-      require_once('views/login.php');
+      set_route('views/login.php');
   }
   
   public function remove_tutorat()
@@ -147,23 +147,23 @@ class TutoratController
     
        if(Tutorat::Remove_tutorat($id_t,$id_admin) == 0)
          {
-       $controller_report='superadmin';
-       $fonction_back='interface_tutorat';
+       set_controller_report('superadmin');
+       set_fonction_back('interface_tutorat');
        
        
-       require_once('views/superadmin/interface_tutorat.php');
+       set_route('views/superadmin/interface_tutorat.php');
         }
         else
         {
           $message = ' Opération impossible, un compte administrateur doit au minimum gérer un tutorat ';
-          $controller_report='superadmin';
-          $fonction_back='interface_tutorat';
+          set_controller_report('superadmin');
+          set_fonction_back('interface_tutorat');
 
-          require_once('views/system/error.php');
+          set_route('views/system/error.php');
         }
     }
     else
-      require_once('views/login.php');
+      set_route('views/login.php');
   }
   public function add_tutorat()
   {
@@ -175,15 +175,15 @@ class TutoratController
      {
        Tutorat::Add_tutorat($id_t,$id_admin);
 
-       $controller_report='superadmin';
-       $fonction_back='interface_tutorat';
+       set_controller_report('superadmin');
+       set_fonction_back('interface_tutorat');
        
        
-       require_once('views/superadmin/interface_tutorat.php');
+       set_route('views/superadmin/interface_tutorat.php');
      }
     }
     else
-      require_once('views/login.php');
+      set_route('views/login.php');
   }
 
   public function account_affectation()
@@ -197,14 +197,14 @@ class TutoratController
      {
        Tutorat::Account_affectation($id_t,$id_admin);
 
-       $controller_report='superadmin';
-       $fonction_back='interface_tutorat';
+       set_controller_report('superadmin');
+       set_fonction_back('interface_tutorat');
       
-       require_once('views/superadmin/interface_tutorat.php');
+       set_route('views/superadmin/interface_tutorat.php');
      }
     }
     else
-      require_once('views/login.php');
+      set_route('views/login.php');
   }
    
      

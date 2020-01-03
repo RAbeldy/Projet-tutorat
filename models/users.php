@@ -241,6 +241,7 @@ require_once('connexion.php');
     public function Deconnexion()
     {
       session_destroy();
+      header('Location: ?controller=users&action=login');
     }
 
 

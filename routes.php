@@ -36,8 +36,7 @@
                        'users' => ['login','inscription','save_user','connexion','deconnexion','resetPassword','forgotPassword', 'choixStatut','update_account','modify_account','profil','create_account','redirection'],
                        'page'=>['home','contact'],
 
-                       'tuteurs'=>['interface_tuteur','tuteur_set_event','events_creation','selection_tutores','tutores_list','notifications','waiting_list',
-                       'link','accept_link','delete_link','working_list','wish_list','cancel_wish','contact','message','show_proposal','accept_proposal','savoir_tuteurs'], 
+                       'tuteurs'=>['interface_tuteur','tuteur_set_event','events_creation','selection_tutores','tutores_list','notifications','waiting_list','link','accept_link','delete_link','working_list','wish_list','cancel_wish','contact','message','show_proposal','accept_proposal','savoir_tuteurs'], 
 
                        'tutores'=>['interface_tutore','selection_tuteurs','tuteurs_list','notifications','waiting_list','link','accept_link','working_list','wish_list','cancel_wish','validate_hours','contact','message','savoir_tutores'],
 
