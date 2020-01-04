@@ -110,7 +110,7 @@
                                                                       <input type="hidden" name="id_t" value="<?=$data->getId_user();?>" >
                                                                 <?php 
                                                                 }
-                                                                else
+                                                                else 
                                                                 {
                                                                 ?>
                                                                     <td><label class="btn" name="validé" title="deja validé">Validé</label>  </td>

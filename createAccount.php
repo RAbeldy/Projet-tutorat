@@ -72,8 +72,8 @@
                 // on envoie un email de confirmation
                 include('send_mail.php');
 
-                if($error == 0)
-                {
+                /* if($error == 0)
+                { */
 
 		                if(is_null($niveau) && is_null($nationa)) // c'est un tuteur dans ce cas 
 		   				{
@@ -188,7 +188,7 @@
 						         else
 						         	header('location: index.php?controller=users&action=login');
 						}
-				}
+				/* }
 				else
 				{
 					echo $error;
@@ -196,7 +196,7 @@
 				$_SESSION['alert']= "&nbsp <strong>cette adresse e-mail est incorrecte, remplissez à nouveau le formulaire</strong>";
 				header('location:index.php?controller=users&action=choixStatut');
 				//On le redirige vers la page de login
-				}
+				} */
 
 			}
 			else 

@@ -92,7 +92,7 @@ public function profil()
 {
 	if(isset($_SESSION['id_statut']))// on vérifie que seul un utilisateur connecté peut accéder à ces pages
         {
-            $data = Users::Get_info($_SESSION['id_user']);    // on récupère les info des user
+            set_data( Users::Get_info($_SESSION['id_user']));    // on récupère les info des user
             set_route('views/mon_profil.php');
         }
      else

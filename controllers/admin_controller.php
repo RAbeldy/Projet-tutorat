@@ -6,9 +6,7 @@ require_once('models/tuteurs.php');
 require_once('models/users.php');
 require_once('models/admin.php');
 require_once('models/tutorat.php');
-
-
-
+require_once('controllers/users_controller.php');
 
 
 /* Définition du controller */
@@ -21,13 +19,13 @@ class AdminController
             {
                 switch ($_SESSION['statut']) 
                 {
-                   case 'MEF':
+                   case 'ADMIN_MEF':
                       set_route('views/admin/mef/interface_admin_mef.php');
                     break;
-                    case 'IMMERSION':
+                    case 'ADMIN_IMMERSION':
                       set_route('views/admin/immersion/interface_admin.php');
                     break;
-                    case 'PERSONNALISE':
+                    case 'ADMIN_TUTORAT_PERSONNALISE':
                       set_route('views/admin/personnalise/interface_admin.php');
                     break;
                     case 'ADMIN_GESTION':
@@ -89,7 +87,7 @@ class AdminController
             {
               set_donnees(Evenements::Subscription_list($id_e)); // on récupère la liste des participants
 
-              $data= Evenements::Get_informations_on_events($id_e);  // on récupère la date, le. lieu etc sur l'évenement
+              set_data(Evenements::Get_informations_on_events($id_e));  // on récupère la date, le. lieu etc sur l'évenement
 
               set_controller_report('admin');
               set_fonction_back('future_events_list');
@@ -233,10 +231,10 @@ class AdminController
 
               set_route('views/admin/personnalise/state_tuteurs_list.php');
             }
-            else
+            else    // admin vauban ,immersion...
             {
               set_donnees(Admin::Not_selected_tuteurs($_SESSION['id_user']));
-              $req= Tutorat::Get_tutorat($_SESSION['id_user']);  // on récupère la liste des tutorats qu'il administre pour affecter des tuteurs pour un tutorat en particulier
+              set_res(Tutorat::Get_tutorat($_SESSION['id_user']));  // on récupère la liste des tutorats qu'il administre pour affecter des tuteurs pour un tutorat en particulier
 
               set_controller_report('admin');
               set_fonction_back('interface_admin');
@@ -276,7 +274,7 @@ class AdminController
               elseif(preg_match('#MEF#', $_SESSION['statut']))
                {
                     set_donnees(Admin::Get_my_tutores($_SESSION['id_user']));
-                    $data= Admin::Get_free_tuteurs();
+                    set_data(Admin::Get_free_tuteurs());
 
                     set_controller_report('admin');
                     set_fonction_back('interface_tutores_mef');
@@ -312,12 +310,13 @@ class AdminController
       $tutorat= htmlspecialchars($_POST['tutorat']);
       $id_u_d= htmlspecialchars($_POST['id_u_d']);
       
-           if($id_u_c!="")
+           if($id_u_c !="" && $tutorat != "")
                  {
                     //echo "gfgfdghdfhxvvdvdfdfdkfhmdfhdmkfdhfdkmlfhdvn;vdkmbnvdfhdvfbnifldhfdklfdhfikhdg".$_POST['id_e_c'];
                       
                       Admin::Send_proposal($id_u_c,$tutorat);
-                      set_donnees(Admin::Get_sent_proposal($id_u_c,$tutorat,$_SESSION['id_user'])); // on récupère les informations sur la proposition de sélection envoyée
+                      $donnees= Admin::Get_sent_proposal($id_u_c,$tutorat,$_SESSION['id_user']);
+                      set_donnees($donnees); // on récupère les informations sur la proposition de sélection envoyée
 
                       set_controller_report('admin');
                       set_fonction_back('interface_admin');
@@ -326,7 +325,7 @@ class AdminController
 
                       AdminController::tuteurs_list(); // on charge la vue adéquates
                  }
-           elseif($id_u_d!="")
+           elseif($id_u_d!="" && $tutorat != "")
                  {
                     //echo "gfgfdghdfhxvvdvdfdfdkfhmdfhdmkfdhfdkmlfhdvn;vdkmbnvdfhdvfbnifldhfdklfdhfikhdg".$_POST['id_e_d'];
                       
@@ -340,6 +339,8 @@ class AdminController
            else
                 {   
                     //echo "gfgfdghdfhxvvdvdfdfdkfhmdfhdmkfdhfdkmlfhdvn;vdkmbnvdfhdvfbnifldhfdklfdhfikhdg".$_POST['id_e_d'];
+                    $message = 'vous n\'administrez aucun tutorat... vous ne pouvez donc pour le moment faire aucune affectation';
+                    set_message($message);
                     set_controller_report('admin');
                     set_fonction_back('interface_admin');
                     set_route('views/system/error.php');
@@ -354,10 +355,24 @@ class AdminController
      {
          if( isset($_SESSION['id_statut']))
          {
+           if( preg_match('#MEF#',$_SESSION['statut'])){
+                set_controller_report('admin');
+                set_fonction_back('interface_admin');
+                set_route('views/admin/mef/interface_tutorat.php');
+           }
+           else if(preg_match('#VAUBAN#',$_SESSION['statut'])){
+                set_controller_report('admin');
+                set_fonction_back('interface_admin');
+                set_route('views/admin/vauban/interface_tutorat.php');
+           }
+           else if(preg_match('#IMMERSION#',$_SESSION['statut'])){
             set_controller_report('admin');
             set_fonction_back('interface_admin');
-
-                set_route('views/admin/mef/interface_tutorat.php');
+            set_route('views/admin/immersion/interface_tutorat.php');
+       }
+           else {
+                UsersController::deconnexion();
+           }
          }
           else
                 set_route('views/login.php');
@@ -419,7 +434,7 @@ class AdminController
           
            if( isset($_POST['consulter']))
            {
-               $data= Users::Get_info($id_u); // on récupère les info du user en question
+               set_data(Users::Get_info($id_u)); // on récupère les info du user en question
                if(preg_match('#MEF#', $_SESSION['statut']))
                   set_donnees(Evenements::Get_my_events_list($id_u,$_SESSION['id_user']));
                else
@@ -443,7 +458,7 @@ class AdminController
 
               set_donnees(Evenements::Subscription_list($id_e_c)); // on récupère la liste des participants
 
-              $data= Evenements::Get_informations_on_events($id_e_c);  // on récupère la date, le. lieu etc sur l'évenement
+              set_data(Evenements::Get_informations_on_events($id_e_c));  // on récupère la date, le. lieu etc sur l'évenement
 
               set_controller_report('admin');
               set_fonction_back('future_events_list');
@@ -533,6 +548,7 @@ class AdminController
             else
             {
                 $message = 'Cette liaison est impossible, ce tuteur a atteint son quota maximum de liaison';
+                set_message($message);
                 set_controller_report('admin');
                 set_fonction_back('tutores_list');
                 set_route('views/system/error.php');
@@ -558,7 +574,7 @@ class AdminController
             if($id_tutore!="")
             {
               set_donnees(Tutores::Get_working_list($id_tutore));
-              $data= Users::Get_info($id_tutore);
+              set_data(Users::Get_info($id_tutore));
 
               set_controller_report('admin');
               set_fonction_back('tutores_list');
@@ -568,7 +584,7 @@ class AdminController
             elseif($id_tuteur!="")
             {
               set_donnees(Tuteurs::Get_working_list($id_tuteur));
-              $data= Users::Get_info($id_tuteur);
+              set_data(Users::Get_info($id_tuteur));
 
               set_controller_report('admin');
               set_fonction_back('tuteurs_list');
@@ -625,7 +641,7 @@ class AdminController
         if( isset($_SESSION['id_statut']))
         {
           set_donnees(Evenements::Future_events_list($_SESSION['id_user']));
-          $data= Admin::Selected_tuteurs($_SESSION['id_user']);
+          set_data( Admin::Selected_tuteurs($_SESSION['id_user']));
 
           set_controller_report('admin');
           set_fonction_back('interface_selection');
@@ -724,8 +740,8 @@ class AdminController
       if( isset($_SESSION['id_statut']))
        {
        
-      $id_u= htmlspecialchars($_POST['id_u']);
-      $id_t= htmlspecialchars($_POST['id_t']);
+        $id_u= htmlspecialchars($_POST['id_u']);
+        $id_t= htmlspecialchars($_POST['id_t']);
       
     
         Admin::Cancel_proposal($id_u,$id_t);
@@ -788,7 +804,7 @@ public  function export()
  {
   if(isset($_SESSION['id_statut']))// on vérifie que seul un utilisateur connecté peut accéder à ces pages
   { 
-      $data= Users::Get_all_contact_admin($_SESSION['id_user']);
+      set_data(Users::Get_all_contact_admin($_SESSION['id_user']));
       set_route('views/admin/contacter.php');
   }
   else
@@ -871,6 +887,8 @@ public  function export()
      
       if(isset($_POST['id_user']) && isset($_POST['statut']))
       {
+        $id_user= htmlspecialchars($_POST['id_user']);
+
         if($_POST['statut']==13)
         {
           set_donnees(Admin::TuteurCompte($id_user));
@@ -901,10 +919,9 @@ public  function export()
   {
     if(isset($_SESSION['id_statut']))//verifie la connexion 
     {
+      $id_user= htmlspecialchars($_POST['id_user']);
       if(isset($_POST['validertuteur']))
       {
-        $id_user= htmlspecialchars($_POST['id_user']);
-    
     
         Admin::ValiderCompte($id_user);
         set_donnees(Admin::WaitCompte(13));
@@ -914,7 +931,6 @@ public  function export()
       }
       elseif(isset($_POST['validertutore']))
       {
-          $id_user= htmlspecialchars($_POST['id_user']);
       
              Admin::ValiderCompte($id_user);
               
@@ -925,7 +941,6 @@ public  function export()
       }
       elseif(isset($_POST['annulertuteur']))
       {
-        $id_user= htmlspecialchars($_POST['id_user']);
       
           set_donnees(Admin::TuteurCompte($id_user));
           set_controller_report('admin');
@@ -935,8 +950,6 @@ public  function export()
       }
       else
       {
-        $id_user= htmlspecialchars($_POST['id_user']); 
-    
             
           set_donnees(Admin::TutoreCompte($id_user));
           set_controller_report('admin');

@@ -31,6 +31,7 @@ class EvenementsController
                 else
                 {
                     $message = 'Vous avez déja un évènement prévu à cette date et à cette heure, rendez vous dans la rubrique "je me suis inscrit à " pour le supprimer, puis dans "créer évènement", créer en un nouveau si vous le souhaitez';
+                    set_message($message);
                     set_controller_report('tuteurs');
                     set_fonction_back('tuteur_set_event');
                     set_route('views/system/error.php');
@@ -46,6 +47,7 @@ class EvenementsController
                 else if(htmlspecialchars($_POST['id_1']) == htmlspecialchars($_POST['id_2'])) 
                 {
                   $message = 'Vous avez sélectionné le meme tutoré deux fois';
+                    set_message($message);
                     set_controller_report('tuteurs');
                     set_fonction_back('tuteur_set_event');
 
@@ -54,6 +56,7 @@ class EvenementsController
                 else
                 {
                     $message = 'Vous avez déja un évènement prévu à cette date et à cette heure, rendez vous dans la rubrique "je me suis inscrit à " pour le supprimer, puis dans "créer évènement", créer en un nouveau si vous le souhaitez';
+                    set_message($message);
                     set_controller_report('tuteurs');
                     set_fonction_back('tuteur_set_event');
 
@@ -72,6 +75,7 @@ class EvenementsController
                 else
                 {
                     $message = 'Vous avez déja un évènement prévu à cette date et à cette heure, rendez vous dans la rubrique "je me suis inscrit à " pour le supprimer, puis dans "créer évènement", créer en un nouveau si vous le souhaitez';
+                    set_message($message);
                     set_controller_report('tuteurs');
                     set_fonction_back('tuteur_set_event');
                     set_route('views/system/error.php');
@@ -87,6 +91,7 @@ class EvenementsController
                 else if(htmlspecialchars($_POST['id_1']) == htmlspecialchars($_POST['id_2'])) 
                 {
                   $message = 'Vous avez sélectionné le meme tutoré deux fois';
+                    set_message($message);
                     set_controller_report('tuteurs');
                     set_fonction_back('tuteur_set_event');
 
@@ -95,6 +100,7 @@ class EvenementsController
                 else
                 {
                     $message = 'Vous avez déja un évènement prévu à cette date et à cette heure, rendez vous dans la rubrique "je me suis inscrit à " pour le supprimer, puis dans "créer évènement", créer en un nouveau si vous le souhaitez';
+                    set_message($message);
                     set_controller_report('tuteurs');
                     set_fonction_back('tuteur_set_event');
 
@@ -110,28 +116,39 @@ class EvenementsController
     public function admin_set_event()
     {
       // une instance de la classe tuteur
-            $event = new Evenements(); 
-            $event->setDate_evenement( $_POST['date_creation']);
-            $event->setDuree( $_POST['duree']);
-            $event->setNb_tuteurs($_POST['nb_tuteurs']);
-            $event->setNb_tutores($_POST['nb_tutores']);
+            
+            if($_POST['id_t'] !="" && $_POST['nb_tuteurs']!="" && $_POST['nb_tutores']!="" && $_POST['duree']!=""){
 
-            if( $event->Admin_set_event($_SESSION['id_user'],$_POST['id_t']) == 0) // on a récupéré l'identifiant de celui avec qui il aura un tutorat personnalisé ou alors l'identifiant du lieu
-            {    
-              if($_SESSION['id_statut'] == 11)
-                set_route('views/admin/mef/interface_admin_mef.php');
-              elseif($_SESSION['id_statut'] == 17)
-                set_route('views/admin/immersion/interface_admin.php');
-              else
-                set_route('views/admin/interface_admin.php');
-            } 
-            else
-            {
-                $message = 'Vous avez déja un évènement prévu à cette date et à cette heure, rendez vous dans la rubrique "je me suis inscrit à " pour le supprimer, puis dans "créer évènement", créer en un nouveau si vous le souhaitez';
-                set_controller_report('admin');
-                set_fonction_back('admin_set_event');
-                set_route('views/system/error.php');
-            }
+              $event = new Evenements(); 
+              $event->setDate_evenement( htmlspecialchars($_POST['date_creation']));
+              $event->setDuree( htmlspecialchars($_POST['duree']));
+              $event->setNb_tuteurs(htmlspecialchars($_POST['nb_tuteurs']));
+              $event->setNb_tutores(htmlspecialchars($_POST['nb_tutores']));
+
+                  if( $event->Admin_set_event($_SESSION['id_user'],htmlspecialchars($_POST['id_t'])) == 0) // on a récupéré l'identifiant de celui avec qui il aura un tutorat personnalisé ou alors l'identifiant du lieu
+                  {    
+                    if($_SESSION['statut'] == "ADMIN_MEF")
+                      set_route('views/admin/mef/interface_admin_mef.php');
+                    elseif($_SESSION['id_statut'] == "ADMIN_IMMERSION")
+                      set_route('views/admin/immersion/interface_admin.php');
+                    else
+                      set_route('views/admin/interface_admin.php');
+                  } 
+                  else
+                  {
+                      $message = 'Vous avez déja un évènement prévu à cette date et à cette heure, rendez vous dans la rubrique "je me suis inscrit à " pour le supprimer, puis dans "créer évènement", créer en un nouveau si vous le souhaitez';
+                      set_message($message);
+                      set_controller_report('admin');
+                      set_fonction_back('admin_set_event');
+                      set_route('views/system/error.php');
+                  }
+          }else{
+                      $message = 'des champs sont incomplets';
+                      set_message($message);
+                      set_controller_report('admin');
+                      set_fonction_back('admin_set_event');
+                      set_route('views/system/error.php');
+          }
             
     }
     public function superadmin_set_event()
@@ -154,6 +171,7 @@ class EvenementsController
               else
               {
                   $message = 'Vous avez déja un évènement prévu à cette date et à cette heure, rendez vous dans la rubrique "je me suis inscrit à " pour le supprimer, puis dans "créer évènement", créer en un nouveau si vous le souhaitez';
+                  set_message($message);
                   set_controller_report('admin');
                   set_fonction_back('admin_set_event');
                   set_route('views/system/error.php');
@@ -163,6 +181,7 @@ class EvenementsController
             {
               $message = 'Vous avez tenté de créer un évènement pour un tutorat dont la gestion n\'est pas encore affiliée:
               rendez-vous donc dans la rubrique <strong> tutorats =>les comptes admin </strong> et faites affecter et tout ira pour le mieux après';
+                  set_message($message);
                   set_controller_report('admin');
                   set_fonction_back('admin_set_event');
                   set_route('views/system/error.php');
@@ -305,6 +324,7 @@ class EvenementsController
                             else
                             {
                               $message = 'Vous etes déja inscrit à cet évènement';
+                              set_message($message);
                               set_controller_report('tuteurs');
                               set_fonction_back('display_future_events');
                               set_route('views/system/error.php');
@@ -313,6 +333,7 @@ class EvenementsController
                     else
                     {   
                         $message = 'l\'évènement est complet';
+                        set_message($message);
                         set_controller_report('evenements');
                         set_fonction_back('Display_future_events');
                         set_route('views/system/error.php');
@@ -330,6 +351,7 @@ class EvenementsController
                     else
                     {
                       $message = 'Vous etes déja inscrit à cet évènement';
+                      set_message($message);
                       set_controller_report('evenements');
                       set_fonction_back('Display_future_events');
                       set_route('views/system/error.php');
@@ -351,6 +373,7 @@ class EvenementsController
                             else
                             {
                               $message = 'Ce tuteur est déja inscrit à cet évènement';
+                              set_message($message);
                               set_controller_report('admin');
                               set_fonction_back('Sfuture_events_list');
                               set_route('views/system/error.php');
@@ -359,6 +382,7 @@ class EvenementsController
                     else
                     {   
                         $message = 'l\'évènement est complet';
+                        set_message($message);
                         set_controller_report('evenements');
                         set_fonction_back('Display_future_events');
                         set_route('views/system/error.php');
@@ -446,7 +470,7 @@ public function cancel_participation()
        if( isset($_SESSION['id_statut']))
        {
           set_donnees(Evenements::Subscription_list($_POST['id_e'])); // on récupère la liste des participants
-          $data= Evenements::Get_informations_on_events($_POST['id_e']);  // on récupère la date, le. lieu etc sur l'évenement
+          set_data(Evenements::Get_informations_on_events($_POST['id_e']));  // on récupère la date, le. lieu etc sur l'évenement
           set_controller_report('admin');
           set_fonction_back('pasts_events_list');
 
@@ -460,7 +484,7 @@ public function cancel_participation()
        if( isset($_SESSION['id_statut']))
        {
           set_donnees(Evenements::Subscription_list($_POST['id_e'])); // on récupère la liste des participants
-          $data= Evenements::Get_informations_on_events($_POST['id_e']);  // on récupère la date, le. lieu etc sur l'évenement
+          set_data(Evenements::Get_informations_on_events($_POST['id_e']));  // on récupère la date, le. lieu etc sur l'évenement
           $req= Tutorat::Get_lieu_tutorat($_SESSION['id_user']); // on récupère la liste des tutorats que l'admin administre
           set_controller_report('admin');
           set_fonction_back('Sfuture_events_list');
@@ -481,21 +505,28 @@ public function cancel_participation()
             $event->setDate_evenement( $_POST['date_creation']);
             $event->setLieu( $_POST['lieu']);
             $event->setDuree( $_POST['duree']);
+            if( $_POST['date_creation']!="" &&  $_POST['lieu']!= "" && $_POST['duree']!="" && $_POST['id_t']!=""){
+                if( $event->Declare_hours($_SESSION['id_user'],$_POST['id_t']) == 0) // l'admin déclarelui memeses heures effectuées
+                  {
+                      AdminController::interface_hours(); // on recharge. la page de déclaration d'heure
+                  } 
+                  else
+                  {
+                      $message = 'Vous avez déja un évènement prévu à cette date et à cette heure, rendez vous dans la rubrique "je me suis inscrit à " pour le supprimer, puis dans "créer évènement", créer en un nouveau si vous le souhaitez';
+                      set_message($message);
+                      set_controller_report('admin');
+                      set_fonction_back('admin_set_event');
+                      set_route('views/system/error.php');
+                  }
 
-           if( $event->Declare_hours($_SESSION['id_user'],$_POST['id_t']) == 0) // l'admin déclarelui memeses heures effectuées
-            {
-                  AdminController::interface_hours(); // on recharge. la page de déclaration d'heure
-            } 
-            else
-            {
-                $message = 'Vous avez déja un évènement prévu à cette date et à cette heure, rendez vous dans la rubrique "je me suis inscrit à " pour le supprimer, puis dans "créer évènement", créer en un nouveau si vous le souhaitez';
-                set_controller_report('admin');
-                set_fonction_back('admin_set_event');
-                set_route('views/system/error.php');
-            }
-
-          
-
+              }
+              else{
+                      $message = 'des champs sont incomplets';
+                      set_message($message);
+                      set_controller_report('admin');
+                      set_fonction_back('admin_set_event');
+                      set_route('views/system/error.php');
+              }
        }
        else
           set_route('views/login.php');

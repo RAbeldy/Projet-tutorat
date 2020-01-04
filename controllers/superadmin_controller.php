@@ -266,16 +266,17 @@ class SuperadminController
                set_fonction_back('interface_set_event');
                
                  
-                   set_donnees(Tutorat::Get_specific_tutorat_list($id)); // on récupère la liste des tutorats associés à ce type de tutorat
+                   $donnees= Tutorat::Get_specific_tutorat_list($id);
                    if($donnees != 0)
                    {
+                      set_donnees($donnees); // on récupère la liste des tutorats associés à ce type de tutorat
                       set_route('views/superadmin/superadmin_set_event.php');
                    }
                    else
                    {
                     $message = 'aucun tutorat associé à ce type, la création d\'évènement n\'est pas possible dans l\'état actuel,
                     veuillez créer dans la rubrique tutorat un un centre associé à ce type de tutorat';
-                    
+                    set_message($message);
                     set_route('views/system/error.php');
                    }
     
@@ -310,7 +311,7 @@ class SuperadminController
             {
               set_donnees(Evenements::Subscription_list($id_e)); // on récupère la liste des participants
 
-              $data= Evenements::Get_informations_on_events($id_e);  // on récupère la date, le. lieu etc sur l'évenement
+              set_data(Evenements::Get_informations_on_events($id_e));  // on récupère la date, le. lieu etc sur l'évenement
 
               set_controller_report('superadmin');
               set_fonction_back('future_events_list');
@@ -342,7 +343,7 @@ class SuperadminController
                  
                if( isset($_POST['consulter']))
                {
-                 $data= Users::Get_info($id_u); // on récupère les info du user en question
+                 set_data( Users::Get_info($id_u)); // on récupère les info du user en question
 
                  set_donnees(Evenements::Get_past_events($id_u)); // on récupère les évènements que le tuteur a effectué 
 
@@ -365,7 +366,7 @@ class SuperadminController
 
                   set_donnees(Evenements::Subscription_list($d_e_c)); // on récupère la liste des participants
 
-                  $data= Evenements::Get_informations_on_events($id_e_c);  // on récupère la date, le. lieu etc sur l'évenement
+                  set_data(Evenements::Get_informations_on_events($id_e_c));  // on récupère la date, le. lieu etc sur l'évenement
 
                   set_controller_report('superadmin');
                   set_fonction_back('future_events_list');
@@ -391,7 +392,7 @@ class SuperadminController
           if( $_SESSION['id_statut'] == 1 )
             {
               set_donnees(Evenements::Subscription_list($id_e)); // on récupère la liste des participants
-              $data= Evenements::Get_informations_on_events($id_e);  // on récupère la date, le. lieu etc sur l'évenement
+              set_data(Evenements::Get_informations_on_events($id_e));  // on récupère la date, le. lieu etc sur l'évenement
               set_controller_report('superadmin');
               set_fonction_back('future_events_list');
 
@@ -413,7 +414,7 @@ class SuperadminController
             if( $_SESSION['id_statut'] == 1 )
             {
               set_donnees(Evenements::Subscription_list($id_e)); // on récupère la liste des participants
-              $data= Evenements::Get_informations_on_events($id_e);  // on récupère la date, le. lieu etc sur l'évenement
+              set_data(Evenements::Get_informations_on_events($id_e));  // on récupère la date, le. lieu etc sur l'évenement
               set_controller_report('superadmin');
               set_fonction_back('pasts_events_list');
 
@@ -517,7 +518,7 @@ class SuperadminController
                 {
                   $message = 'aucun tutorat associé à ce type, la création d\'évènement n\'est pas possible dans l\'état actuel,
                     veuillez créer dans la rubrique tutorat un un centre associé à ce type de tutorat';
-                    
+                    set_message($message);
                     set_route('views/system/error.php');
                 }
              
@@ -532,7 +533,7 @@ class SuperadminController
       if( isset($_SESSION['id_statut']))
          {
            set_donnees(Admin::Get_all_tuteurs($_SESSION['id_user']));
-           $data= Tutorat::Get_available_account();
+           set_data(Tutorat::Get_available_account());
 
            set_controller_report('superadmin'); 
            set_fonction_back('interface_tutorat');
@@ -566,7 +567,7 @@ class SuperadminController
        $id_u= htmlspecialchars($_POST['id_u']);
        
          set_donnees(Tutorat::Get_working_account($_POST['id_u']));
-         $data= Users::Get_admin($_POST['id_u']); // on récupère les informations de ce compte admin
+         set_data(Users::Get_admin($_POST['id_u'])); // on récupère les informations de ce compte admin
 
          set_controller_report('superadmin'); 
          set_fonction_back('interface_tutorat');
@@ -602,14 +603,15 @@ class SuperadminController
                   set_fonction_back('static_account');
 
                   $message= 'tentative de suppression du compte associé à ce type de tutorat: opération impossible';
+                  set_message($message);
                   set_route('views/system/error.php');
                 }
              }
              else
              {
                set_donnees(Tutorat::Get_tutorat($id_admin)); // on récupère la liste des tutorats associiés à ce compte statique admin
-               $data= Users::Get_admin($id_admin); // on récupère les informations de ce compte admin
-               $res= Tutorat::Get_available_tutorat($id_type); // on récupère la liste des tutorats qui ne sont pas encore affectés
+               set_data(Users::Get_admin($id_admin)); // on récupère les informations de ce compte admin
+               set_res(Tutorat::Get_available_tutorat($id_type)); // on récupère la liste des tutorats qui ne sont pas encore affectés
 
                set_controller_report('superadmin'); 
                set_fonction_back('static_account');
@@ -733,8 +735,10 @@ class SuperadminController
 
 public  function export() // fonction d'exportation fichier excel
   {
-    if (isset($_SESSION['id_user'])) {
-        set_donnees(Users::Get_unpaidHours_tuteurs());
+    if (isset($_SESSION['id_user'])){
+
+        $donnees= Users::Get_unpaidHours_tuteurs();
+        set_donnees($donnees);
        
         Evenements::payUnpaidHours(); // on passe la liste des évènements impayés à payer
 
@@ -782,7 +786,7 @@ public  function export() // fonction d'exportation fichier excel
         {
             if(isset($_SESSION['id_statut']))// on vérifie que seul un utilisateur connecté peut accéder à ces pages
                 { 
-                    $data= Users::Get_all_contact_admin($_SESSION['id_user']); // on récupère le contact de tous les admin du site(ceux qui en ont la gestion)
+                    set_data(Users::Get_all_contact_admin($_SESSION['id_user'])); // on récupère le contact de tous les admin du site(ceux qui en ont la gestion)
                     set_route('views/superadmin/contacter.php');
                 }
             else

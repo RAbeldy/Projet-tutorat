@@ -203,7 +203,7 @@ class Tutorat
       return $list ;
     }
 
-    public static function Account_affectation($id_admin,$id_user)
+    public static function Account_affectation($id_user,$id_admin)
     {
         require 'connectToMail.php';
         require 'PHPMailer/PHPMailerAutoload.php';

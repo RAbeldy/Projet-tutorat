@@ -191,11 +191,11 @@ class TutoratController
     if( isset($_SESSION['id_statut']))
     {
     
-    $id_t= htmlspecialchars($_POST['id_u']);
+    $id_u= htmlspecialchars($_POST['id_u']);
     $id_admin= htmlspecialchars($_POST['id_admin']);
-    if($id_t!="" && id_admin!="")
+    if($id_u!="" && $id_admin!="")
      {
-       Tutorat::Account_affectation($id_t,$id_admin);
+       Tutorat::Account_affectation($id_u,$id_admin);
 
        set_controller_report('superadmin');
        set_fonction_back('interface_tutorat');

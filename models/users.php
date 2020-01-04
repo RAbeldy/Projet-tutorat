@@ -253,10 +253,10 @@ require_once('connexion.php');
     
     $request = $db->prepare('SELECT u.id_user as id from user as u, avoir_statut as av, statut_compte as s  WHERE u.email= ? and u.password= ? and u.id_user = av.id_user and av.id_statut_compte = s.id_statut_compte and s.libelle <> "ATTENTE_VALIDATION" ');
     $request->execute(array($email,$pwd));
-    //echo crypt($pwd);
+
     if ($request->rowCount() == 1)
     {
-         //echo('1');
+         
          $_SESSION['id_user']= $request->fetch()['id'];
          
          

@@ -22,6 +22,7 @@
 
                                                     <div class="col-md-7 text-nowrap">
                                                         <span style="color: black; font-style: oblique;">   Compte:  </span> <?= $data->getNom();?> <?= $data->getPrenom();?></br>
+                                                        <span style="color: black; font-style: oblique;"> email de connexion: </span>   <?= $data->getEmail();?></br>
                                                        <span style="color: black; font-style: oblique;"> Mot de passe: </span>   <?= $data->getPassword();?>
                                                         <form method="post" action="?controller=superadmin&action=update_password">
                                                             <button class="btn" type="submit">Modifier le mot de passe admin</button>

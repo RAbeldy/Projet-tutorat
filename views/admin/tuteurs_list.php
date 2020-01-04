@@ -89,10 +89,10 @@
                                                                   <td><label >
                                                                   <select class="form-control" name="tutorat">
                                                                   <?php 
-                                                                       foreach($req as $data)
+                                                                       foreach($res as $row)
                                                                        {
                                                                          ?>
-                                                                        <option value="<?=$data['tutorat']->getId_tutorat();?>"required> <?= $data['tutorat']->getLibelle() ;?>
+                                                                        <option value="<?=$row['tutorat']->getId_tutorat();?>"required> <?= $row['tutorat']->getLibelle() ;?>
                                                                             
                                                                         </option>
                                                                         

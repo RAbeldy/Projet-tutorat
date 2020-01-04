@@ -87,7 +87,7 @@
                                                                   
                                                                   <td><label ><strong ><span style="color: red;" ><?=$elt['participer_evenement']?></span></strong></label></td>
                                                                   
-                                                                  <td><button class="btn" onclick="openModal();" id="btnPopup"> Réclamer</button>
+                                                                  <td><label class="btn"  id="btnPopup"> Réclamer</label>
                                                                   </td>
                                                                   <div id= "overlay" class="overlay"> 
                                                                          <div id="popup" class="popup">

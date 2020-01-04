@@ -374,7 +374,7 @@
 		</ul>
 		';
 	}
-	elseif(isset($_SESSION['statut']) && ($_SESSION['statut']== 'GESTIONNAIRE_COMPTE')) // menu latéral pour admin
+	elseif(isset($_SESSION['statut']) && ($_SESSION['statut']== 'ADMIN_GESTION')) // menu latéral pour admin
 	{
 		$lateralSideBar = '
 		<a class="navbar-brand d-flex justify-content-center align-items-center sidebar-brand m-0" href="#">
@@ -431,7 +431,20 @@
 	function set_donnees($data){
 		global $donnees;
 		$donnees = $data;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   
-	}
+    }
+    function set_data($input){
+        global $data;
+        $data= $input;
+    }
+    function set_res($input){
+        global $res;
+        $res= $input;
+    }
+    function set_message($input)
+    {
+        global $message;
+        $message= $input;
+    }
 	function set_controller_report($controller){
 		global $controller_report;
 		$controller_report = $controller;
@@ -545,7 +558,7 @@
                 <li class="list-inline-item"><a href="#">Actualités</a></li>
                 <li class="list-inline-item"><a href="?controller=page&action=contact">Contact</a></li>
             </ul>
-            <p class="copyright">Tutorat YNCREA © 2019</p>
+            <p class="copyright">Tutorat YNCREA © <?php echo date('Y');?></p>
         </footer>
     </div>
      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>

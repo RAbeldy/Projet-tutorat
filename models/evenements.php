@@ -390,6 +390,7 @@ class Evenements
         return $list;
 
     }
+    
     public static function Pasts_events_list_admin($id_admin) // liste des evenements que les tutores de la mef vont faire(tutorats personnalisés)
     {
       $db = Db::getInstance();

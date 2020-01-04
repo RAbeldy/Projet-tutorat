@@ -8,16 +8,7 @@
                                 </div>
                                 <div class="col-xs-12 col-md-8">
                                     <div class="row">
-                                        <div class="col-xs-12 col-md-6 card-container">
-                                            <div class="card avenir">
-                                                <div class="card-body">
-                                                    <h4 class="card-title">Evènements</h4>
-                                                    <a href="?controller=admin&action=events">
-                                                        <button class="btn" type="button">je crée, je consulte</button>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
+                                       
                                         <div class="col-xs-12 col-md-6 card-container">
                                             <div class="card historique">
                                                 <div class="card-body">
