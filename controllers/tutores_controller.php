@@ -1,8 +1,8 @@
 <?php
-set_route('models/users.php');
-set_route('models/tuteurs.php');
-set_route('models/tutores.php');
-set_route('models/evenements.php');
+require_once('models/users.php');
+require_once('models/tuteurs.php');
+require_once('models/tutores.php');
+require_once('models/evenements.php');
 
 /* Définition du controller */
 class TutoresController
@@ -50,8 +50,8 @@ class TutoresController
             
             if(isset($_SESSION['id_statut']))// on vérifie que seul un utilisateur connecté peut accéder à ces pages
             {   
-                $tuteurs= new Tutores();
-                set_donnees($tuteurs->Get_waiting_list($_SESSION['id_user']));
+                $tutores= new Tutores();
+                set_donnees($tutores->Get_waiting_list($_SESSION['id_user']));
 
                 set_controller_report('tutores');
                 set_fonction_back('notifications');
@@ -69,8 +69,8 @@ class TutoresController
             {    
               $id_u=  htmlspecialchars($_POST['id_u']);
       
-                 $tuteurs= new Tutores();
-                 $tuteurs->Link_with_tuteurs($_SESSION['id_user'],$id_u);
+                 $tutores= new Tutores();
+                 $tutores->Link_with_tuteurs($_SESSION['id_user'],$id_u);
                 set_route('views/tutores/notifications_tutores.php');
         
             }
@@ -90,6 +90,7 @@ class TutoresController
                 else
                 {
                     $message = 'Cette liaison est impossible, ce tuteur a atteint son quota maximum de liaison';
+                    set_message($message);
                     set_controller_report('tutores');
                     set_fonction_back('notifications');
                     set_route('views/system/error.php');
@@ -136,8 +137,8 @@ class TutoresController
         {
             if(isset($_SESSION['id_statut']))// on vérifie que seul un utilisateur connecté peut accéder à ces pages
             {    
-                 $tuteurs= new Tutores();
-                 set_donnees($tuteurs->Get_wish_list($_SESSION['id_user']));
+                 $tutores= new Tutores();
+                 set_donnees($tutores->Get_wish_list($_SESSION['id_user']));
 
                  set_controller_report('tutores');
                  set_fonction_back('notifications');
@@ -152,9 +153,9 @@ class TutoresController
             if(isset($_SESSION['id_statut']))// on vérifie que seul un utilisateur connecté peut accéder à ces pages
             {    
               $id_u=  htmlspecialchars($_POST['id_u']);
-              $tuteurs= new Tutores();
+              $tutores= new Tutores();
 
-              set_donnees($tuteurs->Cancel_wish($_SESSION['id_user'],$_POST['id_u']));
+              set_donnees($tutores->Cancel_wish($_SESSION['id_user'],$_POST['id_u']));
               set_route('views/tutores/interface_selection_tuteurs_tutores.php');
     
             }
@@ -166,7 +167,7 @@ class TutoresController
            if(isset($_SESSION['id_statut']))// on vérifie que seul un utilisateur connecté peut accéder à ces pages
               { 
                     $duree= htmlspecialchars($_POST['duree']);
-                    $tutores = new Tutores();
+                    $tutores= new Tutores();
                     
                       $tutores->Validate_hours($_POST['id_e'],$duree); 
                       set_route('views/tutores/interface_tutore.php');

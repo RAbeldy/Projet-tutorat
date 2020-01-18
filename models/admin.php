@@ -525,7 +525,7 @@ class Admin
        
            //Déclaration du message au format texte et au format html (selon ce que les webmails supportent)
         $message_txt = 'Bonjour Mr/Mme '.$data->getPrenom().' '.$data->getNom().',\nNous avons le plaisir de vous annoncer que votre compte a été validé.Vous pouvez dès à présent vous connecter.Pour toute question subsidiaire , veuillez contacter l\'administrateur\n .\nCe message est généré automatiquement, veuillez ne pas répondre.';
-        $message_html ='<html><head></head><body><p>Bonjour Mr/Mme '.$data->getPrenom().' '.$data->getNom().', </p><p>Nous vous annoncons avec infortune que votre compte a été désactivé.Vous pouvez dès à présent vous connecter. Pour question subsidiaire  veuillez contacter l\'administrateur.</p><p>Ce message est généré <b>automatiquement</b>, veuillez <b>ne pas répondre</b>.</p></body></html>';
+        $message_html ='<html><head></head><body><p>Bonjour Mr/Mme '.$data->getPrenom().' '.$data->getNom().', </p><p>Nous avons le plaisir de vous annoncer que votre compte a été validé.Vous pouvez dès à présent vous connecter. Pour toute question subsidiaire  veuillez contacter l\'administrateur.</p><p>Ce message est généré <b>automatiquement</b>, veuillez <b>ne pas répondre</b>.</p></body></html>';
                 //Sujet
         $sujet = "[Yncrea tutorat] Compte validé  ";
                 //envoie du mail

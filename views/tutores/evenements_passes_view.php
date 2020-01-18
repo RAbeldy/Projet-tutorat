@@ -83,7 +83,7 @@
                                                                   
                                                                   <td><label ><?=$elt['participer_evenement']?></label></td>
                                                                   <?php
-                                                                  if( $elt['participer_evenement'] == 'NON' )
+                                                                  if( $elt['participer_evenement'] == 'NON' && preg_match('#PERSO#',$elt['tutorat']))
                                                                   {
                                                                     ?>
                                                                   <td><button class="btn"  id="popup"> Valider</button>

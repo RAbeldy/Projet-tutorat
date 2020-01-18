@@ -1,20 +1,7 @@
-<script type="text/javascript">
-//Control password
-var check = function() {
-  if (document.getElementById('password').value ==
-    document.getElementById('confirm_password').value) {
-    document.getElementById('message').style.color = 'green';
-    document.getElementById('message').innerHTML = 'matching';
-  } else {
-    document.getElementById('message').style.color = 'red';
-    document.getElementById('message').innerHTML = 'not matching';
-  }
-}
 
-</script>
 
 <div class="login-dark">
-        <form method="post" action="resetPassword.php">
+        <form method="post" action="resetPassword.php" class="envoi">
             <h2 class="sr-only">Réinitialiser le mot de passe </h2>
             <div class="illustration">
                 <i class="icon ion-person-add"></i>
@@ -22,13 +9,15 @@ var check = function() {
            <?php  include('views/alert_view.php'); ?>
           
             <div class="form-group">
-                <input class="form-control" type="text" name="reset_email" placeholder="Email" required>
+                <input class="form-control complete" type="text" name="reset_email" placeholder="Email" required>
             </div>
             <div class="form-group">
-                <input class="form-control" type="password" name="password" id="password" placeholder="mot de passe"  onkeyup='javascript:check();' required>
+                <input class="form-control complete" type="password" name="password" id="password" placeholder="mot de passe"  onkeyup='javascript:check();' required>
+                <span id='mess'></span>
             </div>
             <div class="form-group">
-            <input class="form-control" type="password" name="confirm_password" id="confirm_password" placeholder="confirmer mot de passe"  onkeyup='javascript:check();' required>
+            <input class="form-control complete" type="password" name="confirm_password" id="cpassword" placeholder="confirmer mot de passe"  onkeyup='javascript:check();' required>
+            <span id='mess'></span>
             </div>
             <div class="form-group">
             <button class="btn btn-primary btn-block" id="submit">Réinitialiser</button>
@@ -40,3 +29,63 @@ var check = function() {
 </div>
 
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script type="text/javascript">
+    //Control password
+    $(document).ready(function(){
+
+        
+        var complete= document.querySelectorAll(".complete");
+        var pwd= document.getElementById('password');
+        var cpwd= document.getElementById('cpassword');
+        var tel= document.getElementById('tel');
+        var bool= true;
+      
+
+        var checke = function() {
+          if (pwd.value ==  cpwd.value) {
+            document.getElementById('mess').style.color = 'green';
+            document.getElementById('mess').innerHTML = 'matching';
+          } else {
+            document.getElementById('mess').style.color = 'red';
+            document.getElementById('mess').innerHTML = 'not matching';
+          }
+        }
+
+        
+        
+        function completeFields(complete){
+            for(let i=0 ; i< complete.length; i++)
+            {
+                if(complete[i].value == "")
+                {
+                    complete[i].style.borderColor= "red";
+                    complete[i].style.color= "red";
+                    //complete[i].placeholder= "veuillez remplir ce champ";
+                    bool= false;
+                }
+    
+            }
+                if(bool)
+                    return true;
+                else    
+                {
+                    bool= true;
+                    return false;
+                }
+            }
+            
+            $('#cpassword').keyup(e =>{
+                checke();
+            })
+            
+            $('.envoi').submit((e)=>{
+            if(!completeFields(complete))
+            {
+                alert("des champs sont incomplets");
+                e.preventDefault(); // on annule la fonction par défaut du bouton d'envoi
+            }
+           
+        })
+})
+</script>

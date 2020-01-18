@@ -99,7 +99,7 @@
 								// puis son nom et prénom dans la table user
 								$addCompte = $bd->prepare('INSERT INTO user (nom, prenom, date_naissance,ecole,niveau, email, password,phone,id_adresse) VALUES (?,?,?,?,?,?,?,?,?)');
 								//$date_naiss= DATE_FORMAT($date_naiss, "%M %d %Y");
-								$addCompte->execute(array($nom, $prenom,$date_naiss, $ecole,$niveau, $login_mail,$pwd, $phone,$req->fetch()['id_adresse'] ));   // rajouter une exception à ce niveau
+								$addCompte->execute(array($nom, $prenom,$date_naiss, $ecole,$niveau, $login_mail,password_hash($pwd,PASSWORD_DEFAULT), $phone,$req->fetch()['id_adresse'] ));   // rajouter une exception à ce niveau
 								//password_hash($pwd,PASSWORD_DEFAULT)
 							   }
 		   					 	// on insère son école

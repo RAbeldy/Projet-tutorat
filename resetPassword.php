@@ -34,7 +34,7 @@ if (isset($_POST['reset_email']) AND isset($_POST['password']) AND isset($_POST[
 	       
 				//On enregistre le nouveau mot de passe dans la bdd
 				$updatePWD = $bdd->prepare('UPDATE user SET password=? WHERE email=?');
-				$updatePWD->execute(array($pwd1, $login_mail));
+				$updatePWD->execute(array(password_hash($pwd1,PASSWORD_DEFAULT), $login_mail));
 				$resultat="1";
 				$_SESSION['alert']= "&nbsp <strong>Réinitialisation de votre mot de passe réussie</strong>";
 				header('location:index.php?controller=users&action=connexion');

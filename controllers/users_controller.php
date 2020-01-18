@@ -124,28 +124,49 @@ public function modify_account()
 				$complement_adresse=  htmlspecialchars($_POST['complement_adresse']);
 				$code_postal=  htmlspecialchars($_POST['code_postal']);
 				$password=  htmlspecialchars($_POST['password']);
+				$niveau= htmlspecialchars($_POST['niveau']);
+				$ecole= htmlspecialchars($_POST['ecole']);
 				$nom=  htmlspecialchars($_POST['nom']);
 				$prenom=  htmlspecialchars($_POST['prenom']);
 
-				if($ville!= "" && $adresse!="" && $complement_adresse!="" && $code_postal!="" && $password!="" && $nom!="" &&$prenom!="")
-                {
+				if($ville!="" && $adresse!="" && $complement_adresse!="" && $code_postal!="" && $password!="" && $nom!="" &&$prenom!="" && $niveau!="" && $ecole !="")
+                { // il s'agit du super admin qui met à jour son profil
 	                $user->setVille($ville);
 	                $user->setAdress($adresse);
 	                $user->setCom_adress($complement_adresse);
 	                $user->setCode_postal($code_postal);
 	                $user->setPassword($password);
-
+					$user->setNiveau($niveau);
+					$user->setEcole($ecole);
 	                $user->setNom($nom);
-	                $user->setPrenom($prenom);
-	            }
+					$user->setPrenom($prenom);
 
+					$user->Modify_info($_SESSION['id_user']);    // on update les infos du user
+					if(!empty($_FILES["fileToUpload"]["name"]))
+						$this->upload_file();  // on va uploader la photo
 
-                $user->Modify_info($_SESSION['id_user']);    // on update les infos du user
-                if(!empty($_FILES["fileToUpload"]["name"]))
-                $this->upload_file();  // on va uploader la photo
+					UsersController::update_account(); // on recharge pour la mise à jour
+				}
+				else if($ville!="" && $adresse!="" && $complement_adresse!="" && $code_postal!="" && $password!="" && $niveau!="" && $ecole !=""){
+					// un utilisateur autre met  à jour son profil
+					$user->setVille($ville);
+	                $user->setAdress($adresse);
+	                $user->setCom_adress($complement_adresse);
+					$user->setCode_postal($code_postal);
+					$user->setNiveau($niveau);
+					$user->setEcole($ecole);
+					$user->setPassword($password);
 
+					$user->Modify_info($_SESSION['id_user']);    // on update les infos du user
+					if(!empty($_FILES["fileToUpload"]["name"]))
+						$this->upload_file();  // on va uploader la photo
+					
+					UsersController::update_account(); // on recharge pour la mise à jour
+				}
+				else {	// les informations sont incomplètes
+					UsersController::update_account(); // on recharge pour la mise à jour
+				}
 
-                UsersController::update_account(); // on recharge pour la mise à jour
             }
             else
                 set_route('views/Login.php');
@@ -237,7 +258,8 @@ public function set_picture_path($target_file)
 				$message = ' Un administrateur est déja en charge de ce tutorat, pour affecter sa gestion à une autre personne, il est primordial de rompre le contrat avec l\'administrateur actuel. Rendez-vous donc dans la page "les centres de tutorat" si tel est votre souhait ';
 				set_controller_report('superadmin');
 				set_fonction_back('interface_account_creation');
-
+				set_message($message);
+				
 				set_route('views/system/error.php');
 			  }
 

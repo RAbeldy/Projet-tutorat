@@ -501,7 +501,7 @@ class SuperadminController
           set_route('views/Login.php');
      }
 
-     public function create_account() // il s'agit de la vue de création ici, l'insertion se fait dans le controller evenement
+     public function create_account() // il s'agit de la vue de création ici, l'insertion se fait dans le controller user
      {
        if( isset($_SESSION['id_statut']))
          {
@@ -510,13 +510,13 @@ class SuperadminController
            set_controller_report('superadmin'); 
            set_fonction_back('interface_account_creation');
 
-        
-               set_donnees(Tutorat::Get_specific_tutorat_list($id)); // on récupère la liste des tutorats associés à ce type de tutorat
+               $donnees= Tutorat::Get_specific_tutorat_list($id);
+               set_donnees($donnees); // on récupère la liste des tutorats associés à ce type de tutorat
                if($donnees != 0)
                   set_route('views/superadmin/create_account.php'); 
                 else
                 {
-                  $message = 'aucun tutorat associé à ce type, la création d\'évènement n\'est pas possible dans l\'état actuel,
+                  $message = 'aucun tutorat associé à ce type, la création d\'un compte associé à ce type n\'est pas possible dans l\'état actuel,
                     veuillez créer dans la rubrique tutorat un un centre associé à ce type de tutorat';
                     set_message($message);
                     set_route('views/system/error.php');
@@ -739,47 +739,52 @@ public  function export() // fonction d'exportation fichier excel
 
         $donnees= Users::Get_unpaidHours_tuteurs();
         set_donnees($donnees);
-       
-        Evenements::payUnpaidHours(); // on passe la liste des évènements impayés à payer
 
-        set_include_path( get_include_path().PATH_SEPARATOR."..");
-        ini_set('display_errors', 0);
-        ini_set('log_errors', 1);
-        error_reporting(E_ALL & ~E_NOTICE);
+          if(!empty(donnees)){
+              Evenements::payUnpaidHours(); // on passe la liste des évènements impayés à payer
 
-        $today = date("Y-m-d");
-        $filename = "Export".$today.".xlsx";
+              set_include_path( get_include_path().PATH_SEPARATOR."..");
+              ini_set('display_errors', 0);
+              ini_set('log_errors', 1);
+              error_reporting(E_ALL & ~E_NOTICE);
 
-        header('Content-disposition: attachment; filename="'.XLSXWriter::sanitize_filename($filename).'"');
-        header("Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
-        header('Content-Transfer-Encoding: binary');
-        header('Cache-Control: must-revalidate');
-        header('Pragma: public');
+              $today = date("Y-m-d");
+              $filename = "Export".$today.".xlsx";
+
+              header('Content-disposition: attachment; filename="'.XLSXWriter::sanitize_filename($filename).'"');
+              header("Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+              header('Content-Transfer-Encoding: binary');
+              header('Cache-Control: must-revalidate');
+              header('Pragma: public');
 
 
-      $header = array('Nom du user'=>'string','Prénom'=>'string','Email'=>'string','phone'=>'string','ville'=>'string','adresse'=>'string','code_postal'=>'string','Nombre d\'heures'=>'string'
-      );
+            $header = array('Nom du user'=>'string','Prénom'=>'string','Email'=>'string','phone'=>'string','ville'=>'string','adresse'=>'string','code_postal'=>'string','Nombre d\'heures'=>'string'
+            );
 
-        $data1 = [];
-        foreach($donnees as $data)
-          { 
-            $data1 [] = array($data['user']->getNom(),$data['user']->getPrenom(),$data['user']->getEmail(),$data['user']->getPhone(),$data['user']->getVille(),$data['user']->getAdress(),$data['user']->getCode_postal(),$data['heure'],);
+              $data1 = [];
+              foreach($donnees as $data)
+                { 
+                  $data1 [] = array($data['user']->getNom(),$data['user']->getPrenom(),$data['user']->getEmail(),$data['user']->getPhone(),$data['user']->getVille(),$data['user']->getAdress(),$data['user']->getCode_postal(),$data['heure'],);
+                }
+              $writer = new XLSXWriter();
+              $writer->writeSheetHeader('Sheet1', $header);
+              foreach($data1 as $row){
+                $writer->writeSheetRow('Sheet1', $row);
+              }
+              $writer->writeToFile($filename);
+
+              //$writer->writeToStdOut();
+            //include_once('PHP_XLSXWriter-master/examples/ex00-simple.php');
+            $this->validated_hours();
           }
-        $writer = new XLSXWriter();
-        $writer->writeSheetHeader('Sheet1', $header);
-        foreach($data1 as $row){
-          $writer->writeSheetRow('Sheet1', $row);
-        }
-        $writer->writeToFile($filename);
-
-        //$writer->writeToStdOut();
-      //include_once('PHP_XLSXWriter-master/examples/ex00-simple.php');
-      $this->validated_hours();
-    }
-    else{
-        echo "échec d'exportation de données";
-        $this->validated_hours();
-    }
+          else{
+              echo "échec d'exportation de données";
+              $this->validated_hours();
+          }
+      }
+      else {  // utilsateur pas connecté
+        set_route('views/Login.php');
+      }
   }
     
  public static function contact()

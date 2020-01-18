@@ -149,14 +149,14 @@ require_once('connexion.php');
     public function Modify_info($id_user) // modification de compte
     {
       $db = Db::getInstance();
-      $req= $db->prepare("UPDATE user as u INNER JOIN adresse as a ON a.id_adresse = u.id_adresse  SET password = ?,a.ville= ?, a.adress = ?,a.complement_adress = ?, a.code_postal = ? WHERE  u.id_user = ?");
-      $req->execute(array($this->getPassword(),$this->getVille(),$this->getAdress(),$this->getCom_adress(),$this->getCode_postal(),$id_user ));
+      $req= $db->prepare("UPDATE user as u INNER JOIN adresse as a ON a.id_adresse = u.id_adresse  SET u.password = ?,u.ecole=?,u.niveau= ?,a.ville= ?, a.adress = ?,a.complement_adress = ?, a.code_postal = ? WHERE  u.id_user = ?");
+      $req->execute(array(password_hash($this->getPassword(),PASSWORD_DEFAULT),$this->getEcole(),$this->getNiveau(),$this->getVille(),$this->getAdress(),$this->getCom_adress(),$this->getCode_postal(),$id_user ));
 /*
       $req= $db->prepare("UPDATE adresse as a INNER JOIN  user as u ON u.id_adresse = a.id_adresse SET a.ville= ?, a.adress = ?,a.complement_adress = ?, a.code_postal = ? WHERE  u.id_user = ? ");
       $req->execute(array($this->getVille(),$this->getAdress(),$this->getCom_adress(),$this->getCode_postal(),$id_user));
       */
     }
-    public static function Update_password($id_admin)
+    public static function Update_password($id_admin) // le super admin met à jour le mot de passe d'un compte statique d'administration
     {
       require 'connectToMail.php';
       require 'PHPMailer/PHPMailerAutoload.php';
@@ -251,14 +251,16 @@ require_once('connexion.php');
     $db = Db::getInstance();
 
     
-    $request = $db->prepare('SELECT u.id_user as id from user as u, avoir_statut as av, statut_compte as s  WHERE u.email= ? and u.password= ? and u.id_user = av.id_user and av.id_statut_compte = s.id_statut_compte and s.libelle <> "ATTENTE_VALIDATION" ');
-    $request->execute(array($email,$pwd));
-
-    if ($request->rowCount() == 1)
+    $request = $db->prepare('SELECT u.id_user as id,u.password as mdp  FROM user as u, avoir_statut as av, statut_compte as s  WHERE u.email= ? and u.id_user = av.id_user and av.id_statut_compte = s.id_statut_compte and s.libelle <> "ATTENTE_VALIDATION" ');
+    $request->execute(array($email));
+    while( $elt= $request->fetch()){
+      $id= $elt['id'];
+      $password= $elt['mdp'];
+ }
+    if ($request->rowCount() == 1 && password_verify($pwd,$password))
     {
          
-         $_SESSION['id_user']= $request->fetch()['id'];
-         
+         $_SESSION['id_user']= $id;
          
          //on recupere l'ID du statut de l'user
          $request=$db->query('SELECT avst.id_statut as id_statut,e.libelle as libelle,s.libelle as libelle_statut, us.nom as nom,us.prenom as prenom,us.email as mail from user as us, avoir_statut as avst, etat as e,statut as s WHERE  avst.id_user=us.id_user AND e.id_etat = avst.id_etat AND avst.id_statut = s.id_statut AND avst.id_user = '.$_SESSION['id_user'].'');
@@ -286,7 +288,7 @@ require_once('connexion.php');
  {
       $db=Db::getInstance();
       $req= $db->prepare("UPDATE user SET chemin_photo= ? WHERE id_user= $id_user");
-      $req->execute(array( $this->chemin_photo));
+      $req->execute(array( $this->getChemin_photo()));
  }
 
  public static function Get_informations_on_user($id_user) // la meme que get_info plus haut ( à dégager)
@@ -393,9 +395,9 @@ require_once('connexion.php');
         if(is_null($nb)) // l'indice des comptes statiques commence à 1
           $nb= 1;
         
-        
+        $hash= password_hash('az',PASSWORD_DEFAULT);
         $today = date('y-m-j');
-        $req= $db->prepare("INSERT INTO user(nom,prenom,date_naissance,email,phone,password) VALUES(?,?,?,?,?,'az')");
+        $req= $db->prepare("INSERT INTO user(nom,prenom,date_naissance,email,phone,password) VALUES(?,?,?,?,?,'.$hash.')");
 
         $nom= 'ADMIN'.$nb ;
         $email= 'ADMIN'.$nb.'.'.$res.'@tutorat-yncrea.fr';
