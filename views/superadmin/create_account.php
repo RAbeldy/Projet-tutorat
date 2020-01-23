@@ -23,7 +23,7 @@
                                                         
                                                         <div class="form-group text-center col-12">
                                                             <label for="lieu">
-                                                                <strong>intitulé tutorat</strong><br> 
+                                                                <strong>Tutorat</strong><br> 
                                                             </label>
                                                             <select class="form-control" name="id_t">
                                                             <?php

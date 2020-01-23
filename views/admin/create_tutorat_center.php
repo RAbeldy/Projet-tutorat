@@ -43,14 +43,14 @@
                                                         </div>
                                                         <div class="form-group col-xs-12 col-md-6">
                                                             <label for="lieu">
-                                                                <strong>nom du centre (lycée, collège...)</strong><br> 
+                                                                <strong>Nom du centre (lycée, collège...)</strong><br> 
                                                             </label>
                                                              <input type="text" class="form-control" name="libelle">
                                                             
                                                         </div>
                                                         <div class="form-group col-xs-12 col-md-6">
                                                             <label for="tutore">
-                                                                <strong>nombre de Tutorés</strong><br>
+                                                                <strong>Nombre de tutorés</strong><br>
                                                             </label>
                                                             <input type="number" class="form-control" name="nb_tutores">
                                                             
@@ -58,7 +58,7 @@
                                                         </div>
                                                         <div class="form-group col-xs-12 col-md-6">
                                                             <label for="tutore">
-                                                                <strong>nombre de Tuteurs</strong><br>
+                                                                <strong>Nombre de tuteurs</strong><br>
                                                             </label>
                                                             <input type="number" class="form-control" name="nb_tuteurs">
                                                         </div>

@@ -45,31 +45,34 @@
                                                                 
                                                               <tr >
 
- 
+                                                                    <?php if(!preg_match('#ADMIN#',$elt['tutorat']))
+                                                                    {
+                                                                        ?>
                                                                   <td> <label><?=$elt['tutorat']?></label></td>
                                                                   <td><label><?=$elt['evenement']->getDate_evenement()?></label></td>
                                                                   <td><label><?=$elt['evenement']->getLieu()?></label></td>
                                                                   <td><label><?=$elt['evenement']->getNb_places()?></label></td>
                                                                   <td><label ><?=$elt['planning_event']?></label></td>
                                                                   <?php
-                                                                  if( $elt['evenement']->getNb_places() > 0 )
-                                                                  {
-                                                                    ?>
-                                                                  <td><button class="btn" type="submit" title="<?=$elt['evenement']->getNb_places().' place(s) restante(s)' ?>"name="s'inscrire" onclick="alert();">S'inscrire</button>
-                                                                  </td>
-                                                                  <?php
-                                                                  }
-                                                                  else
-                                                                  {
-                                                                    ?>
-                                                                    <td><label title="plus de places disponibles" class="btn" name="s'inscrire">Complet</label>
-                                                                  </td>
-                                                                  <?php
-                                                                  }
+                                                                  
+                                                                    if( $elt['evenement']->getNb_places() > 0  )
+                                                                    {
+                                                                        ?>
+                                                                    <td><button class="btn" type="submit" title="<?=$elt['evenement']->getNb_places().' place(s) restante(s)' ?>"name="s'inscrire" onclick="alert();">S'inscrire</button>
+                                                                    </td>
+                                                                    <?php
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        ?>
+                                                                        <td><label title="plus de places disponibles" class="btn" name="s'inscrire">Complet</label>
+                                                                    </td>
+                                                                    <?php
+                                                                    }}
                                                                   ?>
                                                                 </tr>
                                                                  <input type="hidden" name="id_e" value="<?=$elt['evenement']->getId_evenement()?>" >
-                                                        
+                                                                    
                                                       
                                                              </form>
                                                             <?php

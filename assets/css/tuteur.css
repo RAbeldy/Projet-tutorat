@@ -26,4 +26,7 @@
     .card-body .btn {
         font-size: 15px;
     }
+	.card-title br {
+		display: none;
+	}
 }

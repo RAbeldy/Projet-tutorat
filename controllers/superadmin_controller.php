@@ -740,7 +740,7 @@ public  function export() // fonction d'exportation fichier excel
         $donnees= Users::Get_unpaidHours_tuteurs();
         set_donnees($donnees);
 
-          if(!empty(donnees)){
+          if(!empty($donnees)){
               Evenements::payUnpaidHours(); // on passe la liste des évènements impayés à payer
 
               set_include_path( get_include_path().PATH_SEPARATOR."..");
@@ -778,7 +778,7 @@ public  function export() // fonction d'exportation fichier excel
             $this->validated_hours();
           }
           else{
-              echo "échec d'exportation de données";
+              //echo "échec d'exportation de données";
               $this->validated_hours();
           }
       }
@@ -801,12 +801,16 @@ public  function export() // fonction d'exportation fichier excel
       {
         if(isset($_SESSION['id_statut']))// on vérifie que seul un utilisateur connecté peut accéder à ces pages
         {    
-
+          if( sizeof(Users::Get_all_contact_admin($_SESSION['id_user'])) == 0){ // si pas d'admin disponible
+              $contacter= false;
+              set_route('views/superadmin/contacter.php');
+        }
+        else{
+                $contacter= true;
                 require ('PHPMailer/PHPMailerAutoload.php');
                 require ('connectToMail.php');
                 $mailAccount = 'superadmin@tutorat-yncrea.fr';
-                
-                $contacter= true;
+              
                 $nom= $_SESSION['nom']; 
                 $prenom= $_SESSION['prenom'];
                 
@@ -826,6 +830,7 @@ public  function export() // fonction d'exportation fichier excel
           
                 set_route('views/mail_send_ok.php');
         }
+      }
         else
                 set_route('views/Login.php');
       }   

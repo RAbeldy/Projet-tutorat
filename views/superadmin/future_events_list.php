@@ -75,8 +75,7 @@
                                                         <tbody>
 
                                                             <?php
-                                                            if(!is_null($donnees))
-                                                            {
+                                                            
                                                              foreach ($donnees as $elt)
                                                             {
                                                               if(!preg_match("#ADMINISTRATION#", $elt['tutorat']) )
@@ -109,7 +108,7 @@
                                                             <?php
                                                                 }
                                                              }
-                                                             }
+                                                             
                                                              ?>
                                                         </tbody>
                                                         <tfoot>

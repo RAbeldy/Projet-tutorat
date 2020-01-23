@@ -28,7 +28,7 @@
                                                         </div>
                                                         <div class="form-group col-xs-12 col-md-6">
                                                             <label for="lieu">
-                                                                <strong>intitulé tutorat</strong><br> 
+                                                                <strong>Tutorat</strong><br> 
                                                             </label>
                                                             <select class="form-control" name="id_t">
                                                             <?php
@@ -47,7 +47,7 @@
                                                         </div>
                                                         <div class="form-group col-xs-12 col-md-6">
                                                             <label for="tutore">
-                                                                <strong>nombre de Tutorés</strong><br>
+                                                                <strong>Nombre de tutorés</strong><br>
                                                             </label>
                                                             <input type="number" class="form-control" name="nb_tutores" >
                                                             
@@ -55,7 +55,7 @@
                                                         </div>
                                                         <div class="form-group col-xs-12 col-md-6">
                                                             <label for="tutore">
-                                                                <strong>nombre de Tuteurs</strong><br>
+                                                                <strong>Nombre de tuteurs</strong><br>
                                                             </label>
                                                             <input type="number" class="form-control" name="nb_tuteurs">
                                                         </div>

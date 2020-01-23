@@ -815,7 +815,11 @@ public  function export()
       {
         if(isset($_SESSION['id_statut']))// on vérifie que seul un utilisateur connecté peut accéder à ces pages
         {    
-
+          if( sizeof(Users::Get_all_contact_admin($_SESSION['id_user']))== 0){ // si pas d'admin disponible
+            $contacter= false;
+            set_route('views/admin/contacter.php');
+      }
+      else{
                 require ('PHPMailer/PHPMailerAutoload.php');
                 require ('connectToMail.php');
                 $mailAccount = 'contact_admin@tutorat-yncrea.fr';
@@ -840,6 +844,7 @@ public  function export()
           
                 set_route('views/mail_send_ok.php');  
         }
+      }
         else
                 set_route('views/login.php');
       }

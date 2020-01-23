@@ -464,30 +464,37 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>TUTORAT</title>
+    <title>TUTORAT | L'aide aux étudiants par la région Hauts-De-France</title>
+    <meta name="copyright" content="YNCREA Hauts-De-France">
+    <meta name="language" content="fr">
+    <meta name="description" content="L'aide aux étudiants par le groupe Yncréa Hauts-de-France en partenariat avec le programme régional de réussite en études longues (PRREL).">
+    <meta name="copyright" content="YNCREA Hauts-De-France">
+	<meta property="og:url" content="http://tutorat-yncrea.fr/index.php">
+	<meta property="og:title" content="TUTORAT | L'aide aux étudiants par la région Hauts-De-France">
+	<meta property="og:type" content="website">
+	<meta property="og:image" content="http://tutorat-yncrea.fr/assets/img/OGimg.png">
+	<meta property="og:description" content="L'aide aux étudiants par le groupe Yncréa Hauts-de-France en partenariat avec le programme régional de réussite en études longues (PRREL).">
+	<meta property="og:site_name" content="TUTORAT YNCREA">
+	<meta property="og:locale" content="fr_FR">
+	<link rel="canonical" href="http://tutorat-yncrea.fr/index.php" />
     <link rel="icon" href="assets/img/logo-icon.png">
-    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css?h=f20836d04db9c2e94df06e239fab9fd8">
-    <link rel="stylesheet" href="assets/fonts/ionicons.min.css?h=0692f36eb27607e4837760bbbf813d92">
-    <link rel="stylesheet" href="assets/css/Footer-Basic.css?h=d15dfcb68fabe0442ff06063b052477c">
-    <link rel="stylesheet" href="assets/css/styles.css?">
-    <!-- sign up-->
-    <!--<link rel="stylesheet" href="assets/fonts/font-awesome.min.css"> -->
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="assets/fonts/ionicons.min.css">
-    <link rel="stylesheet" href="assets/css/-Login-form-Page-BS4-.css">
+    <link rel="stylesheet" href="assets/css/Footer-Basic.css">
+    <link rel="stylesheet" href="assets/css/styles.css">
+    <!-- sign up-->
+    <link rel="stylesheet" href="assets/fonts/font-awesome.min.css">
     <link rel="stylesheet" href="assets/css/Login-Form-Clean.css">
-    <link rel="stylesheet" href="assets/css/Login-Form-Dark.css">
     <link rel="stylesheet" href="assets/css/Login-screen.css">
     <!-- navbar latérale et tuteur et evenements-->
-    <link rel="stylesheet" href="assets/fonts/ionicons.min.css?h=0692f36eb27607e4837760bbbf813d92">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i">
-    <link rel="stylesheet" href="assets/fonts/fontawesome-all.min.css?h=0692f36eb27607e4837760bbbf813d92">
+    <link rel="stylesheet" href="assets/fonts/fontawesome-all.min.css">
     <link rel="stylesheet" href="assets/css/menu.css">
     <link rel="stylesheet" href="assets/css/tuteur.css">
     <!-- upadte account -->
-    <link rel="stylesheet" href="assets/css/Profile-Edit-Form.css?h=0d932fa81301936f118cc8607c135e19">
+    <link rel="stylesheet" href="assets/css/Profile-Edit-Form.css">
     <!-- login-->
-    <link rel="stylesheet" href="assets/css/Login-Form.css?h=20d7842de129d800e792499681f0b672">
-    <link rel="stylesheet" href="http://demo.themefisher.com/constra/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="assets/css/Login-Form.css">
 
 
 </head>
@@ -569,44 +576,6 @@
     <script src="assets/js/dynmenu.js"></script>
     <script type="text/javascript">
         $(document).ready(function() {
-
-            var refresh= document.getElementsByClassName('refresh')[0];
-            var doc= document;
-            if (window.XMLHttpRequest)
-            {
-                // code for modern browsers
-                var  xhttp = new XMLHttpRequest();
-            }
-            else
-            {
-                // code for old IE browsers
-                var xhttp = new ActiveXObject("Microsoft.XMLHTTP");
-            }
-            var ajax= function(e){
-
-                // prompt("ajax");
-                e.preventDefault();
-                    xhttp.open("GET","index.php?controller=users&action=deconnexion",true);
-                    xhttp.send();
-                xhttp.onreadystatechange= ()=>{
-                            if(xhttp.readyState === 4 && xhttp.status== 200)
-                            {
-                                var previous = doc.getElementById('page-top');
-                                //var child = xhttp.responseText.getElementById('page-top');
-                                document.body.innerHTML= xhttp.responseText;
-
-                                //prompt(xhttp.responseText);
-                            }
-                        }
-                        document.getElementById("lateralSideBar").style.display = "none";
-                    }
-
-                    document.getElementsByClassName('refresh')[0].addEventListener('click',ajax);
-            //document.getElementsByClassName('refresh')[0].onclick=  aj();
-
-
-
-
             $('#sidebarCollapse').on('click', function () {
                 $('#lateralSideBar').toggleClass('active');
                 $(this).toggleClass('active');

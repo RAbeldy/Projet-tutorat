@@ -1,6 +1,6 @@
 
 
-<div class="login-dark">
+<div class="login-clean">
         <form method="post" action="resetPassword.php" class="envoi">
             <h2 class="sr-only">Réinitialiser le mot de passe </h2>
             <div class="illustration">

@@ -46,19 +46,19 @@
                         <div class="col-sm-12 col-md-6">
                             <div class="form-group">
                                 <label>Code Postal</label>
-                                <input class="form-control complete" type="text" value="<?php echo $donnees->getCode_postal();?>"  name="code_postal" value="" >
+                                <input class="form-control complete" type="text" value="<?php echo $donnees->getCode_postal();?>"  name="code_postal"  >
                             </div>
                         </div>
                         <div class="col-sm-12 col-md-6">
                             <div class="form-group">
                                 <label>Niveau scolaire</label>
-                                <input class="form-control complete" type="text" value="<?php echo $donnees->getNiveau();?>"  name="niveau" value="" >
+                                <input class="form-control complete" type="text" value="<?php echo $donnees->getNiveau();?>"  name="niveau"  >
                             </div>
                         </div>
                         <div class="col-sm-12 col-md-6">
                             <div class="form-group">
                                 <label>Ecole</label>
-                                <input class="form-control complete" type="text" value="<?php echo $donnees->getEcole();?>"  name="ecole" value="" >
+                                <input class="form-control complete" type="text" value="<?php echo $donnees->getEcole();?>"  name="ecole"  >
                             </div>
                         </div>
                         <div class="col">

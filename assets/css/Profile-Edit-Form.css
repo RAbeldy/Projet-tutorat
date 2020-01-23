@@ -25,7 +25,12 @@ div.profile-row {
 }
 
 div.alert {
-  width: 40%;
+	margin-left: 10%;
+    margin-right: 10%;
+}
+
+.alert h2 {
+    margin-top: 3%;
 }
 
 .alert-col > .alert {

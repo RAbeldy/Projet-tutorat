@@ -23,7 +23,7 @@
                                                         
                                                         <div class="form-group text-center col-12">
                                                             <label for="lieu">
-                                                                <strong>intitulé du type de tutorat</strong><br> 
+                                                                <strong>Nom du type de tutorat</strong><br> 
                                                             </label>
                                                            
                                                             

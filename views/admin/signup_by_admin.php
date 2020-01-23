@@ -106,7 +106,7 @@ function validateForm() {
 
 </script>
 
-<div class="login-dark">
+<div class="login-clean">
         <form method="post" name="myForm" onsubmit='javascript:validateForm();' action="createAccount.php">
  
             <h2 class="sr-only">Login Form</h2>

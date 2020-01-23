@@ -68,7 +68,7 @@
                                                             
                                                              foreach ($donnees as $elt) 
                                                             {
-                                                              if(!preg_match('#TUTORAT_PERSONNALISE#',$elt['tutorat']))
+                                                              if(!preg_match('#TUTORAT_PERSONNALISE#',$elt['tutorat']) && !preg_match('#ADMINISTRATION#',$elt['tutorat']))
                                                               {
                                                              ?>
 

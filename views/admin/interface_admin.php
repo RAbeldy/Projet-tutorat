@@ -13,7 +13,7 @@
                                                 <div class="card-body">
                                                     <h4 class="card-title">Evènements</h4>
                                                     <a href="?controller=admin&action=events">
-                                                        <button class="btn" type="button">je crée, je consulte</button>
+                                                        <button class="btn" type="button">Je crée, je consulte</button>
                                                     </a>
                                                 </div>
                                             </div>
@@ -23,7 +23,7 @@
                                                 <div class="card-body">
                                                     <h4 class="card-title">Historique</h4>
                                                     <a href="?controller=admin&action=pasts_events_list">
-                                                        <button class="btn" type="button">je valide<br/>leurs participations</button>
+                                                        <button class="btn" type="button">Je valide<br/>leurs participations</button>
                                                     </a>
                                                 </div>
                                             </div>

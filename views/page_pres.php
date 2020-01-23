@@ -22,7 +22,7 @@
 				i++;
 				if(i >= 4)
 					i = 0;
-				setTimeout(carousel, 6000); // Change image every 4 seconds
+				setTimeout(carousel, 6000); // Change image every 6 seconds
 			}
 		</script>
 
@@ -32,7 +32,7 @@
                 <div class="row">
                     <div class="col-lg-6">
                         <div class="pres_image">
-                            <img src="assets/img/1.jpg" alt="">
+                            <img src="assets/img/2.jpg" alt="">
                         </div>
                     </div>
                     <div class="col-lg-6">
